@@ -26,16 +26,14 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
-import { useUserDispatch, signOut } from "../../context/UserContext";
 import { authSelector } from '../../store/modules/auth'
 
-function Header(props) {
+function Header({profile}) {
   var classes = useStyles();
 
   // global
   var layoutState = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
-  var userDispatch = useUserDispatch();
 
   // local
   var [profileMenu, setProfileMenu] = useState(null);
@@ -96,7 +94,7 @@ function Header(props) {
           >
             <div className={classes.profileMenuUser}>
               <Typography variant="h4" weight="medium">
-                John Smith
+                {`${profile.first_name} ${profile.last_name}`}
               </Typography>
               <Typography
                 className={classes.profileMenuLink}
@@ -104,7 +102,7 @@ function Header(props) {
                 color="primary"
                 href="https://flatlogic.com"
               >
-                Flalogic.com
+                {profile.email}
               </Typography>
             </div>
             <MenuItem
@@ -115,27 +113,11 @@ function Header(props) {
             >
               <AccountIcon className={classes.profileMenuIcon} /> Profile
             </MenuItem>
-            <MenuItem
-              className={classNames(
-                classes.profileMenuItem,
-                classes.headerMenuItem,
-              )}
-            >
-              <AccountIcon className={classes.profileMenuIcon} /> Tasks
-            </MenuItem>
-            <MenuItem
-              className={classNames(
-                classes.profileMenuItem,
-                classes.headerMenuItem,
-              )}
-            >
-              <AccountIcon className={classes.profileMenuIcon} /> Messages
-            </MenuItem>
             <div className={classes.profileMenuUser}>
               <Typography
                 className={classes.profileMenuLink}
                 color="primary"
-                onClick={() => signOut(userDispatch, props.history)}
+                onClick={() => {}}
               >
                 Sign Out
               </Typography>
