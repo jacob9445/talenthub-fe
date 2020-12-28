@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import MUIDataTable from "mui-datatables";
+import  { createStructuredSelector} from 'reselect'
+import  { connect } from 'react-redux'
 
 import PageTitle from "components/PageTitle";
+import { getUsers, usersSelector } from 'store/modules/users'
 
-const columns = ["Name", "Company", "City", "State"]
+const columns = ['Email', 'First Name', 'Last Name', 'Role', 'Username']
+
 const datatableData = [
   ["Joe James", "Example Inc.", "Yonkers", "NY"],
   ["John Walsh", "Example Inc.", "Hartford", "CT"],
@@ -25,15 +29,20 @@ const datatableData = [
   ["Gaston Festus", "Example Inc.", "Tampa", "FL"],
 ]
 
-const Users = () => {
+const Users = ({getUsers, users}) => {
+
+  useEffect(() => {
+    getUsers()
+  }, [getUsers])
+  
   return (
     <>
       <PageTitle title="Users" />
       <Grid container spacing={4}>
-        <Grid xs={12}>
+        <Grid item xs={12}>
           <MUIDataTable
             title="User List"
-            data={datatableData}
+            data={users}
             columns={columns}
             options={{
               filterType: "checkbox",
@@ -45,4 +54,12 @@ const Users = () => {
   );
 }
 
-export default Users
+const actions = {
+  getUsers
+}
+
+const selectors = createStructuredSelector({
+  users: usersSelector
+})
+
+export default connect(selectors, actions)(Users)
