@@ -3,11 +3,16 @@ import { Route, Redirect } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { authSelector } from '../../store/modules/auth/selectors'
-import Header from '../../components/Header';
-import { Grid } from '@material-ui/core'
-import './style.scss'
+import Header from '../../components/Header'
+import Sidebar from 'components/Sidebar'
+import useStyles from './styles'
+import { useLayoutState } from "../../context/LayoutContext";
+import classnames from 'classnames'
 
-const PrivateRoute = ({path, component:Component, profile, ...others}) => (
+const PrivateRoute = ({path, component:Component, profile, ...others}) => {
+  let classes = useStyles()
+  let layoutState = useLayoutState();
+  return (
     <Route 
       path={path}
       {...others}
@@ -16,15 +21,22 @@ const PrivateRoute = ({path, component:Component, profile, ...others}) => (
           return profile ? (
             <React.Fragment>
               <Header />
-              <Grid container className='main'>
-                <Component {...props} />
-              </Grid>
+              <Sidebar />
+              <div
+                className={classnames(classes.content, {
+                  [classes.contentShift]: layoutState.isSidebarOpened,
+                })}
+              >
+                <div className={classes.fakeToolbar} />
+                <Component {...props}/>
+              </div>
             </React.Fragment>
           ) : <Redirect to='/login' /> 
         }
       }
     />
-)
+  ) 
+}
 
 const selectors = createStructuredSelector({
   profile: authSelector
