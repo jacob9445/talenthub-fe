@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { authSelector } from '../store/modules/auth'
 import Login from './Login'
-import Dashboard from './Dashboard'
+import Dashboard from './pages/Dashboard'
 import AuthRoute from './AuthRoute'
 import PrivateRoute from './PrivateRoute'
 
