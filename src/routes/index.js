@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { authSelector } from '../store/modules/auth'
 import Login from './Login'
 import Dashboard from './pages/Dashboard'
+import Users from './pages/Users'
 import AuthRoute from './AuthRoute'
 import PrivateRoute from './PrivateRoute'
 
@@ -19,6 +20,7 @@ const Routes = ({auth}) => {
 			/>
 			<AuthRoute path='/login' component={Login} />
 			<PrivateRoute path='/dashboard' component={Dashboard}/>
+			<PrivateRoute path='/users' component={Users} />
     </React.Fragment>
 	)
 }
