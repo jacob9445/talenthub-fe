@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo} from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
 import {
   Home as HomeIcon,
@@ -9,6 +9,9 @@ import {
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
 import classNames from "classnames";
+import { createStructuredSelector } from 'reselect'
+import { connect} from 'react-redux'
+import * as R from 'ramda'
 
 // styles
 import useStyles from "./styles";
@@ -23,25 +26,10 @@ import {
   toggleSidebar,
 } from "../../context/LayoutContext";
 
-const structure = [
-  { id: 0, 
-    label: "Dashboard", 
-    link: "/dashboard", 
-    icon: <HomeIcon /> 
-  },
-  { id: 1, 
-    label: "Users", 
-    link: "/users", 
-    icon: <UserIcon /> 
-  },
-  { id: 2, 
-    label: "Teams", 
-    link: "/teams", 
-    icon: <TeamIcon /> 
-  },
-];
+import { URL_PREFIXES } from 'config/constants'
+import { authSelector } from 'store/modules/auth'
 
-function Sidebar({ location }) {
+function Sidebar({ location, auth}) {
   var classes = useStyles();
   var theme = useTheme();
 
@@ -52,6 +40,24 @@ function Sidebar({ location }) {
   // local
   var [isPermanent, setPermanent] = useState(true);
 
+  let structure = useMemo(() => ([
+    { id: 0, 
+      label: "Dashboard", 
+      link: `/${URL_PREFIXES[auth.role]}/dashboard`, 
+      icon: <HomeIcon /> 
+    },
+    { id: 1, 
+      label: "Users", 
+      link: `/${URL_PREFIXES[auth.role]}/users`,
+      icon: <UserIcon /> 
+    },
+    { id: 2, 
+      label: "Teams", 
+      link: `/${URL_PREFIXES[auth.role]}/teams`,
+      icon: <TeamIcon /> 
+    },
+  ]), [auth])
+  
   useEffect(function() {
     window.addEventListener("resize", handleWindowWidthChange);
     handleWindowWidthChange();
@@ -112,4 +118,11 @@ function Sidebar({ location }) {
   }
 }
 
-export default withRouter(Sidebar);
+const selectors = createStructuredSelector({
+  auth: authSelector
+})
+
+export default R.compose(
+  withRouter,
+  connect(selectors),
+)(Sidebar)

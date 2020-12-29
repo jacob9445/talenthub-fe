@@ -5,3 +5,9 @@ export const ROLES = {
   TEAM_MANAGER: 2,
   DEVELOPER: 3
 }
+
+export const URL_PREFIXES = {
+	[ROLES.ADMIN]: 'admin',
+	[ROLES.TEAM_MANAGER]: 'team-manager',
+	[ROLES.DEVELOPER]: 'developer',
+}
