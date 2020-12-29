@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 
 import  useStyles from './styles'
+import * as constants from 'config/constants'
 
 const role_patterns = [
   {
@@ -17,17 +18,17 @@ const role_patterns = [
     color: ''
   },
   {
-    id: 1, //Admin
+    id: constants.ROLE_ADMIN, //Admin
     role: 'AD',
     color: 'success',
   },
   {
-    id: 2, //Team Manager
+    id: constants.ROLE_TEAM_MANAGER, //Team Manager
     role: 'TM',
     color: 'warning'
   },
   {
-    id: 3, //Developer
+    id: constants.ROLE_DEVELOPER, //Developer
     role: 'DV',
     color: 'secondary'
   }

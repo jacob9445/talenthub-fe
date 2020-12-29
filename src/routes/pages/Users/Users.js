@@ -6,6 +6,7 @@ import  { connect } from 'react-redux'
 
 // import PageTitle from "components/PageTitle";s
 import { getUsers, usersSelector } from 'store/modules/users'
+import { authSelector } from 'store/modules/auth'
 import Table from './Table'
 import Widget from "components/Widget"
 
@@ -15,12 +16,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Users = ({getUsers, users}) => {
+const Users = ({getUsers, users, profile}) => {
 
   let classes = useStyles()
   useEffect(() => {
-    getUsers()
-  }, [getUsers])
+    getUsers({role: profile.role})
+  }, [getUsers, profile])
   
   return (
     <>
@@ -41,7 +42,8 @@ const actions = {
 }
 
 const selectors = createStructuredSelector({
-  users: usersSelector
+  users: usersSelector,
+  profile: authSelector,
 })
 
 export default connect(selectors, actions)(Users)
