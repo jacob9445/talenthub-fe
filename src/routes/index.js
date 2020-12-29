@@ -11,6 +11,7 @@ import AuthRoute from './AuthRoute'
 import PrivateRoute from './PrivateRoute'
 
 const Routes = ({auth}) => {
+	console.log('private', {auth})
 	return (
     <React.Fragment>
 			<Route exact path='/'

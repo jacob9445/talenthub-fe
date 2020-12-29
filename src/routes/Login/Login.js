@@ -13,9 +13,9 @@ const initialValues = {
 }
 
 const Login = ({authLogin}) => {
+	
 		let classes = useStyles()
 		const handleSubmit = useCallback((payload, formActions) => {
-			console.log('call handleSubmit')
 			return formSubmit( authLogin, {
 				data: payload
 			}, formActions)

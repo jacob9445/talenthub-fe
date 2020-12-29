@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
-import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETPROFILE, AUTH_SAVEPROFILE} from './types'
+import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETPROFILE, AUTH_SAVEPROFILE, AUTH_LOGOUT} from './types'
 
 const authLogin = apiCallSaga({
   type: AUTH_LOGIN,
@@ -38,9 +38,14 @@ const authSaveProfile = apiCallSaga({
   }
 })
 
+const authLogout = function() {
+  localStorage.removeItem('authentication')
+} 
+
 export default function* rootSaga() {
   yield takeLatest(AUTH_LOGIN, authLogin)
   yield takeLatest(AUTH_SIGNUP, authSignup)
   yield takeLatest(AUTH_GETPROFILE, authGetProfile)
   yield takeLatest(AUTH_SAVEPROFILE, authSaveProfile)
+  yield takeLatest(AUTH_LOGOUT, authLogout)
 }

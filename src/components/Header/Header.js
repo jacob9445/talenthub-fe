@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -14,6 +14,7 @@ import {
 import classNames from "classnames";
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 // styles
 import useStyles from "./styles";
 
@@ -26,9 +27,9 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
-import { authSelector } from '../../store/modules/auth'
+import { authSelector, authLogout } from '../../store/modules/auth'
 
-function Header({profile}) {
+function Header({profile, authLogout}) {
   var classes = useStyles();
 
   // global
@@ -37,6 +38,10 @@ function Header({profile}) {
 
   // local
   var [profileMenu, setProfileMenu] = useState(null);
+
+  const handleLogout = useCallback(() => {
+    authLogout()
+  }, [authLogout])
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -114,13 +119,14 @@ function Header({profile}) {
               <AccountIcon className={classes.profileMenuIcon} /> Profile
             </MenuItem>
             <div className={classes.profileMenuUser}>
-              <Typography
+              <Link
+                to='/'
                 className={classes.profileMenuLink}
                 color="primary"
-                onClick={() => {}}
+                onClick={handleLogout}
               >
                 Sign Out
-              </Typography>
+              </Link>
             </div>
         </Menu>
       </Toolbar>
@@ -128,8 +134,11 @@ function Header({profile}) {
   );
 }
 
+const actions = {
+  authLogout
+}
 const selectors = createStructuredSelector({
   profile: authSelector
 })
 
-export default connect(selectors)(Header)
+export default connect(selectors, actions)(Header)

@@ -40,30 +40,35 @@ const columns = ['Username', 'Email', 'First Name', 'Last Name', 'Role']
 export default function TableComponent({ data }) {
   const classes = useStyles();
 
-  return (
-    <Table className="mb-0">
-      <TableHead>
-        <TableRow>
-          {columns.map(key => (
-            <TableCell key={key}>{key}</TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {
-          data ? data.map(({username, email, first_name, last_name, role}) => (
-            <TableRow key={email}>
-              <TableCell className="pl-3 fw-normal">{username}</TableCell>
-              <TableCell>{email}</TableCell>
-              <TableCell>{first_name}</TableCell>
-              <TableCell>{last_name}</TableCell>
-              <TableCell>
-                <Chip label={role_patterns[role].role} classes={{root: classes[role_patterns[role].color]}}/>
-              </TableCell>
-            </TableRow>
-          )) : <h6> No Data </h6>
-        }
-      </TableBody>
-    </Table>
-  );
+  if( data) {
+    return (
+      <Table className="mb-0">
+        <TableHead>
+          <TableRow>
+            {columns.map(key => (
+              <TableCell key={key}>{key}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {
+            data.map(({username, email, first_name, last_name, role}) => (
+              <TableRow key={email}>
+                <TableCell className="pl-3 fw-normal">{username}</TableCell>
+                <TableCell>{email}</TableCell>
+                <TableCell>{first_name}</TableCell>
+                <TableCell>{last_name}</TableCell>
+                <TableCell>
+                  <Chip label={role_patterns[role].role} classes={{root: classes[role_patterns[role].color]}}/>
+                </TableCell>
+              </TableRow>
+            ))
+          }
+        </TableBody>
+      </Table>
+    )
+  } else {
+    return <h6>Do Data</h6>
+  }
+  
 }
