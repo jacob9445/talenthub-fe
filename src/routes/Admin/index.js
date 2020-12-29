@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch} from 'react-router'
 import Dashboard from './routes/Dashboard'
-import Users from './routes/Users'
+import Users from 'components/Users'
 
 const Admin = ({ match }) => {
   return (
