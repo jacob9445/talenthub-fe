@@ -1,12 +1,12 @@
 import  React from 'react'
-import { BrowserRouter} from 'react-router-dom'
+import { BrowserRouter as Router} from 'react-router-dom'
 import Routes from './routes'
 import { history } from './store'
 function App() {
   return (
-    <BrowserRouter history={history}> 
+    <Router history={history}> 
       <Routes />
-    </BrowserRouter>
+    </Router>
   )
 }
 
