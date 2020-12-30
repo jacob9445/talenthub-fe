@@ -8,7 +8,7 @@ const authLogin = apiCallSaga({
   path: 'api/auth/login/',
   selectorKey: 'auth',
   success: (res) => {
-    localStorage.setItem('authentication', JSON.stringify(res))
+    localStorage.setItem('TH_TOKEN', JSON.stringify(res))
   }
 })
 
@@ -30,8 +30,8 @@ const authSaveProfile = apiCallSaga({
   method: 'put',
   path: '/users/profile/',
   success: (res) => {
-    const token = JSON.parse(localStorage.getItem('authentication')).token
-    localStorage.setItem('authentication', JSON.stringify({
+    const token = JSON.parse(localStorage.getItem('TH_TOKEN')).token
+    localStorage.setItem('TH_TOKEN', JSON.stringify({
       info: res,
       token      
     }))
@@ -39,7 +39,7 @@ const authSaveProfile = apiCallSaga({
 })
 
 const authLogout = function() {
-  localStorage.removeItem('authentication')
+  localStorage.removeItem('TH_TOKEN')
 } 
 
 export default function* rootSaga() {

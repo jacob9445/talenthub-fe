@@ -21,7 +21,7 @@ const Users = ({getUsers, users, profile}) => {
   let classes = useStyles()
   useEffect(() => {
     getUsers({role: profile.role})
-  }, [getUsers, profile])
+  }, [getUsers, profile.role])
   
   return (
     <>

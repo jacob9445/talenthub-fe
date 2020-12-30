@@ -4,7 +4,7 @@ import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_LOGOUT} from './types'
 
 const getIntialState = () => {
 
-  const auth = JSON.parse(localStorage.getItem('authentication'))
+  const auth = JSON.parse(localStorage.getItem('TH_TOKEN'))
   return auth ? { profile: auth.info} : { profile: null}
 }
 

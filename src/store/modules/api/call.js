@@ -6,7 +6,7 @@ import { API_BASE } from '../../../config/constants'
 import { requestRejected, requestPending, requestSuccess } from './actions'
 
 const defaultHeaders = request => {
-  const auth = localStorage.getItem('authentication')
+  const auth = localStorage.getItem('TH_TOKEN')
   let baseHeaders = {}
   if(auth) {
     baseHeaders = {
