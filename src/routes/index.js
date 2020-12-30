@@ -3,7 +3,7 @@ import  { createStructuredSelector } from 'reselect'
 import  { Route, Redirect, Switch } from 'react-router'
 import { connect } from 'react-redux'
 
-import { meSelector } from '../store/modules/auth'
+import { meSelector, isAuthenticatedSelector, meRejectedSelector } from '../store/modules/auth'
 import Login from './Login'
 import AuthRoute from './AuthRoute'
 import PrivateRoute from './PrivateRoute'
@@ -12,13 +12,17 @@ import TeamManager from './TeamManager'
 
 import { URL_PREFIXES } from 'config/constants'
 
-const Routes = ({auth}) => {
+const Routes = ({ me, isAuthenticated, meRejected }) => {
 	return (
     <Switch>
 			<Route exact path='/'
-				render={
-					() => auth ? <Redirect to={`${URL_PREFIXES[auth.role]}/dashboard`}/> : <Redirect to='/login'/>
-				}
+				render={() => (
+					isAuthenticated && me ? (
+						<Redirect to={`${URL_PREFIXES[me.role]}/dashboard`}/>
+					) : meRejected ? (
+						<Redirect to='/login'/>
+					) : <h1>Loading...</h1>
+				)}
 			/>
 			<AuthRoute path='/login' component={Login} />
 			<PrivateRoute path='/admin' component={Admin} />
@@ -28,7 +32,9 @@ const Routes = ({auth}) => {
 }
 
 const selectors = createStructuredSelector({
-	auth: meSelector
+	me: meSelector,
+	isAuthenticated: isAuthenticatedSelector,
+	meRejected: meRejectedSelector
 })
 
 export default connect(selectors)(Routes)

@@ -28,9 +28,9 @@ import {
   toggleSidebar,
 } from "../../context/LayoutContext";
 import { authLogout } from 'store/modules/auth'
-import { meSelector } from 'store/modules/auth/selectors';
+import { meSelector, meRejectedSelector } from 'store/modules/auth/selectors';
 
-function Header({me, authLogout}) {
+function Header({me, authLogout, meRejected}) {
   var classes = useStyles();
 
   // global
@@ -44,102 +44,107 @@ function Header({me, authLogout}) {
     authLogout()
   }, [authLogout])
 
-  return (
-    <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar className={classes.toolbar}>
-        <IconButton
-          color="inherit"
-          onClick={() => toggleSidebar(layoutDispatch)}
-          className={classNames(
-            classes.headerMenuButtonSandwich,
-            classes.headerMenuButtonCollapse,
-          )}
-        >
-          {layoutState.isSidebarOpened ? (
-            <ArrowBackIcon
-              classes={{
-                root: classNames(
-                  classes.headerIcon,
-                  classes.headerIconCollapse,
-                ),
-              }}
-            />
-          ) : (
-            <MenuIcon
-              classes={{
-                root: classNames(
-                  classes.headerIcon,
-                  classes.headerIconCollapse,
-                ),
-              }}
-            />
-          )}
-        </IconButton>
-        <Typography variant="h6" weight="medium" className={classes.logotype}>
-          Talents Hub
-        </Typography>
-        <div className={classes.grow} />
+  if( meRejected) {
+    return <h1>Loading...</h1>
+  } else {
+    return (
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
           <IconButton
-            aria-haspopup="true"
             color="inherit"
-            className={classes.headerMenuButton}
-            aria-controls="me-menu"
-            onClick={e => setProfileMenu(e.currentTarget)}
+            onClick={() => toggleSidebar(layoutDispatch)}
+            className={classNames(
+              classes.headerMenuButtonSandwich,
+              classes.headerMenuButtonCollapse,
+            )}
           >
-            <AccountIcon classes={{ root: classes.headerIcon }} />
+            {layoutState.isSidebarOpened ? (
+              <ArrowBackIcon
+                classes={{
+                  root: classNames(
+                    classes.headerIcon,
+                    classes.headerIconCollapse,
+                  ),
+                }}
+              />
+            ) : (
+              <MenuIcon
+                classes={{
+                  root: classNames(
+                    classes.headerIcon,
+                    classes.headerIconCollapse,
+                  ),
+                }}
+              />
+            )}
           </IconButton>
-        
-          <Menu
-            id="me-menu"
-            open={Boolean(profileMenu)}
-            anchorEl={profileMenu}
-            onClose={() => setProfileMenu(null)}
-            className={classes.headerMenu}
-            classes={{ paper: classes.profileMenu }}
-            disableAutoFocusItem
-          >
-            <div className={classes.profileMenuUser}>
-              <Typography variant="h4" weight="medium">
-                {`${me.first_name} ${me.last_name}`}
-              </Typography>
-              <Typography
-                className={classes.profileMenuLink}
-                component="a"
-                color="primary"
-                href="https://flatlogic.com"
-              >
-                {me.email}
-              </Typography>
-            </div>
-            <MenuItem
-              className={classNames(
-                classes.profileMenuItem,
-                classes.headerMenuItem,
-              )}
+          <Typography variant="h6" weight="medium" className={classes.logotype}>
+            Talents Hub
+          </Typography>
+          <div className={classes.grow} />
+            <IconButton
+              aria-haspopup="true"
+              color="inherit"
+              className={classes.headerMenuButton}
+              aria-controls="me-menu"
+              onClick={e => setProfileMenu(e.currentTarget)}
             >
-              <AccountIcon className={classes.profileMenuIcon} /> me
-            </MenuItem>
-            <div className={classes.profileMenuUser}>
-              <Link
-                to='/'
-                className={classes.profileMenuLink}
-                color="primary"
-                onClick={handleLogout}
+              <AccountIcon classes={{ root: classes.headerIcon }} />
+            </IconButton>
+          
+            <Menu
+              id="me-menu"
+              open={Boolean(profileMenu)}
+              anchorEl={profileMenu}
+              onClose={() => setProfileMenu(null)}
+              className={classes.headerMenu}
+              classes={{ paper: classes.profileMenu }}
+              disableAutoFocusItem
+            >
+              <div className={classes.profileMenuUser}>
+                <Typography variant="h4" weight="medium">
+                  {`${me.first_name} ${me.last_name}`}
+                </Typography>
+                <Typography
+                  className={classes.profileMenuLink}
+                  component="a"
+                  color="primary"
+                  href="https://flatlogic.com"
+                >
+                  {me.email}
+                </Typography>
+              </div>
+              <MenuItem
+                className={classNames(
+                  classes.profileMenuItem,
+                  classes.headerMenuItem,
+                )}
               >
-                Sign Out
-              </Link>
-            </div>
-        </Menu>
-      </Toolbar>
-    </AppBar>
-  );
+                <AccountIcon className={classes.profileMenuIcon} /> me
+              </MenuItem>
+              <div className={classes.profileMenuUser}>
+                <Link
+                  to='/'
+                  className={classes.profileMenuLink}
+                  color="primary"
+                  onClick={handleLogout}
+                >
+                  Sign Out
+                </Link>
+              </div>
+          </Menu>
+        </Toolbar>
+      </AppBar>
+    );
+  }
 }
 
 const actions = {
   authLogout
 }
 const selectors = createStructuredSelector({
-  me: meSelector
+  me: meSelector,
+  meRejected: meRejectedSelector
 })
 
 export default connect(selectors, actions)(Header)
