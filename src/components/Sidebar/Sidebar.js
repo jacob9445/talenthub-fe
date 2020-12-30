@@ -27,7 +27,7 @@ import {
 } from "../../context/LayoutContext";
 
 import { URL_PREFIXES } from 'config/constants'
-import { authSelector } from 'store/modules/auth'
+import { meSelector } from 'store/modules/auth'
 
 function Sidebar({ location, auth}) {
   var classes = useStyles();
@@ -119,7 +119,7 @@ function Sidebar({ location, auth}) {
 }
 
 const selectors = createStructuredSelector({
-  auth: authSelector
+  auth: meSelector
 })
 
 export default R.compose(

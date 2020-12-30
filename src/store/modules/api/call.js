@@ -6,11 +6,11 @@ import { API_BASE } from '../../../config/constants'
 import { requestRejected, requestPending, requestSuccess } from './actions'
 
 const defaultHeaders = request => {
-  const auth = localStorage.getItem('TH_TOKEN')
+  const token = localStorage.getItem('TH_TOKEN')
   let baseHeaders = {}
-  if(auth) {
+  if(token) {
     baseHeaders = {
-      'Authorization': `JWT ${JSON.parse(auth).token}`
+      'Authorization': `JWT ${JSON.parse(token)}`
     }
   }
 

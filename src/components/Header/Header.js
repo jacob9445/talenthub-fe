@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom'
 import useStyles from "./styles";
 
 // components
-import { Typography } from "../Wrappers";
+import { Typography } from '../Wrappers';
 
 // context
 import {
@@ -27,9 +27,10 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
-import { authSelector, authLogout } from '../../store/modules/auth'
+import { authLogout } from 'store/modules/auth'
+import { meSelector } from 'store/modules/auth/selectors';
 
-function Header({profile, authLogout}) {
+function Header({me, authLogout}) {
   var classes = useStyles();
 
   // global
@@ -82,14 +83,14 @@ function Header({profile, authLogout}) {
             aria-haspopup="true"
             color="inherit"
             className={classes.headerMenuButton}
-            aria-controls="profile-menu"
+            aria-controls="me-menu"
             onClick={e => setProfileMenu(e.currentTarget)}
           >
             <AccountIcon classes={{ root: classes.headerIcon }} />
           </IconButton>
         
           <Menu
-            id="profile-menu"
+            id="me-menu"
             open={Boolean(profileMenu)}
             anchorEl={profileMenu}
             onClose={() => setProfileMenu(null)}
@@ -99,7 +100,7 @@ function Header({profile, authLogout}) {
           >
             <div className={classes.profileMenuUser}>
               <Typography variant="h4" weight="medium">
-                {`${profile.first_name} ${profile.last_name}`}
+                {`${me.first_name} ${me.last_name}`}
               </Typography>
               <Typography
                 className={classes.profileMenuLink}
@@ -107,7 +108,7 @@ function Header({profile, authLogout}) {
                 color="primary"
                 href="https://flatlogic.com"
               >
-                {profile.email}
+                {me.email}
               </Typography>
             </div>
             <MenuItem
@@ -116,7 +117,7 @@ function Header({profile, authLogout}) {
                 classes.headerMenuItem,
               )}
             >
-              <AccountIcon className={classes.profileMenuIcon} /> Profile
+              <AccountIcon className={classes.profileMenuIcon} /> me
             </MenuItem>
             <div className={classes.profileMenuUser}>
               <Link
@@ -138,7 +139,7 @@ const actions = {
   authLogout
 }
 const selectors = createStructuredSelector({
-  profile: authSelector
+  me: meSelector
 })
 
 export default connect(selectors, actions)(Header)

@@ -2,14 +2,14 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
-import { authSelector } from '../../store/modules/auth/selectors'
+import { meSelector } from '../../store/modules/auth/selectors'
 import Header from '../../components/Header'
 import Sidebar from 'components/Sidebar'
 import useStyles from './styles'
 import { useLayoutState } from "../../context/LayoutContext";
 import classnames from 'classnames'
 
-const PrivateRoute = ({path, component:Component, profile, ...others}) => {
+const PrivateRoute = ({path, component:Component, me, ...others}) => {
   let classes = useStyles()
   let layoutState = useLayoutState();
   return (
@@ -18,7 +18,7 @@ const PrivateRoute = ({path, component:Component, profile, ...others}) => {
       {...others}
       render={
         (props) => {
-          return profile ? (
+          return me ? (
             <React.Fragment>
               <Header />
               <Sidebar />
@@ -39,7 +39,7 @@ const PrivateRoute = ({path, component:Component, profile, ...others}) => {
 }
 
 const selectors = createStructuredSelector({
-  profile: authSelector
+  me: meSelector
 })
 
 export default connect(selectors)(PrivateRoute)

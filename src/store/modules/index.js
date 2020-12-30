@@ -6,6 +6,6 @@ import users from './users'
 
 export default combineReducers({
   api,
-  auth,
+  isAuthenticated: auth,
   users,
 })

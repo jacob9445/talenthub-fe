@@ -3,7 +3,7 @@ import  { createStructuredSelector } from 'reselect'
 import  { Route, Redirect, Switch } from 'react-router'
 import { connect } from 'react-redux'
 
-import { authSelector } from '../store/modules/auth'
+import { meSelector } from '../store/modules/auth'
 import Login from './Login'
 import AuthRoute from './AuthRoute'
 import PrivateRoute from './PrivateRoute'
@@ -28,7 +28,7 @@ const Routes = ({auth}) => {
 }
 
 const selectors = createStructuredSelector({
-	auth: authSelector
+	auth: meSelector
 })
 
 export default connect(selectors)(Routes)

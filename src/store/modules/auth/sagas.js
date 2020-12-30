@@ -6,9 +6,10 @@ const authLogin = apiCallSaga({
   type: AUTH_LOGIN,
   method: 'post',
   path: 'api/auth/login/',
-  selectorKey: 'auth',
-  success: (res) => {
-    localStorage.setItem('TH_TOKEN', JSON.stringify(res))
+  selectorKey: 'profile',
+  payloadOnSuccess: (res) => {
+    localStorage.setItem('TH_TOKEN', JSON.stringify(res.token))
+    return res.info
   }
 })
 
