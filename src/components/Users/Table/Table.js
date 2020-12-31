@@ -5,9 +5,11 @@ import {
   TableHead,
   TableBody,
   TableCell,
-  Chip
+  Chip,
+  Button
 } from "@material-ui/core";
 
+import { Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons'
 import  useStyles from './styles'
 import { ROLES } from 'config/constants'
 
@@ -35,7 +37,7 @@ const role_patterns = [
 ]
 
 
-const columns = ['Username', 'Email', 'First Name', 'Last Name', 'Role']
+const columns = ['Username', 'Email', 'First Name', 'Last Name', 'Role', 'Actions']
 
 export default function TableComponent({ data }) {
   const classes = useStyles();
@@ -52,7 +54,7 @@ export default function TableComponent({ data }) {
         </TableHead>
         <TableBody>
           {
-            data.map(({username, email, first_name, last_name, role}) => (
+            data.map(({username, email, first_name, last_name, role}, index) => (
               <TableRow key={email}>
                 <TableCell className="pl-3 fw-normal">{username}</TableCell>
                 <TableCell>{email}</TableCell>
@@ -60,6 +62,14 @@ export default function TableComponent({ data }) {
                 <TableCell>{last_name}</TableCell>
                 <TableCell>
                   <Chip label={role_patterns[role].role} classes={{root: classes[role_patterns[role].color]}}/>
+                </TableCell>
+                <TableCell>
+                  <Button href={`/admin/users/${index}`}>
+                    <EditIcon color='primary'/>
+                  </Button>
+                  <Button >
+                    <DeleteIcon color='secondary'/>
+                  </Button>
                 </TableCell>
               </TableRow>
             ))
