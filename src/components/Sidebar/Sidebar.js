@@ -29,7 +29,7 @@ import {
 import { URL_PREFIXES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
 
-function Sidebar({ location, auth}) {
+function Sidebar({ location, me}) {
   var classes = useStyles();
   var theme = useTheme();
 
@@ -43,20 +43,20 @@ function Sidebar({ location, auth}) {
   let structure = useMemo(() => ([
     { id: 0, 
       label: "Dashboard", 
-      link: `/${URL_PREFIXES[auth.role]}/dashboard`, 
+      link: `/${URL_PREFIXES[me.role]}/dashboard`, 
       icon: <HomeIcon /> 
     },
     { id: 1, 
       label: "Users", 
-      link: `/${URL_PREFIXES[auth.role]}/users`,
+      link: `/${URL_PREFIXES[me.role]}/users`,
       icon: <UserIcon /> 
     },
     { id: 2, 
       label: "Teams", 
-      link: `/${URL_PREFIXES[auth.role]}/teams`,
+      link: `/${URL_PREFIXES[me.role]}/teams`,
       icon: <TeamIcon /> 
     },
-  ]), [auth])
+  ]), [me])
   
   useEffect(function() {
     window.addEventListener("resize", handleWindowWidthChange);
@@ -119,7 +119,7 @@ function Sidebar({ location, auth}) {
 }
 
 const selectors = createStructuredSelector({
-  auth: meSelector
+  me: meSelector
 })
 
 export default R.compose(

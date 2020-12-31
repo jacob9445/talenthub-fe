@@ -28,7 +28,7 @@ const Users = ({getUsers, users, me}) => {
       {/* <PageTitle title="Users" /> */}
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Widget title="Users" upperTitle noBodyPadding bodyClass={classes.tableOverflow}>
+          <Widget title="Users" upperTitle noBodyPadding bodyClass={classes.tableOverflow} disableWidgetMenu>
             <Table data={users} />
           </Widget>
         </Grid>
