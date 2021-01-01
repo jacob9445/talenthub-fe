@@ -26,4 +26,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-store.subscribe( ()=> console.log('redux', store.getState()));
+store.subscribe( ()=>  { 
+  const state = store.getState()
+  console.log('redux', state)
+})

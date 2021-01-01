@@ -39,7 +39,7 @@ const role_patterns = [
 
 const columns = ['Username', 'Email', 'First Name', 'Last Name', 'Role', 'Actions']
 
-export default function TableComponent({ data }) {
+export default function TableComponent({ data, myRole, handleDelete}) {
   const classes = useStyles();
 
   if( data) {
@@ -54,7 +54,7 @@ export default function TableComponent({ data }) {
         </TableHead>
         <TableBody>
           {
-            data.map(({username, email, first_name, last_name, role}, index) => (
+            data.map(({id, username, email, first_name, last_name, role}) => (
               <TableRow key={email}>
                 <TableCell className="pl-3 fw-normal">{username}</TableCell>
                 <TableCell>{email}</TableCell>
@@ -63,14 +63,18 @@ export default function TableComponent({ data }) {
                 <TableCell>
                   <Chip label={role_patterns[role].role} classes={{root: classes[role_patterns[role].color]}}/>
                 </TableCell>
-                <TableCell>
-                  <Button href={`/admin/users/${index}`}>
-                    <EditIcon color='primary'/>
-                  </Button>
-                  <Button >
-                    <DeleteIcon color='secondary'/>
-                  </Button>
-                </TableCell>
+                {
+                  myRole === ROLES.ADMIN && (
+                    <TableCell>
+                      <Button href={`/admin/users/${id}`}>
+                        <EditIcon color='primary'/>
+                      </Button>
+                      <Button onClick={() => handleDelete(id)}>
+                        <DeleteIcon color='secondary'/>
+                      </Button>
+                    </TableCell>
+                  )
+                }
               </TableRow>
             ))
           }

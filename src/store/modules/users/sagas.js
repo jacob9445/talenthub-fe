@@ -15,6 +15,24 @@ const getUsers = apiCallSaga({
   selectorKey: 'users'
 })
 
+const deleteUser = apiCallSaga({
+  type: Types.USERS_DELETEUSER,
+  method: 'DELETE',
+  path: ({payload}) => (`api/admin/users/${payload.id}/`),
+})
+
+const deleteUserAndRefresh = function* (action) {
+  yield deleteUser(action)
+  yield getUsers({
+    type: Types.USERS_GETUSERS,
+    payload: {
+      role: ROLES.ADMIN
+    }
+  })
+}
+
 export default function* rootSaga() {
   yield takeLatest(Types.USERS_GETUSERS, getUsers)
+  yield takeLatest(Types.USERS_DELETEUSER, deleteUser)
+  yield takeLatest(Types.USERS_DELETE_USER_AND_REFRESH, deleteUserAndRefresh)
 }
