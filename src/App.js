@@ -1,5 +1,5 @@
 import  React, { useEffect } from 'react'
-import { BrowserRouter as Router} from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import Routes from './routes'
 import { history } from './store'
 import { authGetMe, isAuthenticatedSelector, meLoadingSelector } from './store/modules/auth'
