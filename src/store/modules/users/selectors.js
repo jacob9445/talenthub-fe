@@ -5,3 +5,5 @@ export const usersSelector = R.compose(
   R.path(['results']),
   dataSelector('users')
 )
+
+export const certainUserSelector = dataSelector('certain_user')
