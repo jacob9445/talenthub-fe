@@ -5,6 +5,7 @@ import { history } from './store'
 import { authGetMe, isAuthenticatedSelector, meLoadingSelector } from './store/modules/auth'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import Spinner from './components/Spinner'
 
 function App({isAuthenticated, authGetMe, meLoading}) {
 
@@ -13,7 +14,7 @@ function App({isAuthenticated, authGetMe, meLoading}) {
   }, [isAuthenticated, authGetMe])
   
   if( isAuthenticated && meLoading) {
-    return <h1>Loading</h1>
+    return <Spinner />
   } else {
     return (
       <Router history={history}> 

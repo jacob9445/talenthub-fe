@@ -9,9 +9,10 @@ import {
   Button
 } from "@material-ui/core";
 
+import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons'
-import  useStyles from './styles'
 import { ROLES } from 'config/constants'
+import Spinner from 'components/Spinner'
 
 const role_patterns = [
   {
@@ -82,7 +83,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
       </Table>
     )
   } else {
-    return <h6>Do Data</h6>
+    return <Spinner />
   }
   
 }
