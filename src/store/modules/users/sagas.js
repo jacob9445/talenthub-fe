@@ -38,9 +38,16 @@ const getCertainUser = apiCallSaga({
   selectorKey: 'certain_user'
 })
 
+const updateCertainUser = apiCallSaga({
+  type: Types.UPDATE_CERTAIN_USER,
+  method: 'PUT',
+  path: ({payload:{id}}) => (`api/admin/users/${id}/`),
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.USERS_GETUSERS, getUsers)
   yield takeLatest(Types.USERS_DELETEUSER, deleteUser)
   yield takeLatest(Types.USERS_DELETE_USER_AND_REFRESH, deleteUserAndRefresh)
   yield takeLatest(Types.GET_CERTAIN_USER, getCertainUser)
+  yield takeLatest(Types.UPDATE_CERTAIN_USER, updateCertainUser)
 }
