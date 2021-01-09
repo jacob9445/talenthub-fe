@@ -14,6 +14,10 @@ export default makeStyles(theme => ({
     },
   },
   textField: {
-    borderBottomColor: theme.palette.background.light,
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
+  wrapper: {
+    margin: theme.spacing(1)
+  }
 }));

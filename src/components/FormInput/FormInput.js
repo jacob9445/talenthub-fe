@@ -1,27 +1,24 @@
 import React from 'react'
-import  { TextField} from '@material-ui/core'
+import  { TextField, FormLabel } from '@material-ui/core'
 import useStyles from './styles'
 
-const FormInput = ({type, field, form, htmlId, placeholder}) => {
+const FormInput = ({type, field, form, htmlId, label}) => {
 	let classes = useStyles()
-
+	
 	return (
-		<TextField
-      id={htmlId}
-			InputProps={
-        {
-          classes: {
-            underline: classes.textFieldUnderline,
-            input: classes.textField,
-          },
-        }
-      }
-			margin="normal"
-			placeholder={placeholder}
-			type={type}
-			{...field}
-			fullWidth
-		/>
+		<div className={classes.wrapper}>
+			<FormLabel htmlFor={htmlId}> {label} </FormLabel>
+			<TextField
+				id={htmlId}
+				margin="normal"
+				type={type}
+				variant='outlined'
+				fullWidth
+				className={classes.textField}
+				{...field}
+			/>
+		</div>
+		
 	)
 }
 
