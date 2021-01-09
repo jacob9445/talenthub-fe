@@ -20,14 +20,14 @@ const LoginForm = ({handleSubmit, errors}) => {
 						htmlId='email'
 						type='email'
 						name='email'
-						placeholder='Email Address'
+						label='Email Address'
 					/>
 					<Field
 						component={FormInput}
 						htmlId='password'
 						type='password'
 						name='password'
-						placeholder='Password'
+						label='Password'
 					/>
 					<div className={classes.formButtons}>
 						<Button
