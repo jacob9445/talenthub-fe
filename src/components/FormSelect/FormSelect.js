@@ -16,14 +16,13 @@ const FormSelect = ({field, form, htmlId, label, options}) => {
         input={
           <OutlinedInput
             labelWidth={0}
-            ItemItem
             id={htmlId}
             name={field.name}
           />
         }
         onBlur={field.onBlur}
         onChange={field.onChange}
-        value={field.value}
+        value={field.value || ''}
       >
         {
           options.map(item => (<MenuItem key={item.value} value={item.value}>{item.display}</MenuItem>))
