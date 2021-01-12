@@ -3,8 +3,8 @@ import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import  { createStructuredSelector} from 'reselect'
 import  { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-// import PageTitle from "components/PageTitle";s
 import { getUsers, usersSelector, deleteUserAndRefresh } from 'store/modules/users'
 import { meSelector } from 'store/modules/auth'
 import Table from './Table'
@@ -40,6 +40,8 @@ const Users = ({getUsers, users, me, deleteUserAndRefresh}) => {
             WidgetButton={
               <Button
                 color='primary'
+                component={Link}
+                to='/admin/users/new'
               >
                 Add User
               </Button>
