@@ -55,31 +55,27 @@ export default function TableComponent({ data, myRole, handleDelete}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {
-            data.map(({id, username, email, first_name, last_name, role}) => (
-              <TableRow key={email}>
-                <TableCell className="pl-3 fw-normal">{username}</TableCell>
-                <TableCell>{email}</TableCell>
-                <TableCell>{first_name}</TableCell>
-                <TableCell>{last_name}</TableCell>
+          {data.map(({id, username, email, first_name, last_name, role}) => (
+            <TableRow key={email}>
+              <TableCell className="pl-3 fw-normal">{username}</TableCell>
+              <TableCell>{email}</TableCell>
+              <TableCell>{first_name}</TableCell>
+              <TableCell>{last_name}</TableCell>
+              <TableCell>
+                <Chip label={role_patterns[role].role} classes={{root: classes[role_patterns[role].color]}}/>
+              </TableCell>
+              {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
-                  <Chip label={role_patterns[role].role} classes={{root: classes[role_patterns[role].color]}}/>
+                  <Button component={Link} to={`/admin/users/${id}`}>
+                    <EditIcon color='primary'/>
+                  </Button>
+                  <Button onClick={() => handleDelete(id)}>
+                    <DeleteIcon color='secondary'/>
+                  </Button>
                 </TableCell>
-                {
-                  myRole === ROLES.ADMIN && (
-                    <TableCell>
-                      <Button component={Link} to={`/admin/users/${id}`}>
-                        <EditIcon color='primary'/>
-                      </Button>
-                      <Button onClick={() => handleDelete(id)}>
-                        <DeleteIcon color='secondary'/>
-                      </Button>
-                    </TableCell>
-                  )
-                }
-              </TableRow>
-            ))
-          }
+              )}
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     )

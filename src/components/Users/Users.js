@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from "react";
-import { Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import  { createStructuredSelector} from 'reselect'
 import  { connect } from 'react-redux'
@@ -9,7 +9,7 @@ import { getUsers, usersSelector, deleteUserAndRefresh } from 'store/modules/use
 import { meSelector } from 'store/modules/auth'
 import Table from './Table'
 import Widget from "components/Widget"
-
+import { ROLES } from 'config/constants'
 const useStyles = makeStyles(theme => ({
   tableOverflow: {
     overflow: 'auto'
@@ -31,7 +31,20 @@ const Users = ({getUsers, users, me, deleteUserAndRefresh}) => {
       {/* <PageTitle title="Users" /> */}
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Widget title="Users" upperTitle noBodyPadding bodyClass={classes.tableOverflow} disableWidgetMenu>
+          <Widget 
+            title='Users' 
+            upperTitle noBodyPadding 
+            bodyClass={classes.tableOverflow} 
+            disableWidgetMenu
+            disableWidgetButton={me.role !== ROLES.ADMIN}
+            WidgetButton={
+              <Button
+                color='primary'
+              >
+                Add User
+              </Button>
+            }
+          >
             <Table data={users} myRole={me.role} handleDelete={handleDelete}/>
           </Widget>
         </Grid>

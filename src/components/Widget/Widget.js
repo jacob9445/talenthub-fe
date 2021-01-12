@@ -23,6 +23,8 @@ export default function Widget({
   headerClass,
   style,
   noWidgetShadow,
+  disableWidgetButton,
+  WidgetButton,
   ...props
 }) {
   var classes = useStyles();
@@ -47,6 +49,10 @@ export default function Widget({
               <Typography variant="h5" color="textSecondary" noWrap>
                 {title}
               </Typography>
+              {
+                !disableWidgetButton && WidgetButton
+              }
+              
               {!disableWidgetMenu && (
                 <IconButton
                   color="primary"
