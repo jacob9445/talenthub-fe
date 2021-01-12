@@ -3,6 +3,7 @@ import { Field } from 'formik'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import { Link } from 'react-router-dom'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
@@ -22,7 +23,7 @@ const EditUserForm = ({handleSubmit, teams, getTeams}) => {
     display: team.name
   })), [teams])
 
-  if(typeof teams === 'undefined') return <Spinner />
+  if(!teams) return <Spinner />
   else return (
     <form onSubmit={handleSubmit}>
       <Field 
@@ -63,7 +64,15 @@ const EditUserForm = ({handleSubmit, teams, getTeams}) => {
         >
           Update
         </Button>
-        <Button variant='contained' color='secondary' className={classes.formButton}>Cancel</Button>
+        <Button 
+          variant='contained'
+          color='secondary'
+          className={classes.formButton}
+          component={Link}
+          to='/admin/users'
+        >
+          Cancel
+        </Button>
       </div>
     </form>
   )

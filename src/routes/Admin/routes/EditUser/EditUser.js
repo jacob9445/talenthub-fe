@@ -2,19 +2,17 @@ import React, { useEffect, useCallback, useMemo } from 'react'
 import { compose } from 'ramda'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { withRouter } from 'react-router'
-import PropTypes from 'prop-types';
 import { Formik } from 'formik'
 import { pick, get } from 'lodash'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types';
 
 import { formSubmit } from 'helpers/form'
 import { getCertainUser, certainUserSelector, certainUserLoadingSelector } from 'store/modules/users'
-import Widget from 'components/Widget'
-import Spinner from 'components/Spinner'
-import EditUserForm from './components/EditUserForm'
 import { updateCertainUser } from 'store/modules/users'
-
-
+import EditUserForm from './components/EditUserForm'
+import Spinner from 'components/Spinner'
+import Widget from 'components/Widget'
 const EditUser = ({match:{params}, getCertainUser, selectedUser, loadingSelectedUser, updateCertainUser}) => {
 
   useEffect( () => {
@@ -22,7 +20,7 @@ const EditUser = ({match:{params}, getCertainUser, selectedUser, loadingSelected
   }, [params, getCertainUser])
 
   const initialValues = useMemo(() => {
-    return typeof selectedUser === 'undefined' ? {
+    return !selectedUser ? {
       first_name: '',
       last_name: '',
       email: '',
@@ -37,7 +35,7 @@ const EditUser = ({match:{params}, getCertainUser, selectedUser, loadingSelected
     console.log({payload})
     return formSubmit( updateCertainUser, {
       data: payload,
-      id: params.id
+      id: params.id,
     }, formActions)
   }, [updateCertainUser, params.id])
 

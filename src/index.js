@@ -4,6 +4,7 @@ import { ThemeProvider } from "@material-ui/styles"
 import ReactDOM from 'react-dom'
 import Themes from "./themes"
 import { Provider } from 'react-redux'
+import 'react-toastify/dist/ReactToastify.css'
 
 import './index.css'
 import App from './App'
