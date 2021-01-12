@@ -8,6 +8,7 @@ import {
   Chip,
   Button
 } from "@material-ui/core";
+import { Link } from 'react-router-dom'
 
 import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons'
@@ -67,7 +68,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
                 {
                   myRole === ROLES.ADMIN && (
                     <TableCell>
-                      <Button href={`/admin/users/${id}`}>
+                      <Button component={Link} to={`/admin/users/${id}`}>
                         <EditIcon color='primary'/>
                       </Button>
                       <Button onClick={() => handleDelete(id)}>
