@@ -44,10 +44,17 @@ const updateCertainUser = apiCallSaga({
   path: ({payload:{id}}) => (`api/admin/users/${id}/`),
 })
 
+const createUser = apiCallSaga({
+  type: Types.CREATE_USER,
+  method: 'POST',
+  path: 'api/auth/register/'
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.USERS_GETUSERS, getUsers)
   yield takeLatest(Types.USERS_DELETEUSER, deleteUser)
   yield takeLatest(Types.USERS_DELETE_USER_AND_REFRESH, deleteUserAndRefresh)
   yield takeLatest(Types.GET_CERTAIN_USER, getCertainUser)
   yield takeLatest(Types.UPDATE_CERTAIN_USER, updateCertainUser)
+  yield takeLatest(Types.CREATE_USER, createUser)
 }
