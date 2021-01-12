@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { formSubmit } from 'helpers/form'
 import { getCertainUser, certainUserSelector, certainUserLoadingSelector } from 'store/modules/users'
 import { updateCertainUser } from 'store/modules/users'
-import EditUserForm from './components/EditUserForm'
+import UserDetailForm from 'components/UserDetailForm'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 const EditUser = ({match:{params}, getCertainUser, selectedUser, loadingSelectedUser, updateCertainUser}) => {
@@ -43,11 +43,11 @@ const EditUser = ({match:{params}, getCertainUser, selectedUser, loadingSelected
   else return (
     <div>
       <Widget 
-        title='User Information'
+        title='Edit User'
         disableWidgetMenu
       >
        <Formik 
-        component={EditUserForm}
+        component={UserDetailForm}
         onSubmit={handleSubmit}
         initialValues={initialValues}
         enableReinitialize

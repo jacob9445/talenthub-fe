@@ -4,6 +4,8 @@ import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
+import * as R from 'ramda'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
@@ -11,17 +13,20 @@ import useStyles from './styles'
 import { getTeams, teamsSelector } from 'store/modules/teams'
 import Spinner from 'components/Spinner'
 
-const EditUserForm = ({handleSubmit, teams, getTeams}) => {
+const UserDetailForm = ({ match:{path}, handleSubmit, teams, getTeams}) => {
   const classes = useStyles()
 
   useEffect( () => {
     getTeams()
   }, [getTeams])
+
   const options = useMemo(() => 
     typeof teams !== 'undefined' && teams.map(team => ({
     value: team.id,
     display: team.name
   })), [teams])
+
+  const isEdit = useMemo(() => path.includes('edit'), [path])
 
   if(!teams) return <Spinner />
   else return (
@@ -47,6 +52,24 @@ const EditUserForm = ({handleSubmit, teams, getTeams}) => {
         name='email'
         label='Email'
       />
+      { !isEdit && (
+        <React.Fragment>
+          <Field 
+            component={FormInput}
+            htmlId='password'
+            type='password'
+            name='password'
+            label='Password'
+          />
+          <Field 
+            component={FormInput}
+            htmlId='confirm_password'
+            type='password'
+            name='confirm_password'
+            label='Confirm password'
+          />
+        </React.Fragment>
+      )}
       <Field 
         component={FormSelect}
         htmlId='team'
@@ -62,9 +85,9 @@ const EditUserForm = ({handleSubmit, teams, getTeams}) => {
           color='primary'
           className={classes.formButton}
         >
-          Update
+          { isEdit ? 'Update' : 'Create'}
         </Button>
-        <Button 
+        <Button
           variant='contained'
           color='secondary'
           className={classes.formButton}
@@ -86,4 +109,7 @@ const selectors = createStructuredSelector({
   teams: teamsSelector,
 })
 
-export default connect(selectors, actions)(EditUserForm)
+export default R.compose(
+  connect(selectors, actions),
+  withRouter
+)(UserDetailForm)
