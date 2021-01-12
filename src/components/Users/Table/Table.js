@@ -39,7 +39,7 @@ const role_patterns = [
 ]
 
 
-const columns = ['Username', 'Email', 'First Name', 'Last Name', 'Role', 'Actions']
+const columns = ['Email', 'First Name', 'Last Name', 'Role', 'Actions']
 
 export default function TableComponent({ data, myRole, handleDelete}) {
   const classes = useStyles();
@@ -57,7 +57,6 @@ export default function TableComponent({ data, myRole, handleDelete}) {
         <TableBody>
           {data.map(({id, username, email, first_name, last_name, role}) => (
             <TableRow key={email}>
-              <TableCell className="pl-3 fw-normal">{username}</TableCell>
               <TableCell>{email}</TableCell>
               <TableCell>{first_name}</TableCell>
               <TableCell>{last_name}</TableCell>
@@ -66,7 +65,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
               </TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
-                  <Button component={Link} to={`/admin/users/${id}`}>
+                  <Button component={Link} to={`/admin/users/${id}/edit`}>
                     <EditIcon color='primary'/>
                   </Button>
                   <Button onClick={() => handleDelete(id)}>
