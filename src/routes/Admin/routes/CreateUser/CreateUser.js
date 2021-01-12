@@ -18,7 +18,7 @@ const initialValues = {
 	team: ''
 }
 
-const AddUser = ({ createUser, getTeams, teams }) => {
+const CreateUser = ({ createUser, getTeams, teams }) => {
 	const handleSubmit = useCallback((payload, formActions) => {
 
     return formSubmit( createUser, {
@@ -55,4 +55,4 @@ const actions = {
 	getTeams
 }
 
-export default connect(selectors, actions)(AddUser);
+export default connect(selectors, actions)(CreateUser);
