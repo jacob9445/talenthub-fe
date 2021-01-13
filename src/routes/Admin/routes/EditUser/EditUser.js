@@ -43,7 +43,7 @@ const EditUser = ({match:{params}, getCertainUser, selectedUser, loadingSelected
   else return (
     <div>
       <Widget 
-        title='Edit User'
+        title='User Details'
         disableWidgetMenu
       >
        <Formik 
