@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { Field } from 'formik'
 import { Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import * as R from 'ramda'
 
@@ -12,8 +11,7 @@ import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { getTeams, teamsSelector } from 'store/modules/teams'
 import Spinner from 'components/Spinner'
-
-const UserDetailForm = ({ match:{path}, handleSubmit, teams, getTeams}) => {
+const UserDetailForm = ({ match:{path}, location, history, handleSubmit, teams, getTeams}) => {
   const classes = useStyles()
 
   useEffect( () => {
@@ -27,6 +25,10 @@ const UserDetailForm = ({ match:{path}, handleSubmit, teams, getTeams}) => {
   })), [teams])
 
   const isEdit = useMemo(() => path.includes('edit'), [path])
+
+  const handleCancel = useCallback(() => {
+    location.state ? history.push(location.state) : history.push('/admin/users')
+  }, [location, history])
 
   if(!teams) return <Spinner />
   else return (
@@ -91,8 +93,7 @@ const UserDetailForm = ({ match:{path}, handleSubmit, teams, getTeams}) => {
           variant='contained'
           color='secondary'
           className={classes.formButton}
-          component={Link}
-          to='/admin/users'
+          onClick={handleCancel}
         >
           Cancel
         </Button>
