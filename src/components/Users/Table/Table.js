@@ -55,7 +55,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({id, username, email, first_name, last_name, role}) => (
+          {data.map(({id, email, first_name, last_name, role}) => (
             <TableRow key={email}>
               <TableCell>{email}</TableCell>
               <TableCell>{first_name}</TableCell>
