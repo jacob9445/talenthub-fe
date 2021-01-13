@@ -9,6 +9,14 @@ const getTeams = apiCallSaga({
   selectorKey: 'teams'
 })
 
+const getTeamMembers = apiCallSaga({
+  type: Types.GET_TEAM_MEMBERS,
+  method: 'GET',
+  path: ({payload}) => (`api/admin/teams/${payload}/users/`),
+  selectorKey: 'teamMembers'
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_TEAMS, getTeams)
+  yield takeLatest(Types.GET_TEAM_MEMBERS, getTeamMembers)
 }

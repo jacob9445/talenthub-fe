@@ -4,6 +4,7 @@ import Dashboard from './routes/Dashboard'
 import EditUser from './routes/EditUser'
 import Users from 'components/Users'
 import CreateUser from './routes/CreateUser'
+import Teams from './routes/Teams'
 
 const Admin = ({ match }) => {
   return (
@@ -12,6 +13,7 @@ const Admin = ({ match }) => {
       <Route exact path={`${match.path}/users`} component={Users} />
       <Route path={`${match.path}/users/new`} component={CreateUser} />
       <Route path={`${match.path}/users/:id/edit`} component={EditUser} />
+      <Route path={`${match.path}/teams`} component={Teams}/>
     </Switch>
   )
 }
