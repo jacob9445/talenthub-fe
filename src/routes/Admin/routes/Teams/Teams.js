@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
 
 import { getTeams, teamsSelector } from 'store/modules/teams'
+
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
 import TeamMemberExpansion from './TeamMemberExpansion'
@@ -13,14 +14,15 @@ const Teams = ({getTeams, teams }) => {
   useEffect(() => {
     !teams && getTeams()
   }, [teams, getTeams])
+
   if( !teams) return <Spinner />
   else return (
     <Widget title='Teams' disableWidgetMenu>
     { teams.map( team => (
-      <TeamMemberExpansion 
+      <TeamMemberExpansion
         key={team.id} 
-        team_id = {team.id} 
-        team_name={team.name}
+        teamId= {team.id} 
+        teamName={team.name}
       />
     ))}
     </Widget>

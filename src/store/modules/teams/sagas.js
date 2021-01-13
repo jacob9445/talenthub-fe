@@ -13,7 +13,7 @@ const getTeamMembers = apiCallSaga({
   type: Types.GET_TEAM_MEMBERS,
   method: 'GET',
   path: ({payload}) => (`api/admin/teams/${payload}/users/`),
-  selectorKey: 'teamMembers'
+  selectorKey:(payload) => (`teamMembers_${payload}`)
 })
 
 export default function* rootSaga() {
