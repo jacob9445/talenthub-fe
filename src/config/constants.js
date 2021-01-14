@@ -11,3 +11,13 @@ export const URL_PREFIXES = {
 	[ROLES.TEAM_MANAGER]: 'team-manager',
 	[ROLES.DEVELOPER]: 'developer',
 }
+
+export const PROFILE_TYPES = {
+  SELF: 1,
+  PARTNER: 2
+}
+
+export const GENDER = {
+  MALE: 1,
+  FEMALE: 2
+}
