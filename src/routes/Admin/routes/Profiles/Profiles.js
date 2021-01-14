@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { pick, path } from 'ramda'
 import Widget from 'components/Widget'
-import Table from './Table'
+import ProfileTable from './components/Table'
 import { getProfiles, profileSelector, profileLoadingSelector } from 'store/modules/profiles'
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
@@ -30,7 +30,7 @@ const Profiles = ({ getProfiles, profiles, me, isLoading }) => {
       title='Profiles'
       disableWidgetMenu
     >
-      <Table
+      <ProfileTable
         data={data}
         myRole={me.role}
       />
@@ -41,7 +41,8 @@ const Profiles = ({ getProfiles, profiles, me, isLoading }) => {
 Profiles.propTypes = {
   getProfiles: PropTypes.func,
   profiles: PropTypes.array,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  me: PropTypes.object
 };
 
 const actions = {

@@ -11,6 +11,7 @@ const getUsers = apiCallSaga({
       return 'api/admin/users/'
     else if( payload.role === ROLES.TEAM_MANAGER)
       return 'api/team-manager/users/'
+    console.log('test here', payload.role)
   },
   selectorKey: 'users'
 })

@@ -8,3 +8,7 @@ export const profileSelector = R.compose(
 
 export const profileLoadingSelector = (state) => 
   isRequestPending('profiles', 'GET')(state)
+
+export const profileDetailSelector = dataSelector('profileDetail')
+export const profileDetailLoadingSelector = (state) =>
+  isRequestPending('profileDetail', 'GET')(state)

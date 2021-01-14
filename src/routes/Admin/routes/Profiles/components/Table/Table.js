@@ -29,7 +29,7 @@ const profile_type_patterns = [
   {
     id: PROFILE_TYPES.PARTNER,
     type: 'Partner',
-    color: 'warning'
+    color: 'info'
   },
 ]
 
@@ -70,7 +70,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
               <TableCell>{gender_patterns[gender]}</TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
-                  <Button component={Link} to={`/admin/users/${id}/edit`}>
+                  <Button component={Link} to={`/admin/profiles/${id}/edit`}>
                     <EditIcon color='primary'/>
                   </Button>
                   <Button onClick={() => handleDelete(id)}>
