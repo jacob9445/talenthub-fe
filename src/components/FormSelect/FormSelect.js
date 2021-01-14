@@ -1,24 +1,20 @@
-import React, { createRef } from 'react'
-import { FormControl, InputLabel, Select, OutlinedInput, MenuItem} from '@material-ui/core'
+import React from 'react'
+import { FormControl, FormLabel, Select, OutlinedInput, MenuItem} from '@material-ui/core'
 import useStyles from './style'
 const FormSelect = ({field, form, htmlId, label, options}) => {
   const classes = useStyles()
   
-  const ref = createRef()
-
   return (
     <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel
+      <FormLabel
         htmlFor={htmlId}
       >
         {label}
-      </InputLabel>
+      </FormLabel>
       <Select
-        
         className={classes.formSelect}
         input={
           <OutlinedInput
-            inputRef={ref}
             labelWidth={0}
             id={htmlId}
             name={field.name}
