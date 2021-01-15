@@ -7,6 +7,7 @@ import CreateUser from './routes/CreateUser'
 import Teams from './routes/Teams'
 import Profiles from './routes/Profiles'
 import EditProfile from './routes/Profiles/containers/EditProfile'
+import { isAdminOrRedir } from 'hocs/withRoles'
 const Admin = ({ match }) => {
   return (
     <Switch>
@@ -21,4 +22,4 @@ const Admin = ({ match }) => {
   )
 }
 
-export default Admin
+export default isAdminOrRedir(Admin)
