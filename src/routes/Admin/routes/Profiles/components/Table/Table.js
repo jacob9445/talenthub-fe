@@ -70,7 +70,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
               <TableCell>{gender_patterns[gender]}</TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
-                  <Button component={Link} to={`/admin/profiles/${id}/edit`}>
+                  <Button component={Link} to={`/admin/profiles/${id}/detail`}>
                     <EditIcon color='primary'/>
                   </Button>
                   <Button onClick={() => handleDelete(id)}>

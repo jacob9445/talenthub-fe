@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
+import { Grid } from '@material-ui/core'
 
 import { getTeams, teamsSelector } from 'store/modules/teams'
 
@@ -17,15 +18,20 @@ const Teams = ({getTeams, teams }) => {
 
   if( !teams) return <Spinner />
   else return (
-    <Widget title='Teams' disableWidgetMenu>
-    { teams.map( team => (
-      <TeamMemberExpansion
-        key={team.id} 
-        teamId= {team.id} 
-        teamName={team.name}
-      />
-    ))}
-    </Widget>
+    <Grid container>
+      <Grid item xs={12}>
+        <Widget title='Teams' disableWidgetMenu>
+        { teams.map( team => (
+          <TeamMemberExpansion
+            key={team.id} 
+            teamId= {team.id} 
+            teamName={team.name}
+          />
+        ))}
+      </Widget>
+      </Grid>
+    </Grid>
+    
   )
 }
 

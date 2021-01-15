@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { pick, path } from 'ramda'
+import { Grid } from '@material-ui/core'
+
 import Widget from 'components/Widget'
 import ProfileTable from './components/Table'
 import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndRefresh } from 'store/modules/profiles'
@@ -10,7 +12,7 @@ import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
 
 const Profiles = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh }) => {
-  
+
   useEffect(() => {
     getProfiles()
   }, [getProfiles])
@@ -30,16 +32,21 @@ const Profiles = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefres
   
   if( isLoading) return <Spinner />
   else return (
-    <Widget
-      title='Profiles'
-      disableWidgetMenu
-    >
-      <ProfileTable
-        data={data}
-        myRole={me.role}
-        handleDelete={handleDelete}
-      />
-    </Widget>
+    <Grid container spacing={4}>
+      <Grid item xs={12}>
+        <Widget
+          title='Profiles'
+          disableWidgetMenu
+          noBodyPadding
+        >
+          <ProfileTable
+            data={data}
+            myRole={me.role}
+            handleDelete={handleDelete}
+          />
+        </Widget>
+      </Grid>
+    </Grid>
   );
 };
 

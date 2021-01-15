@@ -13,7 +13,7 @@ import { formSubmit } from 'helpers/form';
 import ProfileDetailForm from '../../components/ProfileDetailForm'
 import Spinner from 'components/Spinner'
 
-const EditProfile = ({ match: {params}, getProfileDetail, profileDetail, updateProfile, isLoading}) => {
+const ProfileDetail = ({ match: {params}, getProfileDetail, profileDetail, updateProfile, isLoading}) => {
 
   useEffect(() => {
     getProfileDetail(params.id)
@@ -56,7 +56,7 @@ const EditProfile = ({ match: {params}, getProfileDetail, profileDetail, updateP
   );
 };
 
-EditProfile.propTypes = {
+ProfileDetail.propTypes = {
   params: PropTypes.string,
   getProfileDetail: PropTypes.func,
   profileDetail: PropTypes.object
@@ -76,4 +76,4 @@ const selectors = createStructuredSelector({
 export default compose(
   connect(selectors, actions),
   withRouter
-)(EditProfile);
+)(ProfileDetail);
