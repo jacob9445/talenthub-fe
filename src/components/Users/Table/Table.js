@@ -58,7 +58,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
           {data.map(({id, email, first_name, last_name, role}) => (
             <TableRow key={email}>
               <TableCell>
-                <Link to={`/admin/users/${id}/edit`}>
+                <Link to={`/admin/users/${id}/detail`}>
                   {email}
                 </Link>
               </TableCell>
@@ -69,7 +69,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
               </TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
-                  <Button component={Link} to={`/admin/users/${id}/edit`}>
+                  <Button component={Link} to={`/admin/users/${id}/detail`}>
                     <EditIcon color='primary'/>
                   </Button>
                   <Button onClick={() => handleDelete(id)}>

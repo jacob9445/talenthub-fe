@@ -24,7 +24,7 @@ const UserDetailForm = ({ match:{path}, location, history, handleSubmit, teams, 
     display: team.name
   })), [teams])
 
-  const isEdit = useMemo(() => path.includes('edit'), [path])
+  const isEdit = useMemo(() => path.includes('detail'), [path])
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push('/admin/users')

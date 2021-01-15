@@ -13,7 +13,7 @@ import { updateUserDetail } from 'store/modules/users'
 import UserDetailForm from 'components/UserDetailForm'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
-const EditUser = ({match:{params}, getUserDetail, userDetail, updateUserDetail}) => {
+const UserDetail = ({match:{params}, getUserDetail, userDetail, updateUserDetail}) => {
 
   useEffect( () => {
     getUserDetail(params.id)
@@ -57,7 +57,7 @@ const EditUser = ({match:{params}, getUserDetail, userDetail, updateUserDetail})
   )
 }
 
-EditUser.propTypes = {
+UserDetail.propTypes = {
   params: PropTypes.number,
   getUserDetail: PropTypes.func,
   userDetail: PropTypes.object,
@@ -75,4 +75,4 @@ const actions = {
 export default compose(
   connect(selectors, actions),
   withRouter
-)(EditUser)
+)(UserDetail)
