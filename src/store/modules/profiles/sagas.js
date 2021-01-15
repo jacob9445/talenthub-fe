@@ -10,7 +10,7 @@ const getProfiles = apiCallSaga({
 })
 
 const getProfileDetail = apiCallSaga({
-  type: Types.GET_SELECTED_PROFILE,
+  type: Types.GET_PROFILE_DETAIL,
   method: 'GET',
   path: ({payload}) => (`api/admin/profiles/${payload}/`),
   selectorKey: 'profileDetail'
@@ -24,6 +24,6 @@ const updateProfile = apiCallSaga({
 
 export default function* rootSaga() {
   yield takeLatest(Types.GET_PROFILES, getProfiles)
-  yield takeLatest(Types.GET_SELECTED_PROFILE, getProfileDetail)
+  yield takeLatest(Types.GET_PROFILE_DETAIL, getProfileDetail)
   yield takeLatest(Types.UPDATE_PROFILE, updateProfile)
 }
