@@ -32,15 +32,15 @@ const deleteUserAndRefresh = function* (action) {
   })
 }
 
-const getCertainUser = apiCallSaga({
-  type: Types.GET_CERTAIN_USER,
+const getUserDetail = apiCallSaga({
+  type: Types.GET_USER_DETAIL,
   method: 'GET',
   path: ({payload}) => (`api/admin/users/${payload}/`),
-  selectorKey: 'certain_user'
+  selectorKey: 'userDetail'
 })
 
-const updateCertainUser = apiCallSaga({
-  type: Types.UPDATE_CERTAIN_USER,
+const updateUserDetail = apiCallSaga({
+  type: Types.UPDATE_USER_DETAIL,
   method: 'PUT',
   path: ({payload:{id}}) => (`api/admin/users/${id}/`),
 })
@@ -55,7 +55,7 @@ export default function* rootSaga() {
   yield takeLatest(Types.USERS_GETUSERS, getUsers)
   yield takeLatest(Types.USERS_DELETEUSER, deleteUser)
   yield takeLatest(Types.USERS_DELETE_USER_AND_REFRESH, deleteUserAndRefresh)
-  yield takeLatest(Types.GET_CERTAIN_USER, getCertainUser)
-  yield takeLatest(Types.UPDATE_CERTAIN_USER, updateCertainUser)
+  yield takeLatest(Types.GET_USER_DETAIL, getUserDetail)
+  yield takeLatest(Types.UPDATE_USER_DETAIL, updateUserDetail)
   yield takeLatest(Types.CREATE_USER, createUser)
 }

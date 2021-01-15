@@ -9,6 +9,6 @@ export const usersSelector = R.compose(
 export const usersLoadingSelector = (state) => 
   isRequestPending('users', 'GET')(state)
   
-export const certainUserSelector = dataSelector('certain_user')
-export const certainUserLoadingSelector = (state) => 
-  isRequestPending('certain_user', 'get')(state)
+export const userDetailSelector = dataSelector('userDetail')
+export const userDetailLoadingSelector = (state) => 
+  isRequestPending('userDetail', 'get')(state)

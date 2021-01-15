@@ -8,38 +8,38 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types';
 
 import { formSubmit } from 'helpers/form'
-import { getCertainUser, certainUserSelector, certainUserLoadingSelector } from 'store/modules/users'
-import { updateCertainUser } from 'store/modules/users'
+import { getUserDetail, userDetailSelector, userDetailLoadingSelector } from 'store/modules/users'
+import { updateUserDetail } from 'store/modules/users'
 import UserDetailForm from 'components/UserDetailForm'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
-const EditUser = ({match:{params}, getCertainUser, selectedUser, loadingSelectedUser, updateCertainUser}) => {
+const EditUser = ({match:{params}, getUserDetail, userDetail, updateUserDetail}) => {
 
   useEffect( () => {
-    getCertainUser(params.id)
-  }, [params, getCertainUser])
+    getUserDetail(params.id)
+  }, [params, getUserDetail])
 
   const initialValues = useMemo(() => {
-    return !selectedUser ? {
+    return !userDetail ? {
       first_name: '',
       last_name: '',
       email: '',
       team: ''
     } : {
-      ...pick(selectedUser, ['first_name', 'last_name', 'email']),
-      team: get(selectedUser, 'team.id')
+      ...pick(userDetail, ['first_name', 'last_name', 'email']),
+      team: get(userDetail, 'team.id')
     }
-  }, [selectedUser])
+  }, [userDetail])
   
   const handleSubmit = useCallback((payload, formActions) => {
     console.log({payload})
-    return formSubmit( updateCertainUser, {
+    return formSubmit( updateUserDetail, {
       data: payload,
       id: params.id,
     }, formActions)
-  }, [updateCertainUser, params.id])
+  }, [updateUserDetail, params.id])
 
-  if( !loadingSelectedUser) return <Spinner />
+  if(!userDetail) return <Spinner />
   else return (
     <div>
       <Widget 
@@ -59,18 +59,17 @@ const EditUser = ({match:{params}, getCertainUser, selectedUser, loadingSelected
 
 EditUser.propTypes = {
   params: PropTypes.number,
-  getCertainUser: PropTypes.func,
-  selectedUser: PropTypes.object,
-  loadingSelectedUser: PropTypes.bool
+  getUserDetail: PropTypes.func,
+  userDetail: PropTypes.object,
 }
 
 const selectors = createStructuredSelector({
-  selectedUser: certainUserSelector,
-  loadingSelectedUser: certainUserLoadingSelector
+  userDetail: userDetailSelector,
+  loadingSelectedUser: userDetailLoadingSelector
 })
 const actions = {
-  getCertainUser,
-  updateCertainUser
+  getUserDetail,
+  updateUserDetail
 }
 
 export default compose(
