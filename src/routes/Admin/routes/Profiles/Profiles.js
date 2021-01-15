@@ -1,15 +1,15 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { pick, path } from 'ramda'
 import Widget from 'components/Widget'
 import ProfileTable from './components/Table'
-import { getProfiles, profileSelector, profileLoadingSelector } from 'store/modules/profiles'
+import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndRefresh } from 'store/modules/profiles'
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
 
-const Profiles = ({ getProfiles, profiles, me, isLoading }) => {
+const Profiles = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh }) => {
   
   useEffect(() => {
     getProfiles()
@@ -24,6 +24,10 @@ const Profiles = ({ getProfiles, profiles, me, isLoading }) => {
     }
   }, [profiles])
   
+  const handleDelete = useCallback((id) => {
+    deleteProfileAndRefresh(id)
+  }, [deleteProfileAndRefresh])
+  
   if( isLoading) return <Spinner />
   else return (
     <Widget
@@ -33,6 +37,7 @@ const Profiles = ({ getProfiles, profiles, me, isLoading }) => {
       <ProfileTable
         data={data}
         myRole={me.role}
+        handleDelete={handleDelete}
       />
     </Widget>
   );
@@ -46,7 +51,8 @@ Profiles.propTypes = {
 };
 
 const actions = {
-  getProfiles
+  getProfiles,
+  deleteProfileAndRefresh
 }
 
 const selectors = createStructuredSelector({

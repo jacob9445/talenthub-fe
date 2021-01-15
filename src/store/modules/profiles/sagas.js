@@ -28,9 +28,17 @@ const deleteProfile = apiCallSaga({
   path: ({payload}) => (`api/admin/profiles/${payload}/`),
 })
 
+const deleteProfileAndRefresh = function* (action) {
+  yield deleteProfile(action)
+  yield getProfiles({
+    type: Types.GET_PROFILES
+  })
+}
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_PROFILES, getProfiles)
   yield takeLatest(Types.GET_PROFILE_DETAIL, getProfileDetail)
   yield takeLatest(Types.UPDATE_PROFILE, updateProfile)
   yield takeLatest(Types.DELETE_PROFILE, deleteProfile)
+  yield takeLatest(Types.DELETE_PROFILE_AND_REFRESH, deleteProfileAndRefresh)
 }
