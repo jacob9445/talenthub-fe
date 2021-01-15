@@ -57,7 +57,11 @@ export default function TableComponent({ data, myRole, handleDelete}) {
         <TableBody>
           {data.map(({id, email, first_name, last_name, role}) => (
             <TableRow key={email}>
-              <TableCell>{email}</TableCell>
+              <TableCell>
+                <Link to={`/admin/users/${id}/edit`}>
+                  {email}
+                </Link>
+              </TableCell>
               <TableCell>{first_name}</TableCell>
               <TableCell>{last_name}</TableCell>
               <TableCell>
