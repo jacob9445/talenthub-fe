@@ -8,10 +8,10 @@ import { path } from 'ramda'
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
 import AccountsTable from './AccountsTable'
-import { getAccounts, accountsSelector, accountsLoadingSelector } from 'store/modules/accounts'
+import { getAccounts, deleteAccountAndRefresh, accountsSelector, accountsLoadingSelector } from 'store/modules/accounts'
 import { meSelector } from 'store/modules/auth'
 
-const Accounts = ({ getAccounts, accounts, loadingAccounts, me }) => {
+const Accounts = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccounts, me }) => {
 
   useEffect(() => {
     getAccounts()
@@ -26,8 +26,8 @@ const Accounts = ({ getAccounts, accounts, loadingAccounts, me }) => {
   }, [accounts])
 
   const handleDelete = useCallback((id) => {
-    console.log(id)
-  }, [])
+    deleteAccountAndRefresh(id)
+  }, [deleteAccountAndRefresh])
 
   if(loadingAccounts) return <Spinner />
   else return (
@@ -51,13 +51,15 @@ const Accounts = ({ getAccounts, accounts, loadingAccounts, me }) => {
 
 Accounts.propTypes = {
   getAccounts: PropTypes.func.isRequired,
+  deleteAccountAndRefresh: PropTypes.func.isRequired,
   accounts: PropTypes.array,
   loadingAccounts: PropTypes.bool.isRequired,
   me: PropTypes.object
 };
 
 const actions = {
-  getAccounts
+  getAccounts,
+  deleteAccountAndRefresh,
 }
 
 const selectors = createStructuredSelector({
