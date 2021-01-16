@@ -11,12 +11,12 @@ const useStyles = makeStyles( theme => ({
   }
 }))
 
-const ProfileChips = ({ profiles, history }) => {
+const ProfileChips = ({ profiles, history, location}) => {
   const classes = useStyles()
 
   const showProfileDetail = useCallback((id) => () => {
-    history.push(`/admin/profiles/${id}/detail`)
-  }, [history])
+    history.push(`/admin/profiles/${id}/detail`, location.pathname)
+  }, [history, location])
 
   return (
     <Grid
