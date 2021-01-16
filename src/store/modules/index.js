@@ -5,11 +5,13 @@ import auth from './auth'
 import users from './users'
 import teams from './teams'
 import profiles from './profiles'
+import accounts from './accounts'
 
 export default combineReducers({
   api,
   isAuthenticated: auth,
   users,
   teams,
-  profiles
+  profiles,
+  accounts
 })

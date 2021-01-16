@@ -4,6 +4,7 @@ import { saga as auth } from './auth'
 import { saga as users} from './users'
 import { saga as teams } from './teams'
 import { saga as profiles } from './profiles'
+import { saga as accounts } from './accounts'
 
 export default function* rootSaga() {
   yield all([
@@ -11,5 +12,6 @@ export default function* rootSaga() {
     users(),
     teams(),
     profiles(),
+    accounts()
   ])
 }
