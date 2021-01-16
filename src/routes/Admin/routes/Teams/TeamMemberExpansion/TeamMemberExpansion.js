@@ -24,7 +24,7 @@ const TeamMemberExpansion = ({ teamId, teamName, getTeamMembers, teamMembers, hi
   }, [])
 
   const showUserDetail = useCallback((id) => () => {
-    history.push(`/admin/users/${id}/edit`, location.pathname)
+    history.push(`/admin/users/${id}/detail`, location.pathname)
   },[history, location])
 
   return (
