@@ -21,3 +21,12 @@ export const GENDER = {
   MALE: 1,
   FEMALE: 2
 }
+
+export const PLATFORMS = {
+  EMAIL: 'email',
+  SKYPE: 'skype',
+  SLACK: 'slack',
+  MS_TEAM: 'ms_team',
+  GITHUB: 'github',
+  BITBUCKET: 'bitbucket'
+}
