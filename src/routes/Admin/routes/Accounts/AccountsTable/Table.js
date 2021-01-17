@@ -10,18 +10,11 @@ import {
 import { Link } from 'react-router-dom'
 
 import { Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons'
-import { ROLES, PLATFORMS } from 'config/constants'
+import { ROLES, PLATFORMS, PLATFORM_LABELS } from 'config/constants'
 import Spinner from 'components/Spinner'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
-const platformLabels = {
-  [PLATFORMS.EMAIL]: 'Email',
-  [PLATFORMS.SKYPE]: 'Skype',
-  [PLATFORMS.SLACK]: 'Slack',
-  [PLATFORMS.MS_TEAM]: 'MS Team',
-  [PLATFORMS.GITHUB]: 'Github',
-  [PLATFORMS.BITBUCKET]: 'Bitbucket'
-}
+
 
 export default function TableComponent({ data, myRole, handleDelete}) {
 
@@ -39,7 +32,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
           {data.map(({id, profile, platform_type, email, password, location, recovery_email, url}) => (
             <TableRow key={id}>
               <TableCell>{profile}</TableCell>
-              <TableCell>{platformLabels[platform_type]}</TableCell>
+              <TableCell>{PLATFORM_LABELS[platform_type]}</TableCell>
               <TableCell>{email}</TableCell>
               <TableCell>{password}</TableCell>
               <TableCell>{location}</TableCell>

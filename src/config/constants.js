@@ -30,3 +30,12 @@ export const PLATFORMS = {
   GITHUB: 'github',
   BITBUCKET: 'bitbucket'
 }
+
+export const PLATFORM_LABELS = {
+  [PLATFORMS.EMAIL]: 'Email',
+  [PLATFORMS.SKYPE]: 'Skype',
+  [PLATFORMS.SLACK]: 'Slack',
+  [PLATFORMS.MS_TEAM]: 'MS Team',
+  [PLATFORMS.GITHUB]: 'Github',
+  [PLATFORMS.BITBUCKET]: 'Bitbucket'
+}

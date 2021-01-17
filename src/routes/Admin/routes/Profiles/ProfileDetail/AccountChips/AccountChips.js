@@ -4,7 +4,7 @@ import { Grid, Chip } from '@material-ui/core'
 import { Person as AccountIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import { withRouter } from 'react-router'
-
+import { PLATFORM_LABELS } from 'config/constants'
 const useStyles = makeStyles( theme => ({
   chip: {
     margin: theme.spacing(1) / 2,
@@ -28,7 +28,7 @@ const AccountChips = ({ accounts, history, location}) => {
       accounts.map(account => (
         <Chip
           key={account.id}
-          label={`${account.email}(${account.platform_type})`}
+          label={`${account.email}(${PLATFORM_LABELS[account.platform_type]})`}
           color="primary"
           icon={<AccountIcon />}
           variant="outlined"
