@@ -8,7 +8,7 @@ import Teams from './routes/Teams'
 import Profiles from './routes/Profiles'
 import ProfileDetail from './routes/Profiles/containers/ProfileDetail'
 import Accounts from './routes/Accounts'
-
+import AccountDetail from './routes/Accounts/AccountDetail'
 import { isAdminOrRedir } from 'hocs/withRoles'
 const Admin = ({ match }) => {
   return (
@@ -21,6 +21,7 @@ const Admin = ({ match }) => {
       <Route exact path={`${match.path}/profiles`} component={Profiles} />
       <Route path={`${match.path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route exact path={`${match.path}/accounts`} component={Accounts} />
+      <Route path={`${match.path}/accounts/:id/detail`} component={AccountDetail} />
     </Switch>
   )
 }
