@@ -10,7 +10,7 @@ const getAccounts = apiCallSaga({
 })
 
 const deleteAccount = apiCallSaga({
-  typoe: Types.DELETE_ACCOUNT,
+  type: Types.DELETE_ACCOUNT,
   method: 'DELETE',
   path: ({payload}) => `api/admin/accounts/${payload}/`,
 })
@@ -22,8 +22,16 @@ const deleteAccountAndRefresh = function* (action) {
   })
 }
 
+const getAccountDetail = apiCallSaga({
+  type: Types.GET_ACCOUNTDETAIL,
+  method: 'GET',
+  path: ({payload}) => `api/admin/accounts/${payload}/`,
+  selectorKey: 'accountDetail'
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_ACCOUNTS, getAccounts)
   yield takeLatest(Types.DELETE_ACCOUNT, deleteAccount)
   yield takeLatest(Types.DELETE_ACCOUNT_AND_REFRESH, deleteAccountAndRefresh)
+  yield takeLatest(Types.GET_ACCOUNTDETAIL, getAccountDetail)
 }
