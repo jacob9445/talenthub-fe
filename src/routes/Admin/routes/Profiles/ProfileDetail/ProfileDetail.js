@@ -59,7 +59,7 @@ const ProfileDetail = ({ match: {params}, getProfileDetail, profileDetail, updat
         </Widget>
       </Grid>
       <Grid item xs={12} md={3}>
-        <Widget title='Accounts'>
+        <Widget title='Accounts' disableWidgetMenu>
           <AccountChips accounts={profileDetail.accounts}/>
         </Widget>
       </Grid>
