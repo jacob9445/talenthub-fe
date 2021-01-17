@@ -51,6 +51,7 @@ const AccountDetailForm = ({ location, history, handleSubmit}) => {
         type='text'
         name='profile'
         label='Profile'
+        readOnly={true}
       />
       <Field 
         component={FormSelect}
@@ -59,6 +60,13 @@ const AccountDetailForm = ({ location, history, handleSubmit}) => {
         name='platform_type'
         label='Platform Type'
         options={platformOptions}
+      />
+      <Field 
+        component={FormInput}
+        htmlId='email'
+        type='email'
+        name='email'
+        label='Email'
       />
       <Field 
         component={FormInput}

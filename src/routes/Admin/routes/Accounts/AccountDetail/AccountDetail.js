@@ -20,11 +20,12 @@ const AccountDetail = ({ match: {params}, getAccountDetail, accountDetail, updat
 
   const initialValues = useMemo(() => 
     accountDetail ? {
-      ...pick(['platform_type', 'password', 'location', 'recovery_email', 'url'], accountDetail),
+      ...pick(['platform_type', 'email', 'password', 'location', 'recovery_email', 'url'], accountDetail),
       profile: `${path(['profile', 'first_name'], accountDetail)} ${path(['profile', 'last_name'], accountDetail)}`
     } : ({
         profile: '',
         platform_type: '',
+        email: '',
         password: '',
         location: '',
         recovery_email: '',

@@ -13,7 +13,7 @@ import { Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons'
 import { ROLES, PLATFORMS } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-const columns = ['Profile', 'Platform Type', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
+const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
 const platformLabels = {
   [PLATFORMS.EMAIL]: 'Email',
   [PLATFORMS.SKYPE]: 'Skype',
@@ -36,10 +36,11 @@ export default function TableComponent({ data, myRole, handleDelete}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({id, profile, platform_type, password, location, recovery_email, url}) => (
+          {data.map(({id, profile, platform_type, email, password, location, recovery_email, url}) => (
             <TableRow key={id}>
               <TableCell>{profile}</TableCell>
               <TableCell>{platformLabels[platform_type]}</TableCell>
+              <TableCell>{email}</TableCell>
               <TableCell>{password}</TableCell>
               <TableCell>{location}</TableCell>
               <TableCell>{recovery_email}</TableCell>
