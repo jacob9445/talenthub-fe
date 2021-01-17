@@ -6,12 +6,14 @@ import { createStructuredSelector } from 'reselect'
 import { compose } from 'ramda'
 import { Formik } from 'formik'
 import { pick } from 'ramda'
+import { Grid } from '@material-ui/core'
 
 import { getProfileDetail, profileDetailSelector, updateProfile, profileDetailLoadingSelector } from 'store/modules/profiles'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form';
-import ProfileDetailForm from '../../components/ProfileDetailForm'
+import ProfileDetailForm from '../ProfileDetailForm'
 import Spinner from 'components/Spinner'
+import AccountChips from './AccountChips'
 
 const ProfileDetail = ({ match: {params}, getProfileDetail, profileDetail, updateProfile, isLoading}) => {
 
@@ -40,19 +42,28 @@ const ProfileDetail = ({ match: {params}, getProfileDetail, profileDetail, updat
     }, formActions)
   }, [updateProfile, params.id])
 
-  if( isLoading) return <Spinner />
+  if( isLoading || !profileDetail) return <Spinner />
   else return (
-    <Widget 
-      title='Profile Detail'
-      disableWidgetMenu
-    >
-      <Formik
-        component={ProfileDetailForm}
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        enableReinitialize
-      />
-    </Widget>
+    <Grid container spacing={2}>
+      <Grid item xs={12} md={9}>
+        <Widget 
+          title='Profile Detail'
+          disableWidgetMenu
+        >
+          <Formik
+            component={ProfileDetailForm}
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            enableReinitialize
+          />
+        </Widget>
+      </Grid>
+      <Grid item xs={12} md={3}>
+        <Widget title='Accounts'>
+          <AccountChips accounts={profileDetail.accounts}/>
+        </Widget>
+      </Grid>
+    </Grid>
   );
 };
 
