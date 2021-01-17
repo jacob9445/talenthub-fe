@@ -29,9 +29,16 @@ const getAccountDetail = apiCallSaga({
   selectorKey: 'accountDetail'
 })
 
+const updateAccount = apiCallSaga({
+  type: Types.GET_ACCOUNTDETAIL,
+  method: 'PUT',
+  path: ({payload:{id}}) => `api/admin/accounts/${id}/`
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_ACCOUNTS, getAccounts)
   yield takeLatest(Types.DELETE_ACCOUNT, deleteAccount)
   yield takeLatest(Types.DELETE_ACCOUNT_AND_REFRESH, deleteAccountAndRefresh)
   yield takeLatest(Types.GET_ACCOUNTDETAIL, getAccountDetail)
+  yield takeLatest(Types.UPDATE_ACCOUNT, updateAccount)
 }
