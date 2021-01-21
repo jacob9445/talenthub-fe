@@ -9,6 +9,7 @@ import AuthRoute from './AuthRoute'
 import PrivateRoute from './PrivateRoute'
 import Admin from './Admin'
 import TeamManager from './TeamManager'
+import Developer from './Developer'
 
 import { URL_PREFIXES } from 'config/constants'
 
@@ -24,6 +25,7 @@ const Routes = ({ me, isAuthenticated }) => {
 			<AuthRoute path='/login' component={Login} />
 			<PrivateRoute path='/admin' component={Admin} />
 			<PrivateRoute path='/team-manager' component={TeamManager} />
+			<PrivateRoute path='/developer' component={Developer} />
     </Switch>
 	)
 }
