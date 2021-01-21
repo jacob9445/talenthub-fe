@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom'
 
 import { Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons'
-import { ROLES, PLATFORMS, PLATFORM_LABELS } from 'config/constants'
+import { ROLES, PLATFORM_LABELS } from 'config/constants'
 import Spinner from 'components/Spinner'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
