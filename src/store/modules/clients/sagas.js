@@ -5,14 +5,14 @@ import  * as Types from './types'
 const getClients = apiCallSaga({
   type: Types.GET_CLIENTS,
   method: 'GET',
-  path: 'api/developers/clients/',
+  path: 'api/developer/clients/',
   selectorKey: 'clients'
 })
 
 const createClient = apiCallSaga({
   type: Types.CREATE_CLIENT,
   method: 'POST',
-  path: 'api/developers/clients/'
+  path: 'api/developer/clients/'
 })
 
 

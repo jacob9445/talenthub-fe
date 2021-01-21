@@ -6,6 +6,7 @@ import users from './users'
 import teams from './teams'
 import profiles from './profiles'
 import accounts from './accounts'
+import clients from './clients'
 
 export default combineReducers({
   api,
@@ -13,5 +14,6 @@ export default combineReducers({
   users,
   teams,
   profiles,
-  accounts
+  accounts,
+  clients,
 })
