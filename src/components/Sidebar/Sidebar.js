@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useMemo} from "react";
+import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
 import {
-  Home as HomeIcon,
+  Dashboard as DashboardIcon,
   ArrowBack as ArrowBackIcon,
   Group as UserIcon,
   GroupWork as TeamIcon,
   Face as ProfileIcon,
-  AccountCircle as AccountIcon
+  AccountCircle as AccountIcon,
+  WorkOutline as ClientIcon
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
 import { withRouter } from "react-router-dom";
@@ -28,8 +29,95 @@ import {
   toggleSidebar,
 } from "../../context/LayoutContext";
 
-import { URL_PREFIXES } from 'config/constants'
+import { ROLES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
+
+let structure = {
+  [ROLES.ADMIN]: [
+    { 
+      id: 0, 
+      label: 'Dashboard',
+      link: `/admin/dashboard`, 
+      icon: <DashboardIcon /> 
+    },
+    { 
+      id: 1, 
+      label: 'Users', 
+      link: `/admin/users`,
+      icon: <UserIcon /> 
+    },
+    { 
+      id: 2, 
+      label: 'Teams', 
+      link: `/admin/teams`,
+      icon: <TeamIcon /> 
+    },
+    {
+      id: 3,
+      label: 'Profiles',
+      link: `/admin/profiles`,
+      icon: <ProfileIcon />
+    },
+    {
+      id: 4,
+      label: 'Accounts',
+      link: `/admin/accounts`,
+      icon: <AccountIcon />
+    }
+  ],
+  [ROLES.TEAM_MANAGER]: [
+    { 
+      id: 0, 
+      label: 'Dashboard',
+      link: `/team-manager/dashboard`, 
+      icon: <DashboardIcon /> 
+    },
+    { 
+      id: 1, 
+      label: 'Users', 
+      link: `/team-manager/users`,
+      icon: <UserIcon /> 
+    },
+    {
+      id: 2,
+      label: 'Profiles',
+      link: `/team-manager/profiles`,
+      icon: <ProfileIcon />
+    },
+    {
+      id: 3,
+      label: 'Accounts',
+      link: `/team-manager/accounts`,
+      icon: <AccountIcon />
+    },
+  ],
+  [ROLES.DEVELOPER]: [
+    { 
+      id: 0, 
+      label: 'Dashboard',
+      link: `/developer/dashboard`, 
+      icon: <DashboardIcon /> 
+    },
+    {
+      id: 1,
+      label: 'Profiles',
+      link: `/developer/profiles`,
+      icon: <ProfileIcon />
+    },
+    {
+      id: 2,
+      label: 'Accounts',
+      link: `/developer/accounts`,
+      icon: <AccountIcon />
+    },
+    {
+      id: 3,
+      label: 'Clients',
+      link: '/developer/clients',
+      icon: <ClientIcon />
+    }
+  ]
+}
 
 function Sidebar({ location, me}) {
   var classes = useStyles();
@@ -41,36 +129,6 @@ function Sidebar({ location, me}) {
 
   // local
   var [isPermanent, setPermanent] = useState(true);
-
-  let structure = useMemo(() => ([
-    { id: 0, 
-      label: 'Dashboard',
-      link: `/${URL_PREFIXES[me.role]}/dashboard`, 
-      icon: <HomeIcon /> 
-    },
-    { id: 1, 
-      label: 'Users', 
-      link: `/${URL_PREFIXES[me.role]}/users`,
-      icon: <UserIcon /> 
-    },
-    { id: 2, 
-      label: 'Teams', 
-      link: `/${URL_PREFIXES[me.role]}/teams`,
-      icon: <TeamIcon /> 
-    },
-    {
-      id: 3,
-      label: 'Profiles',
-      link: `/${URL_PREFIXES[me.role]}/profiles`,
-      icon: <ProfileIcon />
-    },
-    {
-      id: 4,
-      label: 'Accounts',
-      link: `/${URL_PREFIXES[me.role]}/accounts`,
-      icon: <AccountIcon />
-    }
-  ]), [me])
   
   useEffect(function() {
     window.addEventListener("resize", handleWindowWidthChange);
@@ -106,7 +164,7 @@ function Sidebar({ location, me}) {
         </IconButton>
       </div>
       <List className={classes.sidebarList}>
-        {structure.map(link => (
+        {structure[me.role].map(link => (
           <SidebarLink
             key={link.id}
             location={location}
