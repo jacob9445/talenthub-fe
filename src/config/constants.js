@@ -39,3 +39,13 @@ export const PLATFORM_LABELS = {
   [PLATFORMS.GITHUB]: 'Github',
   [PLATFORMS.BITBUCKET]: 'Bitbucket'
 }
+
+export const CLIENT_TYPES = {
+  INDIVIDUAL: 1,
+  COMPANY: 2
+}
+
+export const CLIENT_TYPE_LABELS = {
+  [CLIENT_TYPES.INDIVIDUAL]: 'Individual',
+  [CLIENT_TYPES.COMPANY]: 'Company'
+}
