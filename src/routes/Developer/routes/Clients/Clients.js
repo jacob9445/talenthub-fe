@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback }from 'react';
-import { Grid } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 
@@ -25,6 +26,15 @@ const Clients = ({ getClients, clients, isClientsLoading, me }) => {
         <Widget 
           title='Clients'
           disableWidgetMenu
+          WidgetButton={
+            <Button
+              color='primary'
+              component={Link}
+              to='/developer/clients/create'
+            >
+              Add Client
+            </Button>
+          }
         >
           <ClientsTable 
             data={clients}
