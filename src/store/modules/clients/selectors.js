@@ -7,6 +7,6 @@ export const clientsSelector = R.compose(
 )
 export const clientsLoadingSelector = (state) => 
   isRequestPending('clients', 'GET')(state)
-export const clientDetailSelector = dateSelector('clientDetail')
+export const clientDetailSelector = dataSelector('clientDetail')
 export const clientDetailLoadingSelector = (state) =>
   isRequestPending('clientDetail', 'GET')(state)
