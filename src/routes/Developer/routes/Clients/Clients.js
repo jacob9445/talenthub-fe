@@ -7,15 +7,20 @@ import { connect } from 'react-redux'
 import Widget from 'components/Widget'
 import ClientsTable from './ClientsTable'
 import Spinner from 'components/Spinner'
-import { getClients, clientsSelector, clientsLoadingSelector } from 'store/modules/clients'
+import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSelector } from 'store/modules/clients'
 import { meSelector } from 'store/modules/auth'
 
-const Clients = ({ getClients, clients, isClientsLoading, me }) => {
+const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading, me }) => {
   useEffect(() => {
     getClients()
   }, [getClients])
 
-  const handleDelete = useCallback(id => {}, [])
+  const handleDelete = useCallback(
+    id => {
+      deleteClientAndRefresh(id)
+    },
+    [deleteClientAndRefresh]
+  )
 
   if (isClientsLoading) return <Spinner />
   else
@@ -38,7 +43,8 @@ const Clients = ({ getClients, clients, isClientsLoading, me }) => {
 }
 
 const actions = {
-  getClients
+  getClients,
+  deleteClientAndRefresh
 }
 
 const selectors = createStructuredSelector({

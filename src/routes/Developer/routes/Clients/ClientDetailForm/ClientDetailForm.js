@@ -27,8 +27,7 @@ const ClientDetailForm = ({ handleSubmit, values, initialValues, location, histo
     location.state ? history.push(location.state) : history.push('/developer/clients')
   }, [location, history])
 
-  const isCreateMode = useMemo(() => has(initialValues, 'started_at'), [initialValues])
-
+  const isUpdateMode = useMemo(() => has('started_at', initialValues), [initialValues])
   return (
     <form onSubmit={handleSubmit}>
       <Field component={FormInput} type="text" htmlId="full_name" name="full_name" label="Full Name" />
@@ -36,12 +35,12 @@ const ClientDetailForm = ({ handleSubmit, values, initialValues, location, histo
       {values.type === CLIENT_TYPES.COMPANY && (
         <Field component={FormInput} type="text" htmlId="company_name" name="company_name" label="Company Name" />
       )}
-      {isCreateMode && (
+      {isUpdateMode && (
         <Field component={FormInput} type="date" htmlId="started_at" name="started_at" label="Started at" />
       )}
       <div className={classes.formButtonWrapper}>
         <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
-          {isCreateMode ? 'Update' : 'Create'}
+          {isUpdateMode ? 'Update' : 'Create'}
         </Button>
         <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleCancel}>
           Cancel

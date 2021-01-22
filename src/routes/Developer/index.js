@@ -5,6 +5,7 @@ import { isDeveloperOrRedir } from 'hocs/withRoles'
 import Dashboard from './routes/Dashboard'
 import Clients from './routes/Clients'
 import CreateClient from './routes/Clients/CreateClient'
+import ClientDetail from './routes/Clients/ClientDetail'
 
 const Developer = ({ match: { path } }) => {
   return (
@@ -12,6 +13,7 @@ const Developer = ({ match: { path } }) => {
       <Route path={`${path}/dashboard`} component={Dashboard} />
       <Route exact path={`${path}/clients`} component={Clients} />
       <Route path={`${path}/clients/create`} component={CreateClient} />
+      <Route path={`${path}/clients/:id/detail`} component={ClientDetail} />
     </Switch>
   )
 }
