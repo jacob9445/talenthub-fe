@@ -12,20 +12,20 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   progress: {
-    margin: theme.spacing(2),
-  },
+    margin: theme.spacing(2)
+  }
 })
 
-function Spinner({classes}) {
+function Spinner({ classes }) {
   return (
     <div className={classes.wrapper}>
-      <CircularProgress size='5rem' className={classes.progress}/>
+      <CircularProgress size="5rem" className={classes.progress} />
     </div>
   )
 }
 
 Spinner.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Spinner)

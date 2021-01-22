@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -12,50 +12,45 @@ import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
 
 const Profiles = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh }) => {
-
   useEffect(() => {
     getProfiles()
   }, [getProfiles])
 
   const data = useMemo(() => {
-    if(profiles) {
-      return profiles.map((profile) => ({
+    if (profiles) {
+      return profiles.map(profile => ({
         ...pick(['id', 'profile_type', 'first_name', 'last_name', 'address', 'country', 'dob', 'gender'])(profile),
-        username: path(['user','username'])(profile)
+        username: path(['user', 'username'])(profile)
       }))
     }
   }, [profiles])
-  
-  const handleDelete = useCallback((id) => {
-    deleteProfileAndRefresh(id)
-  }, [deleteProfileAndRefresh])
-  
-  if( isLoading) return <Spinner />
-  else return (
-    <Grid container spacing={4}>
-      <Grid item xs={12}>
-        <Widget
-          title='Profiles'
-          disableWidgetMenu
-          noBodyPadding
-        >
-          <ProfileTable
-            data={data}
-            myRole={me.role}
-            handleDelete={handleDelete}
-          />
-        </Widget>
+
+  const handleDelete = useCallback(
+    id => {
+      deleteProfileAndRefresh(id)
+    },
+    [deleteProfileAndRefresh]
+  )
+
+  if (isLoading) return <Spinner />
+  else
+    return (
+      <Grid container spacing={4}>
+        <Grid item xs={12}>
+          <Widget title="Profiles" disableWidgetMenu noBodyPadding>
+            <ProfileTable data={data} myRole={me.role} handleDelete={handleDelete} />
+          </Widget>
+        </Grid>
       </Grid>
-    </Grid>
-  );
-};
+    )
+}
 
 Profiles.propTypes = {
   getProfiles: PropTypes.func,
   profiles: PropTypes.array,
   isLoading: PropTypes.bool,
   me: PropTypes.object
-};
+}
 
 const actions = {
   getProfiles,
@@ -68,4 +63,7 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-export default connect(selectors, actions)(Profiles);
+export default connect(
+  selectors,
+  actions
+)(Profiles)

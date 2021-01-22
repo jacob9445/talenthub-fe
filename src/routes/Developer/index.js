@@ -6,12 +6,12 @@ import Dashboard from './routes/Dashboard'
 import Clients from './routes/Clients'
 import CreateClient from './routes/Clients/CreateClient'
 
-const Developer = ({match:{path}}) => {
+const Developer = ({ match: { path } }) => {
   return (
     <Switch>
-        <Route path={`${path}/dashboard`} component={Dashboard} />
-        <Route exact path={`${path}/clients`} component={Clients} />
-        <Route path={`${path}/clients/create`} component={CreateClient} />
+      <Route path={`${path}/dashboard`} component={Dashboard} />
+      <Route exact path={`${path}/clients`} component={Clients} />
+      <Route path={`${path}/clients/create`} component={CreateClient} />
     </Switch>
   )
 }

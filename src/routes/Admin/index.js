@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Switch} from 'react-router'
+import { Route, Switch } from 'react-router'
 import Dashboard from './routes/Dashboard'
 import UserDetail from './routes/UserDetail'
 import Users from 'components/Users'
@@ -17,7 +17,7 @@ const Admin = ({ match }) => {
       <Route exact path={`${match.path}/users`} component={Users} />
       <Route path={`${match.path}/users/new`} component={CreateUser} />
       <Route path={`${match.path}/users/:id/detail`} component={UserDetail} />
-      <Route path={`${match.path}/teams`} component={Teams}/>
+      <Route path={`${match.path}/teams`} component={Teams} />
       <Route exact path={`${match.path}/profiles`} component={Profiles} />
       <Route path={`${match.path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route exact path={`${match.path}/accounts`} component={Accounts} />

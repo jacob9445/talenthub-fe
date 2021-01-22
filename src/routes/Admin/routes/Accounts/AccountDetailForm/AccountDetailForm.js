@@ -32,85 +32,37 @@ const platformOptions = [
   {
     display: 'Bitbucket',
     value: PLATFORMS.BITBUCKET
-  },
+  }
 ]
 
-
-const AccountDetailForm = ({ location, history, handleSubmit}) => {
+const AccountDetailForm = ({ location, history, handleSubmit }) => {
   const classes = useStyles()
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push('/admin/accounts')
   }, [location, history])
-  
+
   return (
     <form onSubmit={handleSubmit}>
-      <Field 
-        component={FormInput}
-        htmlId='profile'
-        type='text'
-        name='profile'
-        label='Profile'
-        readOnly={true}
-      />
-      <Field 
+      <Field component={FormInput} htmlId="profile" type="text" name="profile" label="Profile" readOnly={true} />
+      <Field
         component={FormSelect}
-        htmlId='platform_type'
-        type='text'
-        name='platform_type'
-        label='Platform Type'
+        htmlId="platform_type"
+        type="text"
+        name="platform_type"
+        label="Platform Type"
         options={platformOptions}
       />
-      <Field 
-        component={FormInput}
-        htmlId='email'
-        type='email'
-        name='email'
-        label='Email'
-      />
-      <Field 
-        component={FormInput}
-        htmlId='password'
-        type='text'
-        name='password'
-        label='Password'
-      />
-      <Field 
-        component={FormInput}
-        htmlId='location'
-        type='text'
-        name='location'
-        label='Location'
-      />
-      <Field 
-        component={FormInput}
-        htmlId='recovery_email'
-        type='text'
-        name='recovery_email'
-        label='Recovery Email'
-      />
-      <Field 
-        component={FormInput}
-        htmlId='url'
-        type='text'
-        name='url'
-        label='URL'
-      />
+      <Field component={FormInput} htmlId="email" type="email" name="email" label="Email" />
+      <Field component={FormInput} htmlId="password" type="text" name="password" label="Password" />
+      <Field component={FormInput} htmlId="location" type="text" name="location" label="Location" />
+      <Field component={FormInput} htmlId="recovery_email" type="text" name="recovery_email" label="Recovery Email" />
+      <Field component={FormInput} htmlId="url" type="text" name="url" label="URL" />
       <div className={classes.formButtonWrapper}>
-        <Button
-          type='submit' 
-          variant='contained'
-          color='primary'
-          className={classes.formButton}
-        >
+        <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
           Update
         </Button>
-        <Button
-          variant='contained'
-          color='secondary'
-          className={classes.formButton}
-          onClick={handleCancel}
-        >
+        <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleCancel}>
           Cancel
         </Button>
       </div>

@@ -4,16 +4,13 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { isAuthenticatedSelector } from '../../store/modules/auth/selectors'
 
-const AuthRoute = ({path, component:Component, redirectTo = '/', isAuthenticated, ...others}) => (
-  
-  <Route 
+const AuthRoute = ({ path, component: Component, redirectTo = '/', isAuthenticated, ...others }) => (
+  <Route
     path={path}
     {...others}
-    render={
-      (props) => {
-        return isAuthenticated ?  <Redirect to={redirectTo} /> : <Component {...props} /> 
-      }
-    }
+    render={props => {
+      return isAuthenticated ? <Redirect to={redirectTo} /> : <Component {...props} />
+    }}
   />
 )
 
@@ -22,6 +19,3 @@ const selectors = createStructuredSelector({
 })
 
 export default connect(selectors)(AuthRoute)
-
-
-

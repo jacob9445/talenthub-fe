@@ -5,8 +5,6 @@ export const accountsSelector = R.compose(
   R.path(['results']),
   dataSelector('accounts')
 )
-export const accountsLoadingSelector = (state) => 
-  isRequestPending('accounts', 'GET')(state)
+export const accountsLoadingSelector = state => isRequestPending('accounts', 'GET')(state)
 export const accountDetailSelector = dataSelector('accountDetail')
-export const accountDetailLoadingSelector = (state) =>
-  isRequestPending('accountDetail', 'GET')(state)
+export const accountDetailLoadingSelector = state => isRequestPending('accountDetail', 'GET')(state)

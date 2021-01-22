@@ -36,11 +36,11 @@ const genderOptions = [
   }
 ]
 
-const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, isUsersLoading, me}) => {
+const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, isUsersLoading, me }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    console.log({users, me})
+    console.log({ users, me })
     !users && getUsers(me)
   }, [getUsers, users, me])
 
@@ -49,93 +49,53 @@ const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, i
   }, [location, history])
 
   const userOptions = useMemo(() => {
-    if(users) {
+    if (users) {
       return users.map(user => ({
         display: user.username,
         value: user.id
       }))
     }
   }, [users])
-  
-  if(isUsersLoading || typeof userOptions === 'undefined') return <Spinner />
-  else return (
-    <form onSubmit={handleSubmit}>
-      <Field 
-        component={FormSelect}
-        htmlId='user_id'
-        type='text'
-        name='user_id'
-        label='Owner'
-        options={userOptions}
-      />
-      <Field 
-        component={FormSelect}
-        htmlId='profile_type'
-        type='text'
-        name='profile_type'
-        label='Profile Types'
-        options={profileTypeOptions}
-      />
-      <Field 
-        component={FormInput}
-        htmlId='first_name'
-        type='text'
-        name='first_name'
-        label='First Name'
-      />
-      <Field 
-        component={FormInput}
-        htmlId='last_name'
-        type='text'
-        name='last_name'
-        label='Last Name'
-      />
-      <Field 
-        component={FormInput}
-        htmlId='address'
-        type='text'
-        name='address'
-        label='Address'
-      />
-      <Field 
-        component={FormInput}
-        htmlId='country'
-        type='text'
-        name='country'
-        label='Country'
-      />
-      <Field 
-        component={FormSelect}
-        htmlId='gender'
-        type='text'
-        name='gender'
-        label='Gender'
-        options={genderOptions}
-      />
-      <div className={classes.formButtonWrapper}>
-        <Button
-          type='submit' 
-          variant='contained'
-          color='primary'
-          className={classes.formButton}
-        >
-          Update
-        </Button>
-        <Button
-          variant='contained'
-          color='secondary'
-          className={classes.formButton}
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
-      </div>
-    </form>
-  )
+
+  if (isUsersLoading || typeof userOptions === 'undefined') return <Spinner />
+  else
+    return (
+      <form onSubmit={handleSubmit}>
+        <Field component={FormSelect} htmlId="user_id" type="text" name="user_id" label="Owner" options={userOptions} />
+        <Field
+          component={FormSelect}
+          htmlId="profile_type"
+          type="text"
+          name="profile_type"
+          label="Profile Types"
+          options={profileTypeOptions}
+        />
+        <Field component={FormInput} htmlId="first_name" type="text" name="first_name" label="First Name" />
+        <Field component={FormInput} htmlId="last_name" type="text" name="last_name" label="Last Name" />
+        <Field component={FormInput} htmlId="address" type="text" name="address" label="Address" />
+        <Field component={FormInput} htmlId="country" type="text" name="country" label="Country" />
+        <Field
+          component={FormSelect}
+          htmlId="gender"
+          type="text"
+          name="gender"
+          label="Gender"
+          options={genderOptions}
+        />
+        <div className={classes.formButtonWrapper}>
+          <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
+            Update
+          </Button>
+          <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleCancel}>
+            Cancel
+          </Button>
+        </div>
+      </form>
+    )
 }
 
 const actions = {
-  getUsers,
+  getUsers
 }
 
 const selectors = createStructuredSelector({
@@ -146,5 +106,8 @@ const selectors = createStructuredSelector({
 
 export default R.compose(
   withRouter,
-  connect(selectors, actions)
+  connect(
+    selectors,
+    actions
+  )
 )(ProfileDetailForm)

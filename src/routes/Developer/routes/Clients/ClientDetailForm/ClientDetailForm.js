@@ -31,54 +31,19 @@ const ClientDetailForm = ({ handleSubmit, values, initialValues, location, histo
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field 
-        component={FormInput}
-        type='text'
-        htmlId='full_name'
-        name='full_name'
-        label='Full Name'
-      />
-      <Field 
-        component={FormSelect}
-        htmlId='type'
-        name='type'
-        label='Type'
-        options={clientTypeOptions}
-      />
-      { values.type === CLIENT_TYPES.COMPANY &&
-        <Field
-          component={FormInput}
-          type='text'
-          htmlId='company_name'
-          name='company_name'
-          label='Company Name' 
-        />
-      }
-      {
-        isCreateMode &&
-        <Field
-          component={FormInput}
-          type='date'
-          htmlId='started_at'
-          name='started_at'
-          label='Started at'
-        />
-      }
+      <Field component={FormInput} type="text" htmlId="full_name" name="full_name" label="Full Name" />
+      <Field component={FormSelect} htmlId="type" name="type" label="Type" options={clientTypeOptions} />
+      {values.type === CLIENT_TYPES.COMPANY && (
+        <Field component={FormInput} type="text" htmlId="company_name" name="company_name" label="Company Name" />
+      )}
+      {isCreateMode && (
+        <Field component={FormInput} type="date" htmlId="started_at" name="started_at" label="Started at" />
+      )}
       <div className={classes.formButtonWrapper}>
-        <Button
-          type='submit' 
-          variant='contained'
-          color='primary'
-          className={classes.formButton}
-        >
-        { isCreateMode ? 'Update' : 'Create'}
+        <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
+          {isCreateMode ? 'Update' : 'Create'}
         </Button>
-        <Button
-          variant='contained'
-          color='secondary'
-          className={classes.formButton}
-          onClick={handleCancel}
-        >
+        <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleCancel}>
           Cancel
         </Button>
       </div>
@@ -87,4 +52,3 @@ const ClientDetailForm = ({ handleSubmit, values, initialValues, location, histo
 }
 
 export default withRouter(ClientDetailForm)
-  

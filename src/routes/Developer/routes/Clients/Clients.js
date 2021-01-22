@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback }from 'react';
+import React, { useEffect, useCallback } from 'react'
 import { Grid, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
@@ -15,37 +15,27 @@ const Clients = ({ getClients, clients, isClientsLoading, me }) => {
     getClients()
   }, [getClients])
 
-  const handleDelete = useCallback((id) => {
-    
-  }, [])
+  const handleDelete = useCallback(id => {}, [])
 
-  if( isClientsLoading) return <Spinner />
-  else return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Widget 
-          title='Clients'
-          disableWidgetMenu
-          WidgetButton={
-            <Button
-              color='primary'
-              component={Link}
-              to='/developer/clients/create'
-            >
-              Add Client
-            </Button>
-          }
-        >
-          <ClientsTable 
-            data={clients}
-            myRole={me.role}
-            handleDelete={handleDelete}
-          />
-        </Widget>
+  if (isClientsLoading) return <Spinner />
+  else
+    return (
+      <Grid container>
+        <Grid item xs={12}>
+          <Widget
+            title="Clients"
+            disableWidgetMenu
+            WidgetButton={
+              <Button color="primary" component={Link} to="/developer/clients/create">
+                Add Client
+              </Button>
+            }>
+            <ClientsTable data={clients} myRole={me.role} handleDelete={handleDelete} />
+          </Widget>
+        </Grid>
       </Grid>
-    </Grid>
-  );
-};
+    )
+}
 
 const actions = {
   getClients
@@ -57,4 +47,7 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-export default connect(selectors, actions)(Clients);
+export default connect(
+  selectors,
+  actions
+)(Clients)

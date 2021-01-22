@@ -1,13 +1,6 @@
-import React from "react";
-import {
-  Table,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  Button
-} from "@material-ui/core";
-import { Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons'
+import React from 'react'
+import { Table, TableRow, TableHead, TableBody, TableCell, Button } from '@material-ui/core'
+import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
 import Spinner from 'components/Spinner'
@@ -15,9 +8,8 @@ import { CLIENT_TYPE_LABELS, ROLES } from 'config/constants'
 
 const columns = ['Full Name', 'Type', 'Company Name', 'Started at', 'Actions']
 
-export default function TableComponent({ data, myRole, handleDelete}) {
-
-  if( data) {
+export default function TableComponent({ data, myRole, handleDelete }) {
+  if (data) {
     return (
       <Table className="mb-0">
         <TableHead>
@@ -28,7 +20,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({id, full_name, type, company_name, started_at}) => (
+          {data.map(({ id, full_name, type, company_name, started_at }) => (
             <TableRow key={id}>
               <TableCell>{full_name}</TableCell>
               <TableCell>{CLIENT_TYPE_LABELS[type]}</TableCell>
@@ -37,10 +29,10 @@ export default function TableComponent({ data, myRole, handleDelete}) {
               {[ROLES.DEVELOPER].includes(myRole) && (
                 <TableCell>
                   <Button component={Link} to={`/developer/clients/${id}/detail`}>
-                    <EditIcon color='primary'/>
+                    <EditIcon color="primary" />
                   </Button>
                   <Button onClick={() => handleDelete(id)}>
-                    <DeleteIcon color='secondary'/>
+                    <DeleteIcon color="secondary" />
                   </Button>
                 </TableCell>
               )}
@@ -52,5 +44,4 @@ export default function TableComponent({ data, myRole, handleDelete}) {
   } else {
     return <Spinner />
   }
-  
 }

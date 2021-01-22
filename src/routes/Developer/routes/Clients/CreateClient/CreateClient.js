@@ -12,29 +12,28 @@ import { CLIENT_TYPES } from 'config/constants'
 const initialValues = {
   full_name: '',
   type: CLIENT_TYPES.COMPANY,
-  company_name: '',
+  company_name: ''
 }
 
 const CreateClient = ({ createClient }) => {
-
-  const handleSubmit = useCallback((payload, formActions) => {
-    return formSubmit( createClient, {
-      data: payload
-    }, formActions)
-  }, [createClient])
+  const handleSubmit = useCallback(
+    (payload, formActions) => {
+      return formSubmit(
+        createClient,
+        {
+          data: payload
+        },
+        formActions
+      )
+    },
+    [createClient]
+  )
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Widget
-          title='Create Client'
-          disableWidgetMenu
-        >
-          <Formik 
-            component={ClientDetailForm}
-            initialValues={initialValues}
-            onSubmit={handleSubmit}
-          />          
+        <Widget title="Create Client" disableWidgetMenu>
+          <Formik component={ClientDetailForm} initialValues={initialValues} onSubmit={handleSubmit} />
         </Widget>
       </Grid>
     </Grid>
@@ -45,5 +44,7 @@ const actions = {
   createClient
 }
 
-
-export default connect(null, actions)(CreateClient)
+export default connect(
+  null,
+  actions
+)(CreateClient)

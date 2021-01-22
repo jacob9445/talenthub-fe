@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import {
-  Paper,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@material-ui/core";
-import { MoreVert as MoreIcon } from "@material-ui/icons";
-import classnames from "classnames";
+import React, { useState } from 'react'
+import { Paper, IconButton, Menu, MenuItem, Typography } from '@material-ui/core'
+import { MoreVert as MoreIcon } from '@material-ui/icons'
+import classnames from 'classnames'
 
 // styles
-import useStyles from "./styles";
+import useStyles from './styles'
 
 export default function Widget({
   children,
@@ -27,21 +21,26 @@ export default function Widget({
   WidgetButton,
   ...props
 }) {
-  var classes = useStyles();
+  var classes = useStyles()
 
   // local
-  var [moreButtonRef, setMoreButtonRef] = useState(null);
-  var [isMoreMenuOpen, setMoreMenuOpen] = useState(false);
+  var [moreButtonRef, setMoreButtonRef] = useState(null)
+  var [isMoreMenuOpen, setMoreMenuOpen] = useState(false)
 
   return (
-    <div className={classes.widgetWrapper} style={style && {...style}}>
-      <Paper className={classes.paper} classes={{ root: classnames(classes.widgetRoot, {
-        [classes.noWidgetShadow]: noWidgetShadow
-        }) }}>
-        <div className={classnames(classes.widgetHeader, {
-          [classes.noPadding]: noHeaderPadding,
-          [headerClass]: headerClass
-        })}>
+    <div className={classes.widgetWrapper} style={style && { ...style }}>
+      <Paper
+        className={classes.paper}
+        classes={{
+          root: classnames(classes.widgetRoot, {
+            [classes.noWidgetShadow]: noWidgetShadow
+          })
+        }}>
+        <div
+          className={classnames(classes.widgetHeader, {
+            [classes.noPadding]: noHeaderPadding,
+            [headerClass]: headerClass
+          })}>
           {header ? (
             header
           ) : (
@@ -49,10 +48,8 @@ export default function Widget({
               <Typography variant="h5" color="textSecondary" noWrap>
                 {title}
               </Typography>
-              {
-                !disableWidgetButton && WidgetButton
-              }
-              
+              {!disableWidgetButton && WidgetButton}
+
               {!disableWidgetMenu && (
                 <IconButton
                   color="primary"
@@ -60,8 +57,7 @@ export default function Widget({
                   aria-owns="widget-menu"
                   aria-haspopup="true"
                   onClick={() => setMoreMenuOpen(true)}
-                  buttonRef={setMoreButtonRef}
-                >
+                  buttonRef={setMoreButtonRef}>
                   <MoreIcon />
                 </IconButton>
               )}
@@ -71,9 +67,8 @@ export default function Widget({
         <div
           className={classnames(classes.widgetBody, {
             [classes.noPadding]: noBodyPadding,
-            [bodyClass]: bodyClass,
-          })}
-        >
+            [bodyClass]: bodyClass
+          })}>
           {children}
         </div>
       </Paper>
@@ -82,8 +77,7 @@ export default function Widget({
         open={isMoreMenuOpen}
         anchorEl={moreButtonRef}
         onClose={() => setMoreMenuOpen(false)}
-        disableAutoFocusItem
-      >
+        disableAutoFocusItem>
         <MenuItem>
           <Typography>Edit</Typography>
         </MenuItem>
@@ -98,5 +92,5 @@ export default function Widget({
         </MenuItem>
       </Menu>
     </div>
-  );
+  )
 }

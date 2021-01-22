@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
@@ -8,71 +8,84 @@ import { Formik } from 'formik'
 import { pick } from 'ramda'
 import { Grid } from '@material-ui/core'
 
-import { getProfileDetail, profileDetailSelector, updateProfile, profileDetailLoadingSelector } from 'store/modules/profiles'
+import {
+  getProfileDetail,
+  profileDetailSelector,
+  updateProfile,
+  profileDetailLoadingSelector
+} from 'store/modules/profiles'
 import Widget from 'components/Widget'
-import { formSubmit } from 'helpers/form';
+import { formSubmit } from 'helpers/form'
 import ProfileDetailForm from '../ProfileDetailForm'
 import Spinner from 'components/Spinner'
 import AccountChips from './AccountChips'
 
-const ProfileDetail = ({ match: {params}, getProfileDetail, profileDetail, updateProfile, isLoading}) => {
-
+const ProfileDetail = ({ match: { params }, getProfileDetail, profileDetail, updateProfile, isLoading }) => {
   useEffect(() => {
     getProfileDetail(params.id)
   }, [getProfileDetail, params.id])
 
-  const initialValues = useMemo(() => 
-    profileDetail ? pick(['user_id', 'profile_type', 'first_name', 'last_name', 'address', 'country', 'dob', 'gender'], 
-      profileDetail) : ({
-        user_id: '',
-        profile_type: '',
-        first_name: '',
-        last_name: '',
-        address: '',
-        country: '',
-        dob: '',
-        gender: ''
-      }),
+  const initialValues = useMemo(
+    () =>
+      profileDetail
+        ? pick(
+            ['user_id', 'profile_type', 'first_name', 'last_name', 'address', 'country', 'dob', 'gender'],
+            profileDetail
+          )
+        : {
+            user_id: '',
+            profile_type: '',
+            first_name: '',
+            last_name: '',
+            address: '',
+            country: '',
+            dob: '',
+            gender: ''
+          },
     [profileDetail]
   )
-  const handleSubmit = useCallback((payload, formActions) => {
-    return formSubmit( updateProfile, {
-      data: payload,
-      id: params.id
-    }, formActions)
-  }, [updateProfile, params.id])
+  const handleSubmit = useCallback(
+    (payload, formActions) => {
+      return formSubmit(
+        updateProfile,
+        {
+          data: payload,
+          id: params.id
+        },
+        formActions
+      )
+    },
+    [updateProfile, params.id]
+  )
 
-  if( isLoading || !profileDetail) return <Spinner />
-  else return (
-    <Grid container spacing={2}>
-      <Grid item xs={12} md={9}>
-        <Widget 
-          title='Profile Detail'
-          disableWidgetMenu
-        >
-          <Formik
-            component={ProfileDetailForm}
-            initialValues={initialValues}
-            onSubmit={handleSubmit}
-            enableReinitialize
-          />
-        </Widget>
+  if (isLoading || !profileDetail) return <Spinner />
+  else
+    return (
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={9}>
+          <Widget title="Profile Detail" disableWidgetMenu>
+            <Formik
+              component={ProfileDetailForm}
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              enableReinitialize
+            />
+          </Widget>
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <Widget title="Accounts" disableWidgetMenu>
+            <AccountChips accounts={profileDetail.accounts} />
+          </Widget>
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={3}>
-        <Widget title='Accounts' disableWidgetMenu>
-          <AccountChips accounts={profileDetail.accounts}/>
-        </Widget>
-      </Grid>
-    </Grid>
-  );
-};
+    )
+}
 
 ProfileDetail.propTypes = {
   params: PropTypes.string,
   getProfileDetail: PropTypes.func,
   profileDetail: PropTypes.object
-};
-
+}
 
 const actions = {
   getProfileDetail,
@@ -85,6 +98,9 @@ const selectors = createStructuredSelector({
 })
 
 export default compose(
-  connect(selectors, actions),
+  connect(
+    selectors,
+    actions
+  ),
   withRouter
-)(ProfileDetail);
+)(ProfileDetail)

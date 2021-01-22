@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
-import  * as Types from './types'
+import * as Types from './types'
 
 const getAccounts = apiCallSaga({
   type: Types.GET_ACCOUNTS,
@@ -12,10 +12,10 @@ const getAccounts = apiCallSaga({
 const deleteAccount = apiCallSaga({
   type: Types.DELETE_ACCOUNT,
   method: 'DELETE',
-  path: ({payload}) => `api/admin/accounts/${payload}/`,
+  path: ({ payload }) => `api/admin/accounts/${payload}/`
 })
 
-const deleteAccountAndRefresh = function* (action) {
+const deleteAccountAndRefresh = function*(action) {
   yield deleteAccount(action)
   yield getAccounts({
     type: Types.GET_ACCOUNTS
@@ -25,14 +25,14 @@ const deleteAccountAndRefresh = function* (action) {
 const getAccountDetail = apiCallSaga({
   type: Types.GET_ACCOUNTDETAIL,
   method: 'GET',
-  path: ({payload}) => `api/admin/accounts/${payload}/`,
+  path: ({ payload }) => `api/admin/accounts/${payload}/`,
   selectorKey: 'accountDetail'
 })
 
 const updateAccount = apiCallSaga({
   type: Types.GET_ACCOUNTDETAIL,
   method: 'PUT',
-  path: ({payload:{id}}) => `api/admin/accounts/${id}/`
+  path: ({ payload: { id } }) => `api/admin/accounts/${id}/`
 })
 
 export default function* rootSaga() {

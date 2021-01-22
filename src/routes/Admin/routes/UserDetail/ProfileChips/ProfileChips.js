@@ -1,32 +1,29 @@
-import React, { useCallback }from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Chip } from '@material-ui/core'
 import { Face as FaceIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import { withRouter } from 'react-router'
 
-const useStyles = makeStyles( theme => ({
+const useStyles = makeStyles(theme => ({
   chip: {
-    margin: theme.spacing(1) / 2,
+    margin: theme.spacing(1) / 2
   }
 }))
 
-const ProfileChips = ({ profiles, history, location}) => {
+const ProfileChips = ({ profiles, history, location }) => {
   const classes = useStyles()
 
-  const showProfileDetail = useCallback((id) => () => {
-    history.push(`/admin/profiles/${id}/detail`, location.pathname)
-  }, [history, location])
+  const showProfileDetail = useCallback(
+    id => () => {
+      history.push(`/admin/profiles/${id}/detail`, location.pathname)
+    },
+    [history, location]
+  )
 
   return (
-    <Grid
-      container
-      alignItems='center'
-      justify='center'
-      wrap='wrap'
-    >
-    {
-      profiles.map(profile => (
+    <Grid container alignItems="center" justify="center" wrap="wrap">
+      {profiles.map(profile => (
         <Chip
           key={profile.id}
           label={`${profile.first_name} ${profile.last_name}`}
@@ -36,8 +33,7 @@ const ProfileChips = ({ profiles, history, location}) => {
           className={classes.chip}
           onClick={showProfileDetail(profile.id)}
         />
-      ))
-    }
+      ))}
     </Grid>
   )
 }
@@ -46,4 +42,4 @@ ProfileChips.propTypes = {
   profiles: PropTypes.array
 }
 
-export default withRouter(ProfileChips);
+export default withRouter(ProfileChips)

@@ -1,16 +1,14 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
-import  * as Types from './types'
+import * as Types from './types'
 import { ROLES } from 'config/constants'
 
 const getUsers = apiCallSaga({
   type: Types.USERS_GETUSERS,
   method: 'GET',
-  path: ({payload}) => {
-    if( payload.role === ROLES.ADMIN)
-      return 'api/admin/users/'
-    else if( payload.role === ROLES.TEAM_MANAGER)
-      return 'api/team-manager/users/'
+  path: ({ payload }) => {
+    if (payload.role === ROLES.ADMIN) return 'api/admin/users/'
+    else if (payload.role === ROLES.TEAM_MANAGER) return 'api/team-manager/users/'
     console.log('test here', payload.role)
   },
   selectorKey: 'users'
@@ -19,10 +17,10 @@ const getUsers = apiCallSaga({
 const deleteUser = apiCallSaga({
   type: Types.USERS_DELETEUSER,
   method: 'DELETE',
-  path: ({payload}) => (`api/admin/users/${payload.id}/`),
+  path: ({ payload }) => `api/admin/users/${payload.id}/`
 })
 
-const deleteUserAndRefresh = function* (action) {
+const deleteUserAndRefresh = function*(action) {
   yield deleteUser(action)
   yield getUsers({
     type: Types.USERS_GETUSERS,
@@ -35,14 +33,14 @@ const deleteUserAndRefresh = function* (action) {
 const getUserDetail = apiCallSaga({
   type: Types.GET_USER_DETAIL,
   method: 'GET',
-  path: ({payload}) => (`api/admin/users/${payload}/`),
+  path: ({ payload }) => `api/admin/users/${payload}/`,
   selectorKey: 'userDetail'
 })
 
 const updateUserDetail = apiCallSaga({
   type: Types.UPDATE_USER_DETAIL,
   method: 'PUT',
-  path: ({payload:{id}}) => (`api/admin/users/${id}/`),
+  path: ({ payload: { id } }) => `api/admin/users/${id}/`
 })
 
 const createUser = apiCallSaga({

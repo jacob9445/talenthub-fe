@@ -1,6 +1,6 @@
-import React from "react";
-import { makeStyles, useTheme } from "@material-ui/styles";
-import classnames from "classnames";
+import React from 'react'
+import { makeStyles, useTheme } from '@material-ui/styles'
+import classnames from 'classnames'
 
 // styles
 var useStyles = makeStyles(theme => ({
@@ -8,8 +8,8 @@ var useStyles = makeStyles(theme => ({
     width: 8,
     height: 8,
     backgroundColor: theme.palette.text.hint,
-    borderRadius: "50%",
-    transition: theme.transitions.create("background-color"),
+    borderRadius: '50%',
+    transition: theme.transitions.create('background-color')
   },
   dotSmall: {
     width: 5,
@@ -17,24 +17,23 @@ var useStyles = makeStyles(theme => ({
   },
   dotLarge: {
     width: 11,
-    height: 11,
-  },
-}));
+    height: 11
+  }
+}))
 
 export default function Dot({ size, color }) {
-  var classes = useStyles();
-  var theme = useTheme();
+  var classes = useStyles()
+  var theme = useTheme()
 
   return (
     <div
       className={classnames(classes.dotBase, {
-        [classes.dotLarge]: size === "large",
-        [classes.dotSmall]: size === "small",
+        [classes.dotLarge]: size === 'large',
+        [classes.dotSmall]: size === 'small'
       })}
       style={{
-        backgroundColor:
-          color && theme.palette[color] && theme.palette[color].main,
+        backgroundColor: color && theme.palette[color] && theme.palette[color].main
       }}
     />
-  );
+  )
 }

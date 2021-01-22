@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
-import  * as Types from './types'
+import * as Types from './types'
 
 const getProfiles = apiCallSaga({
   type: Types.GET_PROFILES,
@@ -12,23 +12,23 @@ const getProfiles = apiCallSaga({
 const getProfileDetail = apiCallSaga({
   type: Types.GET_PROFILE_DETAIL,
   method: 'GET',
-  path: ({payload}) => (`api/admin/profiles/${payload}/`),
+  path: ({ payload }) => `api/admin/profiles/${payload}/`,
   selectorKey: 'profileDetail'
 })
 
 const updateProfile = apiCallSaga({
   type: Types.UPDATE_PROFILE,
   method: 'PUT',
-  path: ({payload:{id}}) => (`api/admin/profiles/${id}/`),
+  path: ({ payload: { id } }) => `api/admin/profiles/${id}/`
 })
 
 const deleteProfile = apiCallSaga({
   type: Types.DELETE_PROFILE,
   method: 'DELETE',
-  path: ({payload}) => (`api/admin/profiles/${payload}/`),
+  path: ({ payload }) => `api/admin/profiles/${payload}/`
 })
 
-const deleteProfileAndRefresh = function* (action) {
+const deleteProfileAndRefresh = function*(action) {
   yield deleteProfile(action)
   yield getProfiles({
     type: Types.GET_PROFILES

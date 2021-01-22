@@ -1,25 +1,10 @@
-import React from "react";
-import classnames from "classnames";
-import {
-  Paper,
-  IconButton,
-  Menu,
-  MenuItem,
-  withStyles
-} from "@material-ui/core";
-import { MoreVert as MoreIcon } from "@material-ui/icons";
-import Typography from "@material-ui/core/es/Typography/Typography";
+import React from 'react'
+import classnames from 'classnames'
+import { Paper, IconButton, Menu, MenuItem, withStyles } from '@material-ui/core'
+import { MoreVert as MoreIcon } from '@material-ui/icons'
+import Typography from '@material-ui/core/es/Typography/Typography'
 
-const Widget = ({
-  classes,
-  children,
-  title,
-  noBodyPadding,
-  bodyClass,
-  className,
-  disableWidgetMenu,
-  ...props
-}) => (
+const Widget = ({ classes, children, title, noBodyPadding, bodyClass, className, disableWidgetMenu, ...props }) => (
   <div className={classes.widgetWrapper}>
     <Paper className={classes.paper} classes={{ root: classes.widgetRoot }}>
       <div className={classes.widgetHeader}>
@@ -37,8 +22,7 @@ const Widget = ({
                 aria-owns="widget-menu"
                 aria-haspopup="true"
                 onClick={() => props.setMoreMenuOpen(true)}
-                buttonRef={props.setMoreButtonRef}
-              >
+                buttonRef={props.setMoreButtonRef}>
                 <MoreIcon />
               </IconButton>
             )}
@@ -49,8 +33,7 @@ const Widget = ({
         className={classnames(classes.widgetBody, {
           [classes.noPadding]: noBodyPadding,
           [bodyClass]: bodyClass
-        })}
-      >
+        })}>
         {children}
       </div>
     </Paper>
@@ -59,8 +42,7 @@ const Widget = ({
       open={props.isMoreMenuOpen}
       anchorEl={props.moreButtonRef}
       onClose={() => props.setMoreMenuOpen(false)}
-      disableAutoFocusItem
-    >
+      disableAutoFocusItem>
       <MenuItem>
         <Typography>Edit</Typography>
       </MenuItem>
@@ -75,19 +57,19 @@ const Widget = ({
       </MenuItem>
     </Menu>
   </div>
-);
+)
 
 const styles = theme => ({
   widgetWrapper: {
-    display: "flex",
-    minHeight: "100%"
+    display: 'flex',
+    minHeight: '100%'
   },
   widgetHeader: {
     padding: theme.spacing(3),
     paddingBottom: theme.spacing.unit,
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center"
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   widgetRoot: {
     boxShadow: theme.customShadows.widget
@@ -101,10 +83,10 @@ const styles = theme => ({
     padding: 0
   },
   paper: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     flexGrow: 1,
-    overflow: "hidden"
+    overflow: 'hidden'
   },
   moreButton: {
     margin: -theme.spacing.unit,
@@ -112,11 +94,11 @@ const styles = theme => ({
     width: 40,
     height: 40,
     color: theme.palette.text.hint,
-    "&:hover": {
+    '&:hover': {
       backgroundColor: theme.palette.primary.main,
-      color: "rgba(255, 255, 255, 0.35)"
+      color: 'rgba(255, 255, 255, 0.35)'
     }
   }
-});
+})
 
-export default withStyles(styles, { withTheme: true })(Widget);
+export default withStyles(styles, { withTheme: true })(Widget)

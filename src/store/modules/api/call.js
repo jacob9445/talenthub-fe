@@ -8,9 +8,9 @@ import { requestRejected, requestPending, requestSuccess } from './actions'
 const defaultHeaders = request => {
   const token = localStorage.getItem('TH_TOKEN')
   let baseHeaders = {}
-  if(token) {
+  if (token) {
     baseHeaders = {
-      'Authorization': `JWT ${JSON.parse(token)}`
+      Authorization: `JWT ${JSON.parse(token)}`
     }
   }
 
@@ -77,7 +77,7 @@ export default ({
         },
         data,
         params: allowedParamKeys ? R.pick(allowedParamKeys, queryParams) : queryParams,
-        baseURL: API_BASE,
+        baseURL: API_BASE
       })
 
       const resData = payloadOnSuccess ? payloadOnSuccess(res.data, action) : res.data

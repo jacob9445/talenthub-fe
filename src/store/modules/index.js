@@ -15,5 +15,5 @@ export default combineReducers({
   teams,
   profiles,
   accounts,
-  clients,
+  clients
 })

@@ -1,24 +1,15 @@
-import React from "react";
-import {
-  Table,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  Button
-} from "@material-ui/core";
+import React from 'react'
+import { Table, TableRow, TableHead, TableBody, TableCell, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
-import { Edit as EditIcon, Delete as DeleteIcon} from '@material-ui/icons'
+import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { ROLES, PLATFORM_LABELS } from 'config/constants'
 import Spinner from 'components/Spinner'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
 
-
-export default function TableComponent({ data, myRole, handleDelete}) {
-
-  if( data) {
+export default function TableComponent({ data, myRole, handleDelete }) {
+  if (data) {
     return (
       <Table className="mb-0">
         <TableHead>
@@ -29,7 +20,7 @@ export default function TableComponent({ data, myRole, handleDelete}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({id, profile, platform_type, email, password, location, recovery_email, url}) => (
+          {data.map(({ id, profile, platform_type, email, password, location, recovery_email, url }) => (
             <TableRow key={id}>
               <TableCell>{profile}</TableCell>
               <TableCell>{PLATFORM_LABELS[platform_type]}</TableCell>
@@ -41,10 +32,10 @@ export default function TableComponent({ data, myRole, handleDelete}) {
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
                   <Button component={Link} to={`/admin/accounts/${id}/detail`}>
-                    <EditIcon color='primary'/>
+                    <EditIcon color="primary" />
                   </Button>
                   <Button onClick={() => handleDelete(id)}>
-                    <DeleteIcon color='secondary'/>
+                    <DeleteIcon color="secondary" />
                   </Button>
                 </TableCell>
               )}
@@ -55,5 +46,5 @@ export default function TableComponent({ data, myRole, handleDelete}) {
     )
   } else {
     return <Spinner />
-  }  
+  }
 }

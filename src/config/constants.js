@@ -7,9 +7,9 @@ export const ROLES = {
 }
 
 export const URL_PREFIXES = {
-	[ROLES.ADMIN]: 'admin',
-	[ROLES.TEAM_MANAGER]: 'team-manager',
-	[ROLES.DEVELOPER]: 'developer',
+  [ROLES.ADMIN]: 'admin',
+  [ROLES.TEAM_MANAGER]: 'team-manager',
+  [ROLES.DEVELOPER]: 'developer'
 }
 
 export const PROFILE_TYPES = {

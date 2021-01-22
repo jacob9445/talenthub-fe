@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect }from 'react';
+import React, { useCallback, useEffect } from 'react'
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -10,49 +10,51 @@ import { createUser } from 'store/modules/users'
 import { getTeams, teamsSelector } from 'store/modules/teams'
 
 const initialValues = {
-	first_name: '',
-	last_name: '',
-	email: '',
-	password: '',
-	confirm_password: '',
-	team: ''
+  first_name: '',
+  last_name: '',
+  email: '',
+  password: '',
+  confirm_password: '',
+  team: ''
 }
 
 const CreateUser = ({ createUser, getTeams, teams }) => {
-	const handleSubmit = useCallback((payload, formActions) => {
+  const handleSubmit = useCallback(
+    (payload, formActions) => {
+      return formSubmit(
+        createUser,
+        {
+          data: payload
+        },
+        formActions
+      )
+    },
+    [createUser]
+  )
 
-    return formSubmit( createUser, {
-      data: payload
-    }, formActions)
-	}, [createUser])
-	
-	useEffect( () => {
-		!teams && getTeams()
-	}, [getTeams, teams])
+  useEffect(() => {
+    !teams && getTeams()
+  }, [getTeams, teams])
 
-	return (
-		<div>
-			<Widget 
-				title='Create User'
-        disableWidgetMenu
-			>
-				<Formik 
-					component={UserDetailForm}
-					onSubmit={handleSubmit}
-					initialValues={initialValues}
-				/> 
-			</Widget>
-		</div>
-	)
+  return (
+    <div>
+      <Widget title="Create User" disableWidgetMenu>
+        <Formik component={UserDetailForm} onSubmit={handleSubmit} initialValues={initialValues} />
+      </Widget>
+    </div>
+  )
 }
 
 const selectors = createStructuredSelector({
-	teams: teamsSelector
+  teams: teamsSelector
 })
 
 const actions = {
-	createUser,
-	getTeams
+  createUser,
+  getTeams
 }
 
-export default connect(selectors, actions)(CreateUser);
+export default connect(
+  selectors,
+  actions
+)(CreateUser)

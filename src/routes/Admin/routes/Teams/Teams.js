@@ -10,34 +10,29 @@ import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
 import TeamMemberExpansion from './TeamMemberExpansion'
 
-const Teams = ({getTeams, teams }) => {
-
+const Teams = ({ getTeams, teams }) => {
   useEffect(() => {
     !teams && getTeams()
   }, [teams, getTeams])
 
-  if( !teams) return <Spinner />
-  else return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Widget title='Teams' disableWidgetMenu>
-        { teams.map( team => (
-          <TeamMemberExpansion
-            key={team.id} 
-            teamId= {team.id} 
-            teamName={team.name}
-          />
-        ))}
-      </Widget>
+  if (!teams) return <Spinner />
+  else
+    return (
+      <Grid container>
+        <Grid item xs={12}>
+          <Widget title="Teams" disableWidgetMenu>
+            {teams.map(team => (
+              <TeamMemberExpansion key={team.id} teamId={team.id} teamName={team.name} />
+            ))}
+          </Widget>
+        </Grid>
       </Grid>
-    </Grid>
-    
-  )
+    )
 }
 
 Teams.propTypes = {
   getTeams: PropTypes.func,
-  teams: PropTypes.array,
+  teams: PropTypes.array
 }
 
 const actions = {
@@ -48,4 +43,7 @@ const selectors = createStructuredSelector({
   teams: teamsSelector
 })
 
-export default connect(selectors, actions)(Teams);
+export default connect(
+  selectors,
+  actions
+)(Teams)

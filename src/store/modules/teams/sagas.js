@@ -1,6 +1,6 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
-import  * as Types from './types'
+import * as Types from './types'
 
 const getTeams = apiCallSaga({
   type: Types.GET_TEAMS,
@@ -12,8 +12,8 @@ const getTeams = apiCallSaga({
 const getTeamMembers = apiCallSaga({
   type: Types.GET_TEAM_MEMBERS,
   method: 'GET',
-  path: ({payload}) => (`api/admin/teams/${payload}/users/`),
-  selectorKey:(payload) => (`teamMembers_${payload}`)
+  path: ({ payload }) => `api/admin/teams/${payload}/users/`,
+  selectorKey: payload => `teamMembers_${payload}`
 })
 
 export default function* rootSaga() {

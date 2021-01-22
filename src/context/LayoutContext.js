@@ -1,52 +1,50 @@
-import React from "react";
+import React from 'react'
 
-var LayoutStateContext = React.createContext();
-var LayoutDispatchContext = React.createContext();
+var LayoutStateContext = React.createContext()
+var LayoutDispatchContext = React.createContext()
 
 function layoutReducer(state, action) {
   switch (action.type) {
-    case "TOGGLE_SIDEBAR":
-      return { ...state, isSidebarOpened: !state.isSidebarOpened };
+    case 'TOGGLE_SIDEBAR':
+      return { ...state, isSidebarOpened: !state.isSidebarOpened }
     default: {
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${action.type}`)
     }
   }
 }
 
 function LayoutProvider({ children }) {
   var [state, dispatch] = React.useReducer(layoutReducer, {
-    isSidebarOpened: true,
-  });
+    isSidebarOpened: true
+  })
   return (
     <LayoutStateContext.Provider value={state}>
-      <LayoutDispatchContext.Provider value={dispatch}>
-        {children}
-      </LayoutDispatchContext.Provider>
+      <LayoutDispatchContext.Provider value={dispatch}>{children}</LayoutDispatchContext.Provider>
     </LayoutStateContext.Provider>
-  );
+  )
 }
 
 function useLayoutState() {
-  var context = React.useContext(LayoutStateContext);
+  var context = React.useContext(LayoutStateContext)
   if (context === undefined) {
-    throw new Error("useLayoutState must be used within a LayoutProvider");
+    throw new Error('useLayoutState must be used within a LayoutProvider')
   }
-  return context;
+  return context
 }
 
 function useLayoutDispatch() {
-  var context = React.useContext(LayoutDispatchContext);
+  var context = React.useContext(LayoutDispatchContext)
   if (context === undefined) {
-    throw new Error("useLayoutDispatch must be used within a LayoutProvider");
+    throw new Error('useLayoutDispatch must be used within a LayoutProvider')
   }
-  return context;
+  return context
 }
 
-export { LayoutProvider, useLayoutState, useLayoutDispatch, toggleSidebar };
+export { LayoutProvider, useLayoutState, useLayoutDispatch, toggleSidebar }
 
 // ###########################################################
 function toggleSidebar(dispatch) {
   dispatch({
-    type: "TOGGLE_SIDEBAR",
-  });
+    type: 'TOGGLE_SIDEBAR'
+  })
 }

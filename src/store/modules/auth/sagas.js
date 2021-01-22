@@ -1,13 +1,13 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
-import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT} from './types'
+import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT } from './types'
 
 const authLogin = apiCallSaga({
   type: AUTH_LOGIN,
   method: 'post',
   path: 'api/auth/login/',
   selectorKey: 'auth',
-  success: (res) => {
+  success: res => {
     localStorage.setItem('TH_TOKEN', JSON.stringify(res.token))
   }
 })
@@ -15,7 +15,7 @@ const authLogin = apiCallSaga({
 const authSignup = apiCallSaga({
   type: AUTH_SIGNUP,
   method: 'post',
-  path: '/auth/register/',
+  path: '/auth/register/'
 })
 
 const authGetMe = apiCallSaga({
@@ -27,7 +27,7 @@ const authGetMe = apiCallSaga({
 
 const authLogout = function() {
   localStorage.removeItem('TH_TOKEN')
-} 
+}
 
 export default function* rootSaga() {
   yield takeLatest(AUTH_LOGIN, authLogin)

@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 
 // styles
-import useStyles from "./styles";
+import useStyles from './styles'
 
 // components
-import { Typography } from "../Wrappers";
+import { Typography } from '../Wrappers'
 
 export default function PageTitle(props) {
-  var classes = useStyles();
+  var classes = useStyles()
 
   return (
     <div className={classes.pageTitleContainer}>
@@ -16,5 +16,5 @@ export default function PageTitle(props) {
       </Typography>
       {props.button && props.button}
     </div>
-  );
+  )
 }

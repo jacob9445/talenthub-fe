@@ -1,13 +1,13 @@
-import tinycolor from "tinycolor2";
+import tinycolor from 'tinycolor2'
 
-const primary = "#536DFE";
-const secondary = "#FF5C93";
-const warning = "#FFC260";
-const success = "#3CD4A0";
-const info = "#9013FE";
+const primary = '#536DFE'
+const secondary = '#FF5C93'
+const warning = '#FFC260'
+const success = '#3CD4A0'
+const info = '#9013FE'
 
-const lightenRate = 7.5;
-const darkenRate = 15;
+const lightenRate = 7.5
+const darkenRate = 15
 
 export default {
   palette: {
@@ -18,7 +18,7 @@ export default {
         .toHexString(),
       dark: tinycolor(primary)
         .darken(darkenRate)
-        .toHexString(),
+        .toHexString()
     },
     secondary: {
       main: secondary,
@@ -28,7 +28,7 @@ export default {
       dark: tinycolor(secondary)
         .darken(darkenRate)
         .toHexString(),
-      contrastText: "#FFFFFF",
+      contrastText: '#FFFFFF'
     },
     warning: {
       main: warning,
@@ -37,7 +37,7 @@ export default {
         .toHexString(),
       dark: tinycolor(warning)
         .darken(darkenRate)
-        .toHexString(),
+        .toHexString()
     },
     success: {
       main: success,
@@ -46,7 +46,7 @@ export default {
         .toHexString(),
       dark: tinycolor(success)
         .darken(darkenRate)
-        .toHexString(),
+        .toHexString()
     },
     info: {
       main: info,
@@ -55,84 +55,80 @@ export default {
         .toHexString(),
       dark: tinycolor(info)
         .darken(darkenRate)
-        .toHexString(),
+        .toHexString()
     },
     text: {
-      primary: "#4A4A4A",
-      secondary: "#6E6E6E",
-      hint: "#B9B9B9",
+      primary: '#4A4A4A',
+      secondary: '#6E6E6E',
+      hint: '#B9B9B9'
     },
     background: {
-      default: "#F6F7FF",
-      light: "#F3F5FF",
-    },
+      default: '#F6F7FF',
+      light: '#F3F5FF'
+    }
   },
   customShadows: {
-    widget:
-      "0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A",
-    widgetDark:
-      "0px 3px 18px 0px #4558A3B3, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A",
-    widgetWide:
-      "0px 12px 33px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A",
+    widget: '0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
+    widgetDark: '0px 3px 18px 0px #4558A3B3, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
+    widgetWide: '0px 12px 33px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A'
   },
   overrides: {
     MuiBackdrop: {
       root: {
-        backgroundColor: "#4A4A4A1A",
-      },
+        backgroundColor: '#4A4A4A1A'
+      }
     },
     MuiMenu: {
       paper: {
-        boxShadow:
-          "0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A",
-      },
+        boxShadow: '0px 3px 11px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A'
+      }
     },
     MuiSelect: {
       icon: {
-        color: "#B9B9B9",
-      },
+        color: '#B9B9B9'
+      }
     },
     MuiListItem: {
       root: {
-        "&$selected": {
-          backgroundColor: "#F3F5FF !important",
-          "&:focus": {
-            backgroundColor: "#F3F5FF",
-          },
-        },
+        '&$selected': {
+          backgroundColor: '#F3F5FF !important',
+          '&:focus': {
+            backgroundColor: '#F3F5FF'
+          }
+        }
       },
       button: {
-        "&:hover, &:focus": {
-          backgroundColor: "#F3F5FF",
-        },
-      },
+        '&:hover, &:focus': {
+          backgroundColor: '#F3F5FF'
+        }
+      }
     },
     MuiTouchRipple: {
       child: {
-        backgroundColor: "white",
-      },
+        backgroundColor: 'white'
+      }
     },
     MuiTableRow: {
       root: {
-        height: 56,
-      },
+        height: 56
+      }
     },
     MuiTableCell: {
       root: {
-        borderBottom: "1px solid rgba(224, 224, 224, .5)",
+        borderBottom: '1px solid rgba(224, 224, 224, .5)',
         paddingLeft: 24
       },
       head: {
-        fontSize: "0.95rem",
+        fontSize: '0.95rem'
       },
       body: {
-        fontSize: "0.95rem",
-      },
+        fontSize: '0.95rem'
+      }
     },
     PrivateSwitchBase: {
       root: {
         marginLeft: 10
       }
     }
-  },
-};
+  }
+}
