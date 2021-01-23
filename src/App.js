@@ -6,6 +6,7 @@ import { authGetMe, isAuthenticatedSelector, meLoadingSelector } from './store/m
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import Spinner from './components/Spinner'
+import Message from './components/Message'
 
 function App({ isAuthenticated, authGetMe, meLoading }) {
   useEffect(() => {
@@ -18,6 +19,7 @@ function App({ isAuthenticated, authGetMe, meLoading }) {
     return (
       <Router history={history}>
         <Routes />
+        <Message />
       </Router>
     )
   }
