@@ -2,6 +2,7 @@ import React from 'react'
 import { withStyles, Badge as BadgeBase, Typography as TypographyBase, Button as ButtonBase } from '@material-ui/core'
 import { useTheme, makeStyles } from '@material-ui/styles'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 
 // styles
 var useStyles = makeStyles(theme => ({
@@ -53,6 +54,7 @@ function Typography({ children, weight, size, colorBrightness, color, ...props }
 }
 
 function Button({ children, color, className, ...props }) {
+  console.log({children, color, className, ...props})
   var theme = useTheme()
 
   var Styled = createStyled({
@@ -102,6 +104,22 @@ function Button({ children, color, className, ...props }) {
       )}
     </Styled>
   )
+}
+
+Badge.propTypes = {
+
+}
+
+Typography.propTypes = {
+  children: PropTypes.node,
+  weight: PropTypes.string,
+  size: PropTypes.number,
+  colorBrightness: PropTypes.number,
+  variant: PropTypes.string
+}
+
+Button.propTypes = {
+  
 }
 
 export { Badge, Typography, Button }

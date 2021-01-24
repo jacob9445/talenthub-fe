@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/styles'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
 
 import { hideMessage, messageStateSelector, messageOptionSelector } from 'store/modules/message'
 
@@ -42,7 +43,6 @@ const variantIcon = {
 
 const Message = ({ hideMessage, state, options }) => {
   const classes = useStyles()
-  console.log({ options })
   return (
     <Snackbar
       {...options}
@@ -88,6 +88,12 @@ const selectors = createStructuredSelector({
   state: messageStateSelector,
   options: messageOptionSelector
 })
+
+Message.propTypes = {
+  hideMessage: PropTypes.func.isRequired,
+  options: PropTypes.object.isRequired,
+  state: PropTypes.bool
+}
 
 export default connect(
   selectors,

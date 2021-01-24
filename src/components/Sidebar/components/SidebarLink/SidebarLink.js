@@ -3,6 +3,7 @@ import { Collapse, Divider, List, ListItem, ListItemIcon, ListItemText, Typograp
 import { Inbox as InboxIcon } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 
 // styles
 import useStyles from './styles'
@@ -112,4 +113,15 @@ export default function SidebarLink({ link, icon, label, children, location, isS
       setIsOpen(!isOpen)
     }
   }
+}
+
+SidebarLink.propTypes = {
+  icon: PropTypes.element,
+  label: PropTypes.string.isRequired,
+  isSidebarOpened: PropTypes.bool.isRequired,
+  link: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  location: PropTypes.object.isRequired,
+  nested: PropTypes.bool,
+  type: PropTypes.oneOf(['title', 'divider'])
 }

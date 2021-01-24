@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 // styles
 import useStyles from './styles'
 
@@ -100,6 +101,11 @@ const actions = {
 const selectors = createStructuredSelector({
   me: meSelector
 })
+
+Header.propTypes = {
+  authLogout: PropTypes.func.isRequired,
+  me: PropTypes.object.isRequired
+}
 
 export default connect(
   selectors,

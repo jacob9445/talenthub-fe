@@ -15,6 +15,7 @@ import classNames from 'classnames'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import * as R from 'ramda'
+import PropTypes from 'prop-types'
 
 // styles
 import useStyles from './styles'
@@ -183,6 +184,11 @@ function Sidebar({ location, me }) {
 const selectors = createStructuredSelector({
   me: meSelector
 })
+
+Sidebar.propTypes = {
+  location: PropTypes.object.isRequired,
+  me: PropTypes.object.isRequired
+}
 
 export default R.compose(
   withRouter,

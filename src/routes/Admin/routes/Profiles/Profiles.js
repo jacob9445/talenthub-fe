@@ -46,9 +46,10 @@ const Profiles = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefres
 }
 
 Profiles.propTypes = {
-  getProfiles: PropTypes.func,
+  getProfiles: PropTypes.func.isRequired,
+  deleteProfileAndRefresh: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   profiles: PropTypes.array,
-  isLoading: PropTypes.bool,
   me: PropTypes.object
 }
 

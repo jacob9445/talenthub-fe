@@ -3,6 +3,7 @@ import { Grid, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import ClientsTable from './ClientsTable'
@@ -52,6 +53,14 @@ const selectors = createStructuredSelector({
   isClientsLoading: clientsLoadingSelector,
   me: meSelector
 })
+
+Clients.propTypes = {
+  getClients: PropTypes.func.isRequired,
+  deleteClientAndRefresh: PropTypes.func.isRequired,
+  clients: PropTypes.array,
+  isClientsLoading: PropTypes.bool.isRequired,
+  me: PropTypes.object.isRequired
+}
 
 export default connect(
   selectors,

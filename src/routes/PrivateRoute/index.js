@@ -2,6 +2,8 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
 import { isAuthenticatedSelector } from '../../store/modules/auth/selectors'
 import Header from '../../components/Header'
 import Sidebar from 'components/Sidebar'
@@ -40,5 +42,11 @@ const PrivateRoute = ({ path, component: Component, isAuthenticated, ...others }
 const selectors = createStructuredSelector({
   isAuthenticated: isAuthenticatedSelector
 })
+
+PrivateRoute.propTypes = {
+  path: PropTypes.string.isRequired,
+  component: PropTypes.elementType.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
+}
 
 export default connect(selectors)(PrivateRoute)

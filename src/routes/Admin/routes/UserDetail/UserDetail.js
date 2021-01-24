@@ -73,12 +73,6 @@ const UserDetail = ({ match: { params }, getUserDetail, userDetail, updateUserDe
     )
 }
 
-UserDetail.propTypes = {
-  params: PropTypes.number,
-  getUserDetail: PropTypes.func,
-  userDetail: PropTypes.object
-}
-
 const selectors = createStructuredSelector({
   userDetail: userDetailSelector,
   loadingSelectedUser: userDetailLoadingSelector
@@ -86,6 +80,13 @@ const selectors = createStructuredSelector({
 const actions = {
   getUserDetail,
   updateUserDetail
+}
+
+UserDetail.propTypes = {
+  params: PropTypes.number,
+  userDetail: PropTypes.object,
+  getUserDetail: PropTypes.func.isRequired,
+  updateUserDetail: PropTypes.func.isRequired
 }
 
 export default compose(

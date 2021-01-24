@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 // styles
 import useStyles from './styles'
@@ -7,6 +8,7 @@ import useStyles from './styles'
 import { Typography } from '../Wrappers'
 
 export default function PageTitle(props) {
+  // console.log({props})
   var classes = useStyles()
 
   return (
@@ -17,4 +19,7 @@ export default function PageTitle(props) {
       {props.button && props.button}
     </div>
   )
+}
+
+PageTitle.propTypes = {
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { TextField, FormLabel } from '@material-ui/core'
+import PropTypes from 'prop-types'
 import useStyles from './styles'
 
 const FormInput = ({ type, field, form, htmlId, label, readOnly }) => {
@@ -26,6 +27,14 @@ const FormInput = ({ type, field, form, htmlId, label, readOnly }) => {
       />
     </div>
   )
+}
+
+FormInput.propTypes = {
+  type: PropTypes.string.isRequired,
+  field: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
+  htmlId: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired
 }
 
 export default FormInput

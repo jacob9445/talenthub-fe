@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import UserDetailForm from 'components/UserDetailForm'
@@ -52,6 +53,12 @@ const selectors = createStructuredSelector({
 const actions = {
   createUser,
   getTeams
+}
+
+CreateUser.propTypes = {
+  createUser: PropTypes.func.isRequired,
+  getTeams: PropTypes.func.isRequired,
+  teams: PropTypes.array
 }
 
 export default connect(

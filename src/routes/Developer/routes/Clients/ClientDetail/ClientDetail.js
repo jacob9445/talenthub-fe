@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
 import { pick } from 'ramda'
+import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
@@ -71,6 +72,14 @@ const selectors = createStructuredSelector({
   clientDetail: clientDetailSelector,
   isDetailLoading: clientDetailLoadingSelector
 })
+
+ClientDetail.propTypes = {
+  getClientDetail: PropTypes.func.isRequired,
+  updateClient: PropTypes.func.isRequired,
+  clientDetail: PropTypes.object,
+  isDetailLoading: PropTypes.bool.isRequired,
+  params: PropTypes.object
+}
 
 export default compose(
   withRouter,

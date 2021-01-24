@@ -18,6 +18,7 @@ import {
 import { useTheme } from '@material-ui/styles'
 import classnames from 'classnames'
 import tinycolor from 'tinycolor2'
+import PropTypes from 'prop-types'
 
 // styles
 import useStyles from './styles'

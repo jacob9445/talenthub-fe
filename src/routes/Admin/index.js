@@ -1,5 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
+import PropTypes from 'prop-types'
+
 import Dashboard from './routes/Dashboard'
 import UserDetail from './routes/UserDetail'
 import Users from 'components/Users'
@@ -10,6 +12,7 @@ import ProfileDetail from './routes/Profiles/ProfileDetail'
 import Accounts from './routes/Accounts'
 import AccountDetail from './routes/Accounts/AccountDetail'
 import { isAdminOrRedir } from 'hocs/withRoles'
+
 const Admin = ({ match }) => {
   return (
     <Switch>
@@ -24,6 +27,10 @@ const Admin = ({ match }) => {
       <Route path={`${match.path}/accounts/:id/detail`} component={AccountDetail} />
     </Switch>
   )
+}
+
+Admin.propTypes = {
+  match: PropTypes.object.isRequired
 }
 
 export default isAdminOrRedir(Admin)

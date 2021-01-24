@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
+import PropTypes from 'prop-types'
 
 import { isDeveloperOrRedir } from 'hocs/withRoles'
 import Dashboard from './routes/Dashboard'
@@ -16,6 +17,10 @@ const Developer = ({ match: { path } }) => {
       <Route path={`${path}/clients/:id/detail`} component={ClientDetail} />
     </Switch>
   )
+}
+
+Developer.propTypes = {
+  path: PropTypes.string
 }
 
 export default isDeveloperOrRedir(Developer)

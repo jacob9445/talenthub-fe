@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import Spinner from './components/Spinner'
 import Message from './components/Message'
+import PropTypes from 'prop-types'
 
 function App({ isAuthenticated, authGetMe, meLoading }) {
   useEffect(() => {
@@ -33,6 +34,12 @@ const selectors = createStructuredSelector({
   isAuthenticated: isAuthenticatedSelector,
   meLoading: meLoadingSelector
 })
+
+App.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  authGetMe: PropTypes.func.isRequired,
+  meLoading: PropTypes.bool.isRequired
+}
 
 export default connect(
   selectors,
