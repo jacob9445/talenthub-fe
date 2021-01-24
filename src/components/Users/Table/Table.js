@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, TableRow, TableHead, TableBody, TableCell, Chip, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
@@ -74,4 +75,10 @@ export default function TableComponent({ data, myRole, handleDelete }) {
   } else {
     return <Spinner />
   }
+}
+
+TableComponent.propTypes = {
+  data: PropTypes.array,
+  myRole: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func.isRequired
 }

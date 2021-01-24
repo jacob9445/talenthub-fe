@@ -3,6 +3,7 @@ import { Field } from 'formik'
 import { has } from 'ramda'
 import { Button } from '@material-ui/core'
 import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
@@ -48,6 +49,14 @@ const ClientDetailForm = ({ handleSubmit, values, initialValues, location, histo
       </div>
     </form>
   )
+}
+
+ClientDetailForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  values: PropTypes.object.isRequired,
+  initialValues: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 export default withRouter(ClientDetailForm)

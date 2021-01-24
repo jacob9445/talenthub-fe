@@ -64,12 +64,12 @@ const TeamMemberExpansion = ({ teamId, teamName, getTeamMembers, teamMembers, hi
 }
 
 TeamMemberExpansion.propTypes = {
-  teamName: PropTypes.string,
-  teamId: PropTypes.number,
-  getTeamMembers: PropTypes.func,
+  teamName: PropTypes.string.isRequired,
+  teamId: PropTypes.number.isRequired,
+  getTeamMembers: PropTypes.func.isRequired,
   teamMembers: PropTypes.array,
-  history: PropTypes.object,
-  location: PropTypes.object
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 const actions = {

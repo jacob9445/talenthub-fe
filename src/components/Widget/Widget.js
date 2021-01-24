@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Paper, IconButton, Menu, MenuItem, Typography } from '@material-ui/core'
 import { MoreVert as MoreIcon } from '@material-ui/icons'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 
 // styles
 import useStyles from './styles'
@@ -93,4 +94,22 @@ export default function Widget({
       </Menu>
     </div>
   )
+}
+
+Widget.propTypes = {
+  title: PropTypes.string.isRequired,
+  disableWidgetMenu: PropTypes.bool,
+  children: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  noBodyPadding: PropTypes.any, //ToDo
+  bodyClass: PropTypes.any, //ToDo
+  header: PropTypes.any, //ToDo
+  noHeaderPadding: PropTypes.any, //ToDo
+  headerClass: PropTypes.any, //ToDo
+  style: PropTypes.any, //ToDo
+  noWidgetShadow: PropTypes.any, //ToDo
+  disableWidgetButton: PropTypes.any, //ToDo
+  WidgetButton: PropTypes.any //ToDo
 }

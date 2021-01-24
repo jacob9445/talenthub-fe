@@ -39,7 +39,9 @@ const AccountChips = ({ accounts, history, location }) => {
 }
 
 AccountChips.propTypes = {
-  accounts: PropTypes.array.isRequired
+  accounts: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 export default withRouter(AccountChips)

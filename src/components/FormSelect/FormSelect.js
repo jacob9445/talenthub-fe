@@ -1,5 +1,6 @@
 import React from 'react'
 import { FormControl, FormLabel, Select, OutlinedInput, MenuItem } from '@material-ui/core'
+import PropTypes from 'prop-types'
 import useStyles from './style'
 
 const FormSelect = ({ field, form, htmlId, label, options }) => {
@@ -22,6 +23,14 @@ const FormSelect = ({ field, form, htmlId, label, options }) => {
       </Select>
     </FormControl>
   )
+}
+
+FormSelect.propTypes = {
+  field: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
+  htmlId: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired
 }
 
 export default FormSelect

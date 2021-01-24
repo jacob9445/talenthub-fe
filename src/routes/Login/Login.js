@@ -7,6 +7,7 @@ import logo from './logo.svg'
 import LoginForm from './LoginForm'
 import { authLogin } from '../../store/modules/auth'
 import { formSubmit } from '../../helpers/form'
+import PropTypes from 'prop-types'
 const initialValues = {
   email: '',
   password: ''
@@ -45,6 +46,11 @@ const Login = ({ authLogin }) => {
 const actions = {
   authLogin
 }
+
+Login.propTypes = {
+  authLogin: PropTypes.func.isRequired
+}
+
 export default connect(
   null,
   actions

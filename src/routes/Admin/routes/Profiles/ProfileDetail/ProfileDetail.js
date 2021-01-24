@@ -83,8 +83,10 @@ const ProfileDetail = ({ match: { params }, getProfileDetail, profileDetail, upd
 
 ProfileDetail.propTypes = {
   params: PropTypes.string,
-  getProfileDetail: PropTypes.func,
-  profileDetail: PropTypes.object
+  getProfileDetail: PropTypes.func.isRequired,
+  profileDetail: PropTypes.object,
+  updateProfile: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 }
 
 const actions = {

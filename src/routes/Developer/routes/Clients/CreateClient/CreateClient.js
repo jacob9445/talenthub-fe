@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { Grid } from '@material-ui/core'
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import ClientDetailForm from '../ClientDetailForm'
@@ -42,6 +43,10 @@ const CreateClient = ({ createClient }) => {
 
 const actions = {
   createClient
+}
+
+CreateClient.propTypes = {
+  createClient: PropTypes.func.isRequired
 }
 
 export default connect(

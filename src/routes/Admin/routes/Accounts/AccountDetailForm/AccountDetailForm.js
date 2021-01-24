@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { Field } from 'formik'
 import { Button } from '@material-ui/core'
 import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
@@ -68,6 +69,12 @@ const AccountDetailForm = ({ location, history, handleSubmit }) => {
       </div>
     </form>
   )
+}
+
+AccountDetailForm.propTypes = {
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired
 }
 
 export default withRouter(AccountDetailForm)

@@ -90,10 +90,10 @@ const AccountDetail = ({ match: { params }, getAccountDetail, accountDetail, upd
 
 AccountDetail.propTypes = {
   params: PropTypes.string,
-  getAccountDetail: PropTypes.func,
+  getAccountDetail: PropTypes.func.isRequired,
   accountDetail: PropTypes.object,
-  updateAccount: PropTypes.func,
-  isLoading: PropTypes.bool
+  updateAccount: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 }
 
 const actions = {

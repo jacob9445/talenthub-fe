@@ -31,7 +31,7 @@ const Teams = ({ getTeams, teams }) => {
 }
 
 Teams.propTypes = {
-  getTeams: PropTypes.func,
+  getTeams: PropTypes.func.isRequired,
   teams: PropTypes.array
 }
 

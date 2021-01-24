@@ -4,6 +4,7 @@ import { Typography, Button } from '@material-ui/core'
 
 import FormInput from '../../../components/FormInput'
 import useStyles from '../styles'
+import PropTypes from 'prop-types'
 
 const LoginForm = ({ handleSubmit, errors }) => {
   let classes = useStyles()
@@ -26,6 +27,10 @@ const LoginForm = ({ handleSubmit, errors }) => {
       </form>
     </>
   )
+}
+
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired
 }
 
 export default LoginForm

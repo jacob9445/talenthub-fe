@@ -10,7 +10,7 @@ import PrivateRoute from './PrivateRoute'
 import Admin from './Admin'
 import TeamManager from './TeamManager'
 import Developer from './Developer'
-
+import PropTypes from 'prop-types'
 import { URL_PREFIXES } from 'config/constants'
 
 const Routes = ({ me, isAuthenticated }) => {
@@ -35,5 +35,10 @@ const selectors = createStructuredSelector({
   me: meSelector,
   isAuthenticated: isAuthenticatedSelector
 })
+
+Routes.propTypes = {
+  me: PropTypes.object,
+  isAuthenticated: PropTypes.bool.isRequired
+}
 
 export default connect(selectors)(Routes)

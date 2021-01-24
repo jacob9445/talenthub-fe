@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router'
 import * as R from 'ramda'
+import PropTypes from 'prop-types'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
@@ -40,7 +41,6 @@ const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, i
   const classes = useStyles()
 
   useEffect(() => {
-    console.log({ users, me })
     !users && getUsers(me)
   }, [getUsers, users, me])
 
@@ -103,6 +103,16 @@ const selectors = createStructuredSelector({
   isUsersLoading: usersLoadingSelector,
   me: meSelector
 })
+
+ProfileDetailForm.propTypes = {
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
+  users: PropTypes.array,
+  me: PropTypes.object.isRequired,
+  isUsersLoading: PropTypes.bool.isRequired
+}
 
 export default R.compose(
   withRouter,

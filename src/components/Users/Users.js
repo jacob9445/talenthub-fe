@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import { getUsers, usersSelector, deleteUserAndRefresh } from 'store/modules/users'
 import { meSelector } from 'store/modules/auth'
@@ -62,6 +63,13 @@ const selectors = createStructuredSelector({
   users: usersSelector,
   me: meSelector
 })
+
+Users.propTypes = {
+  users: PropTypes.array,
+  me: PropTypes.object,
+  getUsers: PropTypes.func.isRequired,
+  deleteUserAndRefresh: PropTypes.func.isRequired
+}
 
 export default connect(
   selectors,

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router'
 import * as R from 'ramda'
+import PropTypes from 'prop-types'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
@@ -73,6 +74,15 @@ const actions = {
 const selectors = createStructuredSelector({
   teams: teamsSelector
 })
+
+UserDetailForm.propTypes = {
+  path: PropTypes.string,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  getTeams: PropTypes.func.isRequired,
+  teams: PropTypes.array
+}
 
 export default R.compose(
   connect(
