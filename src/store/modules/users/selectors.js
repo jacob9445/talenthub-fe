@@ -1,12 +1,12 @@
 import * as R from 'ramda'
-import { dataSelector, isRequestPending } from '../api'
+import { createDataSelector, isRequestPending } from '../api'
 
 export const usersSelector = R.compose(
   R.path(['results']),
-  dataSelector('users')
+  createDataSelector('users')
 )
 
 export const usersLoadingSelector = state => isRequestPending('users', 'GET')(state)
 
-export const userDetailSelector = dataSelector('userDetail')
+export const userDetailSelector = createDataSelector('userDetail')
 export const userDetailLoadingSelector = state => isRequestPending('userDetail', 'get')(state)

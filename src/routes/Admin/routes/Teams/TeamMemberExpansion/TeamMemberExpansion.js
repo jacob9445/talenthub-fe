@@ -10,7 +10,7 @@ import * as R from 'ramda'
 import useStyles from './style'
 import Spinner from 'components/Spinner'
 import { getTeamMembers } from 'store/modules/teams'
-import { dataSelector } from 'store/modules/api'
+import { createDataSelector } from 'store/modules/api'
 
 const TeamMemberExpansion = ({ teamId, teamName, getTeamMembers, teamMembers, history, location }) => {
   const classes = useStyles()
@@ -79,7 +79,7 @@ const actions = {
 const teamMemberSelector = (state, props) =>
   R.compose(
     R.path(['results']),
-    dataSelector(`teamMembers_${props.teamId}`)
+    createDataSelector(`teamMembers_${props.teamId}`)
   )(state)
 
 const selectors = createStructuredSelector({
