@@ -8,6 +8,7 @@ import profiles from './profiles'
 import accounts from './accounts'
 import clients from './clients'
 import message from './message'
+import partners from './partners'
 
 export default combineReducers({
   api,
@@ -17,5 +18,6 @@ export default combineReducers({
   profiles,
   accounts,
   clients,
-  message
+  message,
+  partners
 })

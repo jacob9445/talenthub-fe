@@ -49,3 +49,14 @@ export const CLIENT_TYPE_LABELS = {
   [CLIENT_TYPES.INDIVIDUAL]: 'Individual',
   [CLIENT_TYPES.COMPANY]: 'Company'
 }
+
+export const CONTACT_METHOD_TYPES = [
+  {
+    value: "Skype",
+    display: "Skype"
+  },
+  {
+    value: "Whatsapp",
+    display: "Whatsapp"
+  }
+]

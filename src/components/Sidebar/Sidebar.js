@@ -112,6 +112,12 @@ let structure = {
       label: 'Clients',
       link: '/developer/clients',
       icon: <ClientIcon />
+    },
+    {
+      id: 4,
+      label: 'Partners',
+      link: '/developer/partners',
+      icon: <ClientIcon />
     }
   ]
 }
