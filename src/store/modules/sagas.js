@@ -6,7 +6,8 @@ import { saga as teams } from './teams'
 import { saga as profiles } from './profiles'
 import { saga as accounts } from './accounts'
 import { saga as clients } from './clients'
+import { saga as partners } from './partners'
 
 export default function* rootSaga() {
-  yield all([auth(), users(), teams(), profiles(), accounts(), clients()])
+  yield all([auth(), users(), teams(), profiles(), accounts(), clients(), partners()])
 }

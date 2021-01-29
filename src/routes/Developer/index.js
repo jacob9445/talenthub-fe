@@ -7,6 +7,9 @@ import Dashboard from './routes/Dashboard'
 import Clients from './routes/Clients'
 import CreateClient from './routes/Clients/CreateClient'
 import ClientDetail from './routes/Clients/ClientDetail'
+import Partners from './routes/Partners'
+import CreatePartner from './routes/Partners/CreatePartner'
+import PartnerDetail from './routes/Partners/PartnerDetail'
 
 const Developer = ({ match: { path } }) => {
   return (
@@ -15,12 +18,15 @@ const Developer = ({ match: { path } }) => {
       <Route exact path={`${path}/clients`} component={Clients} />
       <Route path={`${path}/clients/create`} component={CreateClient} />
       <Route path={`${path}/clients/:id/detail`} component={ClientDetail} />
+      <Route exact path={`${path}/partners`} component={Partners} />
+      <Route path={`${path}/partners/create`} component={CreatePartner} />
+      <Route path={`${path}/partners/:id/detail`} component={PartnerDetail} />
     </Switch>
   )
 }
 
 Developer.propTypes = {
-  path: PropTypes.string
+  match: PropTypes.object
 }
 
 export default isDeveloperOrRedir(Developer)
