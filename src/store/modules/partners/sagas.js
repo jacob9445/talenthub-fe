@@ -1,16 +1,13 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
 import * as Types from './types'
-import { ROLES } from 'config/constants'
+import { roleBasedPath } from 'helpers/sagaHelpers'
 
 const getPartners = apiCallSaga({
   type: Types.PARTNERS_GETPARTNERS,
   method: 'GET',
-  path: ({ payload }) => {
-    if (payload.role === ROLES.ADMIN) return 'api/admin/partners/'
-    else if (payload.role === ROLES.TEAM_MANAGER) return 'api/team-manager/partners/'
-    else return 'api/developer/partners/'
-    // console.log('test here', payload.role)
+  path: function*() {
+    return yield roleBasedPath('partners/')
   },
   selectorKey: 'partners'
 })
@@ -18,7 +15,9 @@ const getPartners = apiCallSaga({
 const deletePartner = apiCallSaga({
   type: Types.PARTNERS_DELETEPARTNER,
   method: 'DELETE',
-  path: ({ payload }) => `api/developer/partners/${payload.id}/`
+  path: function*({ payload }) {
+    return yield roleBasedPath(`partners/${payload.id}`)
+  }
 })
 
 const deletePartnerAndRefresh = function*(action) {
@@ -31,20 +30,26 @@ const deletePartnerAndRefresh = function*(action) {
 const getPartnerDetail = apiCallSaga({
   type: Types.GET_PARTNER_DETAIL,
   method: 'GET',
-  path: ({ payload }) => `api/developer/partners/${payload}/`,
+  path: function*({ payload }) {
+    return yield roleBasedPath(`partners/${payload}`)
+  },
   selectorKey: 'partnerDetail'
 })
 
 const updatePartnerDetail = apiCallSaga({
   type: Types.UPDATE_PARTNER_DETAIL,
   method: 'PUT',
-  path: ({ payload: { id } }) => `api/developer/partners/${id}/`
+  path: function*({ payload }) {
+    return yield roleBasedPath(`partners/${payload.id}/`)
+  }
 })
 
 const createPartner = apiCallSaga({
   type: Types.CREATE_PARTNER,
   method: 'POST',
-  path: 'api/developer/partners/'
+  path: function*() {
+    return yield roleBasedPath(`partners/`)
+  }
 })
 
 export default function* rootSaga() {

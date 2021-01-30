@@ -7,9 +7,9 @@ import Dashboard from './routes/Dashboard'
 import Clients from './routes/Clients'
 import CreateClient from './routes/Clients/CreateClient'
 import ClientDetail from './routes/Clients/ClientDetail'
-import Partners from './routes/Partners'
-import CreatePartner from './routes/Partners/CreatePartner'
-import PartnerDetail from './routes/Partners/PartnerDetail'
+import Partners from '../Partners'
+import CreatePartner from '../Partners/CreatePartner'
+import PartnerDetail from '../Partners/PartnerDetail'
 
 const Developer = ({ match: { path } }) => {
   return (

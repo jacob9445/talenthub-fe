@@ -19,6 +19,7 @@ export const formSubmit = (actionCreator, payload, formActions) => {
     //const error = R.path(['error'], res.data || res.error || res)
     const error = res.data
     if (typeof error === 'object') {
+      console.log({ error })
       const { message, errors, non_field_errors: globalError, ...otherFieldErrors } = error
       formActions.setErrors({
         _error: message || globalError,

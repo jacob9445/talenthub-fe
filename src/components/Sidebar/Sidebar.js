@@ -60,6 +60,12 @@ let structure = {
       label: 'Accounts',
       link: `/admin/accounts`,
       icon: <AccountIcon />
+    },
+    {
+      id: 5,
+      label: 'Partners',
+      link: '/admin/partners',
+      icon: <ClientIcon />
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -86,6 +92,12 @@ let structure = {
       label: 'Accounts',
       link: `/team-manager/accounts`,
       icon: <AccountIcon />
+    },
+    {
+      id: 4,
+      label: 'Partners',
+      link: '/team-manager/partners',
+      icon: <ClientIcon />
     }
   ],
   [ROLES.DEVELOPER]: [

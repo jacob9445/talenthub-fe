@@ -18,9 +18,9 @@ const Partners = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLo
 
   const handleDelete = useCallback(
     id => {
-      deletePartnerAndRefresh({id, role: me.role})
+      deletePartnerAndRefresh({ id, role: me.role })
     },
-    [deletePartnerAndRefresh]
+    [deletePartnerAndRefresh, me.role]
   )
 
   if (isPartnersLoading) return <Spinner />

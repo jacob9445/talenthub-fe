@@ -10,22 +10,36 @@ import PropTypes from 'prop-types'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
 import PartnerDetailForm, { validationSchema } from '../PartnerDetailForm'
-import { getPartnerDetail, updatePartnerDetail, partnerDetailSelector, partnerDetailLoadingSelector } from 'store/modules/partners'
+import {
+  getPartnerDetail,
+  updatePartnerDetail,
+  partnerDetailSelector,
+  partnerDetailLoadingSelector
+} from 'store/modules/partners'
 import Spinner from 'components/Spinner'
 
-const PartnerDetail = ({ getPartnerDetail, updatePartnerDetail, partnerDetail, isDetailLoading, match: { params } }) => {
+const PartnerDetail = ({
+  getPartnerDetail,
+  updatePartnerDetail,
+  partnerDetail,
+  isDetailLoading,
+  match: { params }
+}) => {
   useEffect(() => {
     getPartnerDetail(params.id)
   }, [getPartnerDetail, params])
 
-  const initialValues = useMemo(() => ({
-    full_name: partnerDetail?.full_name || '',
-    email: partnerDetail?.email || '',
-    address: partnerDetail?.address || '',
-    dob: partnerDetail?.dob || '',
-    phone_num: partnerDetail?.phone_num || '',
-    contact_method: partnerDetail?.contact_method || ''
-  }), [partnerDetail])
+  const initialValues = useMemo(
+    () => ({
+      full_name: partnerDetail?.full_name || '',
+      email: partnerDetail?.email || '',
+      address: partnerDetail?.address || '',
+      dob: partnerDetail?.dob || '',
+      phone_num: partnerDetail?.phone_num || '',
+      contact_method: partnerDetail?.contact_method || ''
+    }),
+    [partnerDetail]
+  )
 
   const handleSubmit = useCallback(
     (payload, formActions) => {
@@ -52,9 +66,7 @@ const PartnerDetail = ({ getPartnerDetail, updatePartnerDetail, partnerDetail, i
               initialValues={initialValues}
               validationSchema={validationSchema}
               enableReinitialize
-              onSubmit={handleSubmit}
-            >
-            </Formik>
+              onSubmit={handleSubmit}></Formik>
           </Widget>
         </Grid>
       </Grid>

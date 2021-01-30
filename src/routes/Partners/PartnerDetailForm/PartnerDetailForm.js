@@ -18,9 +18,9 @@ export const validationSchema = Yup.object().shape({
   phone_num: Yup.string().required('This field is required!')
 })
 
-const validateContactMethodField = (value) => value ? undefined : 'This field is required!'
+const validateContactMethodField = value => (value ? undefined : 'This field is required!')
 
-const PartnerDetailForm = ({ handleSubmit, values, initialValues, location, history }) => {
+const PartnerDetailForm = ({ handleSubmit, values, initialValues, location, history, ...props }) => {
   const classes = useStyles()
 
   const handleCancel = useCallback(() => {
@@ -33,10 +33,10 @@ const PartnerDetailForm = ({ handleSubmit, values, initialValues, location, hist
       <Field component={FormInput} type="text" htmlId="full_name" name="full_name" label="Full Name" />
       <Field component={FormInput} type="email" htmlId="email" name="email" label="Email" />
       <Field component={FormInput} type="text" htmlId="address" name="address" label="Address" />
-      <Field component={FormInput} type="text" htmlId="dob" name="dob" label="Data Of Birth" />
+      <Field component={FormInput} type="date" htmlId="dob" name="dob" label="Data Of Birth" />
       <Field component={FormInput} type="text" htmlId="phone_num" name="phone_num" label="Phone Number" />
       <FieldArray name="contact_method">
-        {(arrayHelpers) => {
+        {arrayHelpers => {
           return (
             <div>
               <Grid container className={classes.contactMethodTitle}>
@@ -50,48 +50,47 @@ const PartnerDetailForm = ({ handleSubmit, values, initialValues, location, hist
                     className={classes.contactMethodAdd}
                     onClick={() => {
                       arrayHelpers.push({ type: '', id: '' })
-                    }}
-                  >
+                    }}>
                     Add
                   </Button>
                 </Grid>
               </Grid>
-              {values.contact_method?.length > 0 && values.contact_method.map((item, index) => (
-                <Grid container spacing={1} className={classes.contactMethodRow} key={index}>
-                  <Grid item md={3}>
-                    <Field
-                      noMb
-                      component={FormSelect}
-                      htmlId={`contact_method.${index}.type`}
-                      name={`contact_method.${index}.type`}
-                      validate={validateContactMethodField}
-                      options={CONTACT_METHOD_TYPES}
-                    />
+              {values.contact_method?.length > 0 &&
+                values.contact_method.map((item, index) => (
+                  <Grid container spacing={1} className={classes.contactMethodRow} key={index}>
+                    <Grid item md={3}>
+                      <Field
+                        noMb
+                        component={FormSelect}
+                        htmlId={`contact_method.${index}.type`}
+                        name={`contact_method.${index}.type`}
+                        validate={validateContactMethodField}
+                        options={CONTACT_METHOD_TYPES}
+                      />
+                    </Grid>
+                    <Grid item md={7}>
+                      <Field
+                        noMb
+                        component={FormInput}
+                        type="text"
+                        htmlId={`contact_method.${index}.id`}
+                        name={`contact_method.${index}.id`}
+                        validate={validateContactMethodField}
+                      />
+                    </Grid>
+                    <Grid item md={2}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.contactMethodRemove}
+                        onClick={() => {
+                          arrayHelpers.remove(index)
+                        }}>
+                        Remove
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item md={7}>
-                    <Field
-                      noMb
-                      component={FormInput}
-                      type="text"
-                      htmlId={`contact_method.${index}.id`}
-                      name={`contact_method.${index}.id`}
-                      validate={validateContactMethodField}
-                    />
-                  </Grid>
-                  <Grid item md={2}>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.contactMethodRemove}
-                      onClick={() => {
-                        arrayHelpers.remove(index)
-                      }}
-                    >
-                      Remove
-                    </Button>
-                  </Grid>
-                </Grid>
-              ))}
+                ))}
             </div>
           )
         }}
