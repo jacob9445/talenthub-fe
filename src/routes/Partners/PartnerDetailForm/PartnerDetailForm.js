@@ -21,7 +21,6 @@ export const validationSchema = Yup.object().shape({
 const validateContactMethodField = value => (value ? undefined : 'This field is required!')
 
 const PartnerDetailForm = ({ handleSubmit, values, initialValues, location, history, ...props }) => {
-  console.log({ props })
   const classes = useStyles()
 
   const handleCancel = useCallback(() => {

@@ -12,6 +12,9 @@ import ProfileDetail from './routes/Profiles/ProfileDetail'
 import Accounts from './routes/Accounts'
 import AccountDetail from './routes/Accounts/AccountDetail'
 import { isAdminOrRedir } from 'hocs/withRoles'
+import Partners from '../Partners'
+import CreatePartner from '../Partners/CreatePartner'
+import PartnerDetail from '../Partners/PartnerDetail'
 
 const Admin = ({ match }) => {
   return (
@@ -25,6 +28,9 @@ const Admin = ({ match }) => {
       <Route path={`${match.path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route exact path={`${match.path}/accounts`} component={Accounts} />
       <Route path={`${match.path}/accounts/:id/detail`} component={AccountDetail} />
+      <Route exact path={`${match.path}/partners`} component={Partners} />
+      <Route path={`${match.path}/partners/create`} component={CreatePartner} />
+      <Route path={`${match.path}/partners/:id/detail`} component={PartnerDetail} />
     </Switch>
   )
 }

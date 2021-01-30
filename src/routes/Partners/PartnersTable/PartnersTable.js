@@ -1,14 +1,14 @@
 import React from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Button, Tooltip, Chip } from '@material-ui/core'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { Table, TableRow, TableHead, TableBody, TableCell, Button, Tooltip, Chip } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import Spinner from 'components/Spinner'
 
 const columns = ['Full Name', 'Email', 'Address', 'Data Of Birth', 'Phone Number', 'Contact Method', 'Actions']
 
-export default function TableComponent({ data, myRole, handleDelete }) {
+function PartnersTable({ data, myRole, handleDelete, match: { path } }) {
   if (data) {
     return (
       <Table className="mb-0">
@@ -35,7 +35,7 @@ export default function TableComponent({ data, myRole, handleDelete }) {
                 ))}
               </TableCell>
               <TableCell>
-                <Button component={Link} to={`/developer/partners/${id}/detail`}>
+                <Button component={Link} to={`${path}/${id}/detail`}>
                   <EditIcon color="primary" />
                 </Button>
                 <Button onClick={() => handleDelete(id)}>
@@ -52,8 +52,11 @@ export default function TableComponent({ data, myRole, handleDelete }) {
   }
 }
 
-TableComponent.propTypes = {
+export default withRouter(PartnersTable)
+
+PartnersTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  handleDelete: PropTypes.func.isRequired,
+  match: PropTypes.object
 }
