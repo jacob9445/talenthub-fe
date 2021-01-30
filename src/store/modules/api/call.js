@@ -68,7 +68,7 @@ export default ({
       const queryParams = { ...defaultParams, ...params }
 
       const res = yield call(axios.request, {
-        url: typeof path === 'function' ? path(action) : path,
+        url: typeof path === 'function' ? yield path(action) : path,
         method: method.toLowerCase(),
         headers: {
           ...defaultHeaders({ method }),

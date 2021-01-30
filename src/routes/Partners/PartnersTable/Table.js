@@ -27,13 +27,13 @@ export default function TableComponent({ data, myRole, handleDelete }) {
               <TableCell>{address}</TableCell>
               <TableCell>{dob}</TableCell>
               <TableCell>{phone_num}</TableCell>
-              <TableCell>{
-                contact_method.map((method) => (
+              <TableCell>
+                {(contact_method || []).map(method => (
                   <Tooltip key={method.id} title={method.id} placement="top">
                     <Chip label={method.type} variant="outlined" />
                   </Tooltip>
-                ))
-              }</TableCell>
+                ))}
+              </TableCell>
               <TableCell>
                 <Button component={Link} to={`/developer/partners/${id}/detail`}>
                   <EditIcon color="primary" />
