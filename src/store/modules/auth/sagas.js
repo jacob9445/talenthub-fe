@@ -1,14 +1,19 @@
-import { takeLatest } from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
 import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT } from './types'
+import { authSuccess, authFail } from './actions'
 
 const authLogin = apiCallSaga({
   type: AUTH_LOGIN,
   method: 'post',
   path: 'api/auth/login/',
   selectorKey: 'auth',
-  success: res => {
-    localStorage.setItem('TH_TOKEN', JSON.stringify(res.token))
+  success: function*(resData) {
+    localStorage.setItem('TH_TOKEN', JSON.stringify(resData.token))
+    yield put(authSuccess())
+  },
+  fail: function*() {
+    yield put(authFail()) 
   }
 })
 
