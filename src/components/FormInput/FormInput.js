@@ -5,13 +5,13 @@ import useStyles from './styles'
 import cn from 'classnames'
 import * as R from 'ramda'
 
-const FormInput = ({ type, field, form, field: {name}, htmlId, label, readOnly, noMb }) => {
+const FormInput = ({ type, field, form, field: { name }, htmlId, label, readOnly, noMb }) => {
   const classes = useStyles()
   const error = R.path(R.split('.', name), form.touched) && R.path(R.split('.', name), form.errors)
-  
+
   return (
-    <div className={cn(classes.wrapper, {[classes.noMb]: noMb})}>
-      {label && <FormLabel htmlFor={htmlId}> {label} </FormLabel>}
+    <div className={cn(classes.wrapper, { [classes.noMb]: noMb })}>
+      {label && <FormLabel htmlFor={htmlId}>{label}</FormLabel>}
       <TextField
         id={htmlId}
         margin="none"
