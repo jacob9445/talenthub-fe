@@ -24,7 +24,7 @@ import useStyles from './styles'
 import SidebarLink from './components/SidebarLink/SidebarLink'
 
 // context
-import { useLayoutState, useLayoutDispatch, toggleSidebar } from '../../context/LayoutContext'
+import { useLayoutState, useLayoutDispatch, toggleSidebar } from 'context/LayoutContext'
 
 import { ROLES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'

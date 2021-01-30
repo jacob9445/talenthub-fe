@@ -13,7 +13,7 @@ import useStyles from './styles'
 import { Typography } from '../Wrappers'
 
 // context
-import { useLayoutState, useLayoutDispatch, toggleSidebar } from '../../context/LayoutContext'
+import { useLayoutState, useLayoutDispatch, toggleSidebar } from 'context/LayoutContext'
 import { authLogout } from 'store/modules/auth'
 import { meSelector } from 'store/modules/auth/selectors'
 

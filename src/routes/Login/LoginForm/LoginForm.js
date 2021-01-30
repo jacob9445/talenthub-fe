@@ -2,7 +2,7 @@ import React from 'react'
 import { Field } from 'formik'
 import { Typography, Button } from '@material-ui/core'
 
-import FormInput from '../../../components/FormInput'
+import FormInput from 'components/FormInput'
 import useStyles from '../styles'
 import PropTypes from 'prop-types'
 

@@ -4,12 +4,12 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { isAuthenticatedSelector } from '../../store/modules/auth/selectors'
-import Header from '../../components/Header'
+import { isAuthenticatedSelector } from 'store/modules/auth/selectors'
+import { useLayoutState } from 'context/LayoutContext'
+import classnames from 'classnames'
+import Header from 'components/Header'
 import Sidebar from 'components/Sidebar'
 import useStyles from './styles'
-import { useLayoutState } from '../../context/LayoutContext'
-import classnames from 'classnames'
 
 const PrivateRoute = ({ path, component: Component, isAuthenticated, ...others }) => {
   let classes = useStyles()

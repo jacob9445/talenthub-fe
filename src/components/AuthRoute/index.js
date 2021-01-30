@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
-import { isAuthenticatedSelector } from '../../store/modules/auth/selectors'
+import { isAuthenticatedSelector } from 'store/modules/auth/selectors'
 import PropTypes from 'prop-types'
 
 const AuthRoute = ({ path, component: Component, redirectTo = '/', isAuthenticated, ...others }) => (
