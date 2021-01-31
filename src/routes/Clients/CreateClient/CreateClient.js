@@ -1,15 +1,18 @@
 import React, { useCallback } from 'react'
-import { Grid } from '@material-ui/core'
-import { Formik } from 'formik'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import { createStructuredSelector } from 'reselect'
 import { format } from 'date-fns'
+import { Formik } from 'formik'
+import { Grid } from '@material-ui/core'
+import PropTypes from 'prop-types'
 
-import Widget from 'components/Widget'
-import ClientDetailForm, { validationSchema } from '../ClientDetailForm'
-import { formSubmit } from 'helpers/form'
-import { createClient } from 'store/modules/clients'
 import { CLIENT_TYPES } from 'config/constants'
+import { createClient } from 'store/modules/clients'
+import { formSubmit } from 'helpers/form'
+import { meSelector } from 'store/modules/auth'
+import { ROLES } from 'config/constants'
+import ClientDetailForm, { validationSchema } from '../ClientDetailForm'
+import Widget from 'components/Widget'
 
 const initialValues = {
   full_name: '',
@@ -19,18 +22,25 @@ const initialValues = {
   owner: ''
 }
 
-const CreateClient = ({ createClient }) => {
+const CreateClient = ({ createClient, me }) => {
   const handleSubmit = useCallback(
-    (payload, formActions) => {
+    (values, formActions) => {
       return formSubmit(
         createClient,
         {
-          data: payload
+          data: {
+            ...values,
+            ...(me.role === ROLES.DEVELOPER
+              ? {
+                  owner: me.id
+                }
+              : {})
+          }
         },
         formActions
       )
     },
-    [createClient]
+    [createClient, me]
   )
 
   return (
@@ -49,15 +59,20 @@ const CreateClient = ({ createClient }) => {
   )
 }
 
+const selector = createStructuredSelector({
+  me: meSelector
+})
+
 const actions = {
   createClient
 }
 
 CreateClient.propTypes = {
-  createClient: PropTypes.func.isRequired
+  createClient: PropTypes.func.isRequired,
+  me: PropTypes.object
 }
 
 export default connect(
-  null,
+  selector,
   actions
 )(CreateClient)
