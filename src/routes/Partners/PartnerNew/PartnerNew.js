@@ -1,32 +1,32 @@
 import React, { useCallback } from 'react'
-import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
-import { format } from 'date-fns'
-import { Formik } from 'formik'
 import { Grid } from '@material-ui/core'
+import { Formik } from 'formik'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { createStructuredSelector } from 'reselect'
 
-import { CLIENT_TYPES } from 'config/constants'
-import { createClient } from 'store/modules/clients'
+import Widget from 'components/Widget'
+import PartnerDetailForm, { validationSchema } from '../PartnerDetailForm'
 import { formSubmit } from 'helpers/form'
+import { createPartner } from 'store/modules/partners'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
-import ClientDetailForm, { validationSchema } from '../ClientDetailForm'
-import Widget from 'components/Widget'
 
 const initialValues = {
   full_name: '',
-  type: CLIENT_TYPES.COMPANY,
-  company_name: '',
-  started_at: format(new Date(), 'yyyy-MM-dd'),
-  owner: ''
+  email: '',
+  address: '',
+  dob: '',
+  phone_num: '',
+  owner: '',
+  contact_method: ''
 }
 
-const CreateClient = ({ createClient, me }) => {
+const PartnerNew = ({ createPartner, me }) => {
   const handleSubmit = useCallback(
     (values, formActions) => {
       return formSubmit(
-        createClient,
+        createPartner,
         {
           data: {
             ...values,
@@ -40,18 +40,18 @@ const CreateClient = ({ createClient, me }) => {
         formActions
       )
     },
-    [createClient, me]
+    [createPartner, me]
   )
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Widget title="Create Client" disableWidgetMenu>
+        <Widget title="Create Partner" disableWidgetMenu>
           <Formik
-            component={ClientDetailForm}
+            component={PartnerDetailForm}
             initialValues={initialValues}
-            validationSchema={validationSchema}
             onSubmit={handleSubmit}
+            validationSchema={validationSchema}
           />
         </Widget>
       </Grid>
@@ -64,15 +64,14 @@ const selector = createStructuredSelector({
 })
 
 const actions = {
-  createClient
+  createPartner
 }
 
-CreateClient.propTypes = {
-  createClient: PropTypes.func.isRequired,
-  me: PropTypes.object
+PartnerNew.propTypes = {
+  createPartner: PropTypes.func.isRequired
 }
 
 export default connect(
   selector,
   actions
-)(CreateClient)
+)(PartnerNew)

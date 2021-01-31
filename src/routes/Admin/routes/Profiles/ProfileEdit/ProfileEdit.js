@@ -20,7 +20,7 @@ import ProfileDetailForm from '../ProfileDetailForm'
 import Spinner from 'components/Spinner'
 import AccountChips from './AccountChips'
 
-const ProfileDetail = ({ match: { params }, getProfileDetail, profileDetail, updateProfile, isLoading }) => {
+const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updateProfile, isLoading }) => {
   useEffect(() => {
     getProfileDetail(params.id)
   }, [getProfileDetail, params.id])
@@ -81,7 +81,7 @@ const ProfileDetail = ({ match: { params }, getProfileDetail, profileDetail, upd
     )
 }
 
-ProfileDetail.propTypes = {
+ProfileEdit.propTypes = {
   params: PropTypes.string,
   getProfileDetail: PropTypes.func.isRequired,
   profileDetail: PropTypes.object,
@@ -105,4 +105,4 @@ export default compose(
     actions
   ),
   withRouter
-)(ProfileDetail)
+)(ProfileEdit)

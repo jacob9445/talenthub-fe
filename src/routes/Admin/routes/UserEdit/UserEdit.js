@@ -16,7 +16,7 @@ import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 import ProfileChips from './ProfileChips'
 
-const UserDetail = ({ match: { params }, getUserDetail, userDetail, updateUserDetail }) => {
+const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDetail }) => {
   useEffect(() => {
     getUserDetail(params.id)
   }, [params, getUserDetail])
@@ -82,7 +82,7 @@ const actions = {
   updateUserDetail
 }
 
-UserDetail.propTypes = {
+UserEdit.propTypes = {
   params: PropTypes.number,
   userDetail: PropTypes.object,
   getUserDetail: PropTypes.func.isRequired,
@@ -95,4 +95,4 @@ export default compose(
     actions
   ),
   withRouter
-)(UserDetail)
+)(UserEdit)

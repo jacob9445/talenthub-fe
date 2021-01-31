@@ -19,7 +19,7 @@ const initialValues = {
   team: ''
 }
 
-const CreateUser = ({ createUser, getTeams, teams }) => {
+const UserNew = ({ createUser, getTeams, teams }) => {
   const handleSubmit = useCallback(
     (payload, formActions) => {
       return formSubmit(
@@ -55,7 +55,7 @@ const actions = {
   getTeams
 }
 
-CreateUser.propTypes = {
+UserNew.propTypes = {
   createUser: PropTypes.func.isRequired,
   getTeams: PropTypes.func.isRequired,
   teams: PropTypes.array
@@ -64,4 +64,4 @@ CreateUser.propTypes = {
 export default connect(
   selectors,
   actions
-)(CreateUser)
+)(UserNew)

@@ -33,7 +33,7 @@ const gender_patterns = {
 
 const columns = ['Username', 'Type', 'Full Name', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
 
-export default function TableComponent({ data, myRole, handleDelete }) {
+export default function ProfilesTable({ data, myRole, handleDelete }) {
   const classes = useStyles()
 
   if (data) {
@@ -83,7 +83,7 @@ export default function TableComponent({ data, myRole, handleDelete }) {
   }
 }
 
-TableComponent.propTypes = {
+ProfilesTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired

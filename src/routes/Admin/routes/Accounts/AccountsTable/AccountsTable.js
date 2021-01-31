@@ -9,7 +9,7 @@ import Spinner from 'components/Spinner'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
 
-export default function TableComponent({ data, myRole, handleDelete }) {
+export default function AccountsTable({ data, myRole, handleDelete }) {
   if (data) {
     return (
       <Table className="mb-0">
@@ -50,7 +50,7 @@ export default function TableComponent({ data, myRole, handleDelete }) {
   }
 }
 
-TableComponent.propTypes = {
+AccountsTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired
