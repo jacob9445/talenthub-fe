@@ -10,6 +10,7 @@ import ClientsTable from './ClientsTable'
 import Spinner from 'components/Spinner'
 import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSelector } from 'store/modules/clients'
 import { meSelector } from 'store/modules/auth'
+import { URL_PREFIXES } from 'config/constants'
 
 const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading, me }) => {
   useEffect(() => {
@@ -32,7 +33,7 @@ const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading
             title="Clients"
             disableWidgetMenu
             WidgetButton={
-              <Button color="primary" component={Link} to="/developer/clients/create">
+              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/clients/create`}>
                 Add Client
               </Button>
             }>
