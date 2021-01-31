@@ -17,13 +17,16 @@ import {
   partnerDetailLoadingSelector
 } from 'store/modules/partners'
 import Spinner from 'components/Spinner'
+import { meSelector } from 'store/modules/auth'
+import { ROLES } from 'config/constants'
 
 const PartnerDetail = ({
   getPartnerDetail,
   updatePartnerDetail,
   partnerDetail,
   isDetailLoading,
-  match: { params }
+  match: { params },
+  me
 }) => {
   useEffect(() => {
     getPartnerDetail(params.id)
@@ -36,23 +39,31 @@ const PartnerDetail = ({
       address: partnerDetail?.address || '',
       dob: partnerDetail?.dob || '',
       phone_num: partnerDetail?.phone_num || '',
+      owner: partnerDetail?.owner.id || '',
       contact_method: partnerDetail?.contact_method || ''
     }),
     [partnerDetail]
   )
 
   const handleSubmit = useCallback(
-    (payload, formActions) => {
+    (values, formActions) => {
       return formSubmit(
         updatePartnerDetail,
         {
-          data: payload,
+          data: {
+            ...values,
+            ...(me.role === ROLES.DEVELOPER
+              ? {
+                  owner: me.id
+                }
+              : {})
+          },
           id: params.id
         },
         formActions
       )
     },
-    [updatePartnerDetail, params.id]
+    [updatePartnerDetail, params.id, me]
   )
 
   if (isDetailLoading) return <Spinner />
@@ -80,7 +91,8 @@ const actions = {
 
 const selectors = createStructuredSelector({
   partnerDetail: partnerDetailSelector,
-  isDetailLoading: partnerDetailLoadingSelector
+  isDetailLoading: partnerDetailLoadingSelector,
+  me: meSelector
 })
 
 PartnerDetail.propTypes = {

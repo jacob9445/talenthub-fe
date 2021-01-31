@@ -4,7 +4,7 @@ import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 
 const getPartners = apiCallSaga({
-  type: Types.PARTNERS_GETPARTNERS,
+  type: Types.GET_PARTNERS,
   method: 'GET',
   path: function*() {
     return yield roleBasedPath('partners/')
@@ -13,7 +13,7 @@ const getPartners = apiCallSaga({
 })
 
 const deletePartner = apiCallSaga({
-  type: Types.PARTNERS_DELETEPARTNER,
+  type: Types.DELETE_PARTNER,
   method: 'DELETE',
   path: function*({ payload }) {
     return yield roleBasedPath(`partners/${payload.id}`)
@@ -53,9 +53,9 @@ const createPartner = apiCallSaga({
 })
 
 export default function* rootSaga() {
-  yield takeLatest(Types.PARTNERS_GETPARTNERS, getPartners)
-  yield takeLatest(Types.PARTNERS_DELETEPARTNER, deletePartner)
-  yield takeLatest(Types.PARTNERS_DELETE_PARTNER_AND_REFRESH, deletePartnerAndRefresh)
+  yield takeLatest(Types.GET_PARTNERS, getPartners)
+  yield takeLatest(Types.DELETE_PARTNER, deletePartner)
+  yield takeLatest(Types.DELETE_PARTNER_AND_REFRESH, deletePartnerAndRefresh)
   yield takeLatest(Types.GET_PARTNER_DETAIL, getPartnerDetail)
   yield takeLatest(Types.UPDATE_PARTNER_DETAIL, updatePartnerDetail)
   yield takeLatest(Types.CREATE_PARTNER, createPartner)

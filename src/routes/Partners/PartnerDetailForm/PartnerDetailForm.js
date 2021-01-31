@@ -1,14 +1,20 @@
+import React, { useCallback, useMemo, useEffect } from 'react'
 import { Button, FormLabel, Grid } from '@material-ui/core'
 import { Field, FieldArray } from 'formik'
 import { withRouter } from 'react-router'
 import * as Yup from 'yup'
 import PropTypes from 'prop-types'
-import React, { useCallback, useMemo } from 'react'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
-import { CONTACT_METHOD_TYPES } from 'config/constants'
+import { CONTACT_METHOD_TYPES, URL_PREFIXES } from 'config/constants'
+import { meSelector } from 'store/modules/auth'
+import { ROLES } from 'config/constants'
+import { usersSelector, getUsers } from 'store/modules/users'
 
 export const validationSchema = Yup.object().shape({
   full_name: Yup.string().required('This field is required!'),
@@ -18,14 +24,42 @@ export const validationSchema = Yup.object().shape({
   phone_num: Yup.string().required('This field is required!')
 })
 
+const validateOwnerField = value => (!value ? 'This field is required!' : undefined)
 const validateContactMethodField = value => (value ? undefined : 'This field is required!')
 
-const PartnerDetailForm = ({ handleSubmit, values, initialValues, location, history, ...props }) => {
+const PartnerDetailForm = ({
+  handleSubmit,
+  values,
+  initialValues,
+  location,
+  history,
+  me: { role },
+  me,
+  users,
+  getUsers
+}) => {
   const classes = useStyles()
 
+  useEffect(() => {
+    if (!users && me.role !== ROLES.DEVELOPER) {
+      getUsers(me)
+    }
+  }, [getUsers, me, users])
+
   const handleCancel = useCallback(() => {
-    location.state ? history.push(location.state) : history.push('/developer/partners')
-  }, [location, history])
+    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/partners`)
+  }, [location, history, role])
+
+  const userLists = useMemo(() => {
+    if (users) {
+      return users.map(user => ({
+        display: `${user.first_name} ${user.last_name}`,
+        value: user.id
+      }))
+    } else {
+      return []
+    }
+  }, [users])
 
   const isUpdateMode = useMemo(() => Boolean(initialValues.full_name), [initialValues])
   return (
@@ -35,6 +69,17 @@ const PartnerDetailForm = ({ handleSubmit, values, initialValues, location, hist
       <Field component={FormInput} type="text" htmlId="address" name="address" label="Address" />
       <Field component={FormInput} type="date" htmlId="dob" name="dob" label="Data Of Birth" />
       <Field component={FormInput} type="text" htmlId="phone_num" name="phone_num" label="Phone Number" />
+      {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(me.role) && (
+        <Field
+          component={FormSelect}
+          htmlId="owner"
+          type="text"
+          name="owner"
+          label="Owner"
+          options={userLists}
+          validate={validateOwnerField}
+        />
+      )}
       <FieldArray name="contact_method">
         {arrayHelpers => {
           return (
@@ -115,4 +160,19 @@ PartnerDetailForm.propTypes = {
   history: PropTypes.object.isRequired
 }
 
-export default withRouter(PartnerDetailForm)
+const selector = createStructuredSelector({
+  me: meSelector,
+  users: usersSelector
+})
+
+const actions = {
+  getUsers
+}
+
+export default compose(
+  withRouter,
+  connect(
+    selector,
+    actions
+  )
+)(PartnerDetailForm)

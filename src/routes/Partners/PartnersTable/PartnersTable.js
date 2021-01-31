@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { Link, withRouter } from 'react-router-dom'
 import { Table, TableRow, TableHead, TableBody, TableCell, Button, Tooltip, Chip } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
+import { ROLES } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-const columns = ['Full Name', 'Email', 'Address', 'Data Of Birth', 'Phone Number', 'Contact Method', 'Actions']
-
 function PartnersTable({ data, myRole, handleDelete, match: { path } }) {
+  const columns = useMemo(
+    () =>
+      myRole === ROLES.DEVELOPER
+        ? ['Full Name', 'Email', 'Address', 'Dob', 'Phone Number', 'Contact Method', 'Actions']
+        : ['Full Name', 'Email', 'Address', 'Dob', 'Phone Number', 'Contact Method', 'Owner', 'Actions'],
+    [myRole]
+  )
   if (data) {
     return (
       <Table className="mb-0">
@@ -20,7 +26,7 @@ function PartnersTable({ data, myRole, handleDelete, match: { path } }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, full_name, email, address, dob, phone_num, contact_method }) => (
+          {data.map(({ id, full_name, email, address, dob, phone_num, contact_method, owner }) => (
             <TableRow key={id}>
               <TableCell>{full_name}</TableCell>
               <TableCell>{email}</TableCell>
@@ -34,6 +40,7 @@ function PartnersTable({ data, myRole, handleDelete, match: { path } }) {
                   </Tooltip>
                 ))}
               </TableCell>
+              {myRole === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
               <TableCell>
                 <Button component={Link} to={`${path}/${id}/detail`}>
                   <EditIcon color="primary" />
