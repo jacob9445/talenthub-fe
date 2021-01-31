@@ -10,6 +10,7 @@ import PartnersTable from './PartnersTable'
 import Spinner from 'components/Spinner'
 import { getPartners, deletePartnerAndRefresh, partnersSelector, partnersLoadingSelector } from 'store/modules/partners'
 import { meSelector } from 'store/modules/auth'
+import { URL_PREFIXES } from 'config/constants'
 
 const Partners = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoading, me }) => {
   useEffect(() => {
@@ -32,7 +33,7 @@ const Partners = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLo
             title="Partners"
             disableWidgetMenu
             WidgetButton={
-              <Button color="primary" component={Link} to="/developer/partners/create">
+              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/partners/create`}>
                 Add Partner
               </Button>
             }>

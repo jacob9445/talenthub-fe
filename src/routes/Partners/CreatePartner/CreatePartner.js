@@ -3,11 +3,14 @@ import { Grid } from '@material-ui/core'
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { createStructuredSelector } from 'reselect'
 
 import Widget from 'components/Widget'
 import PartnerDetailForm, { validationSchema } from '../PartnerDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createPartner } from 'store/modules/partners'
+import { meSelector } from 'store/modules/auth'
+import { ROLES } from 'config/constants'
 
 const initialValues = {
   full_name: '',
@@ -15,21 +18,29 @@ const initialValues = {
   address: '',
   dob: '',
   phone_num: '',
+  owner: '',
   contact_method: ''
 }
 
-const CreatePartner = ({ createPartner }) => {
+const CreatePartner = ({ createPartner, me }) => {
   const handleSubmit = useCallback(
-    (payload, formActions) => {
+    (values, formActions) => {
       return formSubmit(
         createPartner,
         {
-          data: payload
+          data: {
+            ...values,
+            ...(me.role === ROLES.DEVELOPER
+              ? {
+                  owner: me.id
+                }
+              : {})
+          }
         },
         formActions
       )
     },
-    [createPartner]
+    [createPartner, me]
   )
 
   return (
@@ -48,6 +59,10 @@ const CreatePartner = ({ createPartner }) => {
   )
 }
 
+const selector = createStructuredSelector({
+  me: meSelector
+})
+
 const actions = {
   createPartner
 }
@@ -57,6 +72,6 @@ CreatePartner.propTypes = {
 }
 
 export default connect(
-  null,
+  selector,
   actions
 )(CreatePartner)
