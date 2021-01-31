@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import Spinner from 'components/Spinner'
-import { CLIENT_TYPE_LABELS, ROLES } from 'config/constants'
+import { CLIENT_TYPE_LABELS, CLIENT_TYPES, URL_PREFIXES } from 'config/constants'
 
-const columns = ['Full Name', 'Type', 'Company Name', 'Started at', 'Actions']
+const columns = ['Full Name', 'Type', 'Company Name', 'Started at', 'Owner', 'Actions']
 
-export default function TableComponent({ data, myRole, handleDelete }) {
+export default function ClientsTable({ data, myRole, handleDelete }) {
   if (data) {
     return (
       <Table className="mb-0">
@@ -21,22 +21,21 @@ export default function TableComponent({ data, myRole, handleDelete }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, full_name, type, company_name, started_at }) => (
+          {data.map(({ id, full_name, type, company_name, owner, started_at }) => (
             <TableRow key={id}>
               <TableCell>{full_name}</TableCell>
               <TableCell>{CLIENT_TYPE_LABELS[type]}</TableCell>
-              <TableCell>{company_name}</TableCell>
+              <TableCell>{type === CLIENT_TYPES.INDIVIDUAL ? null : company_name}</TableCell>
               <TableCell>{started_at}</TableCell>
-              {[ROLES.DEVELOPER].includes(myRole) && (
-                <TableCell>
-                  <Button component={Link} to={`/developer/clients/${id}/detail`}>
-                    <EditIcon color="primary" />
-                  </Button>
-                  <Button onClick={() => handleDelete(id)}>
-                    <DeleteIcon color="secondary" />
-                  </Button>
-                </TableCell>
-              )}
+              <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>
+              <TableCell>
+                <Button component={Link} to={`/${URL_PREFIXES[myRole]}/clients/${id}/detail`}>
+                  <EditIcon color="primary" />
+                </Button>
+                <Button onClick={() => handleDelete(id)}>
+                  <DeleteIcon color="secondary" />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -47,7 +46,7 @@ export default function TableComponent({ data, myRole, handleDelete }) {
   }
 }
 
-TableComponent.propTypes = {
+ClientsTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired

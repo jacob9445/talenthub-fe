@@ -54,6 +54,8 @@ const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, i
         display: user.username,
         value: user.id
       }))
+    } else {
+      return []
     }
   }, [users])
 

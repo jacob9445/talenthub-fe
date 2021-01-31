@@ -52,11 +52,22 @@ export const CLIENT_TYPE_LABELS = {
 
 export const CONTACT_METHOD_TYPES = [
   {
-    value: "Skype",
-    display: "Skype"
+    value: 'Skype',
+    display: 'Skype'
   },
   {
-    value: "Whatsapp",
-    display: "Whatsapp"
+    value: 'Whatsapp',
+    display: 'Whatsapp'
+  }
+]
+
+export const CLIENT_TYPE_OPTIONS = [
+  {
+    value: CLIENT_TYPES.COMPANY,
+    display: 'Company'
+  },
+  {
+    value: CLIENT_TYPES.INDIVIDUAL,
+    display: 'Individual'
   }
 ]

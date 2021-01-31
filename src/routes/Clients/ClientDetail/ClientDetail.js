@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import ClientDetailForm from '../ClientDetailForm'
+import ClientDetailForm, { validationSchema } from '../ClientDetailForm'
 import { getClientDetail, updateClient, clientDetailSelector, clientDetailLoadingSelector } from 'store/modules/clients'
 import Spinner from 'components/Spinner'
 import { CLIENT_TYPES } from 'config/constants'
@@ -26,9 +26,13 @@ const ClientDetail = ({ getClientDetail, updateClient, clientDetail, isDetailLoa
           full_name: '',
           type: CLIENT_TYPES.COMPANY,
           company_name: '',
-          started_at: ''
+          started_at: '',
+          owner: ''
         }
-      : pick(['full_name', 'type', 'company_name', 'started_at'])(clientDetail)
+      : {
+          ...pick(['full_name', 'type', 'company_name', 'started_at'])(clientDetail),
+          owner: clientDetail.owner.id
+        }
   }, [clientDetail])
 
   const handleSubmit = useCallback(
@@ -55,6 +59,7 @@ const ClientDetail = ({ getClientDetail, updateClient, clientDetail, isDetailLoa
               component={ClientDetailForm}
               initialValues={initialValues}
               enableReinitialize
+              validationSchema={validationSchema}
               onSubmit={handleSubmit}
             />
           </Widget>
