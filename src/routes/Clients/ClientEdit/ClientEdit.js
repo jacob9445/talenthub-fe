@@ -17,7 +17,7 @@ import { CLIENT_TYPES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
 
-const ClientDetail = ({ getClientDetail, updateClient, clientDetail, isDetailLoading, match: { params }, me }) => {
+const ClientEdit = ({ getClientDetail, updateClient, clientDetail, isDetailLoading, match: { params }, me }) => {
   useEffect(() => {
     getClientDetail(params.id)
   }, [getClientDetail, params.id])
@@ -88,7 +88,7 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-ClientDetail.propTypes = {
+ClientEdit.propTypes = {
   getClientDetail: PropTypes.func.isRequired,
   updateClient: PropTypes.func.isRequired,
   clientDetail: PropTypes.object,
@@ -102,4 +102,4 @@ export default compose(
     selectors,
     actions
   )
-)(ClientDetail)
+)(ClientEdit)

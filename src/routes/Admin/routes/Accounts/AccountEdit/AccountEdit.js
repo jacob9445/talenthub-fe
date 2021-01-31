@@ -17,7 +17,7 @@ import { formSubmit } from 'helpers/form'
 import AccountDetailFrom from '../AccountDetailForm'
 import Spinner from 'components/Spinner'
 
-const AccountDetail = ({ match: { params }, getAccountDetail, accountDetail, updateAccount, isLoading }) => {
+const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updateAccount, isLoading }) => {
   useEffect(() => {
     getAccountDetail(params.id)
   }, [getAccountDetail, params.id])
@@ -88,7 +88,7 @@ const AccountDetail = ({ match: { params }, getAccountDetail, accountDetail, upd
     )
 }
 
-AccountDetail.propTypes = {
+AccountEdit.propTypes = {
   params: PropTypes.string,
   getAccountDetail: PropTypes.func.isRequired,
   accountDetail: PropTypes.object,
@@ -112,4 +112,4 @@ export default compose(
     selectors,
     actions
   )
-)(AccountDetail)
+)(AccountEdit)

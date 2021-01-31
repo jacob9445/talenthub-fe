@@ -20,7 +20,7 @@ import Spinner from 'components/Spinner'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
 
-const PartnerDetail = ({
+const PartnerEdit = ({
   getPartnerDetail,
   updatePartnerDetail,
   partnerDetail,
@@ -95,7 +95,7 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-PartnerDetail.propTypes = {
+PartnerEdit.propTypes = {
   getPartnerDetail: PropTypes.func.isRequired,
   updatePartnerDetail: PropTypes.func.isRequired,
   partnerDetail: PropTypes.object,
@@ -109,4 +109,4 @@ export default compose(
     selectors,
     actions
   )
-)(PartnerDetail)
+)(PartnerEdit)
