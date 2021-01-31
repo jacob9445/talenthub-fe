@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Table, TableRow, TableHead, TableBody, TableCell, Button } from '@material-ui/core'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
@@ -6,10 +6,16 @@ import PropTypes from 'prop-types'
 
 import Spinner from 'components/Spinner'
 import { CLIENT_TYPE_LABELS, CLIENT_TYPES, URL_PREFIXES } from 'config/constants'
-
-const columns = ['Full Name', 'Type', 'Company Name', 'Started at', 'Owner', 'Actions']
+import { ROLES } from 'config/constants'
 
 export default function ClientsTable({ data, myRole, handleDelete }) {
+  const columns = useMemo(
+    () =>
+      myRole === ROLES.DEVELOPER
+        ? ['Full Name', 'Type', 'Company Name', 'Started at', 'Actions']
+        : ['Full Name', 'Type', 'Company Name', 'Started at', 'Owner', 'Actions'],
+    [myRole]
+  )
   if (data) {
     return (
       <Table className="mb-0">
@@ -27,7 +33,7 @@ export default function ClientsTable({ data, myRole, handleDelete }) {
               <TableCell>{CLIENT_TYPE_LABELS[type]}</TableCell>
               <TableCell>{type === CLIENT_TYPES.INDIVIDUAL ? null : company_name}</TableCell>
               <TableCell>{started_at}</TableCell>
-              <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>
+              {myRole === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
               <TableCell>
                 <Button component={Link} to={`/${URL_PREFIXES[myRole]}/clients/${id}/detail`}>
                   <EditIcon color="primary" />

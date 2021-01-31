@@ -14,8 +14,10 @@ import ClientDetailForm, { validationSchema } from '../ClientDetailForm'
 import { getClientDetail, updateClient, clientDetailSelector, clientDetailLoadingSelector } from 'store/modules/clients'
 import Spinner from 'components/Spinner'
 import { CLIENT_TYPES } from 'config/constants'
+import { meSelector } from 'store/modules/auth'
+import { ROLES } from 'config/constants'
 
-const ClientDetail = ({ getClientDetail, updateClient, clientDetail, isDetailLoading, match: { params } }) => {
+const ClientDetail = ({ getClientDetail, updateClient, clientDetail, isDetailLoading, match: { params }, me }) => {
   useEffect(() => {
     getClientDetail(params.id)
   }, [getClientDetail, params.id])
@@ -36,17 +38,24 @@ const ClientDetail = ({ getClientDetail, updateClient, clientDetail, isDetailLoa
   }, [clientDetail])
 
   const handleSubmit = useCallback(
-    (payload, formActions) => {
+    (values, formActions) => {
       return formSubmit(
         updateClient,
         {
-          data: payload,
+          data: {
+            ...values,
+            ...(me.role === ROLES.DEVELOPER
+              ? {
+                  owner: me.id
+                }
+              : {})
+          },
           id: params.id
         },
         formActions
       )
     },
-    [updateClient, params.id]
+    [updateClient, params.id, me]
   )
 
   if (isDetailLoading) return <Spinner />
@@ -75,7 +84,8 @@ const actions = {
 
 const selectors = createStructuredSelector({
   clientDetail: clientDetailSelector,
-  isDetailLoading: clientDetailLoadingSelector
+  isDetailLoading: clientDetailLoadingSelector,
+  me: meSelector
 })
 
 ClientDetail.propTypes = {

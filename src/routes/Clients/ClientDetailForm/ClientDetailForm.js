@@ -14,6 +14,7 @@ import { CLIENT_TYPES, CLIENT_TYPE_OPTIONS, URL_PREFIXES } from 'config/constant
 import useStyles from './styles'
 import { meSelector } from 'store/modules/auth'
 import { usersSelector, getUsers } from 'store/modules/users'
+import { ROLES } from 'config/constants'
 
 export const validationSchema = Yup.object().shape({
   full_name: Yup.string().required('This field is required!'),
@@ -22,9 +23,10 @@ export const validationSchema = Yup.object().shape({
     is: CLIENT_TYPES.COMPANY,
     then: Yup.string().required('Company name is required!'),
     otherwise: Yup.string()
-  }),
-  owner: Yup.number().required('This field is required!')
+  })
 })
+
+const validateOwnerField = value => (!value ? 'This field is required!' : undefined)
 
 const ClientDetailForm = ({
   handleSubmit,
@@ -40,7 +42,7 @@ const ClientDetailForm = ({
   const classes = useStyles()
 
   useEffect(() => {
-    if (!users) {
+    if (!users && me.role !== ROLES.DEVELOPER) {
       getUsers(me)
     }
   }, [getUsers, me, users])
@@ -69,7 +71,17 @@ const ClientDetailForm = ({
         <Field component={FormInput} type="text" htmlId="company_name" name="company_name" label="Company Name" />
       ) : null}
       <Field component={FormInput} type="date" htmlId="started_at" name="started_at" label="Started at" />
-      <Field component={FormSelect} htmlId="owner" type="text" name="owner" label="Owner" options={userLists} />
+      {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(me.role) && (
+        <Field
+          component={FormSelect}
+          htmlId="owner"
+          type="text"
+          name="owner"
+          label="Owner"
+          options={userLists}
+          validate={validateOwnerField}
+        />
+      )}
       <div className={classes.formButtonWrapper}>
         <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
           {isUpdateMode ? 'Update' : 'Create'}
