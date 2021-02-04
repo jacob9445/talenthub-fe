@@ -5,7 +5,7 @@ import * as Types from './types'
 
 const getDashboardInfo = apiCallSaga({
   type: Types.GET_DASHBOARD_INFO,
-  method: 'GET',
+  method: 'get',
   path: function*() {
     return yield roleBasedPath('dashboard/')
   },
