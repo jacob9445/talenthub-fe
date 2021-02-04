@@ -72,6 +72,12 @@ let structure = {
       label: 'Clients',
       link: '/admin/clients',
       icon: <ClientIcon />
+    },
+    {
+      id: 7,
+      label: 'Projects',
+      link: '/admin/project',
+      icon: <ClientIcon />
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -110,6 +116,12 @@ let structure = {
       label: 'Clients',
       link: '/team-manager/clients',
       icon: <ClientIcon />
+    },
+    {
+      id: 6,
+      label: 'Projects',
+      link: '/team-manager/project',
+      icon: <ClientIcon />
     }
   ],
   [ROLES.DEVELOPER]: [
@@ -141,6 +153,12 @@ let structure = {
       id: 4,
       label: 'Partners',
       link: '/developer/partners',
+      icon: <ClientIcon />
+    },
+    {
+      id: 5,
+      label: 'Projects',
+      link: '/developer/project',
       icon: <ClientIcon />
     }
   ]

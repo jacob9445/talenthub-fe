@@ -71,3 +71,63 @@ export const CLIENT_TYPE_OPTIONS = [
     display: 'Individual'
   }
 ]
+
+export const PROJECT_TYPE = {
+  BUDGET: 1,
+  HOULYFT: 2,
+  HOULYPT: 3,
+  CONTRACT: 4
+}
+
+export const PROJECT_TYPE_LABELS = {
+  [PROJECT_TYPE.BUDGET]: 'Budget',
+  [PROJECT_TYPE.HOULYFT]: 'Houly FT',
+  [PROJECT_TYPE.HOULYPT]: 'Houly PT',
+  [PROJECT_TYPE.CONTRACT]: 'Contract'
+}
+
+export const PROJECT_TYPE_OPTIONS = [
+  {
+    value: PROJECT_TYPE.BUDGET,
+    display: 'Budget'
+  },
+  {
+    value: PROJECT_TYPE.HOULYFT,
+    display: 'Houly FT'
+  },
+  {
+    value: PROJECT_TYPE.HOULYPT,
+    display: 'Houly PT'
+  },
+  {
+    value: PROJECT_TYPE.CONTRACT,
+    display: 'Contract'
+  }
+]
+
+export const PROJECT_STATUS = {
+  ONGOING: 1,
+  PAUSED: 2,
+  ENDED: 3
+}
+
+export const PROJECT_STATUS_LABELS = {
+  [PROJECT_STATUS.ONGOING]: 'Ongoing',
+  [PROJECT_STATUS.PAUSED]: 'Paused',
+  [PROJECT_STATUS.ENDED]: 'Ended'
+}
+
+export const PROJECT_STATUS_OPTIONS = [
+  {
+    value: PROJECT_STATUS.ONGOING,
+    display: 'Ongoing'
+  },
+  {
+    value: PROJECT_STATUS.PAUSED,
+    display: 'Paused'
+  },
+  {
+    value: PROJECT_STATUS.ENDED,
+    display: 'Ended'
+  }
+]
