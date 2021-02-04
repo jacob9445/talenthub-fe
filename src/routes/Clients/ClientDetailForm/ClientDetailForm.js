@@ -42,10 +42,8 @@ const ClientDetailForm = ({
   const classes = useStyles()
 
   useEffect(() => {
-    if (!users && me.role !== ROLES.DEVELOPER) {
-      getUsers(me)
-    }
-  }, [getUsers, me, users])
+    getUsers(me)
+  }, [getUsers, me])
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/clients`)

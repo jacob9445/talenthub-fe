@@ -36,15 +36,14 @@ const PartnerDetailForm = ({
   me: { role },
   me,
   users,
-  getUsers
+  getUsers,
+  match: { params }
 }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    if (!users && me.role !== ROLES.DEVELOPER) {
-      getUsers(me)
-    }
-  }, [getUsers, me, users])
+    getUsers(me)
+  }, [getUsers, me])
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/partners`)
@@ -61,7 +60,7 @@ const PartnerDetailForm = ({
     }
   }, [users])
 
-  const isUpdateMode = useMemo(() => Boolean(initialValues.full_name), [initialValues])
+  const isUpdateMode = Boolean(params.id)
   return (
     <form onSubmit={handleSubmit}>
       <Field component={FormInput} type="text" htmlId="full_name" name="full_name" label="Full Name" />
