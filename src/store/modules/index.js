@@ -10,6 +10,7 @@ import clients from './clients'
 import message from './message'
 import partners from './partners'
 import project from './project'
+import dashboard from './dashboard'
 
 export default combineReducers({
   api,
@@ -21,5 +22,6 @@ export default combineReducers({
   clients,
   message,
   partners,
-  project
+  project,
+  dashboard
 })

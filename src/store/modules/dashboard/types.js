@@ -1,0 +1,1 @@
+export const GET_DASHBOARD_INFO = 'GET_DASHBOARD_INFO'
