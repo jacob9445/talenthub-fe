@@ -10,6 +10,9 @@ import ClientEdit from '../Clients/ClientEdit'
 import Partners from '../Partners'
 import PartnerNew from '../Partners/PartnerNew'
 import PartnerEdit from '../Partners/PartnerEdit'
+import Project from '../Project'
+import ProjectNew from '../Project/ProjectNew'
+import ProjectEdit from '../Project/ProjectEdit'
 
 const Developer = ({ match: { path } }) => {
   return (
@@ -21,6 +24,9 @@ const Developer = ({ match: { path } }) => {
       <Route exact path={`${path}/partners`} component={Partners} />
       <Route path={`${path}/partners/create`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
+      <Route exact path={`${path}/project`} component={Project} />
+      <Route path={`${path}/project/create`} component={ProjectNew} />
+      <Route path={`${path}/project/:id/detail`} component={ProjectEdit} />
     </Switch>
   )
 }

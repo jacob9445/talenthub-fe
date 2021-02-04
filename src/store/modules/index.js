@@ -9,6 +9,7 @@ import accounts from './accounts'
 import clients from './clients'
 import message from './message'
 import partners from './partners'
+import project from './project'
 
 export default combineReducers({
   api,
@@ -19,5 +20,6 @@ export default combineReducers({
   accounts,
   clients,
   message,
-  partners
+  partners,
+  project
 })

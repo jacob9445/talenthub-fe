@@ -18,25 +18,31 @@ import PartnerEdit from '../Partners/PartnerEdit'
 import Clients from '../Clients'
 import ClientNew from '../Clients/ClientNew'
 import ClientEdit from '../Clients/ClientEdit'
+import Project from '../Project'
+import ProjectNew from '../Project/ProjectNew'
+import ProjectEdit from '../Project/ProjectEdit'
 
-const Admin = ({ match }) => {
+const Admin = ({ match: { path } }) => {
   return (
     <Switch>
-      <Route path={`${match.path}/dashboard`} component={Dashboard} />
-      <Route exact path={`${match.path}/users`} component={Users} />
-      <Route path={`${match.path}/users/new`} component={UserNew} />
-      <Route path={`${match.path}/users/:id/detail`} component={UserEdit} />
-      <Route path={`${match.path}/teams`} component={Teams} />
-      <Route exact path={`${match.path}/profiles`} component={Profiles} />
-      <Route path={`${match.path}/profiles/:id/detail`} component={ProfileDetail} />
-      <Route exact path={`${match.path}/accounts`} component={Accounts} />
-      <Route path={`${match.path}/accounts/:id/detail`} component={AccountEdit} />
-      <Route exact path={`${match.path}/partners`} component={Partners} />
-      <Route path={`${match.path}/partners/create`} component={PartnerNew} />
-      <Route path={`${match.path}/partners/:id/detail`} component={PartnerEdit} />
-      <Route exact path={`${match.path}/clients`} component={Clients} />
-      <Route path={`${match.path}/clients/create`} component={ClientNew} />
-      <Route path={`${match.path}/clients/:id/detail`} component={ClientEdit} />
+      <Route path={`${path}/dashboard`} component={Dashboard} />
+      <Route exact path={`${path}/users`} component={Users} />
+      <Route path={`${path}/users/new`} component={UserNew} />
+      <Route path={`${path}/users/:id/detail`} component={UserEdit} />
+      <Route path={`${path}/teams`} component={Teams} />
+      <Route exact path={`${path}/profiles`} component={Profiles} />
+      <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
+      <Route exact path={`${path}/accounts`} component={Accounts} />
+      <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
+      <Route exact path={`${path}/partners`} component={Partners} />
+      <Route path={`${path}/partners/create`} component={PartnerNew} />
+      <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
+      <Route exact path={`${path}/clients`} component={Clients} />
+      <Route path={`${path}/clients/create`} component={ClientNew} />
+      <Route path={`${path}/clients/:id/detail`} component={ClientEdit} />
+      <Route exact path={`${path}/project`} component={Project} />
+      <Route path={`${path}/project/create`} component={ProjectNew} />
+      <Route path={`${path}/project/:id/detail`} component={ProjectEdit} />
     </Switch>
   )
 }

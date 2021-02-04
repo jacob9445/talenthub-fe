@@ -11,18 +11,24 @@ import PartnerEdit from '../Partners/PartnerEdit'
 import Clients from '../Clients'
 import ClientNew from '../Clients/ClientNew'
 import ClientEdit from '../Clients/ClientEdit'
+import Project from '../Project'
+import ProjectNew from '../Project/ProjectNew'
+import ProjectEdit from '../Project/ProjectEdit'
 
-const TeamManager = ({ match }) => {
+const TeamManager = ({ match: { path } }) => {
   return (
     <Switch>
-      <Route path={`${match.path}/dashboard`} component={Dashboard} />
-      <Route path={`${match.path}/users`} component={Users} />
-      <Route exact path={`${match.path}/partners`} component={Partners} />
-      <Route path={`${match.path}/partners/create`} component={PartnerNew} />
-      <Route path={`${match.path}/partners/:id/detail`} component={PartnerEdit} />
-      <Route exact path={`${match.path}/clients`} component={Clients} />
-      <Route path={`${match.path}/clients/create`} component={ClientNew} />
-      <Route path={`${match.path}/clients/:id/detail`} component={ClientEdit} />
+      <Route path={`${path}/dashboard`} component={Dashboard} />
+      <Route path={`${path}/users`} component={Users} />
+      <Route exact path={`${path}/partners`} component={Partners} />
+      <Route path={`${path}/partners/create`} component={PartnerNew} />
+      <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
+      <Route exact path={`${path}/clients`} component={Clients} />
+      <Route path={`${path}/clients/create`} component={ClientNew} />
+      <Route path={`${path}/clients/:id/detail`} component={ClientEdit} />
+      <Route exact path={`${path}/project`} component={Project} />
+      <Route path={`${path}/project/create`} component={ProjectNew} />
+      <Route path={`${path}/project/:id/detail`} component={ProjectEdit} />
     </Switch>
   )
 }
