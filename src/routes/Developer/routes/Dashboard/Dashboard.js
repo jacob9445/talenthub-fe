@@ -30,7 +30,7 @@ const Dashboard = ({ getDashboardInfo, dashboardInfo, isLoading, me }) => {
         </Grid>
         <Grid item xs={12}>
           <Widget title="Ongoing Projects" disableWidgetMenu noBodyPadding>
-            <ProjectTable data={ongoing_projects} myRole={me.role} />
+            <ProjectTable data={ongoing_projects} myRole={me.role} disableActions />
           </Widget>
         </Grid>
       </Grid>
