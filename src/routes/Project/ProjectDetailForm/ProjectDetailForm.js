@@ -61,9 +61,12 @@ const ProjectDetailForm = ({
   const classes = useStyles()
 
   useEffect(() => {
-    getUsers(me)
+    me.role !== ROLES.DEVELOPER && getUsers(me)
+  }, [me, getUsers])
+
+  useEffect(() => {
     getClients()
-  }, [getUsers, me, getClients])
+  }, [getClients])
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/project`)
