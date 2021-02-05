@@ -1,16 +1,24 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Table, TableRow, TableHead, TableBody, TableCell, Button } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
-import { ROLES, PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS } from 'config/constants'
+import { ROLES, PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS, URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-function ProjectTable({ data, myRole, handleDelete, match: { path } }) {
+function ProjectTable({ data, myRole, handleDelete, match: { path }, history, location }) {
   const columns = [ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole)
     ? ['Title', 'Type', 'Weakly Limit', 'Price', 'Status', 'Project Starter', 'Actions']
     : ['Title', 'Type', 'Weakly Limit', 'Price', 'Status', 'Actions']
+
+  const showProjectDetail = useCallback(
+    id => () => {
+      history.push(`/${URL_PREFIXES[myRole]}/project/${id}/detail`, location.pathname)
+    },
+    [history, location.pathname, myRole]
+  )
+
   if (data) {
     return (
       <Table className="mb-0">
@@ -33,7 +41,7 @@ function ProjectTable({ data, myRole, handleDelete, match: { path } }) {
                 <TableCell>{`${project_starter.first_name} ${project_starter.last_name}`}</TableCell>
               ) : null}
               <TableCell>
-                <Button component={Link} to={`${path}/${id}/detail`}>
+                <Button onClick={showProjectDetail(id)}>
                   <EditIcon color="primary" />
                 </Button>
                 <Button onClick={() => handleDelete(id)}>
