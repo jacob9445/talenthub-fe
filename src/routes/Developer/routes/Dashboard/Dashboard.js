@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core'
 import useStyles from './styles'
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
-import WeeklyIncomeChart from 'components/WeeklyIncomeChart'
+import WeeklyIncomeLineChart from 'components/WeeklyIncomeLineChart'
 import { getDashboardInfo, dashboardInfoLoadingSelector, dashbordInfoSelector } from 'store/modules/dashboard'
 
 const Dashboard = ({ getDashboardInfo, dashboardInfo, isLoading }) => {
@@ -17,28 +17,19 @@ const Dashboard = ({ getDashboardInfo, dashboardInfo, isLoading }) => {
     getDashboardInfo()
   }, [getDashboardInfo])
 
-  const weeklyIncomeData = useMemo(() => {
-    if (!isLoading) {
-      const { weekly_income } = dashboardInfo
-      const weeks = ['Mon', 'Tue', 'Wed', 'Thur', 'Fri']
-      return weekly_income.map((value, index) => ({
-        label: weeks[index],
-        income: value
-      }))
-    } else return null
-  }, [dashboardInfo, isLoading])
-
   if (isLoading) return <Spinner />
-  else
+  else {
+    const { weekly_income } = dashboardInfo
     return (
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <Widget title="Weekly Incoming" disableWidgetMenu bodyClass={classes.wrapper}>
-            <WeeklyIncomeChart data={weeklyIncomeData} />
+        <Grid item xs={12} md={12}>
+          <Widget title="Weekly Income" disableWidgetMenu bodyClass={classes.wrapper}>
+            <WeeklyIncomeLineChart data={weekly_income} />
           </Widget>
         </Grid>
       </Grid>
     )
+  }
 }
 
 const actions = {
