@@ -131,3 +131,116 @@ export const PROJECT_STATUS_OPTIONS = [
     display: 'Ended'
   }
 ]
+
+export const FINANCIALREQUEST_TYPE = {
+  SENDINVOICE: 1,
+  SENDPAYMENT: 2,
+  RECEIVEPAYMENT: 3,
+  REFUNDPAYMENT: 4
+}
+
+export const FINANCIALREQUEST_TYPE_LABELS = {
+  [FINANCIALREQUEST_TYPE.SENDINVOICE]: 'Send Invoice',
+  [FINANCIALREQUEST_TYPE.SENDPAYMENT]: 'Send Payment',
+  [FINANCIALREQUEST_TYPE.RECEIVEPAYMENT]: 'Receive Payment',
+  [FINANCIALREQUEST_TYPE.REFUNDPAYMENT]: 'Refund Payment'
+}
+
+export const FINANCIALREQUEST_TYPE_OPTIONS = [
+  {
+    value: FINANCIALREQUEST_TYPE.SENDINVOICE,
+    display: 'Send Invoice'
+  },
+  {
+    value: FINANCIALREQUEST_TYPE.SENDPAYMENT,
+    display: 'Send Payment'
+  },
+  {
+    value: FINANCIALREQUEST_TYPE.RECEIVEPAYMENT,
+    display: 'Receive Payment'
+  },
+  {
+    value: FINANCIALREQUEST_TYPE.REFUNDPAYMENT,
+    display: 'Refund Payment'
+  }
+]
+
+export const FINANCIALREQUEST_STATUS = {
+  PENDING: 1,
+  APPROVED: 2,
+  DECLINED: 3,
+  CANCELED: 4
+}
+
+export const FINANCIALREQUEST_STATUS_LABELS = {
+  [FINANCIALREQUEST_STATUS.PENDING]: 'Pending',
+  [FINANCIALREQUEST_STATUS.APPROVED]: 'Approved',
+  [FINANCIALREQUEST_STATUS.DECLINED]: 'Declined',
+  [FINANCIALREQUEST_STATUS.CANCELED]: 'Canceled'
+}
+
+export const FINANCIALREQUEST_STATUS_OPTIONS = [
+  {
+    value: FINANCIALREQUEST_STATUS.PENDING,
+    display: 'Pending'
+  },
+  {
+    value: FINANCIALREQUEST_STATUS.APPROVED,
+    display: 'Approved'
+  },
+  {
+    value: FINANCIALREQUEST_STATUS.DECLINED,
+    display: 'Declined'
+  },
+  {
+    value: FINANCIALREQUEST_STATUS.CANCELED,
+    display: 'Canceled'
+  }
+]
+
+export const FINANCIALREQUEST_COUNTER_PARTY_TYPE = {
+  CLIENT: 6,
+  PARTNER: 8
+}
+
+export const FINANCIALREQUEST_COUNTER_PARTY_OPTIONS = [
+  {
+    value: FINANCIALREQUEST_COUNTER_PARTY_TYPE.CLIENT,
+    display: 'Client'
+  },
+  {
+    value: FINANCIALREQUEST_COUNTER_PARTY_TYPE.PARTNER,
+    display: 'Partner'
+  }
+]
+
+export const PAYMENT_PLATFORM_TYPE = {
+  PAYPAL: 'paypal',
+  PAYONEER: 'payoneer',
+  UPWORK: 'upwork',
+  FREELANCER: 'freelancer',
+  TOPTAL: 'toptal'
+}
+
+export const PAYMENT_PLATFORM_OPTIONS = [
+  {
+    value: PAYMENT_PLATFORM_TYPE.PAYPAL,
+    display: 'Paypal'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.PAYONEER,
+    display: 'Payoneer'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.UPWORK,
+    display: 'Upwork'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.FREELANCER,
+    display: 'Freelancer'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.TOPTAL,
+    display: 'Toptal'
+  }
+]
