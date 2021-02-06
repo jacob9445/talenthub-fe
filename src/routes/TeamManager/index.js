@@ -14,6 +14,9 @@ import ClientEdit from '../Clients/ClientEdit'
 import Project from '../Project'
 import ProjectNew from '../Project/ProjectNew'
 import ProjectEdit from '../Project/ProjectEdit'
+import FinancialRequest from '../FinancialRequest'
+import FinancialRequestEdit from '../FinancialRequest/FinancialRequestEdit'
+import FinancialRequestNew from '../FinancialRequest/FinancialRequestNew'
 
 const TeamManager = ({ match: { path } }) => {
   return (
@@ -29,6 +32,9 @@ const TeamManager = ({ match: { path } }) => {
       <Route exact path={`${path}/project`} component={Project} />
       <Route path={`${path}/project/create`} component={ProjectNew} />
       <Route path={`${path}/project/:id/detail`} component={ProjectEdit} />
+      <Route exact path={`${path}/financial-requests`} component={FinancialRequest} />
+      <Route path={`${path}/financial-requests/:id/detail`} component={FinancialRequestEdit} />
+      <Route path={`${path}/financial-requests/new`} component={FinancialRequestNew} />
     </Switch>
   )
 }

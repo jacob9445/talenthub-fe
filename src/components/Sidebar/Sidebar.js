@@ -78,6 +78,12 @@ let structure = {
       label: 'Projects',
       link: '/admin/project',
       icon: <ClientIcon />
+    },
+    {
+      id: 8,
+      label: 'Financial Requests',
+      link: '/admin/financial-requests',
+      icon: <ClientIcon />
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -122,6 +128,12 @@ let structure = {
       label: 'Projects',
       link: '/team-manager/project',
       icon: <ClientIcon />
+    },
+    {
+      id: 7,
+      label: 'Financial Requests',
+      link: '/team-manager/financial-requests',
+      icon: <ClientIcon />
     }
   ],
   [ROLES.DEVELOPER]: [
@@ -159,6 +171,12 @@ let structure = {
       id: 5,
       label: 'Projects',
       link: '/developer/project',
+      icon: <ClientIcon />
+    },
+    {
+      id: 6,
+      label: 'Financial Requests',
+      link: '/developer/financial-requests',
       icon: <ClientIcon />
     }
   ]

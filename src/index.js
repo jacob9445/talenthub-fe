@@ -5,7 +5,9 @@ import ReactDOM from 'react-dom'
 import Themes from './themes'
 import { Provider } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
+import { IntlProvider } from 'react-intl'
 
+import intlConfig from './config/intl'
 import './index.css'
 import App from './App'
 import { LayoutProvider } from './context/LayoutContext'
@@ -18,7 +20,9 @@ ReactDOM.render(
       <ThemeProvider theme={Themes.default}>
         <CssBaseline />
         <Provider store={store}>
-          <App />
+          <IntlProvider {...intlConfig}>
+            <App />
+          </IntlProvider>
         </Provider>
       </ThemeProvider>
     </UserProvider>
