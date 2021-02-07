@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { Link, withRouter } from 'react-router-dom'
-import { Table, TableRow, TableHead, TableBody, TableCell, Button, Tooltip, Chip } from '@material-ui/core'
+import { Table, TableRow, TableHead, TableBody, TableCell, IconButton, Tooltip, Chip } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import { ROLES } from 'config/constants'
@@ -42,12 +42,16 @@ function PartnersTable({ data, myRole, handleDelete, match: { path } }) {
               </TableCell>
               {myRole === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
               <TableCell>
-                <Button component={Link} to={`${path}/${id}/detail`}>
-                  <EditIcon color="primary" />
-                </Button>
-                <Button onClick={() => handleDelete(id)}>
-                  <DeleteIcon color="secondary" />
-                </Button>
+                <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                  <IconButton component={Link} to={`${path}/${id}/detail`}>
+                    <EditIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                  <IconButton onClick={() => handleDelete(id)}>
+                    <DeleteIcon color="secondary" />
+                  </IconButton>
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}
@@ -65,5 +69,5 @@ PartnersTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
-  match: PropTypes.object
+  match: PropTypes.object.isRequired
 }

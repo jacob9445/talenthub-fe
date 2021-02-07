@@ -13,7 +13,7 @@ import {
   profileDetailSelector,
   updateProfile,
   profileDetailLoadingSelector
-} from 'store/modules/profiles'
+} from 'store/modules/profile'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
 import ProfileDetailForm from '../ProfileDetailForm'

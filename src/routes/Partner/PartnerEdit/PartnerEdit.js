@@ -15,7 +15,7 @@ import {
   updatePartnerDetail,
   partnerDetailSelector,
   partnerDetailLoadingSelector
-} from 'store/modules/partners'
+} from 'store/modules/partner'
 import Spinner from 'components/Spinner'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
@@ -100,7 +100,8 @@ PartnerEdit.propTypes = {
   updatePartnerDetail: PropTypes.func.isRequired,
   partnerDetail: PropTypes.object,
   isDetailLoading: PropTypes.bool.isRequired,
-  params: PropTypes.object
+  match: PropTypes.object.isRequired,
+  me: PropTypes.object
 }
 
 export default compose(

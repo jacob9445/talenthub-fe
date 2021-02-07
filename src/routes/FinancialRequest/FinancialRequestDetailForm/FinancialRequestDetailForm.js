@@ -13,8 +13,8 @@ import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { URL_PREFIXES, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
-import { getClients, clientsSelector } from 'store/modules/clients'
-import { getPartners, partnersSelector } from 'store/modules/partners'
+import { getClients, clientsSelector } from 'store/modules/client'
+import { getPartners, partnersSelector } from 'store/modules/partner'
 import { getProjects, projectsSelector } from 'store/modules/project'
 
 export const validationSchema = Yup.object().shape({

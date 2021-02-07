@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Button } from '@material-ui/core'
+import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton } from '@material-ui/core'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import Spinner from 'components/Spinner'
-import { CLIENT_TYPE_LABELS, CLIENT_TYPES, URL_PREFIXES } from 'config/constants'
+import { CLIENT_TYPE_LABELS, CLIENT_TYPES } from 'config/constants'
 import { ROLES } from 'config/constants'
 
-export default function ClientsTable({ data, myRole, handleDelete }) {
+function ClientsTable({ data, myRole, handleDelete, match: { path } }) {
   const columns = useMemo(
     () =>
       myRole === ROLES.DEVELOPER
@@ -35,12 +35,16 @@ export default function ClientsTable({ data, myRole, handleDelete }) {
               <TableCell>{started_at}</TableCell>
               {myRole === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
               <TableCell>
-                <Button component={Link} to={`/${URL_PREFIXES[myRole]}/clients/${id}/detail`}>
-                  <EditIcon color="primary" />
-                </Button>
-                <Button onClick={() => handleDelete(id)}>
-                  <DeleteIcon color="secondary" />
-                </Button>
+                <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                  <IconButton component={Link} to={`${path}/${id}/detail`}>
+                    <EditIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                  <IconButton onClick={() => handleDelete(id)}>
+                    <DeleteIcon color="secondary" />
+                  </IconButton>
+                </Tooltip>
               </TableCell>
             </TableRow>
           ))}
@@ -55,5 +59,8 @@ export default function ClientsTable({ data, myRole, handleDelete }) {
 ClientsTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  handleDelete: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired
 }
+
+export default withRouter(ClientsTable)

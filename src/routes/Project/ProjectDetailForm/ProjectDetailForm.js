@@ -20,8 +20,8 @@ import {
 } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
-import { usersSelector, getUsers } from 'store/modules/users'
-import { getClients, clientsSelector } from 'store/modules/clients'
+import { usersSelector, getUsers } from 'store/modules/user'
+import { getClients, clientsSelector } from 'store/modules/client'
 
 export const validationSchema = Yup.object().shape({
   title: Yup.string().required('This field is required!'),
@@ -69,7 +69,7 @@ const ProjectDetailForm = ({
   }, [getClients])
 
   const handleCancel = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/project`)
+    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/projects`)
   }, [location, history, role])
 
   const userList = useMemo(() => {
@@ -156,7 +156,11 @@ ProjectDetailForm.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   me: PropTypes.object,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  users: PropTypes.array,
+  getUsers: PropTypes.func.isRequired,
+  clients: PropTypes.array,
+  getClients: PropTypes.func.isRequired
 }
 
 const selector = createStructuredSelector({

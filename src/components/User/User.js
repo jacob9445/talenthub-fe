@@ -6,9 +6,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import { getUsers, usersSelector, deleteUserAndRefresh } from 'store/modules/users'
+import { getUsers, usersSelector, deleteUserAndRefresh } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
-import Table from './Table'
+import UserTable from './UserTable'
 import Widget from 'components/Widget'
 import { ROLES } from 'config/constants'
 const useStyles = makeStyles(theme => ({
@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Users = ({ getUsers, users, me, deleteUserAndRefresh }) => {
+const User = ({ getUsers, users, me, deleteUserAndRefresh }) => {
   let classes = useStyles()
   useEffect(() => {
     getUsers({ role: me.role })
@@ -46,7 +46,7 @@ const Users = ({ getUsers, users, me, deleteUserAndRefresh }) => {
                 Add User
               </Button>
             }>
-            <Table data={users} myRole={me.role} handleDelete={handleDelete} />
+            <UserTable data={users} myRole={me.role} handleDelete={handleDelete} />
           </Widget>
         </Grid>
       </Grid>
@@ -64,7 +64,7 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-Users.propTypes = {
+User.propTypes = {
   users: PropTypes.array,
   me: PropTypes.object,
   getUsers: PropTypes.func.isRequired,
@@ -74,4 +74,4 @@ Users.propTypes = {
 export default connect(
   selectors,
   actions
-)(Users)
+)(User)

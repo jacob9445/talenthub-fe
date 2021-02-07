@@ -14,7 +14,7 @@ import useStyles from './styles'
 import { CONTACT_METHOD_TYPES, URL_PREFIXES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
-import { usersSelector, getUsers } from 'store/modules/users'
+import { usersSelector, getUsers } from 'store/modules/user'
 
 export const validationSchema = Yup.object().shape({
   full_name: Yup.string().required('This field is required!'),
@@ -42,14 +42,16 @@ const PartnerDetailForm = ({
   const classes = useStyles()
 
   useEffect(() => {
-    getUsers(me)
+    if (me.role !== ROLES.DEVELOPER) {
+      getUsers(me)
+    }
   }, [getUsers, me])
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/partners`)
   }, [location, history, role])
 
-  const userLists = useMemo(() => {
+  const userList = useMemo(() => {
     if (users) {
       return users.map(user => ({
         display: `${user.first_name} ${user.last_name}`,
@@ -75,7 +77,7 @@ const PartnerDetailForm = ({
           type="text"
           name="owner"
           label="Owner"
-          options={userLists}
+          options={userList}
           validate={validateOwnerField}
         />
       )}
@@ -156,7 +158,11 @@ PartnerDetailForm.propTypes = {
   values: PropTypes.object.isRequired,
   initialValues: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  me: PropTypes.object,
+  users: PropTypes.array,
+  getUsers: PropTypes.func.isRequired,
+  match: PropTypes.object
 }
 
 const selector = createStructuredSelector({

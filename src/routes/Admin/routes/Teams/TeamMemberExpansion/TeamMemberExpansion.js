@@ -9,7 +9,7 @@ import * as R from 'ramda'
 
 import useStyles from './style'
 import Spinner from 'components/Spinner'
-import { getTeamMembers } from 'store/modules/teams'
+import { getTeamMembers } from 'store/modules/team'
 import { createDataSelector } from 'store/modules/api'
 
 const TeamMemberExpansion = ({ teamId, teamName, getTeamMembers, teamMembers, history, location }) => {

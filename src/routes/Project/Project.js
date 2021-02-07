@@ -60,7 +60,7 @@ Project.propTypes = {
   deleteProjectAndRefresh: PropTypes.func.isRequired,
   projects: PropTypes.array,
   isProjectsLoading: PropTypes.bool.isRequired,
-  me: PropTypes.object.isRequired,
+  me: PropTypes.object,
   match: PropTypes.object.isRequired
 }
 

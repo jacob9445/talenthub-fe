@@ -7,8 +7,8 @@ import PropTypes from 'prop-types'
 import Widget from 'components/Widget'
 import UserDetailForm from 'components/UserDetailForm'
 import { formSubmit } from 'helpers/form'
-import { createUser } from 'store/modules/users'
-import { getTeams, teamsSelector } from 'store/modules/teams'
+import { createUser } from 'store/modules/user'
+import { getTeams, teamsSelector } from 'store/modules/team'
 
 const initialValues = {
   first_name: '',

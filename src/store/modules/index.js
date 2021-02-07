@@ -3,13 +3,13 @@ import { reducer as modal } from 'redux-modal'
 
 import api from './api'
 import auth from './auth'
-import users from './users'
-import teams from './teams'
-import profiles from './profiles'
-import accounts from './accounts'
-import clients from './clients'
+import user from './user'
+import team from './team'
+import profile from './profile'
+import account from './account'
+import client from './client'
 import message from './message'
-import partners from './partners'
+import partner from './partner'
 import project from './project'
 import dashboard from './dashboard'
 import financialRequest from './financialRequest'
@@ -17,13 +17,13 @@ import financialRequest from './financialRequest'
 export default combineReducers({
   api,
   isAuthenticated: auth,
-  users,
-  teams,
-  profiles,
-  accounts,
-  clients,
+  user,
+  team,
+  profile,
+  account,
+  client,
   message,
-  partners,
+  partner,
   project,
   dashboard,
   financialRequest,
