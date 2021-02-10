@@ -9,7 +9,7 @@ import Spinner from 'components/Spinner'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
 
-function AccountsTable({ data, myRole, handleDelete, match: { path } }) {
+function AccountTable({ data, myRole, handleDelete, match: { path } }) {
   if (data) {
     return (
       <Table className="mb-0">
@@ -54,11 +54,11 @@ function AccountsTable({ data, myRole, handleDelete, match: { path } }) {
   }
 }
 
-AccountsTable.propTypes = {
+AccountTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }
 
-export default withRouter(AccountsTable)
+export default withRouter(AccountTable)

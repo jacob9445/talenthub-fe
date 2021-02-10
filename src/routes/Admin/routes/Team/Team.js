@@ -10,7 +10,7 @@ import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
 import TeamMemberExpansion from './TeamMemberExpansion'
 
-const Teams = ({ getTeams, teams }) => {
+const Team = ({ getTeams, teams }) => {
   useEffect(() => {
     !teams && getTeams()
   }, [teams, getTeams])
@@ -30,7 +30,7 @@ const Teams = ({ getTeams, teams }) => {
     )
 }
 
-Teams.propTypes = {
+Team.propTypes = {
   getTeams: PropTypes.func.isRequired,
   teams: PropTypes.array
 }
@@ -46,4 +46,4 @@ const selectors = createStructuredSelector({
 export default connect(
   selectors,
   actions
-)(Teams)
+)(Team)

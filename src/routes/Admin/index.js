@@ -6,16 +6,16 @@ import Dashboard from './routes/Dashboard'
 import UserEdit from './routes/UserEdit'
 import User from 'components/User'
 import UserNew from './routes/UserNew'
-import Teams from './routes/Teams'
-import Profiles from './routes/Profiles'
-import ProfileDetail from './routes/Profiles/ProfileEdit'
-import Accounts from './routes/Accounts'
-import AccountEdit from './routes/Accounts/AccountEdit'
+import Team from './routes/Team'
+import Profile from './routes/Profile'
+import ProfileDetail from './routes/Profile/ProfileEdit'
+import Account from './routes/Account'
+import AccountEdit from './routes/Account/AccountEdit'
 import { isAdminOrRedir } from 'hocs/withRoles'
 import Partner from '../Partner'
 import PartnerNew from '../Partner/PartnerNew'
 import PartnerEdit from '../Partner/PartnerEdit'
-import Clients from '../Client'
+import Client from '../Client'
 import ClientNew from '../Client/ClientNew'
 import ClientEdit from '../Client/ClientEdit'
 import Project from '../Project'
@@ -32,15 +32,15 @@ const Admin = ({ match: { path } }) => {
       <Route exact path={`${path}/users`} component={User} />
       <Route path={`${path}/users/new`} component={UserNew} />
       <Route path={`${path}/users/:id/detail`} component={UserEdit} />
-      <Route path={`${path}/teams`} component={Teams} />
-      <Route exact path={`${path}/profiles`} component={Profiles} />
+      <Route path={`${path}/teams`} component={Team} />
+      <Route exact path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
-      <Route exact path={`${path}/accounts`} component={Accounts} />
+      <Route exact path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
       <Route exact path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/partners/create`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
-      <Route exact path={`${path}/clients`} component={Clients} />
+      <Route exact path={`${path}/clients`} component={Client} />
       <Route path={`${path}/clients/create`} component={ClientNew} />
       <Route path={`${path}/clients/:id/detail`} component={ClientEdit} />
       <Route exact path={`${path}/projects`} component={Project} />

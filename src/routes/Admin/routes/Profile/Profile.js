@@ -11,7 +11,7 @@ import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndR
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
 
-const Profiles = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh }) => {
+const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh }) => {
   useEffect(() => {
     getProfiles()
   }, [getProfiles])
@@ -45,7 +45,7 @@ const Profiles = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefres
     )
 }
 
-Profiles.propTypes = {
+Profile.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   deleteProfileAndRefresh: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
@@ -67,4 +67,4 @@ const selectors = createStructuredSelector({
 export default connect(
   selectors,
   actions
-)(Profiles)
+)(Profile)

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import ClientsTable from './ClientsTable'
+import ClientTable from './ClientTable'
 import Spinner from 'components/Spinner'
 import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSelector } from 'store/modules/client'
 import { meSelector } from 'store/modules/auth'
@@ -37,7 +37,7 @@ const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading
                 Add Client
               </Button>
             }>
-            <ClientsTable data={clients} myRole={me.role} handleDelete={handleDelete} />
+            <ClientTable data={clients} myRole={me.role} handleDelete={handleDelete} />
           </Widget>
         </Grid>
       </Grid>
