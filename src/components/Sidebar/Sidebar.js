@@ -7,7 +7,10 @@ import {
   GroupWork as TeamIcon,
   Face as ProfileIcon,
   AccountCircle as AccountIcon,
-  WorkOutline as ClientIcon
+  WorkOutline as ClientIcon,
+  AccessibilityNew as PartnerIcon,
+  Computer as ProjectIcon,
+  ContactPhone as FRIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
@@ -65,7 +68,7 @@ let structure = {
       id: 5,
       label: 'Partners',
       link: '/admin/partners',
-      icon: <ClientIcon />
+      icon: <PartnerIcon />
     },
     {
       id: 6,
@@ -76,14 +79,14 @@ let structure = {
     {
       id: 7,
       label: 'Projects',
-      link: '/admin/project',
-      icon: <ClientIcon />
+      link: '/admin/projects',
+      icon: <ProjectIcon />
     },
     {
       id: 8,
       label: 'Financial Requests',
       link: '/admin/financial-requests',
-      icon: <ClientIcon />
+      icon: <FRIcon />
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -115,7 +118,7 @@ let structure = {
       id: 4,
       label: 'Partners',
       link: '/team-manager/partners',
-      icon: <ClientIcon />
+      icon: <PartnerIcon />
     },
     {
       id: 5,
@@ -126,14 +129,14 @@ let structure = {
     {
       id: 6,
       label: 'Projects',
-      link: '/team-manager/project',
-      icon: <ClientIcon />
+      link: '/team-manager/projects',
+      icon: <ProjectIcon />
     },
     {
       id: 7,
       label: 'Financial Requests',
       link: '/team-manager/financial-requests',
-      icon: <ClientIcon />
+      icon: <FRIcon />
     }
   ],
   [ROLES.DEVELOPER]: [
@@ -165,19 +168,19 @@ let structure = {
       id: 4,
       label: 'Partners',
       link: '/developer/partners',
-      icon: <ClientIcon />
+      icon: <PartnerIcon />
     },
     {
       id: 5,
       label: 'Projects',
-      link: '/developer/project',
-      icon: <ClientIcon />
+      link: '/developer/projects',
+      icon: <ProjectIcon />
     },
     {
       id: 6,
       label: 'Financial Requests',
       link: '/developer/financial-requests',
-      icon: <ClientIcon />
+      icon: <FRIcon />
     }
   ]
 }

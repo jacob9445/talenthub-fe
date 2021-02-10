@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
 import { Grid } from '@material-ui/core'
 
-import { getTeams, teamsSelector } from 'store/modules/teams'
+import { getTeams, teamsSelector } from 'store/modules/team'
 
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'

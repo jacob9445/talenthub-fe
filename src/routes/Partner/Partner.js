@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import Widget from 'components/Widget'
 import PartnersTable from './PartnersTable'
 import Spinner from 'components/Spinner'
-import { getPartners, deletePartnerAndRefresh, partnersSelector, partnersLoadingSelector } from 'store/modules/partners'
+import { getPartners, deletePartnerAndRefresh, partnersSelector, partnersLoadingSelector } from 'store/modules/partner'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
@@ -60,7 +60,7 @@ Partners.propTypes = {
   deletePartnerAndRefresh: PropTypes.func.isRequired,
   partners: PropTypes.array,
   isPartnersLoading: PropTypes.bool.isRequired,
-  me: PropTypes.object.isRequired
+  me: PropTypes.object
 }
 
 export default connect(

@@ -8,7 +8,7 @@ import { path } from 'ramda'
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
 import AccountsTable from './AccountsTable'
-import { getAccounts, deleteAccountAndRefresh, accountsSelector, accountsLoadingSelector } from 'store/modules/accounts'
+import { getAccounts, deleteAccountAndRefresh, accountsSelector, accountsLoadingSelector } from 'store/modules/account'
 import { meSelector } from 'store/modules/auth'
 
 const Accounts = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccounts, me }) => {

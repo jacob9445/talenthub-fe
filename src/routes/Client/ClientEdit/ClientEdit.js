@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
 import ClientDetailForm, { validationSchema } from '../ClientDetailForm'
-import { getClientDetail, updateClient, clientDetailSelector, clientDetailLoadingSelector } from 'store/modules/clients'
+import { getClientDetail, updateClient, clientDetailSelector, clientDetailLoadingSelector } from 'store/modules/client'
 import Spinner from 'components/Spinner'
 import { CLIENT_TYPES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
@@ -93,7 +93,8 @@ ClientEdit.propTypes = {
   updateClient: PropTypes.func.isRequired,
   clientDetail: PropTypes.object,
   isDetailLoading: PropTypes.bool.isRequired,
-  params: PropTypes.object
+  match: PropTypes.object.isRequired,
+  me: PropTypes.object
 }
 
 export default compose(

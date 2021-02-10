@@ -11,7 +11,7 @@ import {
   accountDetailSelector,
   updateAccount,
   accountDetailLoadingSelector
-} from 'store/modules/accounts'
+} from 'store/modules/account'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
 import AccountDetailFrom from '../AccountDetailForm'

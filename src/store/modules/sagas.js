@@ -1,16 +1,27 @@
 import { all } from 'redux-saga/effects'
 
 import { saga as auth } from './auth'
-import { saga as users } from './users'
-import { saga as teams } from './teams'
-import { saga as profiles } from './profiles'
-import { saga as accounts } from './accounts'
-import { saga as clients } from './clients'
-import { saga as partners } from './partners'
+import { saga as user } from './user'
+import { saga as team } from './team'
+import { saga as profile } from './profile'
+import { saga as account } from './account'
+import { saga as client } from './client'
+import { saga as partner } from './partner'
 import { saga as project } from './project'
 import { saga as dashboard } from './dashboard'
 import { saga as financialRequest } from './financialRequest'
 
 export default function* rootSaga() {
-  yield all([auth(), users(), teams(), profiles(), accounts(), clients(), partners(), project(), dashboard(), financialRequest()])
+  yield all([
+    auth(),
+    user(),
+    team(),
+    profile(),
+    account(),
+    client(),
+    partner(),
+    project(),
+    dashboard(),
+    financialRequest()
+  ])
 }

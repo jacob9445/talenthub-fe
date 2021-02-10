@@ -8,7 +8,7 @@ import { createStructuredSelector } from 'reselect'
 import Widget from 'components/Widget'
 import PartnerDetailForm, { validationSchema } from '../PartnerDetailForm'
 import { formSubmit } from 'helpers/form'
-import { createPartner } from 'store/modules/partners'
+import { createPartner } from 'store/modules/partner'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
 
@@ -68,7 +68,8 @@ const actions = {
 }
 
 PartnerNew.propTypes = {
-  createPartner: PropTypes.func.isRequired
+  createPartner: PropTypes.func.isRequired,
+  me: PropTypes.object
 }
 
 export default connect(

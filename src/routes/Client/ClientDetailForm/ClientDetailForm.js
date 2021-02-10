@@ -10,11 +10,10 @@ import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
-import { CLIENT_TYPES, CLIENT_TYPE_OPTIONS, URL_PREFIXES } from 'config/constants'
+import { CLIENT_TYPES, CLIENT_TYPE_OPTIONS, URL_PREFIXES, ROLES } from 'config/constants'
 import useStyles from './styles'
 import { meSelector } from 'store/modules/auth'
-import { usersSelector, getUsers } from 'store/modules/users'
-import { ROLES } from 'config/constants'
+import { usersSelector, getUsers } from 'store/modules/user'
 
 export const validationSchema = Yup.object().shape({
   full_name: Yup.string().required('This field is required!'),
@@ -28,21 +27,13 @@ export const validationSchema = Yup.object().shape({
 
 const validateOwnerField = value => (!value ? 'This field is required!' : undefined)
 
-const ClientDetailForm = ({
-  handleSubmit,
-  values,
-  initialValues,
-  location,
-  history,
-  me,
-  match: { params },
-  users,
-  getUsers
-}) => {
+const ClientDetailForm = ({ handleSubmit, values, location, history, me, match: { params }, users, getUsers }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    getUsers(me)
+    if (me.role !== ROLES.DEVELOPER) {
+      getUsers(me)
+    }
   }, [getUsers, me])
 
   const handleCancel = useCallback(() => {
@@ -95,12 +86,12 @@ const ClientDetailForm = ({
 ClientDetailForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   values: PropTypes.object.isRequired,
-  initialValues: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   users: PropTypes.array,
-  getUsers: PropTypes.func.isRequired
+  getUsers: PropTypes.func.isRequired,
+  me: PropTypes.object
 }
 
 const selector = createStructuredSelector({

@@ -109,7 +109,8 @@ ProjectEdit.propTypes = {
   updateProjectDetail: PropTypes.func.isRequired,
   projectDetail: PropTypes.object,
   isDetailLoading: PropTypes.bool.isRequired,
-  params: PropTypes.object
+  match: PropTypes.object.isRequired,
+  me: PropTypes.object
 }
 
 export default compose(

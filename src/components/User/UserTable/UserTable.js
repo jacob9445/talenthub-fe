@@ -33,7 +33,7 @@ const role_patterns = [
 
 const columns = ['Email', 'First Name', 'Last Name', 'Role', 'Actions']
 
-export default function TableComponent({ data, myRole, handleDelete }) {
+export default function UserTable({ data, myRole, handleDelete }) {
   const classes = useStyles()
 
   if (data) {
@@ -77,7 +77,7 @@ export default function TableComponent({ data, myRole, handleDelete }) {
   }
 }
 
-TableComponent.propTypes = {
+UserTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired

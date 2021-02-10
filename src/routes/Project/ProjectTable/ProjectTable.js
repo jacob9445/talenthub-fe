@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { ROLES, PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS, URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-function ProjectTable({ data, myRole, handleDelete, match: { path }, history, location, disableActions }) {
+function ProjectTable({ data, myRole, handleDelete, history, location, disableActions }) {
   const columns = useMemo(() => {
     function getColumns(role, disableActions) {
       let columns = ['Title', 'Type', 'Weakly Limit', 'Price', 'Status']
@@ -21,7 +21,7 @@ function ProjectTable({ data, myRole, handleDelete, match: { path }, history, lo
 
   const showProjectDetail = useCallback(
     id => () => {
-      history.push(`/${URL_PREFIXES[myRole]}/project/${id}/detail`, location.pathname)
+      history.push(`/${URL_PREFIXES[myRole]}/projects/${id}/detail`, location.pathname)
     },
     [history, location.pathname, myRole]
   )
@@ -75,8 +75,9 @@ ProjectTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
-  match: PropTypes.object,
-  disableActions: PropTypes.bool.isRequired
+  history: PropTypes.object.isRequired,
+  disableActions: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 ProjectTable.defaultProps = {

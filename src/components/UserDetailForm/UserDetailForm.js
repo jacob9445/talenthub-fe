@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
-import { getTeams, teamsSelector } from 'store/modules/teams'
+import { getTeams, teamsSelector } from 'store/modules/team'
 import Spinner from 'components/Spinner'
 const UserDetailForm = ({ match: { path }, location, history, handleSubmit, teams, getTeams }) => {
   const classes = useStyles()

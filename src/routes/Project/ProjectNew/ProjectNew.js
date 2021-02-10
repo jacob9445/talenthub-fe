@@ -76,7 +76,8 @@ const actions = {
 }
 
 ProjectNew.propTypes = {
-  createProject: PropTypes.func.isRequired
+  createProject: PropTypes.func.isRequired,
+  me: PropTypes.object
 }
 
 export default connect(

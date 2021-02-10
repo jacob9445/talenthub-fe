@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import Widget from 'components/Widget'
 import ClientsTable from './ClientsTable'
 import Spinner from 'components/Spinner'
-import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSelector } from 'store/modules/clients'
+import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSelector } from 'store/modules/client'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
@@ -60,7 +60,7 @@ Clients.propTypes = {
   deleteClientAndRefresh: PropTypes.func.isRequired,
   clients: PropTypes.array,
   isClientsLoading: PropTypes.bool.isRequired,
-  me: PropTypes.object.isRequired
+  me: PropTypes.object
 }
 
 export default connect(

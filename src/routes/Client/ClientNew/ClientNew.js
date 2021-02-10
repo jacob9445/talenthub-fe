@@ -7,7 +7,7 @@ import { Grid } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import { CLIENT_TYPES } from 'config/constants'
-import { createClient } from 'store/modules/clients'
+import { createClient } from 'store/modules/client'
 import { formSubmit } from 'helpers/form'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
