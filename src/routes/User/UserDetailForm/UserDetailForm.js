@@ -6,12 +6,29 @@ import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router'
 import * as R from 'ramda'
 import PropTypes from 'prop-types'
+import * as Yup from 'yup'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { getTeams, teamsSelector } from 'store/modules/team'
 import Spinner from 'components/Spinner'
+
+export const validationSchema = Yup.object().shape({
+  first_name: Yup.string().required('This field is required!'),
+  last_name: Yup.string().required('This field is required!'),
+  email: Yup.string().required('This field is required!'),
+  team: Yup.number().required('This field is required!')
+})
+
+export const validatePwds = values => {
+  if (values.password !== values.confirm_password) {
+    return {
+      confirm_password: 'Confirm Password does not match with password.'
+    }
+  }
+}
+
 const UserDetailForm = ({ match: { path }, location, history, handleSubmit, teams, getTeams }) => {
   const classes = useStyles()
 
@@ -54,7 +71,7 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
             />
           </React.Fragment>
         )}
-        <Field component={FormSelect} htmlId="team" type="text" name="team" label="Team" options={options} />
+        <Field component={FormSelect} htmlId="team" name="team" label="Team" options={options} />
         <div className={classes.formButtonWrapper}>
           <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
             {isEdit ? 'Update' : 'Create'}

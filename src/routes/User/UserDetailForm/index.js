@@ -1,1 +1,1 @@
-export { default } from './UserDetailForm'
+export { default, validationSchema, validatePwds } from './UserDetailForm'
