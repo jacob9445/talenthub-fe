@@ -49,7 +49,6 @@ const ProjectEdit = ({
 
   const handleSubmit = useCallback(
     (values, formActions) => {
-      console.log({ values })
       return formSubmit(
         updateProjectDetail,
         {

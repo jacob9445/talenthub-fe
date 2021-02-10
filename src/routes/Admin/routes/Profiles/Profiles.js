@@ -6,7 +6,7 @@ import { pick, path } from 'ramda'
 import { Grid } from '@material-ui/core'
 
 import Widget from 'components/Widget'
-import ProfileTable from './ProfilesTable'
+import ProfileTable from './ProfileTable'
 import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndRefresh } from 'store/modules/profile'
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'

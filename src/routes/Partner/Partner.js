@@ -6,13 +6,13 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import PartnersTable from './PartnersTable'
+import PartnerTable from './PartnerTable'
 import Spinner from 'components/Spinner'
 import { getPartners, deletePartnerAndRefresh, partnersSelector, partnersLoadingSelector } from 'store/modules/partner'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
-const Partners = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoading, me }) => {
+const Partner = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoading, me }) => {
   useEffect(() => {
     getPartners(me)
   }, [getPartners, me])
@@ -37,7 +37,7 @@ const Partners = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLo
                 Add Partner
               </Button>
             }>
-            <PartnersTable data={partners} myRole={me.role} handleDelete={handleDelete} />
+            <PartnerTable data={partners} myRole={me.role} handleDelete={handleDelete} />
           </Widget>
         </Grid>
       </Grid>
@@ -55,7 +55,7 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-Partners.propTypes = {
+Partner.propTypes = {
   getPartners: PropTypes.func.isRequired,
   deletePartnerAndRefresh: PropTypes.func.isRequired,
   partners: PropTypes.array,
@@ -66,4 +66,4 @@ Partners.propTypes = {
 export default connect(
   selectors,
   actions
-)(Partners)
+)(Partner)

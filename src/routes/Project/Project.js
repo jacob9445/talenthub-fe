@@ -37,7 +37,7 @@ const Project = ({ getProjects, deleteProjectAndRefresh, projects, isProjectsLoa
                 Add Project
               </Button>
             }>
-            <ProjectsTable data={projects} myRole={me.role} handleDelete={handleDelete} />
+            <ProjectsTable data={projects} myRole={me.role} onDelete={handleDelete} />
           </Widget>
         </Grid>
       </Grid>

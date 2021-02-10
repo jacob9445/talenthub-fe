@@ -1,6 +1,6 @@
 import React from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Chip, Button } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Table, TableRow, TableHead, TableBody, TableCell, Chip, Tooltip, IconButton } from '@material-ui/core'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import useStyles from './styles'
@@ -33,7 +33,7 @@ const role_patterns = [
 
 const columns = ['Email', 'First Name', 'Last Name', 'Role', 'Actions']
 
-export default function UserTable({ data, myRole, handleDelete }) {
+function UserTable({ data, myRole, handleDelete, match: { path } }) {
   const classes = useStyles()
 
   if (data) {
@@ -59,12 +59,16 @@ export default function UserTable({ data, myRole, handleDelete }) {
               </TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
-                  <Button component={Link} to={`/admin/users/${id}/detail`}>
-                    <EditIcon color="primary" />
-                  </Button>
-                  <Button onClick={() => handleDelete(id)}>
-                    <DeleteIcon color="secondary" />
-                  </Button>
+                  <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                    <IconButton component={Link} to={`${path}/${id}/detail`}>
+                      <EditIcon color="primary" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                    <IconButton onClick={() => handleDelete(id)}>
+                      <DeleteIcon color="secondary" />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               )}
             </TableRow>
@@ -82,3 +86,5 @@ UserTable.propTypes = {
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired
 }
+
+export default withRouter(UserTable)

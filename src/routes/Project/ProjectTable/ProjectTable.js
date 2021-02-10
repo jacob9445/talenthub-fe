@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
-import { Table, TableRow, TableHead, TableBody, TableCell, Button } from '@material-ui/core'
+import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton, Button } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import { ROLES, PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS, URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-function ProjectTable({ data, myRole, handleDelete, history, location, disableActions }) {
+function ProjectTable({ data, myRole, onDelete, history, location, disableActions }) {
   const columns = useMemo(() => {
     function getColumns(role, disableActions) {
       let columns = ['Title', 'Type', 'Weakly Limit', 'Price', 'Status']
@@ -51,12 +51,16 @@ function ProjectTable({ data, myRole, handleDelete, history, location, disableAc
               ) : null}
               {!disableActions && (
                 <TableCell>
-                  <Button onClick={showProjectDetail(id)}>
-                    <EditIcon color="primary" />
-                  </Button>
-                  <Button onClick={() => handleDelete(id)}>
-                    <DeleteIcon color="secondary" />
-                  </Button>
+                  <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                    <IconButton onClick={showProjectDetail(id)}>
+                      <EditIcon color="primary" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                    <IconButton onClick={() => onDelete(id)}>
+                      <DeleteIcon color="secondary" />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               )}
             </TableRow>

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Chip, Button } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Table, TableRow, TableHead, TableBody, TableCell, Chip, Tooltip, IconButton } from '@material-ui/core'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import useStyles from './styles'
@@ -33,7 +33,7 @@ const gender_patterns = {
 
 const columns = ['Username', 'Type', 'Full Name', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
 
-export default function ProfilesTable({ data, myRole, handleDelete }) {
+function ProfileTable({ data, myRole, handleDelete, match: { path } }) {
   const classes = useStyles()
 
   if (data) {
@@ -65,12 +65,16 @@ export default function ProfilesTable({ data, myRole, handleDelete }) {
               <TableCell>{gender_patterns[gender]}</TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
-                  <Button component={Link} to={`/admin/profiles/${id}/detail`}>
-                    <EditIcon color="primary" />
-                  </Button>
-                  <Button onClick={() => handleDelete(id)}>
-                    <DeleteIcon color="secondary" />
-                  </Button>
+                  <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                    <IconButton component={Link} to={`${path}/${id}/detail`}>
+                      <EditIcon color="primary" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                    <IconButton onClick={() => handleDelete(id)}>
+                      <DeleteIcon color="secondary" />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               )}
             </TableRow>
@@ -83,8 +87,11 @@ export default function ProfilesTable({ data, myRole, handleDelete }) {
   }
 }
 
-ProfilesTable.propTypes = {
+ProfileTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  handleDelete: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired
 }
+
+export default withRouter(ProfileTable)

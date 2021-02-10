@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
+import useStyles from './styles'
 import {
   FINANCIALREQUEST_TYPE_LABELS,
   FINANCIALREQUEST_STATUS_LABELS,
@@ -14,6 +15,7 @@ import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
 
 function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, match: { path } }) {
+  const classes = useStyles()
   const columns = ['Type', 'Status', 'Amount', 'To', 'Requested time', 'Sender', 'Project', 'Actions']
   if (data) {
     return (
@@ -58,7 +60,7 @@ function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, match
                   <>
                     <Tooltip key={`${id}Approve`} title="Approve" placement="top">
                       <IconButton onClick={() => onApprove(id, amount, type)}>
-                        <ApproveIcon color="secondary" />
+                        <ApproveIcon className={classes.success} />
                       </IconButton>
                     </Tooltip>
                     <Tooltip key={`${id}Decline`} title="Decline" placement="top">
