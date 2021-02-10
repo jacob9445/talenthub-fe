@@ -7,11 +7,11 @@ import { path } from 'ramda'
 
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
-import AccountsTable from './AccountsTable'
+import AccountTable from './AccountTable'
 import { getAccounts, deleteAccountAndRefresh, accountsSelector, accountsLoadingSelector } from 'store/modules/account'
 import { meSelector } from 'store/modules/auth'
 
-const Accounts = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccounts, me }) => {
+const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccounts, me }) => {
   useEffect(() => {
     getAccounts()
   }, [getAccounts])
@@ -38,14 +38,14 @@ const Accounts = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccou
       <Grid container>
         <Grid item xs={12}>
           <Widget title="Accounts" noBodyPadding disableWidgetMenu>
-            <AccountsTable data={data} myRole={me.role} handleDelete={handleDelete} />
+            <AccountTable data={data} myRole={me.role} handleDelete={handleDelete} />
           </Widget>
         </Grid>
       </Grid>
     )
 }
 
-Accounts.propTypes = {
+Account.propTypes = {
   getAccounts: PropTypes.func.isRequired,
   deleteAccountAndRefresh: PropTypes.func.isRequired,
   accounts: PropTypes.array,
@@ -67,4 +67,4 @@ const selectors = createStructuredSelector({
 export default connect(
   selectors,
   actions
-)(Accounts)
+)(Account)

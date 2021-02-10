@@ -8,7 +8,7 @@ import Spinner from 'components/Spinner'
 import { CLIENT_TYPE_LABELS, CLIENT_TYPES } from 'config/constants'
 import { ROLES } from 'config/constants'
 
-function ClientsTable({ data, myRole, handleDelete, match: { path } }) {
+function ClientTable({ data, myRole, handleDelete, match: { path } }) {
   const columns = useMemo(
     () =>
       myRole === ROLES.DEVELOPER
@@ -56,11 +56,11 @@ function ClientsTable({ data, myRole, handleDelete, match: { path } }) {
   }
 }
 
-ClientsTable.propTypes = {
+ClientTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }
 
-export default withRouter(ClientsTable)
+export default withRouter(ClientTable)
