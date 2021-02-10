@@ -1,6 +1,6 @@
 import React from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Button } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton } from '@material-ui/core'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
@@ -9,7 +9,7 @@ import Spinner from 'components/Spinner'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
 
-export default function AccountsTable({ data, myRole, handleDelete }) {
+function AccountsTable({ data, myRole, handleDelete, match: { path } }) {
   if (data) {
     return (
       <Table className="mb-0">
@@ -32,12 +32,16 @@ export default function AccountsTable({ data, myRole, handleDelete }) {
               <TableCell>{url}</TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
                 <TableCell>
-                  <Button component={Link} to={`/admin/accounts/${id}/detail`}>
-                    <EditIcon color="primary" />
-                  </Button>
-                  <Button onClick={() => handleDelete(id)}>
-                    <DeleteIcon color="secondary" />
-                  </Button>
+                  <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                    <IconButton component={Link} to={`${path}/${id}/detail`}>
+                      <EditIcon color="primary" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                    <IconButton onClick={() => handleDelete(id)}>
+                      <DeleteIcon color="secondary" />
+                    </IconButton>
+                  </Tooltip>
                 </TableCell>
               )}
             </TableRow>
@@ -53,5 +57,8 @@ export default function AccountsTable({ data, myRole, handleDelete }) {
 AccountsTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  handleDelete: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired
 }
+
+export default withRouter(AccountsTable)

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import { ROLES } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-function PartnersTable({ data, myRole, handleDelete, match: { path } }) {
+function PartnerTable({ data, myRole, handleDelete, match: { path } }) {
   const columns = useMemo(
     () =>
       myRole === ROLES.DEVELOPER
@@ -63,9 +63,9 @@ function PartnersTable({ data, myRole, handleDelete, match: { path } }) {
   }
 }
 
-export default withRouter(PartnersTable)
+export default withRouter(PartnerTable)
 
-PartnersTable.propTypes = {
+PartnerTable.propTypes = {
   data: PropTypes.array,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,

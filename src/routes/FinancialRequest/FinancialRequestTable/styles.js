@@ -2,8 +2,7 @@ import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles(theme => ({
   success: {
-    backgroundColor: theme.palette.success.main,
-    color: '#fff'
+    color: theme.palette.success.main
   },
   warning: {
     backgroundColor: theme.palette.warning.main,

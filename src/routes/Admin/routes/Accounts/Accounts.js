@@ -16,7 +16,6 @@ const Accounts = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccou
     getAccounts()
   }, [getAccounts])
 
-  console.log({ accounts })
   const data = useMemo(() => {
     return accounts
       ? accounts.map(account => ({
