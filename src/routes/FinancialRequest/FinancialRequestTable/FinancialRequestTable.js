@@ -9,7 +9,8 @@ import {
   FINANCIALREQUEST_TYPE_LABELS,
   FINANCIALREQUEST_STATUS_LABELS,
   ROLES,
-  FINANCIALREQUEST_STATUS
+  FINANCIALREQUEST_STATUS,
+  FINANCIALREQUEST_TYPE
 } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
@@ -40,7 +41,7 @@ function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, match
                 <FormattedDate value={requested_at} format="shortDMY" /> <FormattedTime value={requested_at} />
               </TableCell>
               <TableCell>{`${requester.first_name} ${requester.last_name}`}</TableCell>
-              <TableCell>{project.title}</TableCell>
+              <TableCell>{type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? project.title : null}</TableCell>
               <TableCell>
                 {status === FINANCIALREQUEST_STATUS.PENDING ? (
                   <Tooltip key={`${id}Edit`} title="Edit" placement="top">
