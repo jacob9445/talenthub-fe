@@ -11,7 +11,7 @@ import { getPlatformLabel } from 'helpers/utils'
 
 function TransactionTable({ data, history, me }) {
   const classes = useStyles()
-  const columns = ['Gross amount', 'Net Amount', 'Payment Platform', 'Description', 'Created time']
+  const columns = ['Gross amount', 'Net Amount', 'Payment Platform', 'Description', 'Date']
   const myRole = me?.role
   const handleRowClick = useCallback(
     id => () => {

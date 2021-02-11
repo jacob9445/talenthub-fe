@@ -8,13 +8,13 @@ import { compose } from 'redux'
 import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
-import TransactionTable from './TransactionTable'
+import TransactionTable from '../../components/TransactionTable'
 import Spinner from 'components/Spinner'
 import { getTransactions, transactionsSelector, transactionsLoadingSelector } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
 
-const Transaction = ({ getTransactions, transactions, isTransactionLoading, me }) => {
+const TransactionList = ({ getTransactions, transactions, isTransactionLoading, me }) => {
   useEffect(() => {
     getTransactions(me)
   }, [getTransactions, me])
@@ -46,7 +46,7 @@ const selector = createStructuredSelector({
   me: meSelector
 })
 
-Transaction.propTypes = {
+TransactionList.propTypes = {
   getTransactions: PropTypes.func.isRequired,
   transactions: PropTypes.array,
   isTransactionLoading: PropTypes.bool.isRequired,
@@ -60,4 +60,4 @@ export default compose(
     selector,
     actions
   )
-)(Transaction)
+)(TransactionList)

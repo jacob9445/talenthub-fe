@@ -1,1 +1,1 @@
-export { default } from './Transaction'
+export { default } from './routes/TransactionList/TransactionList'
