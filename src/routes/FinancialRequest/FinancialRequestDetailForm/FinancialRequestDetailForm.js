@@ -28,6 +28,9 @@ const validateClientField = (value, type) =>
 const validatePartnerField = (value, type) =>
   type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? (!value ? 'This field is required!' : undefined) : undefined
 
+const validateProjectField = (value, type) =>
+  type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? (!value ? 'This field is required!' : undefined) : undefined
+
 const FinancialRequestDetailForm = ({
   handleSubmit,
   values,
@@ -107,15 +110,26 @@ const FinancialRequestDetailForm = ({
       />
       <Field component={FormInput} type="number" htmlId="amount" name="amount" label="Amount" />
       {values.type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? (
-        <Field
-          component={FormSelect}
-          type="text"
-          htmlId="client"
-          name="client"
-          label="Client"
-          validate={value => validateClientField(value, values.type)}
-          options={clientList}
-        />
+        <>
+          <Field
+            component={FormSelect}
+            type="text"
+            htmlId="client"
+            name="client"
+            label="Client"
+            validate={value => validateClientField(value, values.type)}
+            options={clientList}
+          />
+          <Field
+            component={FormSelect}
+            type="text"
+            htmlId="project"
+            name="project"
+            label="Project"
+            options={projectList}
+            validate={value => validateProjectField(value, values.type)}
+          />
+        </>
       ) : null}
       {values.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? (
         <Field
@@ -128,7 +142,6 @@ const FinancialRequestDetailForm = ({
           options={partnerList}
         />
       ) : null}
-      <Field component={FormSelect} type="text" htmlId="project" name="project" label="Project" options={projectList} />
 
       <div className={classes.formButtonWrapper}>
         <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
