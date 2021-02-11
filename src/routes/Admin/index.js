@@ -24,6 +24,7 @@ import ProjectEdit from '../Project/ProjectEdit'
 import FinancialRequest from '../FinancialRequest'
 import FinancialRequestEdit from '../FinancialRequest/FinancialRequestEdit'
 import FinancialRequestNew from '../FinancialRequest/FinancialRequestNew'
+import Transaction from '../Transaction'
 
 const Admin = ({ match: { path } }) => {
   return (
@@ -49,6 +50,7 @@ const Admin = ({ match: { path } }) => {
       <Route exact path={`${path}/financial-requests`} component={FinancialRequest} />
       <Route path={`${path}/financial-requests/:id/detail`} component={FinancialRequestEdit} />
       <Route path={`${path}/financial-requests/new`} component={FinancialRequestNew} />
+      <Route exact path={`${path}/transactions`} component={Transaction} />
     </Switch>
   )
 }

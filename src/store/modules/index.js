@@ -13,6 +13,7 @@ import partner from './partner'
 import project from './project'
 import dashboard from './dashboard'
 import financialRequest from './financialRequest'
+import transaction from './transaction'
 
 export default combineReducers({
   api,
@@ -27,5 +28,6 @@ export default combineReducers({
   project,
   dashboard,
   financialRequest,
+  transaction,
   modal
 })

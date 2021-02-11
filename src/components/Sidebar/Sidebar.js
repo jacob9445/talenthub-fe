@@ -10,7 +10,8 @@ import {
   WorkOutline as ClientIcon,
   AccessibilityNew as PartnerIcon,
   Computer as ProjectIcon,
-  ContactPhone as FRIcon
+  ContactPhone as FRIcon,
+  Loop as TransactionIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
@@ -87,6 +88,12 @@ let structure = {
       label: 'Financial Requests',
       link: '/admin/financial-requests',
       icon: <FRIcon />
+    },
+    {
+      id: 9,
+      label: 'Transaction',
+      link: '/admin/transactions',
+      icon: <TransactionIcon />
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -137,6 +144,12 @@ let structure = {
       label: 'Financial Requests',
       link: '/team-manager/financial-requests',
       icon: <FRIcon />
+    },
+    {
+      id: 8,
+      label: 'Transaction',
+      link: '/admin/transactions',
+      icon: <TransactionIcon />
     }
   ],
   [ROLES.DEVELOPER]: [
@@ -181,6 +194,12 @@ let structure = {
       label: 'Financial Requests',
       link: '/developer/financial-requests',
       icon: <FRIcon />
+    },
+    {
+      id: 7,
+      label: 'Transaction',
+      link: '/admin/transactions',
+      icon: <TransactionIcon />
     }
   ]
 }
