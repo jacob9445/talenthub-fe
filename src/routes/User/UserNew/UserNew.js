@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import UserDetailForm from 'components/UserDetailForm'
+import UserDetailForm from 'routes/User/UserDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createUser } from 'store/modules/user'
 import { getTeams, teamsSelector } from 'store/modules/team'

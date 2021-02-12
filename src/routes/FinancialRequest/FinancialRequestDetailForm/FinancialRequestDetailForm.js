@@ -18,8 +18,7 @@ import { getPartners, partnersSelector } from 'store/modules/partner'
 import { getProjects, projectsSelector } from 'store/modules/project'
 
 export const validationSchema = Yup.object().shape({
-  amount: Yup.number().required('This field is required!'),
-  project: Yup.number().required('This field is required!')
+  amount: Yup.number().required('This field is required!')
 })
 
 const validateClientField = (value, type) =>

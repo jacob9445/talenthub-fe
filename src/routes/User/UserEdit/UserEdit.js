@@ -11,10 +11,10 @@ import { Grid } from '@material-ui/core'
 import { formSubmit } from 'helpers/form'
 import { getUserDetail, userDetailSelector, userDetailLoadingSelector } from 'store/modules/user'
 import { updateUserDetail } from 'store/modules/user'
-import UserDetailForm from 'components/UserDetailForm'
+import UserDetailForm from 'routes/User/UserDetailForm'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
-import ProfileChips from './ProfileChips'
+import ProfileChips from 'components/ProfileChips'
 
 const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDetail }) => {
   useEffect(() => {

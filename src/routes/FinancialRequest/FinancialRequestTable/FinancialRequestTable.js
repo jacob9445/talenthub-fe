@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Edit as EditIcon, Cancel as CancelIcon, Check as ApproveIcon, Close as DeclineIcon } from '@material-ui/icons'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
@@ -10,14 +10,23 @@ import {
   FINANCIALREQUEST_STATUS_LABELS,
   ROLES,
   FINANCIALREQUEST_STATUS,
-  FINANCIALREQUEST_TYPE
+  FINANCIALREQUEST_TYPE,
+  URL_PREFIXES
 } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
 
-function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, match: { path } }) {
+function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, history, location }) {
   const classes = useStyles()
   const columns = ['Type', 'Status', 'Amount', 'To', 'Requested time', 'Sender', 'Project', 'Actions']
+
+  const showFinancialRequestDetail = useCallback(
+    id => () => {
+      history.push(`/${URL_PREFIXES[me.role]}/financial-requests/${id}/detail`, location.pathname)
+    },
+    [history, location.pathname, me.role]
+  )
+
   if (data) {
     return (
       <Table className="mb-0">
@@ -45,7 +54,7 @@ function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, match
               <TableCell>
                 {status === FINANCIALREQUEST_STATUS.PENDING ? (
                   <Tooltip key={`${id}Edit`} title="Edit" placement="top">
-                    <IconButton component={Link} to={`${path}/${id}/detail`}>
+                    <IconButton onClick={showFinancialRequestDetail(id)}>
                       <EditIcon color="primary" />
                     </IconButton>
                   </Tooltip>
@@ -87,8 +96,9 @@ export default withRouter(FinancialRequestTable)
 FinancialRequestTable.propTypes = {
   data: PropTypes.array,
   me: PropTypes.object.isRequired,
-  match: PropTypes.object,
-  onApprove: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onDecline: PropTypes.func.isRequired
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  onApprove: PropTypes.func,
+  onCancel: PropTypes.func,
+  onDecline: PropTypes.func
 }
