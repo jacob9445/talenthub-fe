@@ -45,7 +45,7 @@ const FinancialRequestEdit = ({
         financialRequestDetail?.type === FINANCIALREQUEST_TYPE.SENDPAYMENT
           ? financialRequestDetail?.counter_party.id || ''
           : '',
-      project: financialRequestDetail?.project.id || '',
+      project: financialRequestDetail?.project?.id || '',
       ...(me.role !== ROLES.DEVELOPER
         ? {
             sender: financialRequestDetail?.requester.id || ''

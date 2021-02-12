@@ -6,11 +6,13 @@ import { Formik } from 'formik'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import PropTypes from 'prop-types'
 
 import TransactionForm from 'components/TransactionForm'
 import { approveFinancialRequest, getFinancialRequests } from 'store/modules/financialRequest'
 import { formSubmit } from 'helpers/form'
 import { PAYMENT_PLATFORM_TYPE } from 'config/constants'
+import { getPendingRequests } from 'store/modules/dashboard'
 
 const ApproveRequestModal = ({
   requestId,
@@ -18,7 +20,9 @@ const ApproveRequestModal = ({
   show,
   handleHide,
   approveFinancialRequest,
-  getFinancialRequests
+  getFinancialRequests,
+  getPendingRequests,
+  dashboard
 }) => {
   const initialValues = {
     gross_amount: gross_amount,
@@ -34,14 +38,18 @@ const ApproveRequestModal = ({
           data: values,
           id: requestId,
           success: () => {
-            getFinancialRequests()
+            if (dashboard) {
+              getPendingRequests()
+            } else {
+              getFinancialRequests()
+            }
             handleHide()
           }
         },
         formActions
       )
     },
-    [approveFinancialRequest, requestId, getFinancialRequests, handleHide]
+    [approveFinancialRequest, requestId, getFinancialRequests, handleHide, getPendingRequests, dashboard]
   )
 
   return (
@@ -58,7 +66,23 @@ const ApproveRequestModal = ({
 
 const actions = {
   approveFinancialRequest,
-  getFinancialRequests
+  getFinancialRequests,
+  getPendingRequests
+}
+
+ApproveRequestModal.defaultProps = {
+  dashboard: false
+}
+
+ApproveRequestModal.propTypes = {
+  approveFinancialRequest: PropTypes.func.isRequired,
+  getFinancialRequests: PropTypes.func.isRequired,
+  getPendingRequests: PropTypes.func.isRequired,
+  requestId: PropTypes.number.isRequired,
+  gross_amount: PropTypes.number.isRequired,
+  dashboard: PropTypes.bool.isRequired,
+  show: PropTypes.bool.isRequired,
+  handleHide: PropTypes.func.isRequired
 }
 
 export default compose(

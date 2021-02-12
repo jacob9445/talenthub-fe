@@ -50,7 +50,7 @@ function UserTable({ data, myRole, handleDelete, match: { path } }) {
           {data.map(({ id, email, first_name, last_name, role }) => (
             <TableRow key={email}>
               <TableCell>
-                <Link to={`/admin/users/${id}/detail`}>{email}</Link>
+                <Link to={`${path}/${id}/detail`}>{email}</Link>
               </TableCell>
               <TableCell>{first_name}</TableCell>
               <TableCell>{last_name}</TableCell>

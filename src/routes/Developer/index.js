@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router'
 import PropTypes from 'prop-types'
 
 import { isDeveloperOrRedir } from 'hocs/withRoles'
-import Dashboard from './routes/Dashboard'
+import Dashboard from 'routes/Dashboard'
 import Client from '../Client'
 import ClientNew from '../Client/ClientNew'
 import ClientEdit from '../Client/ClientEdit'

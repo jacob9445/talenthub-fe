@@ -2,8 +2,10 @@ import React from 'react'
 import { Route, Switch } from 'react-router'
 import PropTypes from 'prop-types'
 
-import Dashboard from './routes/Dashboard'
-import User from 'components/User'
+import Dashboard from 'routes/Dashboard'
+import User from 'routes/User'
+import UserNew from 'routes/User/UserNew'
+import UserEdit from 'routes/User/UserEdit'
 import { isTeamManagerOrRedir } from 'hocs/withRoles'
 import Partner from '../Partner'
 import PartnerNew from '../Partner/PartnerNew'
@@ -22,7 +24,9 @@ const TeamManager = ({ match: { path } }) => {
   return (
     <Switch>
       <Route path={`${path}/dashboard`} component={Dashboard} />
-      <Route path={`${path}/users`} component={User} />
+      <Route exact path={`${path}/users`} component={User} />
+      <Route path={`${path}/users/create`} component={UserNew} />
+      <Route path={`${path}/users/:id/detail`} component={UserEdit} />
       <Route exact path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/partners/create`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
