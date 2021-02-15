@@ -148,7 +148,7 @@ let structure = {
     {
       id: 8,
       label: 'Transaction',
-      link: '/admin/transactions',
+      link: '/team-manager/transactions',
       icon: <TransactionIcon />
     }
   ],
@@ -198,7 +198,7 @@ let structure = {
     {
       id: 7,
       label: 'Transaction',
-      link: '/admin/transactions',
+      link: '/developer/transactions',
       icon: <TransactionIcon />
     }
   ]
