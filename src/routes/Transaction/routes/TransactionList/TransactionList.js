@@ -8,11 +8,10 @@ import { compose } from 'redux'
 import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
-import TransactionTable from '../../components/TransactionTable'
+import TransactionTable from 'components/TransactionTable'
 import Spinner from 'components/Spinner'
 import { getTransactions, transactionsSelector, transactionsLoadingSelector } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
-import ApproveRequestModal from 'components/ApproveRequestModal'
 
 const TransactionList = ({ getTransactions, transactions, isTransactionLoading, me }) => {
   useEffect(() => {
@@ -21,7 +20,7 @@ const TransactionList = ({ getTransactions, transactions, isTransactionLoading, 
 
   if (isTransactionLoading) return <Spinner />
   else
-    return (
+    return transactions ? (
       <>
         <Grid container>
           <Grid item xs={12}>
@@ -30,9 +29,8 @@ const TransactionList = ({ getTransactions, transactions, isTransactionLoading, 
             </Widget>
           </Grid>
         </Grid>
-        <ApproveRequestModal />
       </>
-    )
+    ) : null
 }
 
 const actions = {

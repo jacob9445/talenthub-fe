@@ -7,3 +7,5 @@ export const getPlatformLabel = paymentPlatform =>
     R.path(['display']),
     R.find(item => item.value === paymentPlatform)
   )(PAYMENT_PLATFORM_OPTIONS)
+
+export const getFullName = user => (user ? [user.first_name, user.last_name].join(' ') : '')
