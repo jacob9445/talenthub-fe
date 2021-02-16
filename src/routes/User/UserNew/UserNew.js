@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import UserDetailForm from 'routes/User/UserDetailForm'
+import UserDetailForm, { validationSchema, validatePwds } from 'routes/User/UserDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createUser } from 'store/modules/user'
 import { getTeams, teamsSelector } from 'store/modules/team'
@@ -40,7 +40,13 @@ const UserNew = ({ createUser, getTeams, teams }) => {
   return (
     <div>
       <Widget title="Create User" disableWidgetMenu>
-        <Formik component={UserDetailForm} onSubmit={handleSubmit} initialValues={initialValues} />
+        <Formik
+          component={UserDetailForm}
+          onSubmit={handleSubmit}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          validate={validatePwds}
+        />
       </Widget>
     </div>
   )

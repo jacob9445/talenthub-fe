@@ -46,7 +46,7 @@ const updateUserDetail = apiCallSaga({
 const createUser = apiCallSaga({
   type: Types.CREATE_USER,
   method: 'POST',
-  path: 'api/auth/register/'
+  path: 'api/admin/users/'
 })
 
 export default function* rootSaga() {
