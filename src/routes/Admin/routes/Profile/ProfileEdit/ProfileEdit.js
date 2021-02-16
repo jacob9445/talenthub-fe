@@ -16,7 +16,7 @@ import {
 } from 'store/modules/profile'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import ProfileDetailForm from '../ProfileDetailForm'
+import ProfileDetailForm, { validationSchema } from '../ProfileDetailForm'
 import Spinner from 'components/Spinner'
 import AccountChips from './AccountChips'
 
@@ -68,6 +68,7 @@ const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updat
               component={ProfileDetailForm}
               initialValues={initialValues}
               onSubmit={handleSubmit}
+              validationSchema={validationSchema}
               enableReinitialize
             />
           </Widget>

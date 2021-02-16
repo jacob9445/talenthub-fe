@@ -3,38 +3,22 @@ import { Field } from 'formik'
 import { Button } from '@material-ui/core'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import * as Yup from 'yup'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
-import { PLATFORMS } from 'config/constants'
+import { platformOptions } from 'config/constants'
 
-const platformOptions = [
-  {
-    display: 'Email',
-    value: PLATFORMS.EMAIL
-  },
-  {
-    display: 'Skype',
-    value: PLATFORMS.SKYPE
-  },
-  {
-    display: 'Slack',
-    value: PLATFORMS.SLACK
-  },
-  {
-    display: 'MS Team',
-    value: PLATFORMS.MS_TEAM
-  },
-  {
-    display: 'Github',
-    value: PLATFORMS.GITHUB
-  },
-  {
-    display: 'Bitbucket',
-    value: PLATFORMS.BITBUCKET
-  }
-]
+export const validationSchema = Yup.object().shape({
+  profile: Yup.string().required('This field is required!'),
+  platform_type: Yup.string().required('This field is required!'),
+  email: Yup.string().required('This field is required!'),
+  password: Yup.string().required('This field is required!'),
+  location: Yup.string().required('This field is required!'),
+  recovery_email: Yup.string().required('This field is required!'),
+  url: Yup.string().required('This field is required!')
+})
 
 const AccountDetailForm = ({ location, history, handleSubmit }) => {
   const classes = useStyles()

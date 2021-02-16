@@ -244,3 +244,30 @@ export const PAYMENT_PLATFORM_OPTIONS = [
     display: 'Toptal'
   }
 ]
+
+export const platformOptions = [
+  {
+    display: 'Email',
+    value: PLATFORMS.EMAIL
+  },
+  {
+    display: 'Skype',
+    value: PLATFORMS.SKYPE
+  },
+  {
+    display: 'Slack',
+    value: PLATFORMS.SLACK
+  },
+  {
+    display: 'MS Team',
+    value: PLATFORMS.MS_TEAM
+  },
+  {
+    display: 'Github',
+    value: PLATFORMS.GITHUB
+  },
+  {
+    display: 'Bitbucket',
+    value: PLATFORMS.BITBUCKET
+  }
+]

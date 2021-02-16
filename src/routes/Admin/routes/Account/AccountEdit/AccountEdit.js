@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
 import { pick, path, split, nth, compose } from 'ramda'
+import { Grid } from '@material-ui/core'
 
 import {
   getAccountDetail,
@@ -14,7 +15,7 @@ import {
 } from 'store/modules/account'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import AccountDetailFrom from '../AccountDetailForm'
+import AccountDetailFrom, { validationSchema } from '../AccountDetailForm'
 import Spinner from 'components/Spinner'
 
 const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updateAccount, isLoading }) => {
@@ -77,14 +78,19 @@ const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updat
   if (isLoading) return <Spinner />
   else
     return (
-      <Widget title="Account Detail" disableWidgetMenu>
-        <Formik
-          component={AccountDetailFrom}
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          enableReinitialize
-        />
-      </Widget>
+      <Grid container>
+        <Grid item xs={12}>
+          <Widget title="Account Detail" disableWidgetMenu>
+            <Formik
+              component={AccountDetailFrom}
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              validationSchema={validationSchema}
+              enableReinitialize
+            />
+          </Widget>
+        </Grid>
+      </Grid>
     )
 }
 

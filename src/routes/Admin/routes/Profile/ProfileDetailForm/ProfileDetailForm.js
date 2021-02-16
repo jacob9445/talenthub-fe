@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router'
 import * as R from 'ramda'
 import PropTypes from 'prop-types'
+import * as Yup from 'yup'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
@@ -14,6 +15,16 @@ import { getUsers, usersSelector, usersLoadingSelector } from 'store/modules/use
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
 import { PROFILE_TYPES, GENDER } from 'config/constants'
+
+export const validationSchema = Yup.object().shape({
+  user_id: Yup.string().required('This field is required!'),
+  profile_type: Yup.string().required('This field is required!'),
+  first_name: Yup.string().required('This field is required!'),
+  last_name: Yup.string().required('This field is required!'),
+  address: Yup.string().required('This field is required!'),
+  country: Yup.string().required('This field is required!'),
+  gender: Yup.string().required('This field is required!')
+})
 
 const profileTypeOptions = [
   {
