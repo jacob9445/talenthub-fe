@@ -7,10 +7,11 @@ import UserEdit from '../User/UserEdit'
 import User from 'routes/User'
 import UserNew from '../User/UserNew'
 import Team from './routes/Team'
-import Profile from './routes/Profile'
-import ProfileDetail from './routes/Profile/ProfileEdit'
-import Account from './routes/Account'
-import AccountEdit from './routes/Account/AccountEdit'
+import Profile from 'routes/Profile'
+import ProfileDetail from 'routes/Profile/ProfileEdit'
+import ProfileNew from 'routes/Profile/ProfileNew'
+import Account from '../Account'
+import AccountEdit from '../Account/AccountEdit'
 import { isAdminOrRedir } from 'hocs/withRoles'
 import Partner from '../Partner'
 import PartnerNew from '../Partner/PartnerNew'
@@ -53,6 +54,9 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/financial-requests/new`} component={FinancialRequestNew} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
+      <Route exact path={`${path}/profiles`} component={Profile} />
+      <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
+      <Route path={`${path}/profiles/create`} component={ProfileNew} />
     </Switch>
   )
 }

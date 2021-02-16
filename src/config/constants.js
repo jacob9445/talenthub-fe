@@ -271,3 +271,48 @@ export const platformOptions = [
     value: PLATFORMS.BITBUCKET
   }
 ]
+
+export const profileTypeOptions = [
+  {
+    display: 'Self',
+    value: PROFILE_TYPES.SELF
+  },
+  {
+    display: 'Partner',
+    value: PROFILE_TYPES.PARTNER
+  }
+]
+
+export const genderOptions = [
+  {
+    display: 'Male',
+    value: GENDER.MALE
+  },
+  {
+    display: 'Female',
+    value: GENDER.FEMALE
+  }
+]
+
+export const profile_type_patterns = [
+  {
+    id: 0,
+    role: null,
+    color: ''
+  },
+  {
+    id: PROFILE_TYPES.SELF,
+    type: 'Self',
+    color: 'success'
+  },
+  {
+    id: PROFILE_TYPES.PARTNER,
+    type: 'Partner',
+    color: 'info'
+  }
+]
+
+export const gender_patterns = {
+  [GENDER.MALE]: 'Male',
+  [GENDER.FEMALE]: 'Female'
+}

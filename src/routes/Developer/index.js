@@ -18,6 +18,10 @@ import FinancialRequestEdit from '../FinancialRequest/FinancialRequestEdit'
 import FinancialRequestNew from '../FinancialRequest/FinancialRequestNew'
 import TransactionList from '../Transaction/routes/TransactionList'
 import TransactionDetail from '../Transaction/routes/TransactionDetail'
+import Profile from 'routes/Profile'
+import ProfileDetail from 'routes/Profile/ProfileEdit'
+import Account from '../Account'
+import AccountEdit from '../Account/AccountEdit'
 
 const Developer = ({ match: { path } }) => {
   return (
@@ -37,6 +41,10 @@ const Developer = ({ match: { path } }) => {
       <Route path={`${path}/financial-requests/new`} component={FinancialRequestNew} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
+      <Route exact path={`${path}/accounts`} component={Account} />
+      <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
+      <Route exact path={`${path}/profiles`} component={Profile} />
+      <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
     </Switch>
   )
 }

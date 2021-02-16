@@ -1,31 +1,40 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
 import * as Types from './types'
+import { roleBasedPath } from 'helpers/sagaHelpers'
 
 const getProfiles = apiCallSaga({
   type: Types.GET_PROFILES,
   method: 'GET',
-  path: 'api/admin/profiles',
+  path: function*() {
+    return yield roleBasedPath('profiles/')
+  },
   selectorKey: 'profiles'
 })
 
 const getProfileDetail = apiCallSaga({
   type: Types.GET_PROFILE_DETAIL,
   method: 'GET',
-  path: ({ payload }) => `api/admin/profiles/${payload}/`,
+  path: function*({ payload }) {
+    return yield roleBasedPath(`profiles/${payload}/`)
+  },
   selectorKey: 'profileDetail'
 })
 
 const updateProfile = apiCallSaga({
   type: Types.UPDATE_PROFILE,
   method: 'PUT',
-  path: ({ payload: { id } }) => `api/admin/profiles/${id}/`
+  path: function*({ payload: { id } }) {
+    return yield roleBasedPath(`profiles/${id}/`)
+  }
 })
 
 const deleteProfile = apiCallSaga({
   type: Types.DELETE_PROFILE,
   method: 'DELETE',
-  path: ({ payload }) => `api/admin/profiles/${payload}/`
+  path: function*({ payload }) {
+    return yield roleBasedPath(`profiles/${payload}/`)
+  }
 })
 
 const deleteProfileAndRefresh = function*(action) {
@@ -35,10 +44,19 @@ const deleteProfileAndRefresh = function*(action) {
   })
 }
 
+const createProfile = apiCallSaga({
+  type: Types.CREATE_PROFILE,
+  method: 'POST',
+  path: function*() {
+    return yield roleBasedPath(`profiles/`)
+  }
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_PROFILES, getProfiles)
   yield takeLatest(Types.GET_PROFILE_DETAIL, getProfileDetail)
   yield takeLatest(Types.UPDATE_PROFILE, updateProfile)
   yield takeLatest(Types.DELETE_PROFILE, deleteProfile)
   yield takeLatest(Types.DELETE_PROFILE_AND_REFRESH, deleteProfileAndRefresh)
+  yield takeLatest(Types.CREATE_PROFILE, createProfile)
 }

@@ -3,14 +3,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { pick, path } from 'ramda'
-import { Grid } from '@material-ui/core'
 import { show } from 'redux-modal'
+import { Grid, Button } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
 import Widget from 'components/Widget'
 import ProfileTable from './ProfileTable'
 import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndRefresh } from 'store/modules/profile'
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
+import { URL_PREFIXES } from 'config/constants'
 
 const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh, show }) => {
   useEffect(() => {
@@ -43,7 +45,15 @@ const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh
     return (
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Widget title="Profiles" disableWidgetMenu noBodyPadding>
+          <Widget
+            title="Profiles"
+            disableWidgetMenu
+            noBodyPadding
+            WidgetButton={
+              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/profiles/create`}>
+                Add Profile
+              </Button>
+            }>
             <ProfileTable data={data} myRole={me.role} handleDelete={handleDelete} />
           </Widget>
         </Grid>

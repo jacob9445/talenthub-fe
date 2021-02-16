@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { compose } from 'ramda'
 import { Formik } from 'formik'
-import { pick } from 'ramda'
 import { Grid } from '@material-ui/core'
 
 import {
@@ -26,22 +25,16 @@ const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updat
   }, [getProfileDetail, params.id])
 
   const initialValues = useMemo(
-    () =>
-      profileDetail
-        ? pick(
-            ['user_id', 'profile_type', 'first_name', 'last_name', 'address', 'country', 'dob', 'gender'],
-            profileDetail
-          )
-        : {
-            user_id: '',
-            profile_type: '',
-            first_name: '',
-            last_name: '',
-            address: '',
-            country: '',
-            dob: '',
-            gender: ''
-          },
+    () => ({
+      user_id: profileDetail?.user_id || '',
+      profile_type: profileDetail?.profile_type || '',
+      first_name: profileDetail?.first_name || '',
+      last_name: profileDetail?.last_name || '',
+      address: profileDetail?.address || '',
+      country: profileDetail?.country || '',
+      dob: profileDetail?.dob || '',
+      gender: profileDetail?.gender || ''
+    }),
     [profileDetail]
   )
   const handleSubmit = useCallback(

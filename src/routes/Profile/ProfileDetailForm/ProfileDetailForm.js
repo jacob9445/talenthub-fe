@@ -14,7 +14,7 @@ import useStyles from './styles'
 import { getUsers, usersSelector, usersLoadingSelector } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
-import { PROFILE_TYPES, GENDER } from 'config/constants'
+import { profileTypeOptions, genderOptions } from 'config/constants'
 
 export const validationSchema = Yup.object().shape({
   user_id: Yup.string().required('This field is required!'),
@@ -23,32 +23,21 @@ export const validationSchema = Yup.object().shape({
   last_name: Yup.string().required('This field is required!'),
   address: Yup.string().required('This field is required!'),
   country: Yup.string().required('This field is required!'),
-  gender: Yup.string().required('This field is required!')
+  gender: Yup.string().required('This field is required!'),
+  dob: Yup.date().required('This field is required!')
 })
 
-const profileTypeOptions = [
-  {
-    display: 'Self',
-    value: PROFILE_TYPES.SELF
-  },
-  {
-    display: 'Partner',
-    value: PROFILE_TYPES.PARTNER
-  }
-]
-
-const genderOptions = [
-  {
-    display: 'Male',
-    value: GENDER.MALE
-  },
-  {
-    display: 'Female',
-    value: GENDER.FEMALE
-  }
-]
-
-const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, isUsersLoading, me }) => {
+const ProfileDetailForm = ({
+  location,
+  history,
+  handleSubmit,
+  getUsers,
+  users,
+  isUsersLoading,
+  me,
+  match: { params }
+}) => {
+  const isUpdateMode = Boolean(params.id)
   const classes = useStyles()
 
   useEffect(() => {
@@ -62,7 +51,7 @@ const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, i
   const userOptions = useMemo(() => {
     if (users) {
       return users.map(user => ({
-        display: user.username,
+        display: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
     } else {
@@ -85,6 +74,7 @@ const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, i
         />
         <Field component={FormInput} htmlId="first_name" type="text" name="first_name" label="First Name" />
         <Field component={FormInput} htmlId="last_name" type="text" name="last_name" label="Last Name" />
+        <Field component={FormInput} htmlId="dob" type="date" name="dob" label="Data of Birth" />
         <Field component={FormInput} htmlId="address" type="text" name="address" label="Address" />
         <Field component={FormInput} htmlId="country" type="text" name="country" label="Country" />
         <Field
@@ -97,7 +87,7 @@ const ProfileDetailForm = ({ location, history, handleSubmit, getUsers, users, i
         />
         <div className={classes.formButtonWrapper}>
           <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
-            Update
+            {isUpdateMode ? 'Update' : 'Create'}
           </Button>
           <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleCancel}>
             Cancel
@@ -124,7 +114,8 @@ ProfileDetailForm.propTypes = {
   getUsers: PropTypes.func.isRequired,
   users: PropTypes.array,
   me: PropTypes.object.isRequired,
-  isUsersLoading: PropTypes.bool.isRequired
+  isUsersLoading: PropTypes.bool.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 export default R.compose(

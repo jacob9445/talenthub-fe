@@ -5,31 +5,8 @@ import PropTypes from 'prop-types'
 
 import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
-import { PROFILE_TYPES, GENDER, ROLES } from 'config/constants'
+import { ROLES, profile_type_patterns, gender_patterns } from 'config/constants'
 import Spinner from 'components/Spinner'
-
-const profile_type_patterns = [
-  {
-    id: 0,
-    role: null,
-    color: ''
-  },
-  {
-    id: PROFILE_TYPES.SELF,
-    type: 'Self',
-    color: 'success'
-  },
-  {
-    id: PROFILE_TYPES.PARTNER,
-    type: 'Partner',
-    color: 'info'
-  }
-]
-
-const gender_patterns = {
-  [GENDER.MALE]: 'Male',
-  [GENDER.FEMALE]: 'Female'
-}
 
 const columns = ['Username', 'Type', 'Full Name', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
 
