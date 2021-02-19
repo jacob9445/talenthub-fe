@@ -12,22 +12,26 @@ import TeamManager from './TeamManager'
 import Developer from './Developer'
 import PropTypes from 'prop-types'
 import { URL_PREFIXES } from 'config/constants'
+import ConfirmModal from 'components/ConfirmModal'
 
 const Routes = ({ me, isAuthenticated }) => {
   return (
-    <Switch>
-      <Route
-        exact
-        path="/"
-        render={() =>
-          isAuthenticated ? <Redirect to={`${URL_PREFIXES[me.role]}/dashboard`} /> : <Redirect to="/login" />
-        }
-      />
-      <AuthRoute path="/login" component={Login} />
-      <PrivateRoute path="/admin" component={Admin} />
-      <PrivateRoute path="/team-manager" component={TeamManager} />
-      <PrivateRoute path="/developer" component={Developer} />
-    </Switch>
+    <>
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() =>
+            isAuthenticated ? <Redirect to={`${URL_PREFIXES[me.role]}/dashboard`} /> : <Redirect to="/login" />
+          }
+        />
+        <AuthRoute path="/login" component={Login} />
+        <PrivateRoute path="/admin" component={Admin} />
+        <PrivateRoute path="/team-manager" component={TeamManager} />
+        <PrivateRoute path="/developer" component={Developer} />
+      </Switch>
+      <ConfirmModal />
+    </>
   )
 }
 
