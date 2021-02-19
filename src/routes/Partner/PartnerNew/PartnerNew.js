@@ -2,6 +2,8 @@ import React, { useCallback } from 'react'
 import { Grid } from '@material-ui/core'
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 
@@ -10,7 +12,7 @@ import PartnerDetailForm, { validationSchema } from '../PartnerDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createPartner } from 'store/modules/partner'
 import { meSelector } from 'store/modules/auth'
-import { ROLES } from 'config/constants'
+import { ROLES, URL_PREFIXES } from 'config/constants'
 
 const initialValues = {
   full_name: '',
@@ -22,7 +24,7 @@ const initialValues = {
   contact_method: ''
 }
 
-const PartnerNew = ({ createPartner, me }) => {
+const PartnerNew = ({ createPartner, me, history }) => {
   const handleSubmit = useCallback(
     (values, formActions) => {
       return formSubmit(
@@ -35,12 +37,13 @@ const PartnerNew = ({ createPartner, me }) => {
                   owner: me.id
                 }
               : {})
-          }
+          },
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/partners`)
         },
         formActions
       )
     },
-    [createPartner, me]
+    [createPartner, me, history]
   )
 
   return (
@@ -72,7 +75,10 @@ PartnerNew.propTypes = {
   me: PropTypes.object
 }
 
-export default connect(
-  selector,
-  actions
+export default compose(
+  withRouter,
+  connect(
+    selector,
+    actions
+  )
 )(PartnerNew)
