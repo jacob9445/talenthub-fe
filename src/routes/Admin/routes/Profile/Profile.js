@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { pick, path } from 'ramda'
 import { Grid } from '@material-ui/core'
+import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
 import ProfileTable from './ProfileTable'
@@ -11,7 +12,7 @@ import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndR
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
 
-const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh }) => {
+const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh, show }) => {
   useEffect(() => {
     getProfiles()
   }, [getProfiles])
@@ -27,9 +28,14 @@ const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh
 
   const handleDelete = useCallback(
     id => {
-      deleteProfileAndRefresh(id)
+      show('confirmModal', {
+        confirmation: 'Are you sure to delete the profile?',
+        proceed: () => {
+          deleteProfileAndRefresh(id)
+        }
+      })
     },
-    [deleteProfileAndRefresh]
+    [show, deleteProfileAndRefresh]
   )
 
   if (isLoading) return <Spinner />
@@ -50,12 +56,14 @@ Profile.propTypes = {
   deleteProfileAndRefresh: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   profiles: PropTypes.array,
-  me: PropTypes.object
+  me: PropTypes.object,
+  show: PropTypes.func.isRequired
 }
 
 const actions = {
   getProfiles,
-  deleteProfileAndRefresh
+  deleteProfileAndRefresh,
+  show
 }
 
 const selectors = createStructuredSelector({

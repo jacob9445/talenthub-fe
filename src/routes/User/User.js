@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { show } from 'redux-modal'
 
 import { getUsers, usersSelector, deleteUserAndRefresh } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
@@ -17,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const User = ({ getUsers, users, me, deleteUserAndRefresh }) => {
+const User = ({ getUsers, users, me, deleteUserAndRefresh, show }) => {
   let classes = useStyles()
   useEffect(() => {
     getUsers({ role: me.role })
@@ -25,10 +26,16 @@ const User = ({ getUsers, users, me, deleteUserAndRefresh }) => {
 
   const handleDelete = useCallback(
     id => {
-      deleteUserAndRefresh({ id })
+      show('confirmModal', {
+        confirmation: 'Are you sure to delete the user?',
+        proceed: () => {
+          deleteUserAndRefresh({ id })
+        }
+      })
     },
-    [deleteUserAndRefresh]
+    [show, deleteUserAndRefresh]
   )
+
   return (
     <>
       {/* <PageTitle title="Users" /> */}
@@ -56,7 +63,8 @@ const User = ({ getUsers, users, me, deleteUserAndRefresh }) => {
 
 const actions = {
   getUsers,
-  deleteUserAndRefresh
+  deleteUserAndRefresh,
+  show
 }
 
 const selectors = createStructuredSelector({
@@ -68,7 +76,8 @@ User.propTypes = {
   users: PropTypes.array,
   me: PropTypes.object,
   getUsers: PropTypes.func.isRequired,
-  deleteUserAndRefresh: PropTypes.func.isRequired
+  deleteUserAndRefresh: PropTypes.func.isRequired,
+  show: PropTypes.func.isRequired
 }
 
 export default connect(

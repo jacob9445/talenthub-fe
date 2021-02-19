@@ -63,12 +63,17 @@ const FinancialRequest = ({
 
   const handleDecline = useCallback(
     id => {
-      declineFinancialRequest({
-        id,
-        success: () => getFinancialRequests()
+      show('confirmModal', {
+        confirmation: 'Are you sure to delete the request?',
+        proceed: () => {
+          declineFinancialRequest({
+            id,
+            success: () => getFinancialRequests()
+          })
+        }
       })
     },
-    [declineFinancialRequest, getFinancialRequests]
+    [show, declineFinancialRequest, getFinancialRequests]
   )
 
   if (isFinancialRequestsLoading) return <Spinner />

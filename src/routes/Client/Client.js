@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
 import ClientTable from './ClientTable'
@@ -12,16 +13,21 @@ import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSele
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
-const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading, me }) => {
+const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading, me, show }) => {
   useEffect(() => {
     getClients()
   }, [getClients])
 
   const handleDelete = useCallback(
     id => {
-      deleteClientAndRefresh(id)
+      show('confirmModal', {
+        confirmation: 'Are you sure to delete the client?',
+        proceed: () => {
+          deleteClientAndRefresh(id)
+        }
+      })
     },
-    [deleteClientAndRefresh]
+    [show, deleteClientAndRefresh]
   )
 
   if (isClientsLoading) return <Spinner />
@@ -46,7 +52,8 @@ const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading
 
 const actions = {
   getClients,
-  deleteClientAndRefresh
+  deleteClientAndRefresh,
+  show
 }
 
 const selectors = createStructuredSelector({
@@ -60,7 +67,8 @@ Clients.propTypes = {
   deleteClientAndRefresh: PropTypes.func.isRequired,
   clients: PropTypes.array,
   isClientsLoading: PropTypes.bool.isRequired,
-  me: PropTypes.object
+  me: PropTypes.object,
+  show: PropTypes.func.isRequired
 }
 
 export default connect(

@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
+import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
 import ProjectsTable from './ProjectTable'
@@ -12,16 +13,21 @@ import Spinner from 'components/Spinner'
 import { getProjects, deleteProjectAndRefresh, projectsSelector, projectsLoadingSelector } from 'store/modules/project'
 import { meSelector } from 'store/modules/auth'
 
-const Project = ({ getProjects, deleteProjectAndRefresh, projects, isProjectsLoading, me, match: { path } }) => {
+const Project = ({ getProjects, deleteProjectAndRefresh, projects, isProjectsLoading, me, match: { path }, show }) => {
   useEffect(() => {
     getProjects(me)
   }, [getProjects, me])
 
   const handleDelete = useCallback(
     id => {
-      deleteProjectAndRefresh({ id, role: me.role })
+      show('confirmModal', {
+        confirmation: 'Are you sure to delete the project?',
+        proceed: () => {
+          deleteProjectAndRefresh({ id, role: me.role })
+        }
+      })
     },
-    [deleteProjectAndRefresh, me.role]
+    [show, deleteProjectAndRefresh, me.role]
   )
 
   if (isProjectsLoading) return <Spinner />
@@ -46,7 +52,8 @@ const Project = ({ getProjects, deleteProjectAndRefresh, projects, isProjectsLoa
 
 const actions = {
   getProjects,
-  deleteProjectAndRefresh
+  deleteProjectAndRefresh,
+  show
 }
 
 const selectors = createStructuredSelector({

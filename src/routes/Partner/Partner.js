@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
 import PartnerTable from './PartnerTable'
@@ -12,16 +13,21 @@ import { getPartners, deletePartnerAndRefresh, partnersSelector, partnersLoading
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
-const Partner = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoading, me }) => {
+const Partner = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoading, me, show }) => {
   useEffect(() => {
     getPartners(me)
   }, [getPartners, me])
 
   const handleDelete = useCallback(
     id => {
-      deletePartnerAndRefresh({ id, role: me.role })
+      show('confirmModal', {
+        confirmation: 'Are you sure to delete the partner?',
+        proceed: () => {
+          deletePartnerAndRefresh({ id, role: me.role })
+        }
+      })
     },
-    [deletePartnerAndRefresh, me.role]
+    [show, deletePartnerAndRefresh, me.role]
   )
 
   if (isPartnersLoading) return <Spinner />
@@ -46,7 +52,8 @@ const Partner = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoa
 
 const actions = {
   getPartners,
-  deletePartnerAndRefresh
+  deletePartnerAndRefresh,
+  show
 }
 
 const selectors = createStructuredSelector({
@@ -60,7 +67,8 @@ Partner.propTypes = {
   deletePartnerAndRefresh: PropTypes.func.isRequired,
   partners: PropTypes.array,
   isPartnersLoading: PropTypes.bool.isRequired,
-  me: PropTypes.object
+  me: PropTypes.object,
+  show: PropTypes.func.isRequired
 }
 
 export default connect(

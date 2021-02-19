@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { path } from 'ramda'
+import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
@@ -11,7 +12,7 @@ import AccountTable from './AccountTable'
 import { getAccounts, deleteAccountAndRefresh, accountsSelector, accountsLoadingSelector } from 'store/modules/account'
 import { meSelector } from 'store/modules/auth'
 
-const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccounts, me }) => {
+const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccounts, me, show }) => {
   useEffect(() => {
     getAccounts()
   }, [getAccounts])
@@ -27,9 +28,14 @@ const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccoun
 
   const handleDelete = useCallback(
     id => {
-      deleteAccountAndRefresh(id)
+      show('confirmModal', {
+        confirmation: 'Are you sure to delete the account?',
+        proceed: () => {
+          deleteAccountAndRefresh(id)
+        }
+      })
     },
-    [deleteAccountAndRefresh]
+    [show, deleteAccountAndRefresh]
   )
 
   if (loadingAccounts) return <Spinner />
@@ -50,12 +56,14 @@ Account.propTypes = {
   deleteAccountAndRefresh: PropTypes.func.isRequired,
   accounts: PropTypes.array,
   loadingAccounts: PropTypes.bool.isRequired,
-  me: PropTypes.object
+  me: PropTypes.object,
+  show: PropTypes.func.isRequired
 }
 
 const actions = {
   getAccounts,
-  deleteAccountAndRefresh
+  deleteAccountAndRefresh,
+  show
 }
 
 const selectors = createStructuredSelector({

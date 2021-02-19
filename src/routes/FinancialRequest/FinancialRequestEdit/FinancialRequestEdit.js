@@ -107,7 +107,8 @@ FinancialRequestEdit.propTypes = {
   financialRequestDetail: PropTypes.object,
   isDetailLoading: PropTypes.bool.isRequired,
   params: PropTypes.object,
-  me: PropTypes.object
+  me: PropTypes.object,
+  show: PropTypes.func.isRequired
 }
 
 export default compose(
