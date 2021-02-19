@@ -11,7 +11,7 @@ import {
   AccessibilityNew as PartnerIcon,
   Computer as ProjectIcon,
   ContactPhone as FRIcon,
-  Loop as TransactionIcon
+  AttachMoney as TransactionIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
