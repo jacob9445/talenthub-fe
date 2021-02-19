@@ -3,12 +3,16 @@ import { Formik } from 'formik'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
+import { compose } from 'redux'
 
 import Widget from 'components/Widget'
 import UserDetailForm, { validationSchema, validatePwds } from 'routes/User/UserDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createUser } from 'store/modules/user'
+import { roleSelector } from 'store/modules/auth'
 import { getTeams, teamsSelector } from 'store/modules/team'
+import { URL_PREFIXES } from 'config/constants'
 
 const initialValues = {
   first_name: '',
@@ -19,18 +23,19 @@ const initialValues = {
   team: ''
 }
 
-const UserNew = ({ createUser, getTeams, teams }) => {
+const UserNew = ({ createUser, getTeams, teams, history, role }) => {
   const handleSubmit = useCallback(
     (payload, formActions) => {
       return formSubmit(
         createUser,
         {
-          data: payload
+          data: payload,
+          success: () => history.push(`/${URL_PREFIXES[role]}/users`)
         },
         formActions
       )
     },
-    [createUser]
+    [createUser, history, role]
   )
 
   useEffect(() => {
@@ -53,7 +58,8 @@ const UserNew = ({ createUser, getTeams, teams }) => {
 }
 
 const selectors = createStructuredSelector({
-  teams: teamsSelector
+  teams: teamsSelector,
+  role: roleSelector
 })
 
 const actions = {
@@ -64,10 +70,14 @@ const actions = {
 UserNew.propTypes = {
   createUser: PropTypes.func.isRequired,
   getTeams: PropTypes.func.isRequired,
-  teams: PropTypes.array
+  teams: PropTypes.array,
+  role: PropTypes.object
 }
 
-export default connect(
-  selectors,
-  actions
+export default compose(
+  withRouter,
+  connect(
+    selectors,
+    actions
+  )
 )(UserNew)
