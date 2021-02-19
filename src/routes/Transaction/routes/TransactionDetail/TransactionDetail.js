@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -40,7 +40,14 @@ const TransactionDetail = ({
         <>
           <Grid container>
             <Grid item xs={12}>
-              <Widget title="Transaction Detail" disableWidgetMenu>
+              <Widget
+                title="Transaction Detail"
+                disableWidgetMenu
+                WidgetButton={
+                  <Button color="primary" component={Link} to={`/${URL_PREFIXES[myRole]}/transactions`}>
+                    Back to list
+                  </Button>
+                }>
                 <Grid container>
                   <Grid item sm={6}>
                     <LabelValue label="Date">
