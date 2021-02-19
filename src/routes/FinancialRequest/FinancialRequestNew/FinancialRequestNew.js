@@ -1,15 +1,19 @@
 import React, { useCallback } from 'react'
-import { Grid } from '@material-ui/core'
-import { Formik } from 'formik'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import { createStructuredSelector } from 'reselect'
+import { Formik } from 'formik'
+import { Grid } from '@material-ui/core'
+import { withRouter } from 'react-router'
 import * as R from 'ramda'
+import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import FinancialRequestDetailForm, { validationSchema } from '../FinancialRequestDetailForm'
 import { formSubmit } from 'helpers/form'
+import { meSelector } from 'store/modules/auth'
 import { createFinancialRequest } from 'store/modules/financialRequest'
-import { FINANCIALREQUEST_TYPE } from 'config/constants'
+import { FINANCIALREQUEST_TYPE, URL_PREFIXES } from 'config/constants'
 
 const initialValues = {
   type: FINANCIALREQUEST_TYPE.SENDINVOICE,
@@ -19,7 +23,7 @@ const initialValues = {
   project: ''
 }
 
-const FinancialRequestNew = ({ createFinancialRequest }) => {
+const FinancialRequestNew = ({ createFinancialRequest, history, me: { role } }) => {
   const handleSubmit = useCallback(
     (values, formActions) => {
       return formSubmit(
@@ -28,12 +32,13 @@ const FinancialRequestNew = ({ createFinancialRequest }) => {
           data: {
             ...R.omit(['client', 'partner'], values),
             counter_party: values.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? values.partner : values.client
-          }
+          },
+          success: () => history.push(`/${URL_PREFIXES[role]}/financial-requests`)
         },
         formActions
       )
     },
-    [createFinancialRequest]
+    [createFinancialRequest, history, role]
   )
 
   return (
@@ -56,11 +61,19 @@ const actions = {
   createFinancialRequest
 }
 
+const selectors = createStructuredSelector({
+  me: meSelector
+})
+
 FinancialRequestNew.propTypes = {
-  createFinancialRequest: PropTypes.func.isRequired
+  createFinancialRequest: PropTypes.func.isRequired,
+  me: PropTypes.object
 }
 
-export default connect(
-  null,
-  actions
+export default compose(
+  withRouter,
+  connect(
+    selectors,
+    actions
+  )
 )(FinancialRequestNew)
