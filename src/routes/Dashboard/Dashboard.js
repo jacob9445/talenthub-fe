@@ -109,12 +109,17 @@ const Dashboard = ({
 
   const handleDecline = useCallback(
     id => {
-      declineFinancialRequest({
-        id,
-        success: () => getPendingRequests()
+      show('confirmModal', {
+        confirmation: 'Are you sure to delete the request?',
+        proceed: () => {
+          declineFinancialRequest({
+            id,
+            success: () => getPendingRequests()
+          })
+        }
       })
     },
-    [declineFinancialRequest, getPendingRequests]
+    [show, declineFinancialRequest, getPendingRequests]
   )
 
   // console.log({dashboardInfo})
