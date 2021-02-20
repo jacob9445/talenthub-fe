@@ -27,16 +27,16 @@ const TeamManager = ({ match: { path } }) => {
     <Switch>
       <Route path={`${path}/dashboard`} component={Dashboard} />
       <Route exact path={`${path}/users`} component={User} />
-      <Route path={`${path}/users/create`} component={UserNew} />
+      <Route path={`${path}/users/new`} component={UserNew} />
       <Route path={`${path}/users/:id/detail`} component={UserEdit} />
       <Route exact path={`${path}/partners`} component={Partner} />
-      <Route path={`${path}/partners/create`} component={PartnerNew} />
+      <Route path={`${path}/partners/new`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
       <Route exact path={`${path}/clients`} component={Client} />
-      <Route path={`${path}/clients/create`} component={ClientNew} />
+      <Route path={`${path}/clients/new`} component={ClientNew} />
       <Route path={`${path}/clients/:id/detail`} component={ClientEdit} />
       <Route exact path={`${path}/projects`} component={Project} />
-      <Route path={`${path}/projects/create`} component={ProjectNew} />
+      <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
       <Route exact path={`${path}/financial-requests`} component={FinancialRequest} />
       <Route path={`${path}/financial-requests/:id/detail`} component={FinancialRequestEdit} />

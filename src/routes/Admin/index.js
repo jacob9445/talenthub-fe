@@ -40,13 +40,13 @@ const Admin = ({ match: { path } }) => {
       <Route exact path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
       <Route exact path={`${path}/partners`} component={Partner} />
-      <Route path={`${path}/partners/create`} component={PartnerNew} />
+      <Route path={`${path}/partners/new`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
       <Route exact path={`${path}/clients`} component={Client} />
-      <Route path={`${path}/clients/create`} component={ClientNew} />
+      <Route path={`${path}/clients/new`} component={ClientNew} />
       <Route path={`${path}/clients/:id/detail`} component={ClientEdit} />
       <Route exact path={`${path}/projects`} component={Project} />
-      <Route path={`${path}/projects/create`} component={ProjectNew} />
+      <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
       <Route exact path={`${path}/financial-requests`} component={FinancialRequest} />
       <Route path={`${path}/financial-requests/:id/detail`} component={FinancialRequestEdit} />

@@ -39,7 +39,7 @@ const Project = ({ getProjects, deleteProjectAndRefresh, projects, isProjectsLoa
             title="Projects"
             disableWidgetMenu
             WidgetButton={
-              <Button color="primary" component={Link} to={`${path}/create`}>
+              <Button color="primary" component={Link} to={`${path}/new`}>
                 Add Project
               </Button>
             }>

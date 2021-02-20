@@ -39,7 +39,7 @@ const Partner = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoa
             title="Partners"
             disableWidgetMenu
             WidgetButton={
-              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/partners/create`}>
+              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/partners/new`}>
                 Add Partner
               </Button>
             }>
