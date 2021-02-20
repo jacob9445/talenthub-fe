@@ -5,12 +5,12 @@ import PropTypes from 'prop-types'
 
 import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
-import { ROLES, profile_type_patterns, gender_patterns } from 'config/constants'
+import { profile_type_patterns, gender_patterns } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-const columns = ['Username', 'Type', 'Full Name', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
+const columns = ['Full Name', 'Type', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
 
-function ProfileTable({ data, myRole, handleDelete, match: { path } }) {
+function ProfileTable({ data, handleDelete, match: { path } }) {
   const classes = useStyles()
 
   if (data) {
@@ -24,36 +24,33 @@ function ProfileTable({ data, myRole, handleDelete, match: { path } }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, username, profile_type, first_name, last_name, address, country, dob, gender }) => (
+          {data.map(({ id, profile_type, first_name, last_name, address, country, dob, gender }) => (
             <TableRow key={id}>
-              <TableCell>{username}</TableCell>
+              <TableCell>
+                {first_name} {last_name}
+              </TableCell>
               <TableCell>
                 <Chip
                   label={profile_type_patterns[profile_type].type}
                   classes={{ root: classes[profile_type_patterns[profile_type].color] }}
                 />
               </TableCell>
-              <TableCell>
-                {first_name} {last_name}
-              </TableCell>
               <TableCell>{address}</TableCell>
               <TableCell>{country}</TableCell>
               <TableCell>{dob}</TableCell>
               <TableCell>{gender_patterns[gender]}</TableCell>
-              {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
-                <TableCell>
-                  <Tooltip key={`${id}Edit`} title="Edit" placement="top">
-                    <IconButton component={Link} to={`${path}/${id}/detail`}>
-                      <EditIcon color="primary" />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip key={`${id}Delete`} title="Delete" placement="top">
-                    <IconButton onClick={() => handleDelete(id)}>
-                      <DeleteIcon color="secondary" />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              )}
+              <TableCell>
+                <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                  <IconButton component={Link} to={`${path}/${id}/detail`}>
+                    <EditIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                  <IconButton onClick={() => handleDelete(id)}>
+                    <DeleteIcon color="secondary" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -66,7 +63,6 @@ function ProfileTable({ data, myRole, handleDelete, match: { path } }) {
 
 ProfileTable.propTypes = {
   data: PropTypes.array,
-  myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }

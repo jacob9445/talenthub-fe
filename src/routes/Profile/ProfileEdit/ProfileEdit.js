@@ -18,15 +18,17 @@ import { formSubmit } from 'helpers/form'
 import ProfileDetailForm, { validationSchema } from '../ProfileDetailForm'
 import Spinner from 'components/Spinner'
 import AccountChips from './AccountChips'
+import { meSelector } from 'store/modules/auth'
+import { ROLES } from 'config/constants'
 
-const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updateProfile, isLoading }) => {
+const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updateProfile, isLoading, me }) => {
   useEffect(() => {
     getProfileDetail(params.id)
   }, [getProfileDetail, params.id])
 
   const initialValues = useMemo(
     () => ({
-      user_id: profileDetail?.user_id || '',
+      ...(me.role !== ROLES.DEVELOPER ? { user_id: profileDetail?.user_id || '' } : {}),
       profile_type: profileDetail?.profile_type || '',
       first_name: profileDetail?.first_name || '',
       last_name: profileDetail?.last_name || '',
@@ -35,20 +37,23 @@ const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updat
       dob: profileDetail?.dob || '',
       gender: profileDetail?.gender || ''
     }),
-    [profileDetail]
+    [profileDetail, me.role]
   )
   const handleSubmit = useCallback(
-    (payload, formActions) => {
+    (values, formActions) => {
       return formSubmit(
         updateProfile,
         {
-          data: payload,
+          data: {
+            ...values,
+            ...(me.role !== ROLES.DEVELOPER ? { user_id: values.user_id } : { user_id: me.id })
+          },
           id: params.id
         },
         formActions
       )
     },
-    [updateProfile, params.id]
+    [updateProfile, params.id, me]
   )
 
   if (isLoading || !profileDetail) return <Spinner />
@@ -80,7 +85,8 @@ ProfileEdit.propTypes = {
   getProfileDetail: PropTypes.func.isRequired,
   profileDetail: PropTypes.object,
   updateProfile: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  me: PropTypes.object
 }
 
 const actions = {
@@ -88,15 +94,16 @@ const actions = {
   updateProfile
 }
 
-const selectors = createStructuredSelector({
+const selector = createStructuredSelector({
   profileDetail: profileDetailSelector,
-  isLoading: profileDetailLoadingSelector
+  isLoading: profileDetailLoadingSelector,
+  me: meSelector
 })
 
 export default compose(
+  withRouter,
   connect(
-    selectors,
+    selector,
     actions
-  ),
-  withRouter
+  )
 )(ProfileEdit)

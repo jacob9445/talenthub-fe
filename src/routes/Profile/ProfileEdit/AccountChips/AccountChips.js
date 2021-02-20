@@ -4,21 +4,26 @@ import { Grid, Chip } from '@material-ui/core'
 import { Person as AccountIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import { withRouter } from 'react-router'
-import { PLATFORM_LABELS } from 'config/constants'
+import { createStructuredSelector } from 'reselect'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+
+import { meSelector } from 'store/modules/auth'
+import { PLATFORM_LABELS, URL_PREFIXES } from 'config/constants'
 const useStyles = makeStyles(theme => ({
   chip: {
     margin: theme.spacing(1) / 2
   }
 }))
 
-const AccountChips = ({ accounts, history, location }) => {
+const AccountChips = ({ accounts, history, location, me }) => {
   const classes = useStyles()
 
   const showProfileDetail = useCallback(
     id => () => {
-      history.push(`/admin/accounts/${id}/detail`, location.pathname)
+      history.push(`/${URL_PREFIXES[me.role]}/accounts/${id}/detail`, location.pathname)
     },
-    [history, location]
+    [history, location, me.role]
   )
 
   return (
@@ -41,7 +46,15 @@ const AccountChips = ({ accounts, history, location }) => {
 AccountChips.propTypes = {
   accounts: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  me: PropTypes.object
 }
 
-export default withRouter(AccountChips)
+const selector = createStructuredSelector({
+  me: meSelector
+})
+
+export default compose(
+  withRouter,
+  connect(selector)
+)(AccountChips)

@@ -10,7 +10,7 @@ import ProfileDetailForm, { validationSchema } from '../ProfileDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createProfile } from 'store/modules/profile'
 import { meSelector } from 'store/modules/auth'
-import { PROFILE_TYPES, GENDER } from 'config/constants'
+import { PROFILE_TYPES, GENDER, ROLES } from 'config/constants'
 
 const initialValues = {
   user_id: '',
@@ -30,13 +30,14 @@ const ProfileNew = ({ createProfile, me }) => {
         createProfile,
         {
           data: {
-            ...values
+            ...values,
+            ...(me.role !== ROLES.DEVELOPER ? { user_id: values.user_id } : { user_id: me.id })
           }
         },
         formActions
       )
     },
-    [createProfile]
+    [createProfile, me]
   )
 
   return (
