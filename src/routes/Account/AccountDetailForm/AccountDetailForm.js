@@ -10,6 +10,7 @@ import { compose } from 'redux'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
+import FormPasswordInput from 'components/FormPasswordInput'
 import useStyles from './styles'
 import { platformOptions } from 'config/constants'
 import { getProfiles, profileSelector } from 'store/modules/profile'
@@ -26,12 +27,13 @@ export const validationSchema = Yup.object().shape({
   url: Yup.string().required('This field is required!')
 })
 
-const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSubmit, me }) => {
+const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSubmit, me, match: { params } }) => {
   useEffect(() => {
     getProfiles()
   }, [getProfiles])
 
   const classes = useStyles()
+  const isUpdateMode = Boolean(params.id)
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/accounts`)
@@ -67,13 +69,13 @@ const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSub
         options={platformOptions}
       />
       <Field component={FormInput} htmlId="email" type="email" name="email" label="Email" />
-      <Field component={FormInput} htmlId="password" type="text" name="password" label="Password" />
+      <Field component={FormPasswordInput} htmlId="password" name="password" label="Password" />
       <Field component={FormInput} htmlId="location" type="text" name="location" label="Location" />
-      <Field component={FormInput} htmlId="recovery_email" type="text" name="recovery_email" label="Recovery Email" />
+      <Field component={FormInput} htmlId="recovery_email" type="email" name="recovery_email" label="Recovery Email" />
       <Field component={FormInput} htmlId="url" type="text" name="url" label="URL" />
       <div className={classes.formButtonWrapper}>
         <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
-          Update
+          {isUpdateMode ? 'Update' : 'Create'}
         </Button>
         <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleCancel}>
           Cancel
@@ -89,7 +91,8 @@ AccountDetailForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   getProfiles: PropTypes.func.isRequired,
   profiles: PropTypes.array,
-  me: PropTypes.object
+  me: PropTypes.object,
+  match: PropTypes.object.isRequired
 }
 
 const actions = {
