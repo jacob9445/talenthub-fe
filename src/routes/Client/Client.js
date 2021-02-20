@@ -39,7 +39,7 @@ const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading
             title="Clients"
             disableWidgetMenu
             WidgetButton={
-              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/clients/create`}>
+              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/clients/new`}>
                 Add Client
               </Button>
             }>

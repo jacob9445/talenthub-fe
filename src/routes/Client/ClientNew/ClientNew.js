@@ -1,12 +1,14 @@
 import React, { useCallback } from 'react'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { format } from 'date-fns'
 import { Formik } from 'formik'
 import { Grid } from '@material-ui/core'
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
-import { CLIENT_TYPES } from 'config/constants'
+import { CLIENT_TYPES, URL_PREFIXES } from 'config/constants'
 import { createClient } from 'store/modules/client'
 import { formSubmit } from 'helpers/form'
 import { meSelector } from 'store/modules/auth'
@@ -22,7 +24,7 @@ const initialValues = {
   owner: ''
 }
 
-const ClientNew = ({ createClient, me }) => {
+const ClientNew = ({ createClient, me, history }) => {
   const handleSubmit = useCallback(
     (values, formActions) => {
       return formSubmit(
@@ -35,12 +37,13 @@ const ClientNew = ({ createClient, me }) => {
                   owner: me.id
                 }
               : {})
-          }
+          },
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/clients`)
         },
         formActions
       )
     },
-    [createClient, me]
+    [createClient, me, history]
   )
 
   return (
@@ -72,7 +75,10 @@ ClientNew.propTypes = {
   me: PropTypes.object
 }
 
-export default connect(
-  selector,
-  actions
+export default compose(
+  withRouter,
+  connect(
+    selector,
+    actions
+  )
 )(ClientNew)
