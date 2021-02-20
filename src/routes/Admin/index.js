@@ -12,6 +12,7 @@ import ProfileDetail from 'routes/Profile/ProfileEdit'
 import ProfileNew from 'routes/Profile/ProfileNew'
 import Account from '../Account'
 import AccountEdit from '../Account/AccountEdit'
+import AccountNew from 'routes/Account/AccountNew'
 import { isAdminOrRedir } from 'hocs/withRoles'
 import Partner from '../Partner'
 import PartnerNew from '../Partner/PartnerNew'
@@ -40,6 +41,7 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route exact path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
+      <Route path={`${path}/accounts/create`} component={AccountNew} />
       <Route exact path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/partners/new`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />

@@ -1,18 +1,23 @@
 import { takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
 import * as Types from './types'
+import { roleBasedPath } from 'helpers/sagaHelpers'
 
 const getAccounts = apiCallSaga({
   type: Types.GET_ACCOUNTS,
   method: 'GET',
-  path: 'api/admin/accounts/',
+  path: function*() {
+    return yield roleBasedPath('accounts/')
+  },
   selectorKey: 'accounts'
 })
 
 const deleteAccount = apiCallSaga({
   type: Types.DELETE_ACCOUNT,
   method: 'DELETE',
-  path: ({ payload }) => `api/admin/accounts/${payload}/`
+  path: function*({ payload }) {
+    return yield roleBasedPath(`accounts/${payload}/`)
+  }
 })
 
 const deleteAccountAndRefresh = function*(action) {
@@ -25,14 +30,26 @@ const deleteAccountAndRefresh = function*(action) {
 const getAccountDetail = apiCallSaga({
   type: Types.GET_ACCOUNTDETAIL,
   method: 'GET',
-  path: ({ payload }) => `api/admin/accounts/${payload}/`,
+  path: function*({ payload }) {
+    return yield roleBasedPath(`accounts/${payload}/`)
+  },
   selectorKey: 'accountDetail'
 })
 
 const updateAccount = apiCallSaga({
   type: Types.GET_ACCOUNTDETAIL,
   method: 'PUT',
-  path: ({ payload: { id } }) => `api/admin/accounts/${id}/`
+  path: function*({ payload: { id } }) {
+    return yield roleBasedPath(`accounts/${id}/`)
+  }
+})
+
+const createAccount = apiCallSaga({
+  type: Types.CREATE_ACCOUNT,
+  method: 'POST',
+  path: function*() {
+    return yield roleBasedPath(`accounts/`)
+  }
 })
 
 export default function* rootSaga() {
@@ -41,4 +58,5 @@ export default function* rootSaga() {
   yield takeLatest(Types.DELETE_ACCOUNT_AND_REFRESH, deleteAccountAndRefresh)
   yield takeLatest(Types.GET_ACCOUNTDETAIL, getAccountDetail)
   yield takeLatest(Types.UPDATE_ACCOUNT, updateAccount)
+  yield takeLatest(Types.CREATE_ACCOUNT, createAccount)
 }

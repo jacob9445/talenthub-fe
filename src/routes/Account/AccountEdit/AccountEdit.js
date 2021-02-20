@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
-import { pick, path, split, nth, compose } from 'ramda'
+import { path, split, nth, compose } from 'ramda'
 import { Grid } from '@material-ui/core'
 
 import {
@@ -24,28 +24,17 @@ const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updat
   }, [getAccountDetail, params.id])
 
   const initialValues = useMemo(
-    () =>
-      accountDetail
-        ? {
-            ...pick(['platform_type', 'email', 'password', 'location', 'recovery_email', 'url'], accountDetail),
-            profile: `${path(['profile', 'first_name'], accountDetail)} ${path(
-              ['profile', 'last_name'],
-              accountDetail
-            )}`
-          }
-        : {
-            profile: '',
-            platform_type: '',
-            email: '',
-            password: '',
-            location: '',
-            recovery_email: '',
-            url: ''
-          },
+    () => ({
+      profile: '',
+      platform_type: accountDetail?.platform_type || '',
+      email: accountDetail?.email || '',
+      password: accountDetail?.password || '',
+      location: accountDetail?.location || '',
+      recovery_email: accountDetail?.recovery_email || '',
+      url: accountDetail?.url || ''
+    }),
     [accountDetail]
   )
-
-  console.log({ initialValues })
 
   const handleSubmit = useCallback(
     (payload, formActions) => {
