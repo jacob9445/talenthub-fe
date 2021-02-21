@@ -18,7 +18,7 @@ import {
 } from 'store/modules/project'
 import Spinner from 'components/Spinner'
 import { meSelector } from 'store/modules/auth'
-import { ROLES, PROJECT_TYPE, PROJECT_STATUS } from 'config/constants'
+import { ROLES, PROJECT_TYPE, PROJECT_STATUS, URL_PREFIXES } from 'config/constants'
 
 const ProjectEdit = ({
   getProjectDetail,
@@ -26,7 +26,8 @@ const ProjectEdit = ({
   projectDetail,
   isDetailLoading,
   match: { params },
-  me
+  me,
+  history
 }) => {
   useEffect(() => {
     getProjectDetail(params.id)
@@ -66,12 +67,13 @@ const ProjectEdit = ({
                   participants: [values.project_starter]
                 })
           },
-          id: params.id
+          id: params.id,
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/projects`)
         },
         formActions
       )
     },
-    [updateProjectDetail, params.id, me]
+    [updateProjectDetail, params.id, me, history]
   )
 
   if (isDetailLoading) return <Spinner />
