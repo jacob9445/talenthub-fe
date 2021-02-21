@@ -1,14 +1,18 @@
 import React, { useCallback } from 'react'
-import { Grid } from '@material-ui/core'
-import { Formik } from 'formik'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { Formik } from 'formik'
+import { Grid } from '@material-ui/core'
+import { createStructuredSelector } from 'reselect'
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import AccountDetailForm, { validationSchema } from '../AccountDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createAccount } from 'store/modules/account'
-import { PLATFORMS } from 'config/constants'
+import { PLATFORMS, URL_PREFIXES } from 'config/constants'
+import { meSelector } from 'store/modules/auth'
 
 const initialValues = {
   profile: '',
@@ -20,7 +24,7 @@ const initialValues = {
   url: ''
 }
 
-const AccountNew = ({ createAccount }) => {
+const AccountNew = ({ createAccount, history, me }) => {
   const handleSubmit = useCallback(
     (values, formActions) => {
       return formSubmit(
@@ -28,12 +32,13 @@ const AccountNew = ({ createAccount }) => {
         {
           data: {
             ...values
-          }
+          },
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/accounts`)
         },
         formActions
       )
     },
-    [createAccount]
+    [createAccount, history, me.role]
   )
 
   return (
@@ -56,11 +61,19 @@ const actions = {
   createAccount
 }
 
+const selectors = createStructuredSelector({
+  me: meSelector
+})
+
 AccountNew.propTypes = {
-  createAccount: PropTypes.func.isRequired
+  createAccount: PropTypes.func.isRequired,
+  me: PropTypes.object
 }
 
-export default connect(
-  null,
-  actions
+export default compose(
+  withRouter,
+  connect(
+    selectors,
+    actions
+  )
 )(AccountNew)
