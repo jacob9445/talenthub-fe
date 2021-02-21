@@ -19,9 +19,9 @@ import ProfileDetailForm, { validationSchema } from '../ProfileDetailForm'
 import Spinner from 'components/Spinner'
 import AccountChips from './AccountChips'
 import { meSelector } from 'store/modules/auth'
-import { ROLES } from 'config/constants'
+import { ROLES, URL_PREFIXES } from 'config/constants'
 
-const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updateProfile, isLoading, me }) => {
+const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updateProfile, isLoading, me, history }) => {
   useEffect(() => {
     getProfileDetail(params.id)
   }, [getProfileDetail, params.id])
@@ -48,12 +48,13 @@ const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updat
             ...values,
             ...(me.role !== ROLES.DEVELOPER ? { user_id: values.user_id } : { user_id: me.id })
           },
-          id: params.id
+          id: params.id,
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/profiles`)
         },
         formActions
       )
     },
-    [updateProfile, params.id, me]
+    [updateProfile, params.id, me, history]
   )
 
   if (isLoading || !profileDetail) return <Spinner />

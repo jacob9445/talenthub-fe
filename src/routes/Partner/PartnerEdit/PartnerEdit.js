@@ -18,7 +18,7 @@ import {
 } from 'store/modules/partner'
 import Spinner from 'components/Spinner'
 import { meSelector } from 'store/modules/auth'
-import { ROLES } from 'config/constants'
+import { ROLES, URL_PREFIXES } from 'config/constants'
 
 const PartnerEdit = ({
   getPartnerDetail,
@@ -26,7 +26,8 @@ const PartnerEdit = ({
   partnerDetail,
   isDetailLoading,
   match: { params },
-  me
+  me,
+  history
 }) => {
   useEffect(() => {
     getPartnerDetail(params.id)
@@ -58,12 +59,13 @@ const PartnerEdit = ({
                 }
               : {})
           },
-          id: params.id
+          id: params.id,
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/partners`)
         },
         formActions
       )
     },
-    [updatePartnerDetail, params.id, me]
+    [updatePartnerDetail, params.id, me, history]
   )
 
   if (isDetailLoading) return <Spinner />

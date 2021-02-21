@@ -17,8 +17,10 @@ import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
 import AccountDetailFrom, { validationSchema } from '../AccountDetailForm'
 import Spinner from 'components/Spinner'
+import { meSelector } from 'store/modules/auth'
+import { URL_PREFIXES } from 'config/constants'
 
-const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updateAccount, isLoading }) => {
+const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updateAccount, isLoading, me, history }) => {
   useEffect(() => {
     getAccountDetail(params.id)
   }, [getAccountDetail, params.id])
@@ -44,12 +46,13 @@ const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updat
           data: {
             ...values
           },
-          id: params.id
+          id: params.id,
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/accounts`)
         },
         formActions
       )
     },
-    [updateAccount, params.id]
+    [updateAccount, params.id, history, me.role]
   )
 
   if (isLoading) return <Spinner />
@@ -76,7 +79,8 @@ AccountEdit.propTypes = {
   getAccountDetail: PropTypes.func.isRequired,
   accountDetail: PropTypes.object,
   updateAccount: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  me: PropTypes.object
 }
 
 const actions = {
@@ -86,7 +90,8 @@ const actions = {
 
 const selectors = createStructuredSelector({
   accountDetail: accountDetailSelector,
-  isLoading: accountDetailLoadingSelector
+  isLoading: accountDetailLoadingSelector,
+  me: meSelector
 })
 
 export default compose(

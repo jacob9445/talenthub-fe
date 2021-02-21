@@ -1,16 +1,18 @@
 import React, { useCallback } from 'react'
-import { Grid } from '@material-ui/core'
-import { Formik } from 'formik'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
+import { Formik } from 'formik'
+import { Grid } from '@material-ui/core'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import ProfileDetailForm, { validationSchema } from '../ProfileDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createProfile } from 'store/modules/profile'
 import { meSelector } from 'store/modules/auth'
-import { PROFILE_TYPES, GENDER, ROLES } from 'config/constants'
+import { PROFILE_TYPES, GENDER, ROLES, URL_PREFIXES } from 'config/constants'
 
 const initialValues = {
   user_id: '',
@@ -23,7 +25,7 @@ const initialValues = {
   gender: GENDER.MALE
 }
 
-const ProfileNew = ({ createProfile, me }) => {
+const ProfileNew = ({ createProfile, me, history }) => {
   const handleSubmit = useCallback(
     (values, formActions) => {
       return formSubmit(
@@ -32,12 +34,13 @@ const ProfileNew = ({ createProfile, me }) => {
           data: {
             ...values,
             ...(me.role !== ROLES.DEVELOPER ? { user_id: values.user_id } : { user_id: me.id })
-          }
+          },
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/profiles`)
         },
         formActions
       )
     },
-    [createProfile, me]
+    [createProfile, me, history]
   )
 
   return (
@@ -69,7 +72,10 @@ ProfileNew.propTypes = {
   me: PropTypes.object
 }
 
-export default connect(
-  selector,
-  actions
+export default compose(
+  withRouter,
+  connect(
+    selector,
+    actions
+  )
 )(ProfileNew)
