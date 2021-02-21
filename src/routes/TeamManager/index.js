@@ -23,8 +23,10 @@ import TransactionList from '../Transaction/routes/TransactionList'
 import TransactionDetail from '../Transaction/routes/TransactionDetail'
 import Profile from 'routes/Profile'
 import ProfileDetail from 'routes/Profile/ProfileEdit'
+import ProfileNew from '../Profile/ProfileNew'
 import Account from '../Account'
 import AccountEdit from '../Account/AccountEdit'
+import AccountNew from 'routes/Account/AccountNew'
 
 const TeamManager = ({ match: { path } }) => {
   return (
@@ -49,8 +51,10 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
       <Route exact path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
+      <Route path={`${path}/profiles/create`} component={ProfileNew} />
       <Route exact path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
+      <Route path={`${path}/accounts/create`} component={AccountNew} />
     </Switch>
   )
 }

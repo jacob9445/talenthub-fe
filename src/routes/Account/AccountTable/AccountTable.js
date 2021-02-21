@@ -4,12 +4,12 @@ import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
-import { ROLES, PLATFORM_LABELS } from 'config/constants'
+import { PLATFORM_LABELS } from 'config/constants'
 import Spinner from 'components/Spinner'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
 
-function AccountTable({ data, myRole, handleDelete, match: { path } }) {
+function AccountTable({ data, handleDelete, match: { path } }) {
   if (data) {
     return (
       <Table className="mb-0">
@@ -26,24 +26,22 @@ function AccountTable({ data, myRole, handleDelete, match: { path } }) {
               <TableCell>{profile}</TableCell>
               <TableCell>{PLATFORM_LABELS[platform_type]}</TableCell>
               <TableCell>{email}</TableCell>
-              <TableCell>{password}</TableCell>
+              <TableCell>*****</TableCell>
               <TableCell>{location}</TableCell>
               <TableCell>{recovery_email}</TableCell>
               <TableCell>{url}</TableCell>
-              {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) && (
-                <TableCell>
-                  <Tooltip key={`${id}Edit`} title="Edit" placement="top">
-                    <IconButton component={Link} to={`${path}/${id}/detail`}>
-                      <EditIcon color="primary" />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip key={`${id}Delete`} title="Delete" placement="top">
-                    <IconButton onClick={() => handleDelete(id)}>
-                      <DeleteIcon color="secondary" />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              )}
+              <TableCell>
+                <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                  <IconButton component={Link} to={`${path}/${id}/detail`}>
+                    <EditIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                  <IconButton onClick={() => handleDelete(id)}>
+                    <DeleteIcon color="secondary" />
+                  </IconButton>
+                </Tooltip>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -56,7 +54,6 @@ function AccountTable({ data, myRole, handleDelete, match: { path } }) {
 
 AccountTable.propTypes = {
   data: PropTypes.array,
-  myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }

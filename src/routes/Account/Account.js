@@ -1,16 +1,18 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { Grid } from '@material-ui/core'
+import { Grid, Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { path } from 'ramda'
 import { show } from 'redux-modal'
+import { Link } from 'react-router-dom'
 
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
 import AccountTable from './AccountTable'
 import { getAccounts, deleteAccountAndRefresh, accountsSelector, accountsLoadingSelector } from 'store/modules/account'
 import { meSelector } from 'store/modules/auth'
+import { URL_PREFIXES } from 'config/constants'
 
 const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccounts, me, show }) => {
   useEffect(() => {
@@ -43,7 +45,15 @@ const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccoun
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Widget title="Accounts" noBodyPadding disableWidgetMenu>
+          <Widget
+            title="Accounts"
+            noBodyPadding
+            disableWidgetMenu
+            WidgetButton={
+              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/accounts/create`}>
+                Add Accounts
+              </Button>
+            }>
             <AccountTable data={data} myRole={me.role} handleDelete={handleDelete} />
           </Widget>
         </Grid>
