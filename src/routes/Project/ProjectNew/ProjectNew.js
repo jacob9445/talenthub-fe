@@ -27,29 +27,32 @@ const initialValues = {
 }
 
 const ProjectNew = ({ createProject, me, history }) => {
-  const handleSubmit = useCallback((values, formActions) => {
-    return formSubmit(
-      createProject,
-      {
-        data: {
-          ...values,
-          ended_at:
-            values.type === PROJECT_TYPE.BUDGET || values.status === PROJECT_STATUS.ENDED ? values.ended_at : null,
-          weakly_limit: values.type !== PROJECT_TYPE.BUDGET ? values.weakly_limit : null,
-          ...(me.role === ROLES.DEVELOPER
-            ? {
-                project_starter: me.id,
-                participants: [me.id]
-              }
-            : {
-                participants: [values.project_starter]
-              })
+  const handleSubmit = useCallback(
+    (values, formActions) => {
+      return formSubmit(
+        createProject,
+        {
+          data: {
+            ...values,
+            ended_at:
+              values.type === PROJECT_TYPE.BUDGET || values.status === PROJECT_STATUS.ENDED ? values.ended_at : null,
+            weakly_limit: values.type !== PROJECT_TYPE.BUDGET ? values.weakly_limit : null,
+            ...(me.role === ROLES.DEVELOPER
+              ? {
+                  project_starter: me.id,
+                  participants: [me.id]
+                }
+              : {
+                  participants: [values.project_starter]
+                })
+          },
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/projects`)
         },
-        success: () => history.push(`/${URL_PREFIXES[me.role]}/projects`)
-      },
-      formActions
-    )
-  }, (0)[(createProject, me, history)])
+        formActions
+      )
+    },
+    [createProject, me, history]
+  )
 
   return (
     <Grid container>
