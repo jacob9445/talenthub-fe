@@ -19,7 +19,7 @@ import {
 } from 'store/modules/financialRequest'
 import Spinner from 'components/Spinner'
 import { meSelector } from 'store/modules/auth'
-import { ROLES, FINANCIALREQUEST_TYPE } from 'config/constants'
+import { ROLES, FINANCIALREQUEST_TYPE, URL_PREFIXES } from 'config/constants'
 
 const FinancialRequestEdit = ({
   getFinancialRequestDetail,
@@ -27,7 +27,8 @@ const FinancialRequestEdit = ({
   financialRequestDetail,
   isDetailLoading,
   match: { params },
-  me
+  me,
+  history
 }) => {
   useEffect(() => {
     getFinancialRequestDetail(params.id)
@@ -64,12 +65,13 @@ const FinancialRequestEdit = ({
             ...R.omit(['client', 'partner'], values),
             counter_party: values.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? values.partner : values.client
           },
-          id: params.id
+          id: params.id,
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/financial-requests`)
         },
         formActions
       )
     },
-    [updateFinancialRequestDetail, params.id]
+    [updateFinancialRequestDetail, params.id, history, me.role]
   )
 
   if (isDetailLoading) return <Spinner />
