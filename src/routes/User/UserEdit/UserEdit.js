@@ -15,8 +15,10 @@ import UserDetailForm, { validationSchema } from 'routes/User/UserDetailForm'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 import ProfileChips from 'components/ProfileChips'
+import { URL_PREFIXES } from 'config/constants'
+import { roleSelector } from 'store/modules/auth'
 
-const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDetail }) => {
+const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDetail, history, role }) => {
   useEffect(() => {
     getUserDetail(params.id)
   }, [params, getUserDetail])
@@ -42,12 +44,13 @@ const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDeta
         updateUserDetail,
         {
           data: payload,
-          id: params.id
+          id: params.id,
+          success: () => history.push(`/${URL_PREFIXES[role]}/users`)
         },
         formActions
       )
     },
-    [updateUserDetail, params.id]
+    [updateUserDetail, params.id, history, role]
   )
 
   if (!userDetail) return <Spinner />
@@ -76,7 +79,8 @@ const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDeta
 
 const selectors = createStructuredSelector({
   userDetail: userDetailSelector,
-  loadingSelectedUser: userDetailLoadingSelector
+  loadingSelectedUser: userDetailLoadingSelector,
+  role: roleSelector
 })
 const actions = {
   getUserDetail,
