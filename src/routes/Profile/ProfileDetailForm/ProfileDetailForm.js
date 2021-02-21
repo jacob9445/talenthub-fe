@@ -14,10 +14,9 @@ import useStyles from './styles'
 import { getUsers, usersSelector, usersLoadingSelector } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
-import { profileTypeOptions, genderOptions } from 'config/constants'
+import { profileTypeOptions, genderOptions, URL_PREFIXES, ROLES } from 'config/constants'
 
 export const validationSchema = Yup.object().shape({
-  user_id: Yup.string().required('This field is required!'),
   profile_type: Yup.string().required('This field is required!'),
   first_name: Yup.string().required('This field is required!'),
   last_name: Yup.string().required('This field is required!'),
@@ -26,6 +25,9 @@ export const validationSchema = Yup.object().shape({
   gender: Yup.string().required('This field is required!'),
   dob: Yup.date().required('This field is required!')
 })
+
+const validateOwnerField = (value, role) =>
+  role !== ROLES.DEVELOPER ? (!value ? 'This field is required!' : undefined) : undefined
 
 const ProfileDetailForm = ({
   location,
@@ -41,12 +43,14 @@ const ProfileDetailForm = ({
   const classes = useStyles()
 
   useEffect(() => {
-    !users && getUsers(me)
+    if (me.role !== ROLES.DEVELOPER) {
+      !users && getUsers(me)
+    }
   }, [getUsers, users, me])
 
   const handleCancel = useCallback(() => {
-    location.state ? history.push(location.state) : history.push('/admin/profiles')
-  }, [location, history])
+    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/profiles`)
+  }, [location, history, me.role])
 
   const userOptions = useMemo(() => {
     if (users) {
@@ -59,11 +63,21 @@ const ProfileDetailForm = ({
     }
   }, [users])
 
-  if (isUsersLoading || typeof userOptions === 'undefined') return <Spinner />
+  if (isUsersLoading || (!userOptions.length && me.role !== ROLES.DEVELOPER)) return <Spinner />
   else
     return (
       <form onSubmit={handleSubmit}>
-        <Field component={FormSelect} htmlId="user_id" type="text" name="user_id" label="Owner" options={userOptions} />
+        {me.role !== ROLES.DEVELOPER ? (
+          <Field
+            component={FormSelect}
+            htmlId="user_id"
+            type="text"
+            name="user_id"
+            label="Owner"
+            options={userOptions}
+            validate={value => validateOwnerField(value, me.role)}
+          />
+        ) : null}
         <Field
           component={FormSelect}
           htmlId="profile_type"
