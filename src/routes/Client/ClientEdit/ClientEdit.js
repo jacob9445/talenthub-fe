@@ -15,9 +15,17 @@ import { getClientDetail, updateClient, clientDetailSelector, clientDetailLoadin
 import Spinner from 'components/Spinner'
 import { CLIENT_TYPES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
-import { ROLES } from 'config/constants'
+import { ROLES, URL_PREFIXES } from 'config/constants'
 
-const ClientEdit = ({ getClientDetail, updateClient, clientDetail, isDetailLoading, match: { params }, me }) => {
+const ClientEdit = ({
+  getClientDetail,
+  updateClient,
+  clientDetail,
+  isDetailLoading,
+  match: { params },
+  me,
+  history
+}) => {
   useEffect(() => {
     getClientDetail(params.id)
   }, [getClientDetail, params.id])
@@ -50,12 +58,13 @@ const ClientEdit = ({ getClientDetail, updateClient, clientDetail, isDetailLoadi
                 }
               : {})
           },
-          id: params.id
+          id: params.id,
+          success: () => history.push(`/${URL_PREFIXES[me.role]}/clients`)
         },
         formActions
       )
     },
-    [updateClient, params.id, me]
+    [updateClient, params.id, me, history]
   )
 
   if (isDetailLoading) return <Spinner />
