@@ -59,7 +59,7 @@ function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, histo
                     </IconButton>
                   </Tooltip>
                 ) : null}
-                {requester.id === me.id && status === FINANCIALREQUEST_STATUS.PENDING ? (
+                {ROLES.ADMIN !== me.role && requester.id === me.id && status === FINANCIALREQUEST_STATUS.PENDING ? (
                   <Tooltip key={`${id}Cancel`} title="Cancel" placement="top">
                     <IconButton onClick={() => onCancel(id)}>
                       <CancelIcon />
