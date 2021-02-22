@@ -1,7 +1,8 @@
-import { takeLatest } from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
 import * as Types from './types'
 import { ROLES } from 'config/constants'
+import { showMessage } from '../message'
 
 const getUsers = apiCallSaga({
   type: Types.USERS_GETUSERS,
@@ -46,7 +47,14 @@ const updateUserDetail = apiCallSaga({
 const createUser = apiCallSaga({
   type: Types.CREATE_USER,
   method: 'POST',
-  path: 'api/admin/users/'
+  path: 'api/admin/users/',
+  success: function*(resData) {
+    yield put(
+      showMessage({
+        message: 'User created successfully!'
+      })
+    )
+  }
 })
 
 export default function* rootSaga() {
