@@ -8,6 +8,7 @@ import { createStructuredSelector } from 'reselect'
 import Spinner from './components/Spinner'
 import Message from './components/Message'
 import PropTypes from 'prop-types'
+import ConfirmModal from 'components/ConfirmModal'
 
 function App({ isAuthenticated, authGetMe, meLoading }) {
   useEffect(() => {
@@ -21,6 +22,7 @@ function App({ isAuthenticated, authGetMe, meLoading }) {
       <Router history={history}>
         <Routes />
         <Message />
+        <ConfirmModal />
       </Router>
     )
   }
