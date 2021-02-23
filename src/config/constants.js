@@ -316,3 +316,18 @@ export const gender_patterns = {
   [GENDER.MALE]: 'Male',
   [GENDER.FEMALE]: 'Female'
 }
+
+export const periodOptions = [
+  {
+    value: 'weekly',
+    label: 'Weekly'
+  },
+  {
+    value: 'monthly',
+    label: 'Monthly'
+  },
+  {
+    value: 'quarterly',
+    label: 'Quarterly'
+  }
+]
