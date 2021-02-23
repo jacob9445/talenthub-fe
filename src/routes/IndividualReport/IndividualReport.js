@@ -20,8 +20,9 @@ import { jsonToQueryString, parseQueryString } from 'helpers/utils'
 
 const IndividualReport = ({ individualReport, getIndividualReport, isIndividualReportLoading, location, history }) => {
   useEffect(() => {
-    const period = parseQueryString(location.search)
-    getIndividualReport(period.period)
+    let { period } = parseQueryString(location.search)
+    if (!period) period = 'monthly'
+    getIndividualReport(period)
   }, [getIndividualReport, location.search])
 
   const handleChange = useCallback(
