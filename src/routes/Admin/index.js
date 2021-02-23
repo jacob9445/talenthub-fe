@@ -63,6 +63,7 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/profiles/create`} component={ProfileNew} />
       <Route exact path={`${path}/individual-reports`} component={IndividualReport} />
       <Route exact path={`${path}/team-reports`} component={TeamReport} />
+      <Route exact path={`${path}/transaction-reports`} component={TransactionList} />
     </Switch>
   )
 }
