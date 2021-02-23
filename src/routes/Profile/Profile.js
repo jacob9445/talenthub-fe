@@ -50,7 +50,7 @@ const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh
             disableWidgetMenu
             noBodyPadding
             WidgetButton={
-              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/profiles/create`}>
+              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/profiles/new`}>
                 Add Profile
               </Button>
             }>

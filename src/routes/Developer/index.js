@@ -4,25 +4,25 @@ import PropTypes from 'prop-types'
 
 import { isDeveloperOrRedir } from 'hocs/withRoles'
 import Dashboard from 'routes/Dashboard'
-import Client from '../Client'
-import ClientNew from '../Client/ClientNew'
-import ClientEdit from '../Client/ClientEdit'
-import Partner from '../Partner'
-import PartnerNew from '../Partner/PartnerNew'
-import PartnerEdit from '../Partner/PartnerEdit'
-import Project from '../Project'
-import ProjectNew from '../Project/ProjectNew'
-import ProjectEdit from '../Project/ProjectEdit'
-import FinancialRequest from '../FinancialRequest'
-import FinancialRequestEdit from '../FinancialRequest/FinancialRequestEdit'
-import FinancialRequestNew from '../FinancialRequest/FinancialRequestNew'
-import TransactionList from '../Transaction/routes/TransactionList'
-import TransactionDetail from '../Transaction/routes/TransactionDetail'
+import Client from 'routes/Client'
+import ClientNew from 'routes/Client/ClientNew'
+import ClientEdit from 'routes/Client/ClientEdit'
+import Partner from 'routes/Partner'
+import PartnerNew from 'routes/Partner/PartnerNew'
+import PartnerEdit from 'routes/Partner/PartnerEdit'
+import Project from 'routes/Project'
+import ProjectNew from 'routes/Project/ProjectNew'
+import ProjectEdit from 'routes/Project/ProjectEdit'
+import FinancialRequest from 'routes/FinancialRequest'
+import FinancialRequestEdit from 'routes/FinancialRequest/FinancialRequestEdit'
+import FinancialRequestNew from 'routes/FinancialRequest/FinancialRequestNew'
+import TransactionList from 'routes/Transaction/routes/TransactionList'
+import TransactionDetail from 'routes/Transaction/routes/TransactionDetail'
 import Profile from 'routes/Profile'
 import ProfileDetail from 'routes/Profile/ProfileEdit'
-import ProfileNew from '../Profile/ProfileNew'
-import Account from '../Account'
-import AccountEdit from '../Account/AccountEdit'
+import ProfileNew from 'routes/Profile/ProfileNew'
+import Account from 'routes/Account'
+import AccountEdit from 'routes/Account/AccountEdit'
 import AccountNew from 'routes/Account/AccountNew'
 
 const Developer = ({ match: { path } }) => {
@@ -45,10 +45,10 @@ const Developer = ({ match: { path } }) => {
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
       <Route exact path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
-      <Route path={`${path}/accounts/create`} component={AccountNew} />
+      <Route path={`${path}/accounts/new`} component={AccountNew} />
       <Route exact path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
-      <Route path={`${path}/profiles/create`} component={ProfileNew} />
+      <Route path={`${path}/profiles/new`} component={ProfileNew} />
     </Switch>
   )
 }

@@ -71,7 +71,7 @@ UserNew.propTypes = {
   createUser: PropTypes.func.isRequired,
   getTeams: PropTypes.func.isRequired,
   teams: PropTypes.array,
-  role: PropTypes.object
+  role: PropTypes.number
 }
 
 export default compose(
