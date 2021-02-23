@@ -29,6 +29,7 @@ import FinancialRequestNew from '../FinancialRequest/FinancialRequestNew'
 import TransactionList from '../Transaction/routes/TransactionList'
 import TransactionDetail from '../Transaction/routes/TransactionDetail'
 import IndividualReport from '../IndividualReport'
+import TeamReport from '../TeamReport'
 
 const Admin = ({ match: { path } }) => {
   return (
@@ -61,6 +62,7 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route path={`${path}/profiles/create`} component={ProfileNew} />
       <Route exact path={`${path}/individual-reports`} component={IndividualReport} />
+      <Route exact path={`${path}/team-reports`} component={TeamReport} />
     </Switch>
   )
 }
