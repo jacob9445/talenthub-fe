@@ -11,7 +11,8 @@ import {
   AccessibilityNew as PartnerIcon,
   Computer as ProjectIcon,
   ContactPhone as FRIcon,
-  AttachMoney as TransactionIcon
+  AttachMoney as TransactionIcon,
+  Money as FRequestIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
@@ -94,6 +95,26 @@ let structure = {
       label: 'Transaction',
       link: '/admin/transactions',
       icon: <TransactionIcon />
+    },
+    {
+      id: 10,
+      label: 'Financial Report',
+      link: '/admin/reports',
+      icon: <FRequestIcon />,
+      children: [
+        {
+          label: 'Transaction Report',
+          link: '/admin/transactions'
+        },
+        {
+          label: 'Individual Report',
+          link: '/admin/individual-reports'
+        },
+        {
+          label: 'Team Report',
+          link: '/admin/team-reports'
+        }
+      ]
     }
   ],
   [ROLES.TEAM_MANAGER]: [

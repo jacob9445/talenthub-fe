@@ -50,7 +50,7 @@ const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccoun
             noBodyPadding
             disableWidgetMenu
             WidgetButton={
-              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/accounts/create`}>
+              <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/accounts/new`}>
                 Add Accounts
               </Button>
             }>

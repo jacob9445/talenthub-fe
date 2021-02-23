@@ -3,33 +3,33 @@ import { Route, Switch } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Dashboard from 'routes/Dashboard'
-import UserEdit from '../User/UserEdit'
+import UserEdit from 'routes/User/UserEdit'
 import User from 'routes/User'
-import UserNew from '../User/UserNew'
+import UserNew from 'routes/User/UserNew'
 import Team from './routes/Team'
 import Profile from 'routes/Profile'
 import ProfileDetail from 'routes/Profile/ProfileEdit'
 import ProfileNew from 'routes/Profile/ProfileNew'
-import Account from '../Account'
-import AccountEdit from '../Account/AccountEdit'
+import Account from 'routes/Account'
+import AccountEdit from 'routes/Account/AccountEdit'
 import AccountNew from 'routes/Account/AccountNew'
 import { isAdminOrRedir } from 'hocs/withRoles'
-import Partner from '../Partner'
-import PartnerNew from '../Partner/PartnerNew'
-import PartnerEdit from '../Partner/PartnerEdit'
-import Client from '../Client'
-import ClientNew from '../Client/ClientNew'
-import ClientEdit from '../Client/ClientEdit'
-import Project from '../Project'
-import ProjectNew from '../Project/ProjectNew'
-import ProjectEdit from '../Project/ProjectEdit'
-import FinancialRequest from '../FinancialRequest'
-import FinancialRequestEdit from '../FinancialRequest/FinancialRequestEdit'
-import FinancialRequestNew from '../FinancialRequest/FinancialRequestNew'
-import TransactionList from '../Transaction/routes/TransactionList'
-import TransactionDetail from '../Transaction/routes/TransactionDetail'
-import IndividualReport from '../IndividualReport'
-import TeamReport from '../TeamReport'
+import Partner from 'routes/Partner'
+import PartnerNew from 'routes/Partner/PartnerNew'
+import PartnerEdit from 'routes/Partner/PartnerEdit'
+import Client from 'routes/Client'
+import ClientNew from 'routes/Client/ClientNew'
+import ClientEdit from 'routes/Client/ClientEdit'
+import Project from 'routes/Project'
+import ProjectNew from 'routes/Project/ProjectNew'
+import ProjectEdit from 'routes/Project/ProjectEdit'
+import FinancialRequest from 'routes/FinancialRequest'
+import FinancialRequestEdit from 'routes/FinancialRequest/FinancialRequestEdit'
+import FinancialRequestNew from 'routes/FinancialRequest/FinancialRequestNew'
+import TransactionList from 'routes/Transaction/routes/TransactionList'
+import TransactionDetail from 'routes/Transaction/routes/TransactionDetail'
+import IndividualReport from 'routes/IndividualReport'
+import TeamReport from 'routes/TeamReport'
 
 const Admin = ({ match: { path } }) => {
   return (
@@ -43,7 +43,7 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route exact path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
-      <Route path={`${path}/accounts/create`} component={AccountNew} />
+      <Route path={`${path}/accounts/new`} component={AccountNew} />
       <Route exact path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/partners/new`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
@@ -60,7 +60,7 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
       <Route exact path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
-      <Route path={`${path}/profiles/create`} component={ProfileNew} />
+      <Route path={`${path}/profiles/new`} component={ProfileNew} />
       <Route exact path={`${path}/individual-reports`} component={IndividualReport} />
       <Route exact path={`${path}/team-reports`} component={TeamReport} />
       <Route exact path={`${path}/transaction-reports`} component={TransactionList} />

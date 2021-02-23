@@ -38,7 +38,7 @@ const TeamReport = ({ teamReport, getTeamReport, isTeamReportLoading, location, 
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Widget title="Individual Reports" disableWidgetMenu>
+          <Widget title="Team Reports" disableWidgetMenu>
             <SimpleSelect label="Period" defaultValue="monthly" options={periodOptions} onChange={handleChange} />
             <TeamReportTable data={teamReport} />
           </Widget>

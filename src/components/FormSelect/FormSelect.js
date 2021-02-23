@@ -36,7 +36,7 @@ FormSelect.propTypes = {
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
   htmlId: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   options: PropTypes.array.isRequired,
   noMb: PropTypes.bool
 }
