@@ -1,12 +1,25 @@
 import React from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Chip, Tooltip, IconButton } from '@material-ui/core'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TablePagination,
+  Chip,
+  Tooltip,
+  IconButton
+} from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { compose } from 'redux'
 
 import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { ROLES } from 'config/constants'
 import Spinner from 'components/Spinner'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
 const role_patterns = [
   {
@@ -33,7 +46,7 @@ const role_patterns = [
 
 const columns = ['Email', 'First Name', 'Last Name', 'Role', 'Actions']
 
-function UserTable({ data, myRole, handleDelete, match: { path } }) {
+function UserTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const classes = useStyles()
 
   if (data) {
@@ -47,7 +60,7 @@ function UserTable({ data, myRole, handleDelete, match: { path } }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, email, first_name, last_name, role }) => (
+          {data.results.map(({ id, email, first_name, last_name, role }) => (
             <TableRow key={email}>
               <TableCell>
                 <Link to={`${path}/${id}/detail`}>{email}</Link>
@@ -74,6 +87,18 @@ function UserTable({ data, myRole, handleDelete, match: { path } }) {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination //This pagination is zero-based.
+              rowsPerPageOptions={[2, 5, 10, 25]}
+              count={data.count}
+              rowsPerPage={pagination.page_size}
+              page={pagination.page - 1}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     )
   } else {
@@ -82,9 +107,15 @@ function UserTable({ data, myRole, handleDelete, match: { path } }) {
 }
 
 UserTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   myRole: PropTypes.number.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  handleDelete: PropTypes.func.isRequired,
+  pagination: PropTypes.object.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  onChangeRowsPerPage: PropTypes.func.isRequired
 }
 
-export default withRouter(UserTable)
+export default compose(
+  withRouter,
+  withPaginationInfo
+)(UserTable)
