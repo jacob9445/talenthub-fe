@@ -10,9 +10,9 @@ const getUsers = apiCallSaga({
   path: ({ payload }) => {
     if (payload.role === ROLES.ADMIN) return 'api/admin/users/'
     else if (payload.role === ROLES.TEAM_MANAGER) return 'api/team-manager/users/'
-    console.log('test here', payload.role)
   },
-  selectorKey: 'users'
+  selectorKey: 'users',
+  allowedParamKeys: ['page', 'page_size']
 })
 
 const deleteUser = apiCallSaga({

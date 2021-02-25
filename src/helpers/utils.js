@@ -35,3 +35,5 @@ export const jsonToQueryString = obj => {
 
   return pairs.length ? `?${pairs.join('&')}` : ''
 }
+
+export const getPageCount = ({ page_size }, count) => Math.ceil(count / page_size)

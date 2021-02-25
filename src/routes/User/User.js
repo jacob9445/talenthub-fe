@@ -6,23 +6,28 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { show } from 'redux-modal'
+import { compose } from 'redux'
 
 import { getUsers, usersSelector, deleteUserAndRefresh } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
 import UserTable from './UserTable'
 import Widget from 'components/Widget'
 import { ROLES } from 'config/constants'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 const useStyles = makeStyles(theme => ({
   tableOverflow: {
     overflow: 'auto'
   }
 }))
 
-const User = ({ getUsers, users, me, deleteUserAndRefresh, show }) => {
+const User = ({ getUsers, users, me, deleteUserAndRefresh, show, pagination, onChangePage, onChangeRowsPerPage }) => {
   let classes = useStyles()
   useEffect(() => {
-    getUsers({ role: me.role })
-  }, [getUsers, me.role])
+    getUsers({
+      role: me.role,
+      params: pagination
+    })
+  }, [getUsers, me.role, pagination])
 
   const handleDelete = useCallback(
     id => {
@@ -53,7 +58,14 @@ const User = ({ getUsers, users, me, deleteUserAndRefresh, show }) => {
                 Add User
               </Button>
             }>
-            <UserTable data={users} myRole={me.role} handleDelete={handleDelete} />
+            <UserTable
+              data={users}
+              myRole={me.role}
+              handleDelete={handleDelete}
+              pagination={pagination}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
           </Widget>
         </Grid>
       </Grid>
@@ -73,14 +85,20 @@ const selectors = createStructuredSelector({
 })
 
 User.propTypes = {
-  users: PropTypes.array,
+  users: PropTypes.object,
   me: PropTypes.object,
   getUsers: PropTypes.func.isRequired,
   deleteUserAndRefresh: PropTypes.func.isRequired,
-  show: PropTypes.func.isRequired
+  show: PropTypes.func.isRequired,
+  pagination: PropTypes.object.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  onChangeRowsPerPage: PropTypes.func.isRequired
 }
 
-export default connect(
-  selectors,
-  actions
+export default compose(
+  withPaginationInfo,
+  connect(
+    selectors,
+    actions
+  )
 )(User)
