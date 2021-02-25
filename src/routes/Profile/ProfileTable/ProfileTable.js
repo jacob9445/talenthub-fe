@@ -1,5 +1,16 @@
 import React from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Chip, Tooltip, IconButton } from '@material-ui/core'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TablePagination,
+  Chip,
+  Tooltip,
+  IconButton
+} from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
@@ -10,7 +21,7 @@ import Spinner from 'components/Spinner'
 
 const columns = ['Full Name', 'Type', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
 
-function ProfileTable({ data, handleDelete, match: { path } }) {
+function ProfileTable({ data, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const classes = useStyles()
 
   if (data) {
@@ -24,7 +35,7 @@ function ProfileTable({ data, handleDelete, match: { path } }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, profile_type, first_name, last_name, address, country, dob, gender }) => (
+          {data.results.map(({ id, profile_type, first_name, last_name, address, country, dob, gender }) => (
             <TableRow key={id}>
               <TableCell>
                 {first_name} {last_name}
@@ -54,6 +65,18 @@ function ProfileTable({ data, handleDelete, match: { path } }) {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination //This pagination is zero-based.
+              rowsPerPageOptions={[2, 5, 10, 25]}
+              count={data.count}
+              rowsPerPage={pagination.page_size}
+              page={pagination.page - 1}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     )
   } else {
@@ -62,7 +85,7 @@ function ProfileTable({ data, handleDelete, match: { path } }) {
 }
 
 ProfileTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }

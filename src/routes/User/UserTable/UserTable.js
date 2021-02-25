@@ -19,7 +19,6 @@ import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { ROLES } from 'config/constants'
 import Spinner from 'components/Spinner'
-import withPaginationInfo from 'hocs/withPaginationInfo'
 
 const role_patterns = [
   {
@@ -115,7 +114,4 @@ UserTable.propTypes = {
   onChangeRowsPerPage: PropTypes.func.isRequired
 }
 
-export default compose(
-  withRouter,
-  withPaginationInfo
-)(UserTable)
+export default compose(withRouter)(UserTable)
