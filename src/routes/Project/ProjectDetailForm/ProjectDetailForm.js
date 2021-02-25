@@ -74,7 +74,7 @@ const ProjectDetailForm = ({
 
   const userList = useMemo(() => {
     if (users) {
-      return users.map(user => ({
+      return users.results.map(user => ({
         display: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
@@ -157,7 +157,7 @@ ProjectDetailForm.propTypes = {
   history: PropTypes.object.isRequired,
   me: PropTypes.object,
   match: PropTypes.object.isRequired,
-  users: PropTypes.array,
+  users: PropTypes.object,
   getUsers: PropTypes.func.isRequired,
   clients: PropTypes.array,
   getClients: PropTypes.func.isRequired
