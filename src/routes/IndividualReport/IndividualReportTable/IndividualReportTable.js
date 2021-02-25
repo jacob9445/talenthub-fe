@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
-import ReportModal from 'components/ReportModal'
 
 function IndividualReportTable({ data, show, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = ['Full Name', 'Earning']
@@ -53,7 +52,6 @@ function IndividualReportTable({ data, show, pagination, onChangePage, onChangeR
             </TableRow>
           </TableFooter>
         </Table>
-        <ReportModal />
       </>
     )
   } else {

@@ -9,6 +9,7 @@ import Spinner from './components/Spinner'
 import Message from './components/Message'
 import PropTypes from 'prop-types'
 import ConfirmModal from 'components/ConfirmModal'
+import ReportModal from 'components/ReportModal'
 
 function App({ isAuthenticated, authGetMe, meLoading }) {
   useEffect(() => {
@@ -19,11 +20,14 @@ function App({ isAuthenticated, authGetMe, meLoading }) {
     return <Spinner />
   } else {
     return (
-      <Router history={history}>
-        <Routes />
-        <Message />
-        <ConfirmModal />
-      </Router>
+      <>
+        <Router history={history}>
+          <Routes />
+          <Message />
+          <ConfirmModal />
+        </Router>
+        <ReportModal />
+      </>
     )
   }
 }
