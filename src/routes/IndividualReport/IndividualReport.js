@@ -1,8 +1,7 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import { Grid } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
 
@@ -16,24 +15,30 @@ import {
 import IndividualReportTable from './IndividualReportTable'
 import { periodOptions } from 'config/constants'
 import SimpleSelect from 'components/SimpleSelect'
-import { jsonToQueryString, parseQueryString } from 'helpers/utils'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
-const IndividualReport = ({ individualReport, getIndividualReport, isIndividualReportLoading, location, history }) => {
+const IndividualReport = ({
+  individualReport,
+  getIndividualReport,
+  isIndividualReportLoading,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) => {
+  let [period, setPeriod] = useState('monthly')
+
   useEffect(() => {
-    let { period } = parseQueryString(location.search)
-    if (!period) period = 'monthly'
-    getIndividualReport(period)
-  }, [getIndividualReport, location.search])
+    getIndividualReport({
+      period,
+      params: pagination
+    })
+  }, [getIndividualReport, pagination, period])
 
   const handleChange = useCallback(
     event => {
-      history.push({
-        search: jsonToQueryString({
-          period: event.target.value
-        })
-      })
+      setPeriod(event.target.value)
     },
-    [history]
+    [setPeriod]
   )
 
   if (isIndividualReportLoading) {
@@ -44,7 +49,12 @@ const IndividualReport = ({ individualReport, getIndividualReport, isIndividualR
         <Grid item xs={12}>
           <Widget title="Individual Reports" disableWidgetMenu>
             <SimpleSelect label="Period" defaultValue="monthly" options={periodOptions} onChange={handleChange} />
-            <IndividualReportTable data={individualReport} />
+            <IndividualReportTable
+              data={individualReport}
+              pagination={pagination}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
           </Widget>
         </Grid>
       </Grid>
@@ -62,15 +72,16 @@ const selector = createStructuredSelector({
 })
 
 IndividualReport.propTypes = {
-  individualReport: PropTypes.array,
+  individualReport: PropTypes.object,
   getIndividualReport: PropTypes.func.isRequired,
   isIndividualReportLoading: PropTypes.bool.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  pagination: PropTypes.object.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  onChangeRowsPerPage: PropTypes.func.isRequired
 }
 
 export default compose(
-  withRouter,
+  withPaginationInfo,
   connect(
     selector,
     actions
