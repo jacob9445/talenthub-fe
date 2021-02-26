@@ -10,9 +10,9 @@ import { Table, TableRow, TableHead, TableBody, TableCell, Typography } from '@m
 
 import useStyles from './style'
 
-const ReportModal = ({ show, handleHide, project_earning }) => {
+const IndividualReportModal = ({ show, handleHide, project_earning }) => {
   const classes = useStyles()
-  const columns = ['Project Title', 'Earning']
+  const column = ["Project Title", "Earning"]
 
   return (
     <Dialog open={show} onClose={handleHide}>
@@ -22,23 +22,23 @@ const ReportModal = ({ show, handleHide, project_earning }) => {
           <Table className="mb-0">
             <TableHead>
               <TableRow>
-                {columns.map(key => (
+                {column.map(key => (
                   <TableCell key={key}>{key}</TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {project_earning.map(({ project_title, earning }) => (
-                <TableRow key={project_title}>
-                  <TableCell>{project_title}</TableCell>
-                  <TableCell>{earning}</TableCell>
+              {project_earning.map((data) => (
+                <TableRow key={data.id}>
+                  <TableCell>{data.project_title}</TableCell>
+                  <TableCell>{data.earning}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         ) : (
-          <Typography className={classes.noItems} variant="body1">
-            No Projects.
+          <Typography className={classes.noItems}>
+            No projects.
           </Typography>
         )}
       </DialogContent>
@@ -51,10 +51,10 @@ const ReportModal = ({ show, handleHide, project_earning }) => {
   )
 }
 
-ReportModal.propTypes = {
+IndividualReportModal.propTypes = {
   show: PropTypes.bool.isRequired,
   handleHide: PropTypes.func.isRequired,
   project_earning: PropTypes.array.isRequired
 }
 
-export default connectModal({ name: 'ReportModal', destroyOnHide: false })(ReportModal)
+export default connectModal({ name: 'IndividualReportModal', destroyOnHide: false })(IndividualReportModal)

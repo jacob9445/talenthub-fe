@@ -9,7 +9,8 @@ import Spinner from './components/Spinner'
 import Message from './components/Message'
 import PropTypes from 'prop-types'
 import ConfirmModal from 'components/ConfirmModal'
-import ReportModal from 'components/ReportModal'
+import TeamReportModal from 'components/TeamReportModal'
+import IndividualReportModal from 'components/IndividualReportModal'
 
 function App({ isAuthenticated, authGetMe, meLoading }) {
   useEffect(() => {
@@ -26,7 +27,8 @@ function App({ isAuthenticated, authGetMe, meLoading }) {
           <Message />
           <ConfirmModal />
         </Router>
-        <ReportModal />
+        <TeamReportModal />
+        <IndividualReportModal />
       </>
     )
   }

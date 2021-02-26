@@ -23,8 +23,8 @@ function TeamReportTable({ data, show, pagination, onChangePage, onChangeRowsPer
 
   const handleRowClick = useCallback(
     id => () => {
-      show('ReportModal', {
-        project_earning: data.results.find((value, index, array) => array[index].id === id).project_earnings
+      show('TeamReportModal', {
+        earning: data.results.find((value, index, array) => array[index].id === id).earning
       })
     },
     [show, data]
@@ -42,12 +42,12 @@ function TeamReportTable({ data, show, pagination, onChangePage, onChangeRowsPer
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.results.map(({ id, name, earning }) => {
-              totalEarning += earning
+            {data.results.map(({ id, name, total }) => {
+              totalEarning += total
               return (
                 <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
                   <TableCell>{name}</TableCell>
-                  <TableCell>{earning}</TableCell>
+                  <TableCell>{total}</TableCell>
                 </TableRow>
               )
             })}

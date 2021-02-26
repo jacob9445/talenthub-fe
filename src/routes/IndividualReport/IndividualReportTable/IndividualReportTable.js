@@ -23,7 +23,7 @@ function IndividualReportTable({ data, show, pagination, onChangePage, onChangeR
 
   const handleRowClick = useCallback(
     id => () => {
-      show('ReportModal', {
+      show('IndividualReportModal', {
         project_earning: data.results.find((value, index, array) => array[index].id === id).project_earnings
       })
     },
