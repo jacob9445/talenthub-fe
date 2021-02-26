@@ -1,8 +1,10 @@
 import React from 'react'
 import { connectModal } from 'redux-modal'
+import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogActions from '@material-ui/core/DialogActions'
 import PropTypes from 'prop-types'
 import { Table, TableRow, TableHead, TableBody, TableCell, Typography } from '@material-ui/core'
 
@@ -40,6 +42,11 @@ const ReportModal = ({ show, handleHide, project_earning }) => {
           </Typography>
         )}
       </DialogContent>
+      <DialogActions>
+        <Button onClick={handleHide} color="primary">
+          Close
+        </Button>
+      </DialogActions>
     </Dialog>
   )
 }
