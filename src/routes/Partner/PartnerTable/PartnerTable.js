@@ -1,13 +1,24 @@
 import React, { useMemo } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { Link, withRouter } from 'react-router-dom'
-import { Table, TableRow, TableHead, TableBody, TableCell, IconButton, Tooltip, Chip } from '@material-ui/core'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TablePagination,
+  IconButton,
+  Tooltip,
+  Chip
+} from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import { ROLES } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-function PartnerTable({ data, myRole, handleDelete, match: { path } }) {
+function PartnerTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = useMemo(
     () =>
       myRole === ROLES.DEVELOPER
@@ -26,7 +37,7 @@ function PartnerTable({ data, myRole, handleDelete, match: { path } }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, full_name, email, address, dob, phone_num, contact_method, owner }) => (
+          {data.results.map(({ id, full_name, email, address, dob, phone_num, contact_method, owner }) => (
             <TableRow key={id}>
               <TableCell>{full_name}</TableCell>
               <TableCell>{email}</TableCell>
@@ -56,6 +67,18 @@ function PartnerTable({ data, myRole, handleDelete, match: { path } }) {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination //This pagination is zero-based.
+              rowsPerPageOptions={[2, 5, 10, 25]}
+              count={data.count}
+              rowsPerPage={pagination.page_size}
+              page={pagination.page - 1}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     )
   } else {
@@ -66,7 +89,7 @@ function PartnerTable({ data, myRole, handleDelete, match: { path } }) {
 export default withRouter(PartnerTable)
 
 PartnerTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired

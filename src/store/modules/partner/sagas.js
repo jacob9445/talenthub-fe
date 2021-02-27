@@ -10,7 +10,8 @@ const getPartners = apiCallSaga({
   path: function*() {
     return yield roleBasedPath('partners/')
   },
-  selectorKey: 'partners'
+  selectorKey: 'partners',
+  allowedParamKeys: ['page', 'page_size']
 })
 
 const deletePartner = apiCallSaga({

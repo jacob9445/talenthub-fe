@@ -76,7 +76,7 @@ const FinancialRequestDetailForm = ({
 
   const partnerList = useMemo(() => {
     if (partners) {
-      return partners.map(partner => ({
+      return partners.results.map(partner => ({
         display: partner.full_name,
         value: partner.id
       }))
