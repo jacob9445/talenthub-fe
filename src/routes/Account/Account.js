@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
-import PropTypes from 'prop-types'
-import { Grid, Button } from '@material-ui/core'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { path } from 'ramda'
-import { show } from 'redux-modal'
+import { Grid, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { show } from 'redux-modal'
+import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
@@ -13,20 +13,33 @@ import AccountTable from './AccountTable'
 import { getAccounts, deleteAccountAndRefresh, accountsSelector, accountsLoadingSelector } from 'store/modules/account'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
-const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccounts, me, show }) => {
+const Account = ({
+  getAccounts,
+  deleteAccountAndRefresh,
+  accounts,
+  loadingAccounts,
+  me,
+  show,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) => {
   useEffect(() => {
-    getAccounts()
-  }, [getAccounts])
+    getAccounts({
+      params: pagination
+    })
+  }, [getAccounts, pagination])
 
-  const data = useMemo(() => {
-    return accounts
-      ? accounts.map(account => ({
-          ...account,
-          profile: `${path(['profile', 'first_name'], account)} ${path(['profile', 'last_name'], account)}`
-        }))
-      : null
-  }, [accounts])
+  // const data = useMemo(() => {
+  //   return accounts
+  //     ? accounts.map(account => ({
+  //         ...account,
+  //         profile: `${path(['profile', 'first_name'], account)} ${path(['profile', 'last_name'], account)}`
+  //       }))
+  //     : null
+  // }, [accounts])
 
   const handleDelete = useCallback(
     id => {
@@ -54,7 +67,14 @@ const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccoun
                 Add Accounts
               </Button>
             }>
-            <AccountTable data={data} myRole={me.role} handleDelete={handleDelete} />
+            <AccountTable
+              data={accounts}
+              myRole={me.role}
+              handleDelete={handleDelete}
+              pagination={pagination}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
           </Widget>
         </Grid>
       </Grid>
@@ -64,10 +84,11 @@ const Account = ({ getAccounts, deleteAccountAndRefresh, accounts, loadingAccoun
 Account.propTypes = {
   getAccounts: PropTypes.func.isRequired,
   deleteAccountAndRefresh: PropTypes.func.isRequired,
-  accounts: PropTypes.array,
+  accounts: PropTypes.object,
   loadingAccounts: PropTypes.bool.isRequired,
   me: PropTypes.object,
-  show: PropTypes.func.isRequired
+  show: PropTypes.func.isRequired,
+  pagination: PropTypes.object
 }
 
 const actions = {
@@ -82,7 +103,10 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-export default connect(
-  selectors,
-  actions
+export default compose(
+  withPaginationInfo,
+  connect(
+    selectors,
+    actions
+  )
 )(Account)
