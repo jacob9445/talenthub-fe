@@ -85,7 +85,7 @@ const ProjectDetailForm = ({
 
   const clientList = useMemo(() => {
     if (clients) {
-      return clients.map(client => ({
+      return clients.results.map(client => ({
         display: client.full_name,
         value: client.id
       }))

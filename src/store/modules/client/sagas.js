@@ -10,7 +10,8 @@ const getClients = apiCallSaga({
   path: function*() {
     return yield roleBasedPath('clients/')
   },
-  selectorKey: 'clients'
+  selectorKey: 'clients',
+  allowedParamKeys: ['page', 'page_size']
 })
 
 const createClient = apiCallSaga({

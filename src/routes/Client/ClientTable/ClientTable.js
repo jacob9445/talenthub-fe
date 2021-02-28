@@ -1,5 +1,15 @@
 import React, { useMemo } from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton } from '@material-ui/core'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TablePagination,
+  Tooltip,
+  IconButton
+} from '@material-ui/core'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -8,7 +18,7 @@ import Spinner from 'components/Spinner'
 import { CLIENT_TYPE_LABELS, CLIENT_TYPES } from 'config/constants'
 import { ROLES } from 'config/constants'
 
-function ClientTable({ data, myRole, handleDelete, match: { path } }) {
+function ClientTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = useMemo(
     () =>
       myRole === ROLES.DEVELOPER
@@ -27,7 +37,7 @@ function ClientTable({ data, myRole, handleDelete, match: { path } }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, full_name, type, company_name, owner, started_at }) => (
+          {data.results.map(({ id, full_name, type, company_name, owner, started_at }) => (
             <TableRow key={id}>
               <TableCell>{full_name}</TableCell>
               <TableCell>{CLIENT_TYPE_LABELS[type]}</TableCell>
@@ -49,6 +59,18 @@ function ClientTable({ data, myRole, handleDelete, match: { path } }) {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination //This pagination is zero-based.
+              rowsPerPageOptions={[2, 5, 10, 25]}
+              count={data.count}
+              rowsPerPage={pagination.page_size}
+              page={pagination.page - 1}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     )
   } else {
@@ -57,7 +79,7 @@ function ClientTable({ data, myRole, handleDelete, match: { path } }) {
 }
 
 ClientTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
