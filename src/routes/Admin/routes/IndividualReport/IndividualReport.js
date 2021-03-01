@@ -105,12 +105,14 @@ IndividualReport.propTypes = {
   isIndividualReportLoading: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,
-  onChangeRowsPerPage: PropTypes.func.isRequired
+  onChangeRowsPerPage: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 export default compose(
-  withPaginationInfo,
   withRouter,
+  withPaginationInfo,
   connect(
     selector,
     actions

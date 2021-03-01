@@ -9,8 +9,7 @@ const getTeamReport = apiCallSaga({
   path: function*({ payload }) {
     return yield roleBasedPath(`reports/team/${payload.period}/`)
   },
-  selectorKey: 'teamReport',
-  allowedParamKeys: ['page', 'page_size']
+  selectorKey: 'teamReport'
 })
 
 export default function* rootSaga() {

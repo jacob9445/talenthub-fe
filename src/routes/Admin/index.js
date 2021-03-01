@@ -28,8 +28,8 @@ import FinancialRequestEdit from 'routes/FinancialRequest/FinancialRequestEdit'
 import FinancialRequestNew from 'routes/FinancialRequest/FinancialRequestNew'
 import TransactionList from 'routes/Transaction/routes/TransactionList'
 import TransactionDetail from 'routes/Transaction/routes/TransactionDetail'
-import IndividualReport from 'routes/IndividualReport'
-import TeamReport from 'routes/TeamReport'
+import IndividualReport from './routes/IndividualReport'
+import TeamReport from './routes/TeamReport'
 
 const Admin = ({ match: { path } }) => {
   return (

@@ -1,9 +1,10 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { Grid } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
@@ -11,30 +12,26 @@ import { teamReportSelector, getTeamReport, teamReportLoadingSelector } from 'st
 import TeamReportTable from './TeamReportTable'
 import { periodOptions } from 'config/constants'
 import SimpleSelect from 'components/SimpleSelect'
-import withPaginationInfo from 'hocs/withPaginationInfo'
+import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 
-const TeamReport = ({
-  teamReport,
-  getTeamReport,
-  isTeamReportLoading,
-  pagination,
-  onChangePage,
-  onChangeRowsPerPage
-}) => {
-  let [period, setPeriod] = useState('monthly')
-
+const TeamReport = ({ teamReport, getTeamReport, isTeamReportLoading, location, history }) => {
   useEffect(() => {
+    let { period } = parseQueryString(location.search)
+    if (typeof period === 'undefined') period = 'monthly'
     getTeamReport({
-      period,
-      params: pagination
+      period
     })
-  }, [getTeamReport, pagination, period])
+  }, [getTeamReport, location.search])
 
   const handleChange = useCallback(
     event => {
-      setPeriod(event.target.value)
+      history.push({
+        search: jsonToQueryString({
+          period: event.target.value
+        })
+      })
     },
-    [setPeriod]
+    [history]
   )
 
   if (isTeamReportLoading) {
@@ -45,12 +42,7 @@ const TeamReport = ({
         <Grid item xs={12}>
           <Widget title="Team Reports" disableWidgetMenu>
             <SimpleSelect label="Period" defaultValue="monthly" options={periodOptions} onChange={handleChange} />
-            <TeamReportTable
-              data={teamReport}
-              pagination={pagination}
-              onChangePage={onChangePage}
-              onChangeRowsPerPage={onChangeRowsPerPage}
-            />
+            <TeamReportTable data={teamReport} />
           </Widget>
         </Grid>
       </Grid>
@@ -71,13 +63,12 @@ TeamReport.propTypes = {
   teamReport: PropTypes.object,
   getTeamReport: PropTypes.func.isRequired,
   isTeamReportLoading: PropTypes.bool.isRequired,
-  pagination: PropTypes.object.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  onChangeRowsPerPage: PropTypes.func.isRequired
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 export default compose(
-  withPaginationInfo,
+  withRouter,
   connect(
     selector,
     actions

@@ -1,14 +1,5 @@
 import React, { useCallback } from 'react'
-import {
-  Table,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  TablePagination,
-  TableFooter,
-  Typography
-} from '@material-ui/core'
+import { Table, TableRow, TableHead, TableBody, TableCell, Typography } from '@material-ui/core'
 import PropTypes from 'prop-types'
 import { show } from 'redux-modal'
 import { connect } from 'react-redux'
@@ -16,15 +7,15 @@ import { connect } from 'react-redux'
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
 
-function IndividualReportTable({ data, show, pagination, onChangePage, onChangeRowsPerPage }) {
-  const columns = ['Full Name', 'Earning']
+function TeamReportTable({ data, show }) {
+  const columns = ['Team Name', 'Earning']
   const classes = useStyles()
   let totalEarning = 0
 
   const handleRowClick = useCallback(
     id => () => {
-      show('IndividualReportModal', {
-        project_earning: data.results.find((value, index, array) => array[index].id === id).project_earnings
+      show('TeamReportModal', {
+        earning: data.results.find((value, index, array) => array[index].id === id).earning
       })
     },
     [show, data]
@@ -42,28 +33,16 @@ function IndividualReportTable({ data, show, pagination, onChangePage, onChangeR
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.results.map(({ id, first_name, last_name, earning }) => {
-              totalEarning += earning
+            {data.results.map(({ id, name, total }) => {
+              totalEarning += total
               return (
                 <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
-                  <TableCell>{`${first_name} ${last_name}`}</TableCell>
-                  <TableCell>{earning}</TableCell>
+                  <TableCell>{name}</TableCell>
+                  <TableCell>{total}</TableCell>
                 </TableRow>
               )
             })}
           </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination //This pagination is zero-based.
-                rowsPerPageOptions={[2, 5, 10, 25]}
-                count={data.count}
-                rowsPerPage={pagination.page_size}
-                page={pagination.page - 1}
-                onChangePage={onChangePage}
-                onChangeRowsPerPage={onChangeRowsPerPage}
-              />
-            </TableRow>
-          </TableFooter>
         </Table>
         <Typography variant="h5" className={classes.totalEarning}>
           Total Earning: {totalEarning}
@@ -79,7 +58,7 @@ const actions = {
   show
 }
 
-IndividualReportTable.propTypes = {
+TeamReportTable.propTypes = {
   data: PropTypes.object,
   show: PropTypes.func.isRequired
 }
@@ -87,4 +66,4 @@ IndividualReportTable.propTypes = {
 export default connect(
   null,
   actions
-)(IndividualReportTable)
+)(TeamReportTable)
