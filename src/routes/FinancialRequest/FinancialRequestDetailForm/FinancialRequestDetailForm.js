@@ -87,7 +87,7 @@ const FinancialRequestDetailForm = ({
 
   const projectList = useMemo(() => {
     if (projects) {
-      return projects.map(project => ({
+      return projects.results.map(project => ({
         display: project.title,
         value: project.id
       }))

@@ -1,11 +1,6 @@
-import * as R from 'ramda'
 import { createDataSelector, isRequestPending } from '../api'
 
-export const projectsSelector = R.compose(
-  R.path(['results']),
-  createDataSelector('projects')
-)
-
+export const projectsSelector = createDataSelector('projects')
 export const projectsLoadingSelector = state => isRequestPending('projects', 'GET')(state)
 
 export const projectDetailSelector = createDataSelector('projectDetail')
