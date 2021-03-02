@@ -1,5 +1,15 @@
 import React from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton } from '@material-ui/core'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TablePagination,
+  Tooltip,
+  IconButton
+} from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
@@ -9,7 +19,7 @@ import Spinner from 'components/Spinner'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
 
-function AccountTable({ data, handleDelete, match: { path } }) {
+function AccountTable({ data, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   if (data) {
     return (
       <Table className="mb-0">
@@ -21,9 +31,11 @@ function AccountTable({ data, handleDelete, match: { path } }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, profile, platform_type, email, password, location, recovery_email, url }) => (
+          {data.results.map(({ id, profile, platform_type, email, password, location, recovery_email, url }) => (
             <TableRow key={id}>
-              <TableCell>{profile}</TableCell>
+              <TableCell>
+                {profile.first_name} {profile.last_name}
+              </TableCell>
               <TableCell>{PLATFORM_LABELS[platform_type]}</TableCell>
               <TableCell>{email}</TableCell>
               <TableCell>*****</TableCell>
@@ -45,6 +57,18 @@ function AccountTable({ data, handleDelete, match: { path } }) {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination //This pagination is zero-based.
+              rowsPerPageOptions={[2, 5, 10, 25]}
+              count={data.count}
+              rowsPerPage={pagination.page_size}
+              page={pagination.page - 1}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     )
   } else {
@@ -53,7 +77,7 @@ function AccountTable({ data, handleDelete, match: { path } }) {
 }
 
 AccountTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }

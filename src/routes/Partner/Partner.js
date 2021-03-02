@@ -1,22 +1,37 @@
 import React, { useEffect, useCallback } from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import { Grid, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { createStructuredSelector } from 'reselect'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { show } from 'redux-modal'
+import PropTypes from 'prop-types'
 
-import Widget from 'components/Widget'
-import PartnerTable from './PartnerTable'
-import Spinner from 'components/Spinner'
 import { getPartners, deletePartnerAndRefresh, partnersSelector, partnersLoadingSelector } from 'store/modules/partner'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
+import PartnerTable from './PartnerTable'
+import Spinner from 'components/Spinner'
+import Widget from 'components/Widget'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
-const Partner = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoading, me, show }) => {
+const Partner = ({
+  getPartners,
+  deletePartnerAndRefresh,
+  partners,
+  isPartnersLoading,
+  me,
+  show,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) => {
   useEffect(() => {
-    getPartners(me)
-  }, [getPartners, me])
+    getPartners({
+      me: me,
+      params: pagination
+    })
+  }, [getPartners, me, pagination])
 
   const handleDelete = useCallback(
     id => {
@@ -43,7 +58,14 @@ const Partner = ({ getPartners, deletePartnerAndRefresh, partners, isPartnersLoa
                 Add Partner
               </Button>
             }>
-            <PartnerTable data={partners} myRole={me.role} handleDelete={handleDelete} />
+            <PartnerTable
+              data={partners}
+              myRole={me.role}
+              handleDelete={handleDelete}
+              pagination={pagination}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
           </Widget>
         </Grid>
       </Grid>
@@ -65,13 +87,17 @@ const selectors = createStructuredSelector({
 Partner.propTypes = {
   getPartners: PropTypes.func.isRequired,
   deletePartnerAndRefresh: PropTypes.func.isRequired,
-  partners: PropTypes.array,
+  partners: PropTypes.object,
   isPartnersLoading: PropTypes.bool.isRequired,
   me: PropTypes.object,
-  show: PropTypes.func.isRequired
+  show: PropTypes.func.isRequired,
+  pagination: PropTypes.object
 }
 
-export default connect(
-  selectors,
-  actions
+export default compose(
+  withPaginationInfo,
+  connect(
+    selectors,
+    actions
+  )
 )(Partner)

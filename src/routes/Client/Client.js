@@ -3,6 +3,7 @@ import { Grid, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
+import { compose } from 'redux'
 import PropTypes from 'prop-types'
 import { show } from 'redux-modal'
 
@@ -12,11 +13,24 @@ import Spinner from 'components/Spinner'
 import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSelector } from 'store/modules/client'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
-const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading, me, show }) => {
+const Clients = ({
+  getClients,
+  deleteClientAndRefresh,
+  clients,
+  isClientsLoading,
+  me,
+  show,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) => {
   useEffect(() => {
-    getClients()
-  }, [getClients])
+    getClients({
+      params: pagination
+    })
+  }, [getClients, pagination])
 
   const handleDelete = useCallback(
     id => {
@@ -43,7 +57,14 @@ const Clients = ({ getClients, deleteClientAndRefresh, clients, isClientsLoading
                 Add Client
               </Button>
             }>
-            <ClientTable data={clients} myRole={me.role} handleDelete={handleDelete} />
+            <ClientTable
+              data={clients}
+              myRole={me.role}
+              handleDelete={handleDelete}
+              pagination={pagination}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
           </Widget>
         </Grid>
       </Grid>
@@ -65,13 +86,17 @@ const selectors = createStructuredSelector({
 Clients.propTypes = {
   getClients: PropTypes.func.isRequired,
   deleteClientAndRefresh: PropTypes.func.isRequired,
-  clients: PropTypes.array,
+  clients: PropTypes.object,
   isClientsLoading: PropTypes.bool.isRequired,
   me: PropTypes.object,
-  show: PropTypes.func.isRequired
+  show: PropTypes.func.isRequired,
+  pagination: PropTypes.object
 }
 
-export default connect(
-  selectors,
-  actions
+export default compose(
+  withPaginationInfo,
+  connect(
+    selectors,
+    actions
+  )
 )(Clients)

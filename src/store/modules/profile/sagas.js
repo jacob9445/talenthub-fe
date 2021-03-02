@@ -10,7 +10,8 @@ const getProfiles = apiCallSaga({
   path: function*() {
     return yield roleBasedPath('profiles/')
   },
-  selectorKey: 'profiles'
+  selectorKey: 'profiles',
+  allowedParamKeys: ['page', 'page_size']
 })
 
 const getProfileDetail = apiCallSaga({

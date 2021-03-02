@@ -54,7 +54,7 @@ const ProfileDetailForm = ({
 
   const userOptions = useMemo(() => {
     if (users) {
-      return users.map(user => ({
+      return users.results.map(user => ({
         display: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))

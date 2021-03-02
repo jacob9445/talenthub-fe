@@ -1,13 +1,34 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
-import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton, Button } from '@material-ui/core'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TablePagination,
+  Tooltip,
+  IconButton,
+  Button
+} from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import { ROLES, PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS, URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-function ProjectTable({ data, myRole, onDelete, history, location, disableActions }) {
+function ProjectTable({
+  data,
+  myRole,
+  onDelete,
+  history,
+  location,
+  disableActions,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) {
   const columns = useMemo(() => {
     function getColumns(role, disableActions) {
       let columns = ['Title', 'Type', 'Weakly Limit', 'Price', 'Status']
@@ -26,7 +47,17 @@ function ProjectTable({ data, myRole, onDelete, history, location, disableAction
     [history, location.pathname, myRole]
   )
 
-  if (data) {
+  const [results, setResults] = useState([])
+
+  useEffect(() => {
+    if (disableActions) {
+      setResults(data)
+    } else {
+      data && setResults(data.results)
+    }
+  }, [disableActions, setResults, data])
+
+  if (results) {
     return (
       <Table className="mb-0">
         <TableHead>
@@ -37,7 +68,7 @@ function ProjectTable({ data, myRole, onDelete, history, location, disableAction
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, title, type, weakly_limit, price, status, project_starter }) => (
+          {results.map(({ id, title, type, weakly_limit, price, status, project_starter }) => (
             <TableRow key={id}>
               <TableCell>
                 <Button onClick={showProjectDetail(id)}>{title}</Button>
@@ -66,6 +97,20 @@ function ProjectTable({ data, myRole, onDelete, history, location, disableAction
             </TableRow>
           ))}
         </TableBody>
+        {!disableActions && (
+          <TableFooter>
+            <TableRow>
+              <TablePagination //This pagination is zero-based.
+                rowsPerPageOptions={[2, 5, 10, 25]}
+                count={data.count}
+                rowsPerPage={pagination.page_size}
+                page={pagination.page - 1}
+                onChangePage={onChangePage}
+                onChangeRowsPerPage={onChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
+        )}
       </Table>
     )
   } else {
@@ -76,7 +121,7 @@ function ProjectTable({ data, myRole, onDelete, history, location, disableAction
 export default withRouter(ProjectTable)
 
 ProjectTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
   history: PropTypes.object.isRequired,

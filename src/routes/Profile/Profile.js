@@ -1,32 +1,36 @@
-import React, { useEffect, useMemo, useCallback } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useCallback } from 'react'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { pick, path } from 'ramda'
-import { show } from 'redux-modal'
 import { Grid, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { show } from 'redux-modal'
+import PropTypes from 'prop-types'
 
-import Widget from 'components/Widget'
-import ProfileTable from './ProfileTable'
 import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndRefresh } from 'store/modules/profile'
 import { meSelector } from 'store/modules/auth'
-import Spinner from 'components/Spinner'
 import { URL_PREFIXES } from 'config/constants'
+import ProfileTable from './ProfileTable'
+import Spinner from 'components/Spinner'
+import Widget from 'components/Widget'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
-const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh, show }) => {
+const Profile = ({
+  getProfiles,
+  profiles,
+  me,
+  isLoading,
+  deleteProfileAndRefresh,
+  show,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) => {
   useEffect(() => {
-    getProfiles()
-  }, [getProfiles])
-
-  const data = useMemo(() => {
-    if (profiles) {
-      return profiles.map(profile => ({
-        ...pick(['id', 'profile_type', 'first_name', 'last_name', 'address', 'country', 'dob', 'gender'])(profile),
-        username: path(['user', 'username'])(profile)
-      }))
-    }
-  }, [profiles])
+    getProfiles({
+      params: pagination
+    })
+  }, [getProfiles, pagination])
 
   const handleDelete = useCallback(
     id => {
@@ -54,7 +58,14 @@ const Profile = ({ getProfiles, profiles, me, isLoading, deleteProfileAndRefresh
                 Add Profile
               </Button>
             }>
-            <ProfileTable data={data} myRole={me.role} handleDelete={handleDelete} />
+            <ProfileTable
+              data={profiles}
+              myRole={me.role}
+              handleDelete={handleDelete}
+              pagination={pagination}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
           </Widget>
         </Grid>
       </Grid>
@@ -65,9 +76,10 @@ Profile.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   deleteProfileAndRefresh: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  profiles: PropTypes.array,
+  profiles: PropTypes.object,
   me: PropTypes.object,
-  show: PropTypes.func.isRequired
+  show: PropTypes.func.isRequired,
+  pagination: PropTypes.object
 }
 
 const actions = {
@@ -82,7 +94,10 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-export default connect(
-  selectors,
-  actions
+export default compose(
+  withPaginationInfo,
+  connect(
+    selectors,
+    actions
+  )
 )(Profile)

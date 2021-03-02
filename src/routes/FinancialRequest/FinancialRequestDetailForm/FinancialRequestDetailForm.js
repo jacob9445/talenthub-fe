@@ -65,7 +65,7 @@ const FinancialRequestDetailForm = ({
 
   const clientList = useMemo(() => {
     if (clients) {
-      return clients.map(client => ({
+      return clients.results.map(client => ({
         display: client.full_name,
         value: client.id
       }))
@@ -76,7 +76,7 @@ const FinancialRequestDetailForm = ({
 
   const partnerList = useMemo(() => {
     if (partners) {
-      return partners.map(partner => ({
+      return partners.results.map(partner => ({
         display: partner.full_name,
         value: partner.id
       }))
@@ -87,7 +87,7 @@ const FinancialRequestDetailForm = ({
 
   const projectList = useMemo(() => {
     if (projects) {
-      return projects.map(project => ({
+      return projects.results.map(project => ({
         display: project.title,
         value: project.id
       }))

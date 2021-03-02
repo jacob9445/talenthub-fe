@@ -12,11 +12,23 @@ import TransactionTable from 'components/TransactionTable'
 import Spinner from 'components/Spinner'
 import { getTransactions, transactionsSelector, transactionsLoadingSelector } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
-const TransactionList = ({ getTransactions, transactions, isTransactionLoading, me }) => {
+const TransactionList = ({
+  getTransactions,
+  transactions,
+  isTransactionLoading,
+  me,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) => {
   useEffect(() => {
-    getTransactions(me)
-  }, [getTransactions, me])
+    getTransactions({
+      me: me,
+      params: pagination
+    })
+  }, [getTransactions, me, pagination])
 
   if (isTransactionLoading) return <Spinner />
   else
@@ -25,7 +37,13 @@ const TransactionList = ({ getTransactions, transactions, isTransactionLoading, 
         <Grid container>
           <Grid item xs={12}>
             <Widget title="Transaction" disableWidgetMenu>
-              <TransactionTable data={transactions} me={me} />
+              <TransactionTable
+                data={transactions}
+                me={me}
+                pagination={pagination}
+                onChangePage={onChangePage}
+                onChangeRowsPerPage={onChangeRowsPerPage}
+              />
             </Widget>
           </Grid>
         </Grid>
@@ -46,14 +64,16 @@ const selector = createStructuredSelector({
 
 TransactionList.propTypes = {
   getTransactions: PropTypes.func.isRequired,
-  transactions: PropTypes.array,
+  transactions: PropTypes.object,
   isTransactionLoading: PropTypes.bool.isRequired,
   me: PropTypes.object.isRequired,
-  show: PropTypes.func.isRequired
+  show: PropTypes.func.isRequired,
+  pagination: PropTypes.object
 }
 
 export default compose(
   withRouter,
+  withPaginationInfo,
   connect(
     selector,
     actions

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Table, TableRow, TableHead, TableBody, TableCell } from '@material-ui/core'
+import { Table, TableRow, TableHead, TableBody, TableCell, TableFooter, TablePagination } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import Spinner from 'components/Spinner'
@@ -9,7 +9,7 @@ import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
 import { getPlatformLabel } from 'helpers/utils'
 
-function TransactionTable({ data, history, me }) {
+function TransactionTable({ data, history, me, pagination, onChangePage, onChangeRowsPerPage }) {
   const classes = useStyles()
   const columns = ['Gross amount', 'Net Amount', 'Payment Platform', 'Description', 'Date']
   const myRole = me?.role
@@ -32,7 +32,7 @@ function TransactionTable({ data, history, me }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(
+          {data.results.map(
             ({ id, gross_amount, net_amount, payment_platform, description, created_at, financial_request }) => (
               <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
                 <TableCell>
@@ -50,6 +50,18 @@ function TransactionTable({ data, history, me }) {
             )
           )}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination //This pagination is zero-based.
+              rowsPerPageOptions={[2, 5, 10, 25]}
+              count={data.count}
+              rowsPerPage={pagination.page_size}
+              page={pagination.page - 1}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     )
   } else {
@@ -58,7 +70,7 @@ function TransactionTable({ data, history, me }) {
 }
 
 TransactionTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   me: PropTypes.object.isRequired
 }
 

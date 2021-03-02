@@ -14,6 +14,7 @@ import UserTable from './UserTable'
 import Widget from 'components/Widget'
 import { ROLES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+
 const useStyles = makeStyles(theme => ({
   tableOverflow: {
     overflow: 'auto'

@@ -42,7 +42,7 @@ const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSub
   const profileOptions = useMemo(
     () =>
       profiles
-        ? profiles.map(profile => ({
+        ? profiles.results.map(profile => ({
             value: profile.id,
             display: `${profile.first_name} ${profile.last_name}`
           }))
@@ -90,7 +90,7 @@ AccountDetailForm.propTypes = {
   location: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   getProfiles: PropTypes.func.isRequired,
-  profiles: PropTypes.array,
+  profiles: PropTypes.object,
   me: PropTypes.object,
   match: PropTypes.object.isRequired
 }

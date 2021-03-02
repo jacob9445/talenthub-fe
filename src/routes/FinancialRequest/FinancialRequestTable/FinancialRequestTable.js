@@ -1,7 +1,17 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Edit as EditIcon, Cancel as CancelIcon, Check as ApproveIcon, Close as DeclineIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
-import { Table, TableRow, TableHead, TableBody, TableCell, Tooltip, IconButton } from '@material-ui/core'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TablePagination,
+  Tooltip,
+  IconButton
+} from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import useStyles from './styles'
@@ -16,7 +26,19 @@ import {
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
 
-function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, history, location }) {
+function FinancialRequestTable({
+  data,
+  me,
+  onCancel,
+  onApprove,
+  onDecline,
+  history,
+  location,
+  fromDashboard,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) {
   const classes = useStyles()
   const columns = ['Type', 'Status', 'Amount', 'To', 'Requested time', 'Sender', 'Project', 'Actions']
 
@@ -27,7 +49,17 @@ function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, histo
     [history, location.pathname, me.role]
   )
 
-  if (data) {
+  const [results, setResults] = useState([])
+
+  useEffect(() => {
+    if (fromDashboard) {
+      setResults(data)
+    } else {
+      data && setResults(data.results)
+    }
+  }, [fromDashboard, setResults, data])
+
+  if (results) {
     return (
       <Table className="mb-0">
         <TableHead>
@@ -38,7 +70,7 @@ function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, histo
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(({ id, type, status, amount, counter_party, requested_at, requester, project }) => (
+          {results.map(({ id, type, status, amount, counter_party, requested_at, requester, project }) => (
             <TableRow key={id}>
               <TableCell>{FINANCIALREQUEST_TYPE_LABELS[type]}</TableCell>
               <TableCell>{FINANCIALREQUEST_STATUS_LABELS[status]}</TableCell>
@@ -84,6 +116,20 @@ function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, histo
             </TableRow>
           ))}
         </TableBody>
+        {!fromDashboard && (
+          <TableFooter>
+            <TableRow>
+              <TablePagination //This pagination is zero-based.
+                rowsPerPageOptions={[2, 5, 10, 25]}
+                count={data.count}
+                rowsPerPage={pagination.page_size}
+                page={pagination.page - 1}
+                onChangePage={onChangePage}
+                onChangeRowsPerPage={onChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
+        )}
       </Table>
     )
   } else {
@@ -94,11 +140,15 @@ function FinancialRequestTable({ data, me, onCancel, onApprove, onDecline, histo
 export default withRouter(FinancialRequestTable)
 
 FinancialRequestTable.propTypes = {
-  data: PropTypes.array,
+  data: PropTypes.object,
   me: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   onApprove: PropTypes.func,
   onCancel: PropTypes.func,
   onDecline: PropTypes.func
+}
+
+FinancialRequestTable.defaultProps = {
+  fromDashboard: false
 }

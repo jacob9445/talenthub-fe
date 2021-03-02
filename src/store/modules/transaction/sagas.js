@@ -9,7 +9,8 @@ const getTransactions = apiCallSaga({
   path: function*() {
     return yield roleBasedPath('transactions/')
   },
-  selectorKey: 'transactions'
+  selectorKey: 'transactions',
+  allowedParamKeys: ['page', 'page_size']
 })
 
 const getTransactionDetail = apiCallSaga({

@@ -10,7 +10,8 @@ const getFinancialRequests = apiCallSaga({
   path: function*() {
     return yield roleBasedPath('financial-requests/')
   },
-  selectorKey: 'financialRequests'
+  selectorKey: 'financialRequests',
+  allowedParamKeys: ['page', 'page_size']
 })
 
 const deleteFinancialRequest = apiCallSaga({

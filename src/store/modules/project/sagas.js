@@ -10,7 +10,8 @@ const getProjects = apiCallSaga({
   path: function*() {
     return yield roleBasedPath('projects/')
   },
-  selectorKey: 'projects'
+  selectorKey: 'projects',
+  allowedParamKeys: ['page', 'page_size']
 })
 
 const deleteProject = apiCallSaga({

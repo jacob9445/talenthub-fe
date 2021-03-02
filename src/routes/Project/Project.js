@@ -12,11 +12,26 @@ import ProjectsTable from './ProjectTable'
 import Spinner from 'components/Spinner'
 import { getProjects, deleteProjectAndRefresh, projectsSelector, projectsLoadingSelector } from 'store/modules/project'
 import { meSelector } from 'store/modules/auth'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
-const Project = ({ getProjects, deleteProjectAndRefresh, projects, isProjectsLoading, me, match: { path }, show }) => {
+const Project = ({
+  getProjects,
+  deleteProjectAndRefresh,
+  projects,
+  isProjectsLoading,
+  me,
+  match: { path },
+  show,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) => {
   useEffect(() => {
-    getProjects(me)
-  }, [getProjects, me])
+    getProjects({
+      me: me,
+      params: pagination
+    })
+  }, [getProjects, me, pagination])
 
   const handleDelete = useCallback(
     id => {
@@ -43,7 +58,14 @@ const Project = ({ getProjects, deleteProjectAndRefresh, projects, isProjectsLoa
                 Add Project
               </Button>
             }>
-            <ProjectsTable data={projects} myRole={me.role} onDelete={handleDelete} />
+            <ProjectsTable
+              data={projects}
+              myRole={me.role}
+              onDelete={handleDelete}
+              pagination={pagination}
+              onChangePage={onChangePage}
+              onChangeRowsPerPage={onChangeRowsPerPage}
+            />
           </Widget>
         </Grid>
       </Grid>
@@ -65,14 +87,16 @@ const selectors = createStructuredSelector({
 Project.propTypes = {
   getProjects: PropTypes.func.isRequired,
   deleteProjectAndRefresh: PropTypes.func.isRequired,
-  projects: PropTypes.array,
+  projects: PropTypes.object,
   isProjectsLoading: PropTypes.bool.isRequired,
   me: PropTypes.object,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  pagination: PropTypes.object
 }
 
 export default compose(
   withRouter,
+  withPaginationInfo,
   connect(
     selectors,
     actions

@@ -42,7 +42,7 @@ const ClientDetailForm = ({ handleSubmit, values, location, history, me, match: 
 
   const userLists = useMemo(() => {
     if (users) {
-      return users.map(user => ({
+      return users.results.map(user => ({
         display: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
@@ -89,7 +89,7 @@ ClientDetailForm.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-  users: PropTypes.array,
+  users: PropTypes.object,
   getUsers: PropTypes.func.isRequired,
   me: PropTypes.object
 }
