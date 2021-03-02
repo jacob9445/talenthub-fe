@@ -57,7 +57,7 @@ function ProjectTable({
     }
   }, [disableActions, setResults, data])
 
-  if (results) {
+  if (data) {
     return (
       <Table className="mb-0">
         <TableHead>
