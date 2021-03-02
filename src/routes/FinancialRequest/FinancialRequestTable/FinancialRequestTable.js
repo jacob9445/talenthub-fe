@@ -59,7 +59,7 @@ function FinancialRequestTable({
     }
   }, [fromDashboard, setResults, data])
 
-  if (results) {
+  if (data) {
     return (
       <Table className="mb-0">
         <TableHead>
