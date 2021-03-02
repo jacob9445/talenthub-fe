@@ -21,6 +21,7 @@ import {
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
 import { FINANCIALREQUEST_TYPE } from 'config/constants'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
 const FinancialRequest = ({
   getFinancialRequests,
@@ -31,11 +32,17 @@ const FinancialRequest = ({
   cancelFinancialRequest,
   declineFinancialRequest,
   show,
-  approveFinancialRequest
+  approveFinancialRequest,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
 }) => {
   useEffect(() => {
-    getFinancialRequests(me)
-  }, [getFinancialRequests, me])
+    getFinancialRequests({
+      me: me,
+      params: pagination
+    })
+  }, [getFinancialRequests, me, pagination])
 
   const handleCancel = useCallback(
     id => {
@@ -96,6 +103,9 @@ const FinancialRequest = ({
                 onCancel={handleCancel}
                 onApprove={handleApprove}
                 onDecline={handleDecline}
+                pagination={pagination}
+                onChangePage={onChangePage}
+                nChangeRowsPerPage={onChangeRowsPerPage}
               />
             </Widget>
           </Grid>
@@ -121,17 +131,19 @@ const selector = createStructuredSelector({
 
 FinancialRequest.propTypes = {
   getFinancialRequests: PropTypes.func.isRequired,
-  financialRequests: PropTypes.array,
+  financialRequests: PropTypes.object,
   isFinancialRequestsLoading: PropTypes.bool.isRequired,
   me: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   cancelFinancialRequest: PropTypes.func.isRequired,
   declineFinancialRequest: PropTypes.func.isRequired,
   approveFinancialRequest: PropTypes.func.isRequired,
-  show: PropTypes.func.isRequired
+  show: PropTypes.func.isRequired,
+  pagination: PropTypes.object
 }
 
 export default compose(
+  withPaginationInfo,
   withRouter,
   connect(
     selector,
