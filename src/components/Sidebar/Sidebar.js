@@ -38,63 +38,63 @@ let structure = {
   [ROLES.ADMIN]: [
     {
       id: 0,
-      label: 'Dashboard',
-      link: `/admin/dashboard`,
-      icon: <DashboardIcon />
-    },
-    {
-      id: 1,
-      label: 'Users',
-      link: `/admin/users`,
-      icon: <UserIcon />
-    },
-    {
-      id: 2,
-      label: 'Teams',
-      link: `/admin/teams`,
-      icon: <TeamIcon />
-    },
-    {
-      id: 3,
-      label: 'Profiles',
-      link: `/admin/profiles`,
-      icon: <ProfileIcon />
-    },
-    {
-      id: 4,
-      label: 'Accounts',
-      link: `/admin/accounts`,
-      icon: <AccountIcon />
-    },
-    {
-      id: 5,
-      label: 'Partners',
-      link: '/admin/partners',
-      icon: <PartnerIcon />
-    },
-    {
-      id: 6,
-      label: 'Clients',
-      link: '/admin/clients',
-      icon: <ClientIcon />
-    },
-    {
-      id: 7,
-      label: 'Projects',
-      link: '/admin/projects',
-      icon: <ProjectIcon />
-    },
-    {
-      id: 8,
       label: 'Financial Requests',
       link: '/admin/financial-requests',
       icon: <FRIcon />
     },
     {
-      id: 9,
+      id: 1,
       label: 'Transaction',
       link: '/admin/transactions',
       icon: <TransactionIcon />
+    },
+    {
+      id: 2,
+      label: 'Dashboard',
+      link: `/admin/dashboard`,
+      icon: <DashboardIcon />
+    },
+    {
+      id: 3,
+      label: 'Users',
+      link: `/admin/users`,
+      icon: <UserIcon />
+    },
+    {
+      id: 4,
+      label: 'Teams',
+      link: `/admin/teams`,
+      icon: <TeamIcon />
+    },
+    {
+      id: 5,
+      label: 'Profiles',
+      link: `/admin/profiles`,
+      icon: <ProfileIcon />
+    },
+    {
+      id: 6,
+      label: 'Accounts',
+      link: `/admin/accounts`,
+      icon: <AccountIcon />
+    },
+    {
+      id: 7,
+      label: 'Partners',
+      link: '/admin/partners',
+      icon: <PartnerIcon />
+    },
+    {
+      id: 8,
+      label: 'Clients',
+      link: '/admin/clients',
+      icon: <ClientIcon />
+    },
+    {
+      id: 9,
+      label: 'Projects',
+      link: '/admin/projects',
+      icon: <ProjectIcon />
     },
     {
       id: 10,
@@ -120,107 +120,107 @@ let structure = {
   [ROLES.TEAM_MANAGER]: [
     {
       id: 0,
-      label: 'Dashboard',
-      link: `/team-manager/dashboard`,
-      icon: <DashboardIcon />
-    },
-    {
-      id: 1,
-      label: 'Users',
-      link: `/team-manager/users`,
-      icon: <UserIcon />
-    },
-    {
-      id: 2,
-      label: 'Profiles',
-      link: `/team-manager/profiles`,
-      icon: <ProfileIcon />
-    },
-    {
-      id: 3,
-      label: 'Accounts',
-      link: `/team-manager/accounts`,
-      icon: <AccountIcon />
-    },
-    {
-      id: 4,
-      label: 'Partners',
-      link: '/team-manager/partners',
-      icon: <PartnerIcon />
-    },
-    {
-      id: 5,
-      label: 'Clients',
-      link: '/team-manager/clients',
-      icon: <ClientIcon />
-    },
-    {
-      id: 6,
-      label: 'Projects',
-      link: '/team-manager/projects',
-      icon: <ProjectIcon />
-    },
-    {
-      id: 7,
       label: 'Financial Requests',
       link: '/team-manager/financial-requests',
       icon: <FRIcon />
     },
     {
-      id: 8,
+      id: 1,
       label: 'Transaction',
       link: '/team-manager/transactions',
       icon: <TransactionIcon />
+    },
+    {
+      id: 2,
+      label: 'Dashboard',
+      link: `/team-manager/dashboard`,
+      icon: <DashboardIcon />
+    },
+    {
+      id: 3,
+      label: 'Users',
+      link: `/team-manager/users`,
+      icon: <UserIcon />
+    },
+    {
+      id: 4,
+      label: 'Profiles',
+      link: `/team-manager/profiles`,
+      icon: <ProfileIcon />
+    },
+    {
+      id: 5,
+      label: 'Accounts',
+      link: `/team-manager/accounts`,
+      icon: <AccountIcon />
+    },
+    {
+      id: 6,
+      label: 'Partners',
+      link: '/team-manager/partners',
+      icon: <PartnerIcon />
+    },
+    {
+      id: 7,
+      label: 'Clients',
+      link: '/team-manager/clients',
+      icon: <ClientIcon />
+    },
+    {
+      id: 8,
+      label: 'Projects',
+      link: '/team-manager/projects',
+      icon: <ProjectIcon />
     }
   ],
   [ROLES.DEVELOPER]: [
     {
       id: 0,
-      label: 'Dashboard',
-      link: `/developer/dashboard`,
-      icon: <DashboardIcon />
-    },
-    {
-      id: 1,
-      label: 'Profiles',
-      link: `/developer/profiles`,
-      icon: <ProfileIcon />
-    },
-    {
-      id: 2,
-      label: 'Accounts',
-      link: `/developer/accounts`,
-      icon: <AccountIcon />
-    },
-    {
-      id: 3,
-      label: 'Clients',
-      link: '/developer/clients',
-      icon: <ClientIcon />
-    },
-    {
-      id: 4,
-      label: 'Partners',
-      link: '/developer/partners',
-      icon: <PartnerIcon />
-    },
-    {
-      id: 5,
-      label: 'Projects',
-      link: '/developer/projects',
-      icon: <ProjectIcon />
-    },
-    {
-      id: 6,
       label: 'Financial Requests',
       link: '/developer/financial-requests',
       icon: <FRIcon />
     },
     {
-      id: 7,
+      id: 1,
       label: 'Transaction',
       link: '/developer/transactions',
       icon: <TransactionIcon />
+    },
+    {
+      id: 2,
+      label: 'Dashboard',
+      link: `/developer/dashboard`,
+      icon: <DashboardIcon />
+    },
+    {
+      id: 3,
+      label: 'Profiles',
+      link: `/developer/profiles`,
+      icon: <ProfileIcon />
+    },
+    {
+      id: 4,
+      label: 'Accounts',
+      link: `/developer/accounts`,
+      icon: <AccountIcon />
+    },
+    {
+      id: 5,
+      label: 'Clients',
+      link: '/developer/clients',
+      icon: <ClientIcon />
+    },
+    {
+      id: 6,
+      label: 'Partners',
+      link: '/developer/partners',
+      icon: <PartnerIcon />
+    },
+    {
+      id: 7,
+      label: 'Projects',
+      link: '/developer/projects',
+      icon: <ProjectIcon />
     }
   ]
 }
