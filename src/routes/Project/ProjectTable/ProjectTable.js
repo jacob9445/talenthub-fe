@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
 import {
@@ -47,7 +47,17 @@ function ProjectTable({
     [history, location.pathname, myRole]
   )
 
-  if (data) {
+  const [results, setResults] = useState([])
+
+  useEffect(() => {
+    if (disableActions) {
+      setResults(data)
+    } else {
+      data && setResults(data.results)
+    }
+  }, [disableActions, setResults, data])
+
+  if (results) {
     return (
       <Table className="mb-0">
         <TableHead>
@@ -58,7 +68,7 @@ function ProjectTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, title, type, weakly_limit, price, status, project_starter }) => (
+          {results.map(({ id, title, type, weakly_limit, price, status, project_starter }) => (
             <TableRow key={id}>
               <TableCell>
                 <Button onClick={showProjectDetail(id)}>{title}</Button>
@@ -87,18 +97,20 @@ function ProjectTable({
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination //This pagination is zero-based.
-              rowsPerPageOptions={[2, 5, 10, 25]}
-              count={data.count}
-              rowsPerPage={pagination.page_size}
-              page={pagination.page - 1}
-              onChangePage={onChangePage}
-              onChangeRowsPerPage={onChangeRowsPerPage}
-            />
-          </TableRow>
-        </TableFooter>
+        {!disableActions && (
+          <TableFooter>
+            <TableRow>
+              <TablePagination //This pagination is zero-based.
+                rowsPerPageOptions={[2, 5, 10, 25]}
+                count={data.count}
+                rowsPerPage={pagination.page_size}
+                page={pagination.page - 1}
+                onChangePage={onChangePage}
+                onChangeRowsPerPage={onChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
+        )}
       </Table>
     )
   } else {

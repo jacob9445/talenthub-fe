@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Edit as EditIcon, Cancel as CancelIcon, Check as ApproveIcon, Close as DeclineIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
 import {
@@ -34,6 +34,7 @@ function FinancialRequestTable({
   onDecline,
   history,
   location,
+  fromDashboard,
   pagination,
   onChangePage,
   onChangeRowsPerPage
@@ -48,7 +49,17 @@ function FinancialRequestTable({
     [history, location.pathname, me.role]
   )
 
-  if (data) {
+  const [results, setResults] = useState([])
+
+  useEffect(() => {
+    if (fromDashboard) {
+      setResults(data)
+    } else {
+      data && setResults(data.results)
+    }
+  }, [fromDashboard, setResults, data])
+
+  if (results) {
     return (
       <Table className="mb-0">
         <TableHead>
@@ -59,7 +70,7 @@ function FinancialRequestTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, type, status, amount, counter_party, requested_at, requester, project }) => (
+          {results.map(({ id, type, status, amount, counter_party, requested_at, requester, project }) => (
             <TableRow key={id}>
               <TableCell>{FINANCIALREQUEST_TYPE_LABELS[type]}</TableCell>
               <TableCell>{FINANCIALREQUEST_STATUS_LABELS[status]}</TableCell>
@@ -105,18 +116,20 @@ function FinancialRequestTable({
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination //This pagination is zero-based.
-              rowsPerPageOptions={[2, 5, 10, 25]}
-              count={data.count}
-              rowsPerPage={pagination.page_size}
-              page={pagination.page - 1}
-              onChangePage={onChangePage}
-              onChangeRowsPerPage={onChangeRowsPerPage}
-            />
-          </TableRow>
-        </TableFooter>
+        {!fromDashboard && (
+          <TableFooter>
+            <TableRow>
+              <TablePagination //This pagination is zero-based.
+                rowsPerPageOptions={[2, 5, 10, 25]}
+                count={data.count}
+                rowsPerPage={pagination.page_size}
+                page={pagination.page - 1}
+                onChangePage={onChangePage}
+                onChangeRowsPerPage={onChangeRowsPerPage}
+              />
+            </TableRow>
+          </TableFooter>
+        )}
       </Table>
     )
   } else {
@@ -134,4 +147,8 @@ FinancialRequestTable.propTypes = {
   onApprove: PropTypes.func,
   onCancel: PropTypes.func,
   onDecline: PropTypes.func
+}
+
+FinancialRequestTable.defaultProps = {
+  fromDashboard: false
 }

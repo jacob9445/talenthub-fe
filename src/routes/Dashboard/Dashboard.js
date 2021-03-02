@@ -180,6 +180,7 @@ const Dashboard = ({
                   onCancel={handleCancel}
                   onApprove={handleApprove}
                   onDecline={handleDecline}
+                  fromDashboard
                 />
               ) : (
                 <Typography className={classes.noItems} variant="body1">
