@@ -105,7 +105,7 @@ const FinancialRequest = ({
                 onDecline={handleDecline}
                 pagination={pagination}
                 onChangePage={onChangePage}
-                nChangeRowsPerPage={onChangeRowsPerPage}
+                onChangeRowsPerPage={onChangeRowsPerPage}
               />
             </Widget>
           </Grid>
