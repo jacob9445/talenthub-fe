@@ -51,7 +51,8 @@ const FinancialRequestEdit = ({
         ? {
             sender: financialRequestDetail?.requester.id || ''
           }
-        : {})
+        : {}),
+      description: financialRequestDetail?.description || ''
     }),
     [financialRequestDetail, me.role]
   )

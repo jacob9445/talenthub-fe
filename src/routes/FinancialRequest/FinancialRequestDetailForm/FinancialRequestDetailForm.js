@@ -10,6 +10,7 @@ import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
 import FormSelect from 'components/FormSelect'
+import FormMultilineInput from 'components/FormMultilineInput'
 import useStyles from './styles'
 import { URL_PREFIXES, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
@@ -18,7 +19,8 @@ import { getPartners, partnersSelector } from 'store/modules/partner'
 import { getProjects, projectsSelector } from 'store/modules/project'
 
 export const validationSchema = Yup.object().shape({
-  amount: Yup.number().required('This field is required!')
+  amount: Yup.number().required('This field is required!'),
+  description: Yup.string().required('This field is required!')
 })
 
 const validateClientField = (value, type) =>
@@ -141,6 +143,7 @@ const FinancialRequestDetailForm = ({
           options={partnerList}
         />
       ) : null}
+      <Field component={FormMultilineInput} type="text" htmlId="description" name="description" label="Description" />
 
       <div className={classes.formButtonWrapper}>
         <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
@@ -155,7 +158,7 @@ const FinancialRequestDetailForm = ({
 }
 
 FinancialRequestDetailForm.propTypes = {
-  clients: PropTypes.array,
+  clients: PropTypes.object,
   getClients: PropTypes.func.isRequired,
   getPartners: PropTypes.func.isRequired,
   getProjects: PropTypes.func.isRequired,
@@ -165,8 +168,8 @@ FinancialRequestDetailForm.propTypes = {
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   me: PropTypes.object,
-  partners: PropTypes.array,
-  projects: PropTypes.array,
+  partners: PropTypes.object,
+  projects: PropTypes.object,
   values: PropTypes.object.isRequired
 }
 
