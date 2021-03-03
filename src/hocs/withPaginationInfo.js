@@ -16,23 +16,16 @@ const withPaginationInfo = WrappedComponent => {
 
     const handleChangePage = useCallback(
       (event, page) => {
-        const { period } = parseQueryString(location.search)
-        if (typeof period === 'undefined') {
-          history.push({
-            search: jsonToQueryString({
-              ...pagination,
-              page: page + 1
-            })
+        const { period, from, to } = parseQueryString(location.search)
+        history.push({
+          search: jsonToQueryString({
+            period,
+            from,
+            to,
+            ...pagination,
+            page: page + 1
           })
-        } else {
-          history.push({
-            search: jsonToQueryString({
-              period,
-              ...pagination,
-              page: page + 1
-            })
-          })
-        }
+        })
       },
       [history, pagination, location.search]
     )
@@ -40,23 +33,16 @@ const withPaginationInfo = WrappedComponent => {
     const handleChangeRowsPerPage = useCallback(
       event => {
         if (event.target.value !== pagination.page_size) {
-          const { period } = parseQueryString(location.search)
-          if (typeof period === 'undefined') {
-            history.push({
-              search: jsonToQueryString({
-                page: 1,
-                page_size: event.target.value
-              })
+          const { period, from, to } = parseQueryString(location.search)
+          history.push({
+            search: jsonToQueryString({
+              period,
+              from,
+              to,
+              page: 1,
+              page_size: event.target.value
             })
-          } else {
-            history.push({
-              search: jsonToQueryString({
-                period,
-                page: 1,
-                page_size: event.target.value
-              })
-            })
-          }
+          })
         }
       },
       [pagination, history, location.search]
