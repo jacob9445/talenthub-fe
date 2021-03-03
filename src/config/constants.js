@@ -319,15 +319,19 @@ export const gender_patterns = {
 
 export const periodOptions = [
   {
-    value: 'weekly',
-    label: 'Weekly'
+    value: 'this-week',
+    label: 'This Week'
   },
   {
-    value: 'monthly',
-    label: 'Monthly'
+    value: 'this-month',
+    label: 'This Month'
   },
   {
-    value: 'quarterly',
-    label: 'Quarterly'
+    value: 'this-quarter',
+    label: 'This Quarter'
+  },
+  {
+    value: 'custom',
+    label: 'Custom'
   }
 ]

@@ -16,28 +16,36 @@ const withPaginationInfo = WrappedComponent => {
 
     const handleChangePage = useCallback(
       (event, page) => {
+        const { period, from, to } = parseQueryString(location.search)
         history.push({
           search: jsonToQueryString({
+            period,
+            from,
+            to,
             ...pagination,
             page: page + 1
           })
         })
       },
-      [history, pagination]
+      [history, pagination, location.search]
     )
 
     const handleChangeRowsPerPage = useCallback(
       event => {
         if (event.target.value !== pagination.page_size) {
+          const { period, from, to } = parseQueryString(location.search)
           history.push({
             search: jsonToQueryString({
+              period,
+              from,
+              to,
               page: 1,
               page_size: event.target.value
             })
           })
         }
       },
-      [pagination, history]
+      [pagination, history, location.search]
     )
 
     return (

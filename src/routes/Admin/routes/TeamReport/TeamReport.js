@@ -2,28 +2,26 @@ import React, { useEffect, useCallback } from 'react'
 import { Grid } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
-import {
-  individualReportSelector,
-  getIndividualReport,
-  individualReportLoadingSelector
-} from 'store/modules/individualReport'
-import IndividualReportTable from './IndividualReportTable'
+import { teamReportSelector, getTeamReport, teamReportLoadingSelector } from 'store/modules/teamReport'
+import TeamReportTable from './TeamReportTable'
 import { periodOptions } from 'config/constants'
 import SimpleSelect from 'components/SimpleSelect'
-import { jsonToQueryString, parseQueryString } from 'helpers/utils'
+import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 
-const IndividualReport = ({ individualReport, getIndividualReport, isIndividualReportLoading, location, history }) => {
+const TeamReport = ({ teamReport, getTeamReport, isTeamReportLoading, location, history }) => {
   useEffect(() => {
     let { period } = parseQueryString(location.search)
-    if (!period) period = 'monthly'
-    getIndividualReport(period)
-  }, [getIndividualReport, location.search])
+    if (typeof period === 'undefined') period = 'monthly'
+    getTeamReport({
+      period
+    })
+  }, [getTeamReport, location.search])
 
   const handleChange = useCallback(
     event => {
@@ -36,15 +34,15 @@ const IndividualReport = ({ individualReport, getIndividualReport, isIndividualR
     [history]
   )
 
-  if (isIndividualReportLoading) {
+  if (isTeamReportLoading) {
     return <Spinner />
   } else {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Widget title="Individual Reports" disableWidgetMenu>
+          <Widget title="Team Reports" disableWidgetMenu>
             <SimpleSelect label="Period" defaultValue="monthly" options={periodOptions} onChange={handleChange} />
-            <IndividualReportTable data={individualReport} />
+            <TeamReportTable data={teamReport} />
           </Widget>
         </Grid>
       </Grid>
@@ -53,18 +51,18 @@ const IndividualReport = ({ individualReport, getIndividualReport, isIndividualR
 }
 
 const actions = {
-  getIndividualReport
+  getTeamReport
 }
 
 const selector = createStructuredSelector({
-  individualReport: individualReportSelector,
-  isIndividualReportLoading: individualReportLoadingSelector
+  teamReport: teamReportSelector,
+  isTeamReportLoading: teamReportLoadingSelector
 })
 
-IndividualReport.propTypes = {
-  individualReport: PropTypes.array,
-  getIndividualReport: PropTypes.func.isRequired,
-  isIndividualReportLoading: PropTypes.bool.isRequired,
+TeamReport.propTypes = {
+  teamReport: PropTypes.object,
+  getTeamReport: PropTypes.func.isRequired,
+  isTeamReportLoading: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
 }
@@ -75,4 +73,4 @@ export default compose(
     selector,
     actions
   )
-)(IndividualReport)
+)(TeamReport)
