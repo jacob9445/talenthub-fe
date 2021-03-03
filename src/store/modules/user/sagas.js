@@ -47,7 +47,7 @@ const updateUserDetail = apiCallSaga({
 const createUser = apiCallSaga({
   type: Types.CREATE_USER,
   method: 'POST',
-  path: 'api/admin/users/',
+  path: 'api/auth/register/',
   success: function*(resData) {
     yield put(
       showMessage({
