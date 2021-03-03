@@ -44,9 +44,23 @@ let structure = {
     },
     {
       id: 1,
-      label: 'Transaction',
-      link: '/admin/transactions',
-      icon: <TransactionIcon />
+      label: 'Financial Report',
+      link: '/admin/reports',
+      icon: <FRequestIcon />,
+      children: [
+        {
+          label: 'Transaction Report',
+          link: '/admin/transactions'
+        },
+        {
+          label: 'Individual Report',
+          link: '/admin/individual-reports'
+        },
+        {
+          label: 'Team Report',
+          link: '/admin/team-reports'
+        }
+      ]
     },
     {
       id: 2,
@@ -95,26 +109,6 @@ let structure = {
       label: 'Projects',
       link: '/admin/projects',
       icon: <ProjectIcon />
-    },
-    {
-      id: 10,
-      label: 'Financial Report',
-      link: '/admin/reports',
-      icon: <FRequestIcon />,
-      children: [
-        {
-          label: 'Transaction Report',
-          link: '/admin/transactions'
-        },
-        {
-          label: 'Individual Report',
-          link: '/admin/individual-reports'
-        },
-        {
-          label: 'Team Report',
-          link: '/admin/team-reports'
-        }
-      ]
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -126,9 +120,19 @@ let structure = {
     },
     {
       id: 1,
-      label: 'Transaction',
-      link: '/team-manager/transactions',
-      icon: <TransactionIcon />
+      label: 'Financial Report',
+      link: '/team-manager/reports',
+      icon: <FRequestIcon />,
+      children: [
+        {
+          label: 'Transaction Report',
+          link: '/team-manager/transactions'
+        },
+        {
+          label: 'My Team Report',
+          link: '/team-manager/my-team-reports'
+        }
+      ]
     },
     {
       id: 2,
@@ -182,9 +186,19 @@ let structure = {
     },
     {
       id: 1,
-      label: 'Transaction',
-      link: '/developer/transactions',
-      icon: <TransactionIcon />
+      label: 'Financial Report',
+      link: '/developer/reports',
+      icon: <FRequestIcon />,
+      children: [
+        {
+          label: 'Transaction Report',
+          link: '/developer/transactions'
+        },
+        {
+          label: 'My Report',
+          link: '/developer/my-reports'
+        }
+      ]
     },
     {
       id: 2,
