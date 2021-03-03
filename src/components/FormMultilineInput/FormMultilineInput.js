@@ -12,19 +12,14 @@ const FormMultilineInput = ({ type, field, form, field: { name }, htmlId, label,
 
   return (
     <div className={cn(classes.wrapper, { [classes.noMb]: noMb })}>
-      {label && (
-        <FormLabel className={classes.formLabel} htmlFor={htmlId}>
-          {label}
-        </FormLabel>
-      )}
+      {label && <FormLabel htmlFor={htmlId}>{label}</FormLabel>}
       <TextField
         id={htmlId}
-        label="Multiline"
         type={type}
         multiline
         rowsMax="4"
-        className={classes.textField}
-        margin="normal"
+        margin="none"
+        fullWidth
         variant="outlined"
         helperText={error || undefined}
         error={Boolean(error)}

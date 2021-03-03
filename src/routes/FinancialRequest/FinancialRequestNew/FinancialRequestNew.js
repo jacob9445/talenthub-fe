@@ -20,7 +20,8 @@ const initialValues = {
   amount: '',
   client: '',
   partner: '',
-  project: ''
+  project: '',
+  description: ''
 }
 
 const FinancialRequestNew = ({ createFinancialRequest, history, me: { role } }) => {
