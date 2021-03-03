@@ -12,7 +12,6 @@ function DatePickers({ label, onChange, id }) {
       id={id}
       label={label}
       type="date"
-      defaultValue="0000-00-00"
       className={classes.textField}
       InputLabelProps={{
         shrink: true
