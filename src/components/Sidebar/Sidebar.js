@@ -11,7 +11,6 @@ import {
   AccessibilityNew as PartnerIcon,
   Computer as ProjectIcon,
   ContactPhone as FRIcon,
-  AttachMoney as TransactionIcon,
   Money as FRequestIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'

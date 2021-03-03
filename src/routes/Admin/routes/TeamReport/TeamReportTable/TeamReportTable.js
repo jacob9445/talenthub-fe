@@ -15,7 +15,7 @@ function TeamReportTable({ data, show }) {
   const handleRowClick = useCallback(
     id => () => {
       show('TeamReportModal', {
-        earning: data.results.find((value, index, array) => array[index].id === id).earning
+        earning: data.find((value, index, array) => array[index].id === id).team_earnings
       })
     },
     [show, data]
@@ -33,7 +33,7 @@ function TeamReportTable({ data, show }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.results.map(({ id, name, total }) => {
+            {data.map(({ id, name, total }) => {
               totalEarning += total
               return (
                 <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
@@ -59,7 +59,7 @@ const actions = {
 }
 
 TeamReportTable.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   show: PropTypes.func.isRequired
 }
 
