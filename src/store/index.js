@@ -5,6 +5,7 @@ import createSagaMiddleware from 'redux-saga'
 
 import rootReducer from './modules'
 import sagas from './modules/sagas'
+import authMiddleware from './middlewares/auth'
 
 // Create a history of your choosing (we're using a browser history in this case)
 export const history = createBrowserHistory()
@@ -15,7 +16,7 @@ const middleware = routerMiddleware(history)
 // Redux-saga middleware
 const sagaMiddleware = createSagaMiddleware()
 
-const middlewares = [middleware, sagaMiddleware]
+const middlewares = [middleware, authMiddleware, sagaMiddleware]
 
 const enhancers = [applyMiddleware(...middlewares)]
 
