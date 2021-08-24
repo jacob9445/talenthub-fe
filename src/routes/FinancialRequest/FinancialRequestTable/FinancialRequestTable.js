@@ -24,7 +24,7 @@ import {
   URL_PREFIXES
 } from 'config/constants'
 import Spinner from 'components/Spinner'
-import { FormattedDate, FormattedTime, FormattedNumber } from 'react-intl'
+import { FormattedDate, FormattedNumber } from 'react-intl'
 
 function FinancialRequestTable({
   data,

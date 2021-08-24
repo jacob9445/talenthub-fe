@@ -25,6 +25,8 @@ const overrides = {
   }
 }
 
-export default {
+const Themes =  {
   default: createMuiTheme({ ...defaultTheme, ...overrides })
 }
+
+export default Themes
