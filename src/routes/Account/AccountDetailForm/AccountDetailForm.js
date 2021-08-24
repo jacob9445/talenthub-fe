@@ -23,7 +23,6 @@ export const validationSchema = Yup.object().shape({
   email: Yup.string().required('This field is required!'),
   password: Yup.string().required('This field is required!'),
   location: Yup.string().required('This field is required!'),
-  recovery_email: Yup.string().required('This field is required!'),
   url: Yup.string().required('This field is required!')
 })
 
@@ -71,8 +70,19 @@ const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSub
       <Field component={FormInput} htmlId="email" type="email" name="email" label="Email" />
       <Field component={FormPasswordInput} htmlId="password" name="password" label="Password" />
       <Field component={FormInput} htmlId="location" type="text" name="location" label="Location" />
-      <Field component={FormInput} htmlId="recovery_email" type="email" name="recovery_email" label="Recovery Email" />
       <Field component={FormInput} htmlId="url" type="text" name="url" label="URL" />
+      <Field
+        component={FormInput}
+        htmlId="extra_info"
+        type="text"
+        name="extra_info"
+        label="Extra Information"
+        extra={{
+          multiline: true,
+          rows: 5,
+          placeholder: 'Security Q/A, Recovery Email, Recovery Phone Number ...'
+        }}
+      />
       <div className={classes.formButtonWrapper}>
         <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
           {isUpdateMode ? 'Update' : 'Create'}
@@ -104,10 +114,4 @@ const selector = createStructuredSelector({
   me: meSelector
 })
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(AccountDetailForm)
+export default compose(withRouter, connect(selector, actions))(AccountDetailForm)

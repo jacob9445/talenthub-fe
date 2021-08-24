@@ -26,6 +26,7 @@ const initialValues = {
 const UserNew = ({ createUser, getTeams, teams, history, role }) => {
   const handleSubmit = useCallback(
     (payload, formActions) => {
+      payload = { ...payload, username: payload.email }
       return formSubmit(
         createUser,
         {
@@ -74,10 +75,4 @@ UserNew.propTypes = {
   role: PropTypes.number
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selectors,
-    actions
-  )
-)(UserNew)
+export default compose(withRouter, connect(selectors, actions))(UserNew)

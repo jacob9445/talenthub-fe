@@ -70,10 +70,8 @@ const TransactionDetail = ({
                     <LabelValue label="Requested Amount">
                       <FormattedNumber format="currency" value={fr.amount} />
                     </LabelValue>
-                    <LabelValue label={fr.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? 'Partner' : 'Client'}>
-                      <Link to={`/${URL_PREFIXES[myRole]}/clients/${fr.counter_party.id}/detail`}>
-                        {fr.counter_party.full_name}
-                      </Link>
+                    <LabelValue label={fr.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? 'Pay To' : 'Receive From'}>
+                      {fr.address}
                     </LabelValue>
                     <LabelValue label="Requested by">
                       {myRole === ROLES.DEVELOPER ? (
@@ -118,10 +116,4 @@ TransactionDetail.propTypes = {
   show: PropTypes.func.isRequired
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(TransactionDetail)
+export default compose(withRouter, connect(selector, actions))(TransactionDetail)

@@ -32,7 +32,7 @@ const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updat
       email: accountDetail?.email || '',
       password: accountDetail?.password || '',
       location: accountDetail?.location || '',
-      recovery_email: accountDetail?.recovery_email || '',
+      extra_info: accountDetail?.extra_info || '',
       url: accountDetail?.url || ''
     }),
     [accountDetail]
@@ -94,10 +94,4 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-export default compose(
-  withRouter,
-  connect(
-    selectors,
-    actions
-  )
-)(AccountEdit)
+export default compose(withRouter, connect(selectors, actions))(AccountEdit)

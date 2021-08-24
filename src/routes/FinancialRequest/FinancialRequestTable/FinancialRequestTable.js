@@ -40,7 +40,7 @@ function FinancialRequestTable({
   onChangeRowsPerPage
 }) {
   const classes = useStyles()
-  const columns = ['Type', 'Status', 'Amount', 'To', 'Requested time', 'Sender', 'Project', 'Actions']
+  const columns = ['Time', 'Project', 'Sender', 'To', 'Amount', 'Type', 'Status', 'Actions']
 
   const showFinancialRequestDetail = useCallback(
     id => () => {
@@ -70,19 +70,19 @@ function FinancialRequestTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {results.map(({ id, type, status, amount, counter_party, requested_at, requester, project }) => (
+          {results.map(({ id, type, status, amount, address, requested_at, requester, project }) => (
             <TableRow key={id}>
-              <TableCell>{FINANCIALREQUEST_TYPE_LABELS[type]}</TableCell>
-              <TableCell>{FINANCIALREQUEST_STATUS_LABELS[status]}</TableCell>
+              <TableCell>
+                <FormattedDate value={requested_at} />
+              </TableCell>
+              <TableCell>{type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? project.title : null}</TableCell>
+              <TableCell>{`${requester.first_name} ${requester.last_name}`}</TableCell>
+              <TableCell>{address}</TableCell>
               <TableCell>
                 <FormattedNumber format="currency" value={amount} />
               </TableCell>
-              <TableCell>{counter_party.full_name}</TableCell>
-              <TableCell>
-                <FormattedDate value={requested_at} format="shortDMY" /> <FormattedTime value={requested_at} />
-              </TableCell>
-              <TableCell>{`${requester.first_name} ${requester.last_name}`}</TableCell>
-              <TableCell>{type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? project.title : null}</TableCell>
+              <TableCell>{FINANCIALREQUEST_TYPE_LABELS[type]}</TableCell>
+              <TableCell>{FINANCIALREQUEST_STATUS_LABELS[status]}</TableCell>
               <TableCell>
                 {status === FINANCIALREQUEST_STATUS.PENDING ? (
                   <Tooltip key={`${id}Edit`} title="Edit" placement="top">

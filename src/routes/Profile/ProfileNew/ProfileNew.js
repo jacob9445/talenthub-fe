@@ -22,7 +22,8 @@ const initialValues = {
   address: '',
   country: '',
   dob: '',
-  gender: GENDER.MALE
+  gender: GENDER.MALE,
+  extra_info: ''
 }
 
 const ProfileNew = ({ createProfile, me, history }) => {
@@ -72,10 +73,4 @@ ProfileNew.propTypes = {
   me: PropTypes.object
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(ProfileNew)
+export default compose(withRouter, connect(selector, actions))(ProfileNew)

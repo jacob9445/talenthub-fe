@@ -41,7 +41,7 @@ const TeamMemberExpansion = ({ teamId, teamName, getTeamMembers, teamMembers, hi
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography className={classes.heading}>{teamName}</Typography>
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails style={{ 'flex-wrap': 'wrap' }}>
         {!teamMembers ? (
           <Spinner />
         ) : (
@@ -77,19 +77,10 @@ const actions = {
 }
 
 const teamMemberSelector = (state, props) =>
-  R.compose(
-    R.path(['results']),
-    createDataSelector(`teamMembers_${props.teamId}`)
-  )(state)
+  R.compose(R.path(['results']), createDataSelector(`teamMembers_${props.teamId}`))(state)
 
 const selectors = createStructuredSelector({
   teamMembers: teamMemberSelector
 })
 
-export default R.compose(
-  connect(
-    selectors,
-    actions
-  ),
-  withRouter
-)(TeamMemberExpansion)
+export default R.compose(connect(selectors, actions), withRouter)(TeamMemberExpansion)

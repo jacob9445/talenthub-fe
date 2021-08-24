@@ -18,10 +18,10 @@ import { usersSelector, getUsers } from 'store/modules/user'
 
 export const validationSchema = Yup.object().shape({
   full_name: Yup.string().required('This field is required!'),
-  email: Yup.string().required('This field is required!'),
-  address: Yup.string().required('This field is required!'),
-  dob: Yup.string().required('This field is required!'),
-  phone_num: Yup.string().required('This field is required!')
+  email: Yup.string().required('This field is required!')
+  // address: Yup.string().required('This field is required!'),
+  // dob: Yup.string().required('This field is required!'),
+  // phone_num: Yup.string().required('This field is required!')
 })
 
 const validateOwnerField = value => (!value ? 'This field is required!' : undefined)
@@ -174,10 +174,4 @@ const actions = {
   getUsers
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(PartnerDetailForm)
+export default compose(withRouter, connect(selector, actions))(PartnerDetailForm)

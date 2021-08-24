@@ -5,7 +5,7 @@ import useStyles from './styles'
 import cn from 'classnames'
 import * as R from 'ramda'
 
-const FormInput = ({ type, field, form, field: { name }, htmlId, label, readOnly, noMb }) => {
+const FormInput = ({ type, field, form, field: { name }, htmlId, label, readOnly, noMb, extra }) => {
   const classes = useStyles()
   const error = R.path(R.split('.', name), form.touched) && R.path(R.split('.', name), form.errors)
 
@@ -28,6 +28,7 @@ const FormInput = ({ type, field, form, field: { name }, htmlId, label, readOnly
               }
             : {}
         }
+        {...extra}
         {...field}
       />
     </div>

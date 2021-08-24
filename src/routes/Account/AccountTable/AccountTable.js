@@ -17,7 +17,7 @@ import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { PLATFORM_LABELS } from 'config/constants'
 import Spinner from 'components/Spinner'
 
-const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'Recovery Email', 'URL', 'Actions']
+const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'URL', 'Actions']
 
 function AccountTable({ data, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   if (data) {
@@ -31,7 +31,7 @@ function AccountTable({ data, handleDelete, match: { path }, pagination, onChang
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, profile, platform_type, email, password, location, recovery_email, url }) => (
+          {data.results.map(({ id, profile, platform_type, email, password, location, url }) => (
             <TableRow key={id}>
               <TableCell>
                 {profile.first_name} {profile.last_name}
@@ -40,7 +40,6 @@ function AccountTable({ data, handleDelete, match: { path }, pagination, onChang
               <TableCell>{email}</TableCell>
               <TableCell>*****</TableCell>
               <TableCell>{location}</TableCell>
-              <TableCell>{recovery_email}</TableCell>
               <TableCell>{url}</TableCell>
               <TableCell>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">

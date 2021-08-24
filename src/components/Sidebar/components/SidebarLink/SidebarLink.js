@@ -11,7 +11,7 @@ import useStyles from './styles'
 // components
 import Dot from '../Dot'
 
-export default function SidebarLink({ link, icon, label, children, location, isSidebarOpened, nested, type }) {
+export default function SidebarLink({ link, icon, label, subLinks, location, isSidebarOpened, nested, type }) {
   var classes = useStyles()
   // local
   var [isOpen, setIsOpen] = useState(false)
@@ -29,7 +29,7 @@ export default function SidebarLink({ link, icon, label, children, location, isS
 
   if (type === 'divider') return <Divider className={classes.divider} />
 
-  if (!children)
+  if (!subLinks)
     return (
       <ListItem
         button
@@ -86,10 +86,10 @@ export default function SidebarLink({ link, icon, label, children, location, isS
           primary={label}
         />
       </ListItem>
-      {children && (
+      {subLinks && (
         <Collapse in={isOpen && isSidebarOpened} timeout="auto" unmountOnExit className={classes.nestedList}>
           <List component="div" disablePadding>
-            {children.map(childrenLink => (
+            {subLinks.map(childrenLink => (
               <SidebarLink
                 key={childrenLink && childrenLink.link}
                 location={location}

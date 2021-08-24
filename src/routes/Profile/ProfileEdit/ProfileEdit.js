@@ -35,7 +35,8 @@ const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updat
       address: profileDetail?.address || '',
       country: profileDetail?.country || '',
       dob: profileDetail?.dob || '',
-      gender: profileDetail?.gender || ''
+      gender: profileDetail?.gender || '',
+      extra_info: profileDetail?.extra_info || ''
     }),
     [profileDetail, me.role]
   )
@@ -101,10 +102,4 @@ const selector = createStructuredSelector({
   me: meSelector
 })
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(ProfileEdit)
+export default compose(withRouter, connect(selector, actions))(ProfileEdit)

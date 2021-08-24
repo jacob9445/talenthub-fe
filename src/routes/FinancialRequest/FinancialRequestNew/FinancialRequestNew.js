@@ -18,8 +18,7 @@ import { FINANCIALREQUEST_TYPE, URL_PREFIXES } from 'config/constants'
 const initialValues = {
   type: FINANCIALREQUEST_TYPE.SENDINVOICE,
   amount: '',
-  client: '',
-  partner: '',
+  address: '',
   project: '',
   description: ''
 }
@@ -30,10 +29,7 @@ const FinancialRequestNew = ({ createFinancialRequest, history, me: { role } }) 
       return formSubmit(
         createFinancialRequest,
         {
-          data: {
-            ...R.omit(['client', 'partner'], values),
-            counter_party: values.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? values.partner : values.client
-          },
+          data: values,
           success: () => history.push(`/${URL_PREFIXES[role]}/financial-requests`)
         },
         formActions
@@ -71,10 +67,4 @@ FinancialRequestNew.propTypes = {
   me: PropTypes.object
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selectors,
-    actions
-  )
-)(FinancialRequestNew)
+export default compose(withRouter, connect(selectors, actions))(FinancialRequestNew)

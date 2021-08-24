@@ -99,6 +99,18 @@ const ProfileDetailForm = ({
           label="Gender"
           options={genderOptions}
         />
+        <Field
+          component={FormInput}
+          htmlId="extra_info"
+          type="text"
+          name="extra_info"
+          label="Extra Information"
+          extra={{
+            multiline: true,
+            rows: 5,
+            placeholder: 'ID Number, Bank account number, Tax ID, Teamviewer / Anydesk ...'
+          }}
+        />
         <div className={classes.formButtonWrapper}>
           <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
             {isUpdateMode ? 'Update' : 'Create'}
@@ -132,10 +144,4 @@ ProfileDetailForm.propTypes = {
   match: PropTypes.object.isRequired
 }
 
-export default R.compose(
-  withRouter,
-  connect(
-    selectors,
-    actions
-  )
-)(ProfileDetailForm)
+export default R.compose(withRouter, connect(selectors, actions))(ProfileDetailForm)

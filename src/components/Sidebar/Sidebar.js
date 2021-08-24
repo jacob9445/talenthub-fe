@@ -46,7 +46,7 @@ let structure = {
       label: 'Financial Report',
       link: '/admin/reports',
       icon: <FRequestIcon />,
-      children: [
+      subLinks: [
         {
           label: 'Transaction Report',
           link: '/admin/transactions'
@@ -122,7 +122,7 @@ let structure = {
       label: 'Financial Report',
       link: '/team-manager/reports',
       icon: <FRequestIcon />,
-      children: [
+      subLinks: [
         {
           label: 'Transaction Report',
           link: '/team-manager/transactions'
@@ -188,7 +188,7 @@ let structure = {
       label: 'Financial Report',
       link: '/developer/reports',
       icon: <FRequestIcon />,
-      children: [
+      subLinks: [
         {
           label: 'Transaction Report',
           link: '/developer/transactions'
@@ -312,7 +312,4 @@ Sidebar.propTypes = {
   me: PropTypes.object.isRequired
 }
 
-export default R.compose(
-  withRouter,
-  connect(selectors)
-)(Sidebar)
+export default R.compose(withRouter, connect(selectors))(Sidebar)

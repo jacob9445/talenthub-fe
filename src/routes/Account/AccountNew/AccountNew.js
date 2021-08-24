@@ -20,7 +20,7 @@ const initialValues = {
   email: '',
   password: '',
   location: '',
-  recovery_email: '',
+  extra_info: '',
   url: ''
 }
 
@@ -70,10 +70,4 @@ AccountNew.propTypes = {
   me: PropTypes.object
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selectors,
-    actions
-  )
-)(AccountNew)
+export default compose(withRouter, connect(selectors, actions))(AccountNew)

@@ -14,6 +14,18 @@ import { formSubmit } from 'helpers/form'
 import { PAYMENT_PLATFORM_TYPE } from 'config/constants'
 import { getPendingRequests } from 'store/modules/dashboard'
 
+const formatDate = date => {
+  var d = new Date(date),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear()
+
+  if (month.length < 2) month = '0' + month
+  if (day.length < 2) day = '0' + day
+
+  return [year, month, day].join('-')
+}
+
 const ApproveRequestModal = ({
   requestId,
   gross_amount,
@@ -27,6 +39,7 @@ const ApproveRequestModal = ({
   const initialValues = {
     gross_amount: gross_amount,
     net_amount: 0,
+    created_at: formatDate(new Date()),
     payment_platform: PAYMENT_PLATFORM_TYPE.PAYPAL
   }
 
@@ -87,8 +100,5 @@ ApproveRequestModal.propTypes = {
 
 export default compose(
   connectModal({ name: 'approveRequestModal', destroyOnHide: false }),
-  connect(
-    null,
-    actions
-  )
+  connect(null, actions)
 )(ApproveRequestModal)

@@ -38,15 +38,8 @@ const FinancialRequestEdit = ({
     () => ({
       type: financialRequestDetail?.type || '',
       amount: financialRequestDetail?.amount || '',
-      client:
-        financialRequestDetail?.type !== FINANCIALREQUEST_TYPE.SENDPAYMENT
-          ? financialRequestDetail?.counter_party.id || ''
-          : '',
-      partner:
-        financialRequestDetail?.type === FINANCIALREQUEST_TYPE.SENDPAYMENT
-          ? financialRequestDetail?.counter_party.id || ''
-          : '',
       project: financialRequestDetail?.project?.id || '',
+      address: financialRequestDetail?.address || '',
       ...(me.role !== ROLES.DEVELOPER
         ? {
             sender: financialRequestDetail?.requester.id || ''
@@ -62,10 +55,7 @@ const FinancialRequestEdit = ({
       return formSubmit(
         updateFinancialRequestDetail,
         {
-          data: {
-            ...R.omit(['client', 'partner'], values),
-            counter_party: values.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? values.partner : values.client
-          },
+          data: values,
           id: params.id,
           success: () => history.push(`/${URL_PREFIXES[me.role]}/financial-requests`)
         },
@@ -114,10 +104,4 @@ FinancialRequestEdit.propTypes = {
   show: PropTypes.func
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selectors,
-    actions
-  )
-)(FinancialRequestEdit)
+export default compose(withRouter, connect(selectors, actions))(FinancialRequestEdit)

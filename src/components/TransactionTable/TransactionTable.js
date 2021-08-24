@@ -9,9 +9,11 @@ import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
 import { getPlatformLabel } from 'helpers/utils'
 
+const briefText = (str, length) => (str.length > length ? str.substring(0, length) + ' ...' : str)
+
 function TransactionTable({ data, history, me, pagination, onChangePage, onChangeRowsPerPage }) {
   const classes = useStyles()
-  const columns = ['Gross amount', 'Net Amount', 'Payment Platform', 'Description', 'Date']
+  const columns = ['Date', 'From/To', 'Gross amount', 'Net Amount', 'Owner', 'Description', 'Payment Platform']
   const myRole = me?.role
   const handleRowClick = useCallback(
     id => () => {
@@ -32,23 +34,25 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(
-            ({ id, gross_amount, net_amount, payment_platform, description, created_at, financial_request }) => (
-              <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
-                <TableCell>
-                  <FormattedNumber format="currency" value={gross_amount} />
-                </TableCell>
-                <TableCell>
-                  <FormattedNumber format="currency" value={net_amount} />
-                </TableCell>
-                <TableCell>{getPlatformLabel(payment_platform)}</TableCell>
-                <TableCell>{description}</TableCell>
-                <TableCell>
-                  <FormattedDate value={created_at} format="shortDMY" /> <FormattedTime value={created_at} />
-                </TableCell>
-              </TableRow>
-            )
-          )}
+          {data.results.map(({ id, gross_amount, net_amount, payment_platform, created_at, financial_request }) => (
+            <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
+              <TableCell>
+                <FormattedDate value={created_at} />
+              </TableCell>
+              <TableCell>{financial_request.address}</TableCell>
+              <TableCell>
+                <FormattedNumber format="currency" value={gross_amount} />
+              </TableCell>
+              <TableCell>
+                <FormattedNumber format="currency" value={net_amount} />
+              </TableCell>
+              <TableCell>
+                {financial_request.requester.first_name} {financial_request.requester.last_name}
+              </TableCell>
+              <TableCell>{briefText(financial_request.description, 30)}</TableCell>
+              <TableCell>{getPlatformLabel(payment_platform)}</TableCell>
+            </TableRow>
+          ))}
         </TableBody>
         <TableFooter>
           <TableRow>

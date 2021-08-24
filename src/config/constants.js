@@ -1,4 +1,4 @@
-export const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:8000/'
+export const API_BASE = process.env.REACT_APP_API_BASE || 'http://talent.hub:8000/'
 
 export const ROLES = {
   ADMIN: 1,
@@ -28,7 +28,11 @@ export const PLATFORMS = {
   SLACK: 'slack',
   MS_TEAM: 'ms_team',
   GITHUB: 'github',
-  BITBUCKET: 'bitbucket'
+  GITLAB: 'gitlab',
+  BITBUCKET: 'bitbucket',
+  FREELANCER: 'freelancer',
+  UPWORK: 'upwork',
+  ETC: 'etc'
 }
 
 export const PLATFORM_LABELS = {
@@ -37,7 +41,11 @@ export const PLATFORM_LABELS = {
   [PLATFORMS.SLACK]: 'Slack',
   [PLATFORMS.MS_TEAM]: 'MS Team',
   [PLATFORMS.GITHUB]: 'Github',
-  [PLATFORMS.BITBUCKET]: 'Bitbucket'
+  [PLATFORMS.GITLAB]: 'Gitlab',
+  [PLATFORMS.BITBUCKET]: 'Bitbucket',
+  [PLATFORMS.FREELANCER]: 'Freelancer',
+  [PLATFORMS.UPWORK]: 'Upwork',
+  [PLATFORMS.ETC]: 'Etc'
 }
 
 export const CLIENT_TYPES = {
@@ -58,6 +66,18 @@ export const CONTACT_METHOD_TYPES = [
   {
     value: 'Whatsapp',
     display: 'Whatsapp'
+  },
+  {
+    value: 'Discord',
+    display: 'Discord'
+  },
+  {
+    value: 'Linkedin',
+    display: 'Linkedin'
+  },
+  {
+    value: 'Facebook',
+    display: 'Facebook'
   }
 ]
 
@@ -219,7 +239,8 @@ export const PAYMENT_PLATFORM_TYPE = {
   PAYONEER: 'payoneer',
   UPWORK: 'upwork',
   FREELANCER: 'freelancer',
-  TOPTAL: 'toptal'
+  TOPTAL: 'toptal',
+  BTC: 'bitcoin'
 }
 
 export const PAYMENT_PLATFORM_OPTIONS = [
@@ -242,6 +263,10 @@ export const PAYMENT_PLATFORM_OPTIONS = [
   {
     value: PAYMENT_PLATFORM_TYPE.TOPTAL,
     display: 'Toptal'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.BTC,
+    display: 'BTC'
   }
 ]
 
@@ -267,8 +292,16 @@ export const platformOptions = [
     value: PLATFORMS.GITHUB
   },
   {
+    display: 'Gitlab',
+    value: PLATFORMS.GITLAB
+  },
+  {
     display: 'Bitbucket',
     value: PLATFORMS.BITBUCKET
+  },
+  {
+    display: 'Etc',
+    value: PLATFORMS.ETC
   }
 ]
 
