@@ -101,8 +101,8 @@ export const PROJECT_TYPE = {
 
 export const PROJECT_TYPE_LABELS = {
   [PROJECT_TYPE.BUDGET]: 'Budget',
-  [PROJECT_TYPE.HOULYFT]: 'Houly FT',
-  [PROJECT_TYPE.HOULYPT]: 'Houly PT',
+  [PROJECT_TYPE.HOULYFT]: 'Houly Full-time',
+  [PROJECT_TYPE.HOULYPT]: 'Houly Part-time',
   [PROJECT_TYPE.CONTRACT]: 'Contract'
 }
 
@@ -113,11 +113,11 @@ export const PROJECT_TYPE_OPTIONS = [
   },
   {
     value: PROJECT_TYPE.HOULYFT,
-    display: 'Houly FT'
+    display: 'Houly Full-time'
   },
   {
     value: PROJECT_TYPE.HOULYPT,
-    display: 'Houly PT'
+    display: 'Houly Part-time'
   },
   {
     value: PROJECT_TYPE.CONTRACT,
