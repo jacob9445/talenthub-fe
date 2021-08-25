@@ -28,7 +28,7 @@ const defaultHeaders = request => {
   }
 }
 
-export default ({
+const createApiCallSaga = ({
   type,
   method, // one of 'get', 'post', 'put', 'delete'
   path,
@@ -129,3 +129,5 @@ export default ({
       return false
     }
   }
+
+  export default createApiCallSaga

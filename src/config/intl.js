@@ -1,4 +1,4 @@
-export default {
+const config =  {
   locale: 'en',
   formats: {
     date: {
@@ -56,3 +56,5 @@ export default {
     }
   }
 }
+
+export default config

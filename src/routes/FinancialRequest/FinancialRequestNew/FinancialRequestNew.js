@@ -5,7 +5,6 @@ import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
 import { Grid } from '@material-ui/core'
 import { withRouter } from 'react-router'
-import * as R from 'ramda'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'

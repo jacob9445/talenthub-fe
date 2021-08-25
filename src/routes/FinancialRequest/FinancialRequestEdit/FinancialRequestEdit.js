@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
 import PropTypes from 'prop-types'
-import * as R from 'ramda'
 
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
@@ -19,7 +18,7 @@ import {
 } from 'store/modules/financialRequest'
 import Spinner from 'components/Spinner'
 import { meSelector } from 'store/modules/auth'
-import { ROLES, FINANCIALREQUEST_TYPE, URL_PREFIXES } from 'config/constants'
+import { ROLES, URL_PREFIXES } from 'config/constants'
 
 const FinancialRequestEdit = ({
   getFinancialRequestDetail,

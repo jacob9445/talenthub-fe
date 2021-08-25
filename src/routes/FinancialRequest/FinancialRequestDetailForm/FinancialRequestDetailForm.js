@@ -20,12 +20,6 @@ export const validationSchema = Yup.object().shape({
   // description: Yup.string().required('This field is required!')
 })
 
-const validateClientField = (value, type) =>
-  type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? (!value ? 'This field is required!' : undefined) : undefined
-
-const validatePartnerField = (value, type) =>
-  type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? (!value ? 'This field is required!' : undefined) : undefined
-
 const validateProjectField = (value, type) =>
   type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? (!value ? 'This field is required!' : undefined) : undefined
 
