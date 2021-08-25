@@ -43,7 +43,6 @@ const role_patterns = [
   }
 ]
 
-// const columns = ['Email', 'First Name', 'Last Name', 'Role', 'Actions']
 const columns = ['Full name', 'Email', 'Role', 'Actions']
 
 function UserTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
@@ -68,7 +67,6 @@ function UserTable({ data, myRole, handleDelete, match: { path }, pagination, on
               <TableCell>
                 <Link to={`${path}/${id}/detail`}>{email}</Link>
               </TableCell>
-              {/* <TableCell>{last_name}</TableCell> */}
               <TableCell>
                 <Chip label={role_patterns[role].role} classes={{ root: classes[role_patterns[role].color] }} />
               </TableCell>
