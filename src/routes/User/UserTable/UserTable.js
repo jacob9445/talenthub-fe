@@ -44,7 +44,7 @@ const role_patterns = [
 ]
 
 // const columns = ['Email', 'First Name', 'Last Name', 'Role', 'Actions']
-const columns = ['Email', 'Full Name', 'Role', 'Actions']
+const columns = ['Full name', 'Email', 'Role', 'Actions']
 
 function UserTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const classes = useStyles()
@@ -63,10 +63,10 @@ function UserTable({ data, myRole, handleDelete, match: { path }, pagination, on
           {data.results.map(({ id, email, first_name, last_name, role }) => (
             <TableRow key={email}>
               <TableCell>
-                <Link to={`${path}/${id}/detail`}>{email}</Link>
+                {first_name} {last_name}
               </TableCell>
               <TableCell>
-                {first_name} {last_name}
+                <Link to={`${path}/${id}/detail`}>{email}</Link>
               </TableCell>
               {/* <TableCell>{last_name}</TableCell> */}
               <TableCell>
