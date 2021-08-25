@@ -37,12 +37,18 @@ let structure = {
   [ROLES.ADMIN]: [
     {
       id: 0,
+      label: 'Dashboard',
+      link: `/admin/dashboard`,
+      icon: <DashboardIcon />
+    },
+    {
+      id: 1,
       label: 'Financial Requests',
       link: '/admin/financial-requests',
       icon: <FRIcon />
     },
     {
-      id: 1,
+      id: 2,
       label: 'Financial Report',
       link: '/admin/reports',
       icon: <FRequestIcon />,
@@ -60,12 +66,6 @@ let structure = {
           link: '/admin/team-reports'
         }
       ]
-    },
-    {
-      id: 2,
-      label: 'Dashboard',
-      link: `/admin/dashboard`,
-      icon: <DashboardIcon />
     },
     {
       id: 3,
@@ -113,12 +113,18 @@ let structure = {
   [ROLES.TEAM_MANAGER]: [
     {
       id: 0,
+      label: 'Dashboard',
+      link: `/team-manager/dashboard`,
+      icon: <DashboardIcon />
+    },
+    {
+      id: 1,
       label: 'Financial Requests',
       link: '/team-manager/financial-requests',
       icon: <FRIcon />
     },
     {
-      id: 1,
+      id: 2,
       label: 'Financial Report',
       link: '/team-manager/reports',
       icon: <FRequestIcon />,
@@ -132,12 +138,6 @@ let structure = {
           link: '/team-manager/my-team-reports'
         }
       ]
-    },
-    {
-      id: 2,
-      label: 'Dashboard',
-      link: `/team-manager/dashboard`,
-      icon: <DashboardIcon />
     },
     {
       id: 3,
@@ -179,12 +179,18 @@ let structure = {
   [ROLES.DEVELOPER]: [
     {
       id: 0,
+      label: 'Dashboard',
+      link: `/developer/dashboard`,
+      icon: <DashboardIcon />
+    },
+    {
+      id: 1,
       label: 'Financial Requests',
       link: '/developer/financial-requests',
       icon: <FRIcon />
     },
     {
-      id: 1,
+      id: 2,
       label: 'Financial Report',
       link: '/developer/reports',
       icon: <FRequestIcon />,
@@ -198,12 +204,6 @@ let structure = {
           link: '/developer/my-reports'
         }
       ]
-    },
-    {
-      id: 2,
-      label: 'Dashboard',
-      link: `/developer/dashboard`,
-      icon: <DashboardIcon />
     },
     {
       id: 3,
