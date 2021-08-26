@@ -9,7 +9,7 @@ import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
-import FormSelect from 'components/FormSelect'
+import FormEditableSelect from 'components/FormEditableSelect'
 import useStyles from './styles'
 import {
   URL_PREFIXES,
@@ -75,7 +75,7 @@ const ProjectDetailForm = ({
   const userList = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        display: `${user.first_name} ${user.last_name}`,
+        label: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
     } else {
@@ -98,7 +98,14 @@ const ProjectDetailForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <Field component={FormInput} type="text" htmlId="title" name="title" label="Title" />
-      <Field component={FormSelect} type="text" htmlId="type" name="type" label="Type" options={PROJECT_TYPE_OPTIONS} />
+      <Field
+        component={FormEditableSelect}
+        type="text"
+        htmlId="type"
+        name="type"
+        label="Type"
+        options={PROJECT_TYPE_OPTIONS}
+      />
       {values.type !== PROJECT_TYPE.BUDGET ? (
         <Field component={FormInput} type="number" htmlId="weakly_limit" name="weakly_limit" label="Weakly Limit" />
       ) : null}
@@ -115,18 +122,25 @@ const ProjectDetailForm = ({
         />
       ) : null}
       <Field
-        component={FormSelect}
+        component={FormEditableSelect}
         type="text"
         htmlId="status"
         name="status"
         label="Status"
         options={PROJECT_STATUS_OPTIONS}
       />
-      <Field component={FormSelect} type="text" htmlId="client" name="client" label="Client" options={clientList} />
+      <Field
+        component={FormEditableSelect}
+        type="text"
+        htmlId="client"
+        name="client"
+        label="Client"
+        options={clientList}
+      />
       {role !== ROLES.DEVELOPER ? (
         <div>
           <Field
-            component={FormSelect}
+            component={FormEditableSelect}
             type="text"
             htmlId="project_starter"
             name="project_starter"

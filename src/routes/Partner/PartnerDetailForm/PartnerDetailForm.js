@@ -9,7 +9,7 @@ import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
-import FormSelect from 'components/FormSelect'
+import FormEditableSelect from 'components/FormEditableSelect'
 import useStyles from './styles'
 import { CONTACT_METHOD_TYPES, URL_PREFIXES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
@@ -54,7 +54,7 @@ const PartnerDetailForm = ({
   const userList = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        display: `${user.first_name} ${user.last_name}`,
+        label: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
     } else {
@@ -72,7 +72,7 @@ const PartnerDetailForm = ({
       <Field component={FormInput} type="text" htmlId="phone_num" name="phone_num" label="Phone Number" />
       {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(me.role) && (
         <Field
-          component={FormSelect}
+          component={FormEditableSelect}
           htmlId="owner"
           type="text"
           name="owner"
@@ -107,7 +107,7 @@ const PartnerDetailForm = ({
                     <Grid item md={3}>
                       <Field
                         noMb
-                        component={FormSelect}
+                        component={FormEditableSelect}
                         htmlId={`contact_method.${index}.type`}
                         name={`contact_method.${index}.type`}
                         validate={validateContactMethodField}

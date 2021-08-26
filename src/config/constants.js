@@ -63,34 +63,34 @@ export const CLIENT_TYPE_LABELS = {
 export const CONTACT_METHOD_TYPES = [
   {
     value: 'Skype',
-    display: 'Skype'
+    label: 'Skype'
   },
   {
     value: 'Whatsapp',
-    display: 'Whatsapp'
+    label: 'Whatsapp'
   },
   {
     value: 'Discord',
-    display: 'Discord'
+    label: 'Discord'
   },
   {
     value: 'Linkedin',
-    display: 'Linkedin'
+    label: 'Linkedin'
   },
   {
     value: 'Facebook',
-    display: 'Facebook'
+    label: 'Facebook'
   }
 ]
 
 export const CLIENT_TYPE_OPTIONS = [
   {
     value: CLIENT_TYPES.COMPANY,
-    display: 'Company'
+    label: 'Company'
   },
   {
     value: CLIENT_TYPES.INDIVIDUAL,
-    display: 'Individual'
+    label: 'Individual'
   }
 ]
 
@@ -111,19 +111,19 @@ export const PROJECT_TYPE_LABELS = {
 export const PROJECT_TYPE_OPTIONS = [
   {
     value: PROJECT_TYPE.BUDGET,
-    display: 'Budget'
+    label: 'Budget'
   },
   {
     value: PROJECT_TYPE.HOURLYFT,
-    display: 'Hourly Full-time'
+    label: 'Hourly Full-time'
   },
   {
     value: PROJECT_TYPE.HOURLYPT,
-    display: 'Hourly Part-time'
+    label: 'Hourly Part-time'
   },
   {
     value: PROJECT_TYPE.CONTRACT,
-    display: 'Contract'
+    label: 'Contract'
   }
 ]
 
@@ -142,15 +142,15 @@ export const PROJECT_STATUS_LABELS = {
 export const PROJECT_STATUS_OPTIONS = [
   {
     value: PROJECT_STATUS.ONGOING,
-    display: 'Ongoing'
+    label: 'Ongoing'
   },
   {
     value: PROJECT_STATUS.PAUSED,
-    display: 'Paused'
+    label: 'Paused'
   },
   {
     value: PROJECT_STATUS.ENDED,
-    display: 'Ended'
+    label: 'Ended'
   }
 ]
 
@@ -171,19 +171,19 @@ export const FINANCIALREQUEST_TYPE_LABELS = {
 export const FINANCIALREQUEST_TYPE_OPTIONS = [
   {
     value: FINANCIALREQUEST_TYPE.SENDINVOICE,
-    display: 'Send Invoice'
+    label: 'Send Invoice'
   },
   {
     value: FINANCIALREQUEST_TYPE.SENDPAYMENT,
-    display: 'Send Payment'
+    label: 'Send Payment'
   },
   {
     value: FINANCIALREQUEST_TYPE.RECEIVEPAYMENT,
-    display: 'Receive Payment'
+    label: 'Receive Payment'
   },
   {
     value: FINANCIALREQUEST_TYPE.REFUNDPAYMENT,
-    display: 'Refund Payment'
+    label: 'Refund Payment'
   }
 ]
 
@@ -204,19 +204,19 @@ export const FINANCIALREQUEST_STATUS_LABELS = {
 export const FINANCIALREQUEST_STATUS_OPTIONS = [
   {
     value: FINANCIALREQUEST_STATUS.PENDING,
-    display: 'Pending'
+    label: 'Pending'
   },
   {
     value: FINANCIALREQUEST_STATUS.APPROVED,
-    display: 'Approved'
+    label: 'Approved'
   },
   {
     value: FINANCIALREQUEST_STATUS.DECLINED,
-    display: 'Declined'
+    label: 'Declined'
   },
   {
     value: FINANCIALREQUEST_STATUS.CANCELED,
-    display: 'Canceled'
+    label: 'Canceled'
   }
 ]
 
@@ -228,11 +228,11 @@ export const FINANCIALREQUEST_COUNTER_PARTY_TYPE = {
 export const FINANCIALREQUEST_COUNTER_PARTY_OPTIONS = [
   {
     value: FINANCIALREQUEST_COUNTER_PARTY_TYPE.CLIENT,
-    display: 'Client'
+    label: 'Client'
   },
   {
     value: FINANCIALREQUEST_COUNTER_PARTY_TYPE.PARTNER,
-    display: 'Partner'
+    label: 'Partner'
   }
 ]
 
@@ -248,83 +248,83 @@ export const PAYMENT_PLATFORM_TYPE = {
 export const PAYMENT_PLATFORM_OPTIONS = [
   {
     value: PAYMENT_PLATFORM_TYPE.PAYPAL,
-    display: 'Paypal'
+    label: 'Paypal'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.PAYONEER,
-    display: 'Payoneer'
+    label: 'Payoneer'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.UPWORK,
-    display: 'Upwork'
+    label: 'Upwork'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.FREELANCER,
-    display: 'Freelancer'
+    label: 'Freelancer'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.TOPTAL,
-    display: 'Toptal'
+    label: 'Toptal'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.BTC,
-    display: 'BTC'
+    label: 'BTC'
   }
 ]
 
 export const platformOptions = [
   {
-    display: 'Email',
+    label: 'Email',
     value: PLATFORMS.EMAIL
   },
   {
-    display: 'Skype',
+    label: 'Skype',
     value: PLATFORMS.SKYPE
   },
   {
-    display: 'Slack',
+    label: 'Slack',
     value: PLATFORMS.SLACK
   },
   {
-    display: 'MS Team',
+    label: 'MS Team',
     value: PLATFORMS.MS_TEAM
   },
   {
-    display: 'Github',
+    label: 'Github',
     value: PLATFORMS.GITHUB
   },
   {
-    display: 'Gitlab',
+    label: 'Gitlab',
     value: PLATFORMS.GITLAB
   },
   {
-    display: 'Bitbucket',
+    label: 'Bitbucket',
     value: PLATFORMS.BITBUCKET
   },
   {
-    display: 'Etc',
+    label: 'Etc',
     value: PLATFORMS.ETC
   }
 ]
 
 export const profileTypeOptions = [
   {
-    display: 'Self',
+    label: 'Self',
     value: PROFILE_TYPES.SELF
   },
   {
-    display: 'Partner',
+    label: 'Partner',
     value: PROFILE_TYPES.PARTNER
   }
 ]
 
 export const genderOptions = [
   {
-    display: 'Male',
+    label: 'Male',
     value: GENDER.MALE
   },
   {
-    display: 'Female',
+    label: 'Female',
     value: GENDER.FEMALE
   }
 ]

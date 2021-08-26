@@ -9,7 +9,7 @@ import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
-import FormSelect from 'components/FormSelect'
+import FormEditableSelect from 'components/FormEditableSelect'
 import { CLIENT_TYPES, CLIENT_TYPE_OPTIONS, URL_PREFIXES, ROLES } from 'config/constants'
 import useStyles from './styles'
 import { meSelector } from 'store/modules/auth'
@@ -43,7 +43,7 @@ const ClientDetailForm = ({ handleSubmit, values, location, history, me, match: 
   const userLists = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        display: `${user.first_name} ${user.last_name}`,
+        label: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
     } else {
@@ -55,14 +55,14 @@ const ClientDetailForm = ({ handleSubmit, values, location, history, me, match: 
   return (
     <form onSubmit={handleSubmit}>
       <Field component={FormInput} type="text" htmlId="full_name" name="full_name" label="Full Name" />
-      <Field component={FormSelect} htmlId="type" name="type" label="Type" options={CLIENT_TYPE_OPTIONS} />
+      <Field component={FormEditableSelect} htmlId="type" name="type" label="Type" options={CLIENT_TYPE_OPTIONS} />
       {values.type === CLIENT_TYPES.COMPANY ? (
         <Field component={FormInput} type="text" htmlId="company_name" name="company_name" label="Company Name" />
       ) : null}
       <Field component={FormInput} type="date" htmlId="started_at" name="started_at" label="Started at" />
       {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(me.role) && (
         <Field
-          component={FormSelect}
+          component={FormEditableSelect}
           htmlId="owner"
           type="text"
           name="owner"
@@ -103,10 +103,4 @@ const actions = {
   getUsers
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(ClientDetailForm)
+export default compose(withRouter, connect(selector, actions))(ClientDetailForm)
