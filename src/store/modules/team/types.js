@@ -1,2 +1,2 @@
-export const GET_TEAMS = 'GET_TEAMS'
-export const GET_TEAM_MEMBERS = 'GET_TEAM_MEMBERS'
+export const GET_TEAMS = 'TH.GET_TEAMS'
+export const GET_TEAM_MEMBERS = 'TH.GET_TEAM_MEMBERS'
