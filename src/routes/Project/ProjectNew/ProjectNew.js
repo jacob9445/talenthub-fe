@@ -16,7 +16,7 @@ import { ROLES, PROJECT_STATUS, PROJECT_TYPE, URL_PREFIXES } from 'config/consta
 
 const initialValues = {
   title: '',
-  type: PROJECT_TYPE.HOULYFT,
+  type: PROJECT_TYPE.HOURLYFT,
   weakly_limit: '',
   price: '',
   started_at: '',
@@ -83,10 +83,4 @@ ProjectNew.propTypes = {
   me: PropTypes.object
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(ProjectNew)
+export default compose(withRouter, connect(selector, actions))(ProjectNew)
