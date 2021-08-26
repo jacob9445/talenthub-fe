@@ -2,7 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects'
 import { apiCallSaga } from '../api'
 import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT } from './types'
 import { authSuccess, authFail } from './actions'
-import { API_GET_URL } from 'config/constants'
+import { API_AUTH_GET_URL } from 'config/constants'
 
 const authLogin = apiCallSaga({
   type: AUTH_LOGIN,
@@ -27,7 +27,7 @@ const authSignup = apiCallSaga({
 const authGetMe = apiCallSaga({
   type: AUTH_GETME,
   method: 'get',
-  path: API_GET_URL,
+  path: API_AUTH_GET_URL,
   selectorKey: 'me'
 })
 
