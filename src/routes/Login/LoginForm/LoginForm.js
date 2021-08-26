@@ -1,6 +1,6 @@
 import React from 'react'
 import { Field } from 'formik'
-import { Typography, Button } from '@material-ui/core'
+import { Snackbar, Typography, Button } from '@material-ui/core'
 
 import FormInput from 'components/FormInput'
 import useStyles from '../styles'
@@ -13,6 +13,13 @@ const LoginForm = ({ handleSubmit, errors }) => {
       <Typography variant="h1" className={classes.greeting}>
         Sign in to Talents Hub
       </Typography>
+      <Snackbar
+        open={Boolean(errors._error)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        message={errors._error}
+        ContentProps={{ variant: 'h6' }}
+      />
+
       <form onSubmit={handleSubmit}>
         <Field component={FormInput} htmlId="email" type="email" name="email" label="Email Address" />
         <Field component={FormInput} htmlId="password" type="password" name="password" label="Password" />

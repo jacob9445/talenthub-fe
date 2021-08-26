@@ -8,10 +8,17 @@ import LoginForm from './LoginForm'
 import { authLogin } from 'store/modules/auth'
 import { formSubmit } from '../../helpers/form'
 import PropTypes from 'prop-types'
+import * as Yup from 'yup'
+
 const initialValues = {
   email: '',
   password: ''
 }
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required('Please type your email in.'),
+  password: Yup.string().required('Please type your password in.')
+})
 
 const Login = ({ authLogin }) => {
   let classes = useStyles()
@@ -35,7 +42,12 @@ const Login = ({ authLogin }) => {
         <Typography className={classes.logotypeText}>Talents Hub</Typography>
       </div>
       <div className={classes.formContainer}>
-        <Formik onSubmit={handleSubmit} initialValues={initialValues} component={LoginForm} />
+        <Formik
+          onSubmit={handleSubmit}
+          initialValues={initialValues}
+          component={LoginForm}
+          validationSchema={validationSchema}
+        />
         {/* { classes => <LoginForm classes={classes}/>} */}
         {/* </Formik> */}
       </div>
@@ -51,7 +63,4 @@ Login.propTypes = {
   authLogin: PropTypes.func.isRequired
 }
 
-export default connect(
-  null,
-  actions
-)(Login)
+export default connect(null, actions)(Login)
