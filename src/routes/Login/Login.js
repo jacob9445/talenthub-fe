@@ -16,8 +16,8 @@ const initialValues = {
 }
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required('Email is required!'),
-  password: Yup.string().required('Password is required!')
+  email: Yup.string().required('Please type your email in.'),
+  password: Yup.string().required('Please type your password in.')
 })
 
 const Login = ({ authLogin }) => {
