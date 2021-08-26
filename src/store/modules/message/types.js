@@ -1,2 +1,2 @@
-export const HIDE_MESSAGE = 'HIDE_MESSAGE'
-export const SHOW_MESSAGE = 'SHOW_MESSAGE'
+export const HIDE_MESSAGE = 'TH.HIDE_MESSAGE'
+export const SHOW_MESSAGE = 'TH.SHOW_MESSAGE'
