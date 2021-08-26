@@ -26,7 +26,7 @@ import { getClients, clientsSelector } from 'store/modules/client'
 export const validationSchema = Yup.object().shape({
   title: Yup.string().required('This field is required!'),
   weakly_limit: Yup.number().when('type', {
-    is: PROJECT_TYPE.HOULYFT || PROJECT_TYPE.HOULYPT || PROJECT_TYPE.CONTRACT,
+    is: PROJECT_TYPE.HOULRYFT || PROJECT_TYPE.HOURLYPT || PROJECT_TYPE.CONTRACT,
     then: Yup.number().required('This field name is required!'),
     otherwise: Yup.number()
   }),
@@ -174,10 +174,4 @@ const actions = {
   getClients
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(ProjectDetailForm)
+export default compose(withRouter, connect(selector, actions))(ProjectDetailForm)

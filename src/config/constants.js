@@ -94,15 +94,15 @@ export const CLIENT_TYPE_OPTIONS = [
 
 export const PROJECT_TYPE = {
   BUDGET: 1,
-  HOULYFT: 2,
-  HOULYPT: 3,
+  HOURLYFT: 2,
+  HOURLYPT: 3,
   CONTRACT: 4
 }
 
 export const PROJECT_TYPE_LABELS = {
   [PROJECT_TYPE.BUDGET]: 'Budget',
-  [PROJECT_TYPE.HOULYFT]: 'Houly Full-time',
-  [PROJECT_TYPE.HOULYPT]: 'Houly Part-time',
+  [PROJECT_TYPE.HOURLYFT]: 'Hourly Full-time',
+  [PROJECT_TYPE.HOURLYPT]: 'Hourly Part-time',
   [PROJECT_TYPE.CONTRACT]: 'Contract'
 }
 
@@ -112,12 +112,12 @@ export const PROJECT_TYPE_OPTIONS = [
     display: 'Budget'
   },
   {
-    value: PROJECT_TYPE.HOULYFT,
-    display: 'Houly Full-time'
+    value: PROJECT_TYPE.HOURLYFT,
+    display: 'Hourly Full-time'
   },
   {
-    value: PROJECT_TYPE.HOULYPT,
-    display: 'Houly Part-time'
+    value: PROJECT_TYPE.HOURLYPT,
+    display: 'Hourly Part-time'
   },
   {
     value: PROJECT_TYPE.CONTRACT,
