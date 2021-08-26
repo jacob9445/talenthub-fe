@@ -1,5 +1,7 @@
 export const API_BASE = process.env.REACT_APP_API_BASE || 'http://talent.hub:8000/'
 
+export const API_GET_URL = 'api/auth/me/'
+
 export const ROLES = {
   ADMIN: 1,
   TEAM_MANAGER: 2,
