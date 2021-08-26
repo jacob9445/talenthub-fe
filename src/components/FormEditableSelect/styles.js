@@ -1,14 +1,12 @@
 import { makeStyles } from '@material-ui/styles'
 
 export const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    height: 70
+  wrapper: {
+    marginBottom: theme.spacing(2)
   },
   input: {
     display: 'flex',
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
+    padding: 18.5
   },
   valueContainer: {
     display: 'flex',

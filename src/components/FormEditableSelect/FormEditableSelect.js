@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextField, Paper, Typography, MenuItem, IconButton } from '@material-ui/core'
+import { TextField, Paper, Typography, MenuItem, IconButton, FormLabel } from '@material-ui/core'
 import { Cancel as CancelIcon, ArrowDropDown as ArrowDropDownIcon } from '@material-ui/icons'
 import Select from 'react-select'
 import { useStyles } from './styles'
@@ -77,16 +77,16 @@ const DropdownIndicator = props => (
 )
 
 const FormEditableSelect = props => {
+  const { label, htmlId } = props
   const classes = useStyles()
   const [value, setValue] = useState(null)
-  console.log({ props })
   return (
-    <div className={classes.root}>
+    <div className={classes.wrapper}>
+      {label && <FormLabel htmlFor={htmlId}>{label}</FormLabel>}
       <Select
         value={value}
         onChange={v => setValue(v)}
         textFieldProps={{
-          label: props.label,
           InputLabelProps: {
             shrink: true
           }
