@@ -4,12 +4,12 @@ import { Table, TableRow, TableHead, TableBody, TableCell, TableFooter, TablePag
 import PropTypes from 'prop-types'
 
 import Spinner from 'components/Spinner'
-import { FormattedDate,  FormattedNumber } from 'react-intl'
+import { FormattedDate, FormattedNumber } from 'react-intl'
 import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
 import { getPlatformLabel } from 'helpers/utils'
 
-const briefText = (str, length) => (str.length > length ? str.substring(0, length) + ' ...' : str)
+const briefText = (str, length) => (str && str.length > length ? str.substring(0, length) + '...' : str)
 
 function TransactionTable({ data, history, me, pagination, onChangePage, onChangeRowsPerPage }) {
   const classes = useStyles()
