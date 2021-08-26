@@ -12,5 +12,8 @@ export default makeStyles(theme => ({
   secondary: {
     backgroundColor: theme.palette.secondary.main,
     color: '#fff'
+  },
+  tableRow: {
+    cursor: 'pointer'
   }
 }))

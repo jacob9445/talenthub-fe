@@ -38,7 +38,7 @@ function PartnerTable({ data, myRole, handleDelete, match: { path }, pagination,
         </TableHead>
         <TableBody>
           {data.results.map(({ id, full_name, email, address, dob, phone_num, contact_method, owner }) => (
-            <TableRow key={id}>
+            <TableRow key={id} hover>
               <TableCell>{full_name}</TableCell>
               <TableCell>{email}</TableCell>
               <TableCell>{address}</TableCell>

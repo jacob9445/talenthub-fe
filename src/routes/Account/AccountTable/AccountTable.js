@@ -32,7 +32,7 @@ function AccountTable({ data, handleDelete, match: { path }, pagination, onChang
         </TableHead>
         <TableBody>
           {data.results.map(({ id, profile, platform_type, email, password, location, url }) => (
-            <TableRow key={id}>
+            <TableRow key={id} hover>
               <TableCell>
                 {profile.first_name} {profile.last_name}
               </TableCell>

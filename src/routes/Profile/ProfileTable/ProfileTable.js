@@ -36,7 +36,7 @@ function ProfileTable({ data, handleDelete, match: { path }, pagination, onChang
         </TableHead>
         <TableBody>
           {data.results.map(({ id, profile_type, first_name, last_name, address, country, dob, gender }) => (
-            <TableRow key={id}>
+            <TableRow key={id} hover>
               <TableCell>
                 {first_name} {last_name}
               </TableCell>

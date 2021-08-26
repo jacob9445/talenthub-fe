@@ -71,7 +71,7 @@ function FinancialRequestTable({
         </TableHead>
         <TableBody>
           {results.map(({ id, type, status, amount, address, requested_at, requester, project }) => (
-            <TableRow key={id}>
+            <TableRow key={id} hover>
               <TableCell>
                 <FormattedDate value={requested_at} />
               </TableCell>
