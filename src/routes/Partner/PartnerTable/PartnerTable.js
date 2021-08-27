@@ -22,8 +22,8 @@ function PartnerTable({ data, myRole, handleDelete, match: { path }, pagination,
   const columns = useMemo(
     () =>
       myRole === ROLES.DEVELOPER
-        ? ['Full Name', 'Email', 'Address', 'Dob', 'Phone Number', 'Contact Method', 'Actions']
-        : ['Full Name', 'Email', 'Address', 'Dob', 'Phone Number', 'Contact Method', 'Owner', 'Actions'],
+        ? ['Full Name', 'Email', 'Address', 'Date of Birth', 'Phone Number', 'Contact Method', 'Actions']
+        : ['Full Name', 'Email', 'Address', 'Date of Birth', 'Phone Number', 'Contact Method', 'Owner', 'Actions'],
     [myRole]
   )
   if (data) {
