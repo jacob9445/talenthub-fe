@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
+import cn from 'classnames'
 import {
   Table,
   TableRow,
@@ -10,13 +11,13 @@ import {
   TableFooter,
   TablePagination,
   Tooltip,
-  IconButton,
-  Button
+  IconButton
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import { ROLES, PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS, URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
+import useStyles from './styles'
 
 function ProjectTable({
   data,
@@ -29,6 +30,7 @@ function ProjectTable({
   onChangePage,
   onChangeRowsPerPage
 }) {
+  const classes = useStyles()
   const columns = useMemo(() => {
     function getColumns(role, disableActions) {
       let columns = ['Title', 'Type', 'Weakly Limit', 'Price', 'Status']
@@ -69,10 +71,12 @@ function ProjectTable({
         </TableHead>
         <TableBody>
           {results.map(({ id, title, type, weakly_limit, price, status, project_starter }) => (
-            <TableRow key={id}>
-              <TableCell>
-                <Button onClick={showProjectDetail(id)}>{title}</Button>
-              </TableCell>
+            <TableRow
+              key={id}
+              hover
+              className={cn({ [classes.tableRow]: disableActions })}
+              onClick={disableActions ? showProjectDetail(id) : undefined}>
+              <TableCell>{title}</TableCell>
               <TableCell>{PROJECT_TYPE_LABELS[type]}</TableCell>
               <TableCell>{weakly_limit}</TableCell>
               <TableCell>{price}</TableCell>

@@ -38,7 +38,7 @@ function ClientTable({ data, myRole, handleDelete, match: { path }, pagination, 
         </TableHead>
         <TableBody>
           {data.results.map(({ id, full_name, type, company_name, owner, started_at }) => (
-            <TableRow key={id}>
+            <TableRow key={id} hover>
               <TableCell>{full_name}</TableCell>
               <TableCell>{CLIENT_TYPE_LABELS[type]}</TableCell>
               <TableCell>{type === CLIENT_TYPES.INDIVIDUAL ? null : company_name}</TableCell>
