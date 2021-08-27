@@ -23,7 +23,7 @@ const FormSelect = ({ field, form, field: { name }, htmlId, label, options, noMb
         value={field.value || ''}>
         {options.map(item => (
           <MenuItem key={item.value} value={item.value}>
-            {item.display}
+            {item.label}
           </MenuItem>
         ))}
       </Select>
