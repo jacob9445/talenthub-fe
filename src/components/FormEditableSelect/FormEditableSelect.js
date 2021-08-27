@@ -36,14 +36,7 @@ const NoOptionsMessage = props => (
 )
 
 const Option = props => (
-  <MenuItem
-    buttonRef={props.innerRef}
-    selected={props.isFocused}
-    component="div"
-    // style={{
-    //   fontWeight: props.isSelected ? 500 : 400
-    // }}
-    {...props.innerProps}>
+  <MenuItem buttonRef={props.innerRef} selected={props.isFocused} component="div" {...props.innerProps}>
     {props.children}
   </MenuItem>
 )
