@@ -10,6 +10,7 @@ import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
 import FormEditableSelect from 'components/FormEditableSelect'
+import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { CONTACT_METHOD_TYPES, URL_PREFIXES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
@@ -107,7 +108,7 @@ const PartnerDetailForm = ({
                     <Grid item md={3}>
                       <Field
                         noMb
-                        component={FormEditableSelect}
+                        component={FormSelect}
                         htmlId={`contact_method.${index}.type`}
                         name={`contact_method.${index}.type`}
                         validate={validateContactMethodField}

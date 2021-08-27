@@ -63,34 +63,34 @@ export const CLIENT_TYPE_LABELS = {
 export const CONTACT_METHOD_TYPES = [
   {
     value: 'Skype',
-    label: 'Skype'
+    display: 'Skype'
   },
   {
     value: 'Whatsapp',
-    label: 'Whatsapp'
+    display: 'Whatsapp'
   },
   {
     value: 'Discord',
-    label: 'Discord'
+    display: 'Discord'
   },
   {
     value: 'Linkedin',
-    label: 'Linkedin'
+    display: 'Linkedin'
   },
   {
     value: 'Facebook',
-    label: 'Facebook'
+    display: 'Facebook'
   }
 ]
 
 export const CLIENT_TYPE_OPTIONS = [
   {
     value: CLIENT_TYPES.COMPANY,
-    label: 'Company'
+    display: 'Company'
   },
   {
     value: CLIENT_TYPES.INDIVIDUAL,
-    label: 'Individual'
+    display: 'Individual'
   }
 ]
 
@@ -111,19 +111,19 @@ export const PROJECT_TYPE_LABELS = {
 export const PROJECT_TYPE_OPTIONS = [
   {
     value: PROJECT_TYPE.BUDGET,
-    label: 'Budget'
+    display: 'Budget'
   },
   {
     value: PROJECT_TYPE.HOURLYFT,
-    label: 'Hourly Full-time'
+    display: 'Hourly Full-time'
   },
   {
     value: PROJECT_TYPE.HOURLYPT,
-    label: 'Hourly Part-time'
+    display: 'Hourly Part-time'
   },
   {
     value: PROJECT_TYPE.CONTRACT,
-    label: 'Contract'
+    display: 'Contract'
   }
 ]
 
@@ -142,15 +142,15 @@ export const PROJECT_STATUS_LABELS = {
 export const PROJECT_STATUS_OPTIONS = [
   {
     value: PROJECT_STATUS.ONGOING,
-    label: 'Ongoing'
+    display: 'Ongoing'
   },
   {
     value: PROJECT_STATUS.PAUSED,
-    label: 'Paused'
+    display: 'Paused'
   },
   {
     value: PROJECT_STATUS.ENDED,
-    label: 'Ended'
+    display: 'Ended'
   }
 ]
 
@@ -171,19 +171,19 @@ export const FINANCIALREQUEST_TYPE_LABELS = {
 export const FINANCIALREQUEST_TYPE_OPTIONS = [
   {
     value: FINANCIALREQUEST_TYPE.SENDINVOICE,
-    label: 'Send Invoice'
+    display: 'Send Invoice'
   },
   {
     value: FINANCIALREQUEST_TYPE.SENDPAYMENT,
-    label: 'Send Payment'
+    display: 'Send Payment'
   },
   {
     value: FINANCIALREQUEST_TYPE.RECEIVEPAYMENT,
-    label: 'Receive Payment'
+    display: 'Receive Payment'
   },
   {
     value: FINANCIALREQUEST_TYPE.REFUNDPAYMENT,
-    label: 'Refund Payment'
+    display: 'Refund Payment'
   }
 ]
 
@@ -309,22 +309,22 @@ export const platformOptions = [
 
 export const profileTypeOptions = [
   {
-    label: 'Self',
+    display: 'Self',
     value: PROFILE_TYPES.SELF
   },
   {
-    label: 'Partner',
+    display: 'Partner',
     value: PROFILE_TYPES.PARTNER
   }
 ]
 
 export const genderOptions = [
   {
-    label: 'Male',
+    display: 'Male',
     value: GENDER.MALE
   },
   {
-    label: 'Female',
+    display: 'Female',
     value: GENDER.FEMALE
   }
 ]

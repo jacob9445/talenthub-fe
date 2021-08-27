@@ -6,7 +6,10 @@ export const useStyles = makeStyles(theme => ({
   },
   input: {
     display: 'flex',
-    padding: 18.5
+    paddingTop: 18.5,
+    paddingDown: 18.5,
+    paddingLeft: 14,
+    paddingRight: 5
   },
   valueContainer: {
     display: 'flex',
@@ -16,21 +19,28 @@ export const useStyles = makeStyles(theme => ({
     overflow: 'hidden'
   },
   noOptionsMessage: {
-    padding: 1 //`${theme.spacing(1)}px ${theme.spacing(2)}px`
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`
   },
   singleValue: {
     fontSize: 16
   },
   placeholder: {
     position: 'absolute',
-    left: 10,
+    left: 15,
     fontSize: 16
   },
   paper: {
     position: 'absolute',
     zIndex: 1,
-    marginTop: 1, //theme.spacing(1),
+    marginTop: 1,
     left: 0,
     right: 0
+  },
+  DropdownIndicator: {
+    padding: 0
+  },
+  ClearIndicator: {
+    position: 'absolute',
+    right: 20
   }
 }))

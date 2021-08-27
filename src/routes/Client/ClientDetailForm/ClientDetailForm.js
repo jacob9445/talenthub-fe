@@ -10,6 +10,7 @@ import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
 import FormEditableSelect from 'components/FormEditableSelect'
+import FormSelect from 'components/FormSelect'
 import { CLIENT_TYPES, CLIENT_TYPE_OPTIONS, URL_PREFIXES, ROLES } from 'config/constants'
 import useStyles from './styles'
 import { meSelector } from 'store/modules/auth'
@@ -55,7 +56,7 @@ const ClientDetailForm = ({ handleSubmit, values, location, history, me, match: 
   return (
     <form onSubmit={handleSubmit}>
       <Field component={FormInput} type="text" htmlId="full_name" name="full_name" label="Full Name" />
-      <Field component={FormEditableSelect} htmlId="type" name="type" label="Type" options={CLIENT_TYPE_OPTIONS} />
+      <Field component={FormSelect} htmlId="type" name="type" label="Type" options={CLIENT_TYPE_OPTIONS} />
       {values.type === CLIENT_TYPES.COMPANY ? (
         <Field component={FormInput} type="text" htmlId="company_name" name="company_name" label="Company Name" />
       ) : null}

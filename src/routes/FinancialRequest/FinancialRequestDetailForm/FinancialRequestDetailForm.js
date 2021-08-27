@@ -10,6 +10,7 @@ import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
 import FormEditableSelect from 'components/FormEditableSelect'
+import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { URL_PREFIXES, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
@@ -59,7 +60,7 @@ const FinancialRequestDetailForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <Field
-        component={FormEditableSelect}
+        component={FormSelect}
         type="text"
         htmlId="type"
         name="type"

@@ -10,6 +10,7 @@ import * as Yup from 'yup'
 
 import FormInput from 'components/FormInput'
 import FormEditableSelect from 'components/FormEditableSelect'
+import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { getUsers, usersSelector, usersLoadingSelector } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
@@ -79,7 +80,7 @@ const ProfileDetailForm = ({
           />
         ) : null}
         <Field
-          component={FormEditableSelect}
+          component={FormSelect}
           htmlId="profile_type"
           type="text"
           name="profile_type"
@@ -92,7 +93,7 @@ const ProfileDetailForm = ({
         <Field component={FormInput} htmlId="address" type="text" name="address" label="Address" />
         <Field component={FormInput} htmlId="country" type="text" name="country" label="Country" />
         <Field
-          component={FormEditableSelect}
+          component={FormSelect}
           htmlId="gender"
           type="text"
           name="gender"

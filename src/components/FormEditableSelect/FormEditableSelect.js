@@ -40,9 +40,9 @@ const Option = props => (
     buttonRef={props.innerRef}
     selected={props.isFocused}
     component="div"
-    style={{
-      fontWeight: props.isSelected ? 500 : 400
-    }}
+    // style={{
+    //   fontWeight: props.isSelected ? 500 : 400
+    // }}
     {...props.innerProps}>
     {props.children}
   </MenuItem>
@@ -65,13 +65,13 @@ const ValueContainer = props => <div className={props.selectProps.classes.valueC
 const IndicatorSeparator = () => null
 
 const ClearIndicator = props => (
-  <IconButton {...props.innerProps}>
+  <IconButton className={props.selectProps.classes.ClearIndicator} {...props.innerProps}>
     <CancelIcon />
   </IconButton>
 )
 
 const DropdownIndicator = props => (
-  <IconButton {...props.innerProps}>
+  <IconButton className={props.selectProps.classes.DropdownIndicator} {...props.innerProps}>
     <ArrowDropDownIcon />
   </IconButton>
 )
@@ -85,7 +85,7 @@ const FormEditableSelect = props => {
       {label && <FormLabel htmlFor={htmlId}>{label}</FormLabel>}
       <Select
         value={value}
-        onChange={v => setValue(v)}
+        onChange={setValue}
         textFieldProps={{
           InputLabelProps: {
             shrink: true
