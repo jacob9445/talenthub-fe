@@ -204,19 +204,19 @@ export const FINANCIALREQUEST_STATUS_LABELS = {
 export const FINANCIALREQUEST_STATUS_OPTIONS = [
   {
     value: FINANCIALREQUEST_STATUS.PENDING,
-    display: 'Pending'
+    label: 'Pending'
   },
   {
     value: FINANCIALREQUEST_STATUS.APPROVED,
-    display: 'Approved'
+    label: 'Approved'
   },
   {
     value: FINANCIALREQUEST_STATUS.DECLINED,
-    display: 'Declined'
+    label: 'Declined'
   },
   {
     value: FINANCIALREQUEST_STATUS.CANCELED,
-    display: 'Canceled'
+    label: 'Canceled'
   }
 ]
 
@@ -228,11 +228,11 @@ export const FINANCIALREQUEST_COUNTER_PARTY_TYPE = {
 export const FINANCIALREQUEST_COUNTER_PARTY_OPTIONS = [
   {
     value: FINANCIALREQUEST_COUNTER_PARTY_TYPE.CLIENT,
-    display: 'Client'
+    label: 'Client'
   },
   {
     value: FINANCIALREQUEST_COUNTER_PARTY_TYPE.PARTNER,
-    display: 'Partner'
+    label: 'Partner'
   }
 ]
 
@@ -248,61 +248,61 @@ export const PAYMENT_PLATFORM_TYPE = {
 export const PAYMENT_PLATFORM_OPTIONS = [
   {
     value: PAYMENT_PLATFORM_TYPE.PAYPAL,
-    display: 'Paypal'
+    label: 'Paypal'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.PAYONEER,
-    display: 'Payoneer'
+    label: 'Payoneer'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.UPWORK,
-    display: 'Upwork'
+    label: 'Upwork'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.FREELANCER,
-    display: 'Freelancer'
+    label: 'Freelancer'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.TOPTAL,
-    display: 'Toptal'
+    label: 'Toptal'
   },
   {
     value: PAYMENT_PLATFORM_TYPE.BTC,
-    display: 'BTC'
+    label: 'BTC'
   }
 ]
 
 export const platformOptions = [
   {
-    display: 'Email',
+    label: 'Email',
     value: PLATFORMS.EMAIL
   },
   {
-    display: 'Skype',
+    label: 'Skype',
     value: PLATFORMS.SKYPE
   },
   {
-    display: 'Slack',
+    label: 'Slack',
     value: PLATFORMS.SLACK
   },
   {
-    display: 'MS Team',
+    label: 'MS Team',
     value: PLATFORMS.MS_TEAM
   },
   {
-    display: 'Github',
+    label: 'Github',
     value: PLATFORMS.GITHUB
   },
   {
-    display: 'Gitlab',
+    label: 'Gitlab',
     value: PLATFORMS.GITLAB
   },
   {
-    display: 'Bitbucket',
+    label: 'Bitbucket',
     value: PLATFORMS.BITBUCKET
   },
   {
-    display: 'Etc',
+    label: 'Etc',
     value: PLATFORMS.ETC
   }
 ]

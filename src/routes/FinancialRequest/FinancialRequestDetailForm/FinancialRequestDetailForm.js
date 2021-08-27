@@ -9,6 +9,7 @@ import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
+import FormEditableSelect from 'components/FormEditableSelect'
 import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { URL_PREFIXES, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
@@ -47,7 +48,7 @@ const FinancialRequestDetailForm = ({
   const projectList = useMemo(() => {
     if (projects) {
       return projects.results.map(project => ({
-        display: project.title,
+        label: project.title,
         value: project.id
       }))
     } else {
@@ -84,7 +85,7 @@ const FinancialRequestDetailForm = ({
       />
       {values.type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? (
         <Field
-          component={FormSelect}
+          component={FormEditableSelect}
           type="text"
           htmlId="project"
           name="project"

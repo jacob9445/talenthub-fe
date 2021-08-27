@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import * as Yup from 'yup'
 
 import FormInput from 'components/FormInput'
-import FormSelect from 'components/FormSelect'
+import FormEditableSelect from 'components/FormEditableSelect'
 import useStyles from './styles'
 import { getTeams, teamsSelector } from 'store/modules/team'
 import Spinner from 'components/Spinner'
@@ -41,7 +41,7 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
       typeof teams !== 'undefined' &&
       teams.map(team => ({
         value: team.id,
-        display: team.name
+        label: team.name
       })),
     [teams]
   )
@@ -71,7 +71,7 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
             />
           </React.Fragment>
         )}
-        <Field component={FormSelect} htmlId="team" name="team" label="Team" options={options} />
+        <Field component={FormEditableSelect} htmlId="team" name="team" label="Team" options={options} />
         <div className={classes.formButtonWrapper}>
           <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
             {isEdit ? 'Update' : 'Create'}
@@ -101,10 +101,4 @@ UserDetailForm.propTypes = {
   teams: PropTypes.array
 }
 
-export default R.compose(
-  connect(
-    selectors,
-    actions
-  ),
-  withRouter
-)(UserDetailForm)
+export default R.compose(connect(selectors, actions), withRouter)(UserDetailForm)

@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import * as Yup from 'yup'
 
 import FormInput from 'components/FormInput'
+import FormEditableSelect from 'components/FormEditableSelect'
 import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { getUsers, usersSelector, usersLoadingSelector } from 'store/modules/user'
@@ -55,7 +56,7 @@ const ProfileDetailForm = ({
   const userOptions = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        display: `${user.first_name} ${user.last_name}`,
+        label: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
     } else {
@@ -69,7 +70,7 @@ const ProfileDetailForm = ({
       <form onSubmit={handleSubmit}>
         {me.role !== ROLES.DEVELOPER ? (
           <Field
-            component={FormSelect}
+            component={FormEditableSelect}
             htmlId="user_id"
             type="text"
             name="user_id"

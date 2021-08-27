@@ -9,6 +9,7 @@ import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
+import FormEditableSelect from 'components/FormEditableSelect'
 import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { CONTACT_METHOD_TYPES, URL_PREFIXES } from 'config/constants'
@@ -54,7 +55,7 @@ const PartnerDetailForm = ({
   const userList = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        display: `${user.first_name} ${user.last_name}`,
+        label: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
     } else {
@@ -72,7 +73,7 @@ const PartnerDetailForm = ({
       <Field component={FormInput} type="text" htmlId="phone_num" name="phone_num" label="Phone Number" />
       {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(me.role) && (
         <Field
-          component={FormSelect}
+          component={FormEditableSelect}
           htmlId="owner"
           type="text"
           name="owner"

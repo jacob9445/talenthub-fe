@@ -9,6 +9,7 @@ import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
 import FormInput from 'components/FormInput'
+import FormEditableSelect from 'components/FormEditableSelect'
 import FormSelect from 'components/FormSelect'
 import { CLIENT_TYPES, CLIENT_TYPE_OPTIONS, URL_PREFIXES, ROLES } from 'config/constants'
 import useStyles from './styles'
@@ -43,7 +44,7 @@ const ClientDetailForm = ({ handleSubmit, values, location, history, me, match: 
   const userLists = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        display: `${user.first_name} ${user.last_name}`,
+        label: `${user.first_name} ${user.last_name}`,
         value: user.id
       }))
     } else {
@@ -62,7 +63,7 @@ const ClientDetailForm = ({ handleSubmit, values, location, history, me, match: 
       <Field component={FormInput} type="date" htmlId="started_at" name="started_at" label="Started at" />
       {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(me.role) && (
         <Field
-          component={FormSelect}
+          component={FormEditableSelect}
           htmlId="owner"
           type="text"
           name="owner"
@@ -103,10 +104,4 @@ const actions = {
   getUsers
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(ClientDetailForm)
+export default compose(withRouter, connect(selector, actions))(ClientDetailForm)

@@ -9,7 +9,7 @@ import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 
 import FormInput from 'components/FormInput'
-import FormSelect from 'components/FormSelect'
+import FormEditableSelect from 'components/FormEditableSelect'
 import FormPasswordInput from 'components/FormPasswordInput'
 import useStyles from './styles'
 import { platformOptions } from 'config/constants'
@@ -43,7 +43,7 @@ const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSub
       profiles
         ? profiles.results.map(profile => ({
             value: profile.id,
-            display: `${profile.first_name} ${profile.last_name}`
+            label: `${profile.first_name} ${profile.last_name}`
           }))
         : [],
     [profiles]
@@ -52,7 +52,7 @@ const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSub
   return (
     <form onSubmit={handleSubmit}>
       <Field
-        component={FormSelect}
+        component={FormEditableSelect}
         htmlId="profile"
         type="text"
         name="profile"
@@ -60,7 +60,7 @@ const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSub
         options={profileOptions}
       />
       <Field
-        component={FormSelect}
+        component={FormEditableSelect}
         htmlId="platform_type"
         type="text"
         name="platform_type"

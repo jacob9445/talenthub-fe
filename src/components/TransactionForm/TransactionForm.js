@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
 
 import FormInput from 'components/FormInput'
-import FormSelect from 'components/FormSelect'
+import FormEditableSelect from 'components/FormEditableSelect'
 import useStyles from './styles'
 import { PAYMENT_PLATFORM_OPTIONS } from 'config/constants'
 
@@ -19,7 +19,7 @@ const TransactionForm = ({ handleSubmit, onClose }) => {
       <Field component={FormInput} htmlId="net_amount" type="number" name="net_amount" label="Net Amount" />
       <Field component={FormInput} type="date" htmlId="created_at" name="created_at" label="Date" />
       <Field
-        component={FormSelect}
+        component={FormEditableSelect}
         htmlId="payment_platform"
         type="text"
         name="payment_platform"
