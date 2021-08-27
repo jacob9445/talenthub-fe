@@ -68,7 +68,6 @@ const ProjectDetailForm = ({
   useEffect(() => {
     getClients()
   }, [getClients])
-
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/projects`)
   }, [location, history, role])
@@ -167,7 +166,7 @@ ProjectDetailForm.propTypes = {
   match: PropTypes.object.isRequired,
   users: PropTypes.object,
   getUsers: PropTypes.func.isRequired,
-  clients: PropTypes.array,
+  clients: PropTypes.object,
   getClients: PropTypes.func.isRequired
 }
 
