@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Chip } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { Person as AccountIcon, Add } from '@material-ui/icons'
-import { makeStyles } from '@material-ui/styles'
 import { withRouter } from 'react-router'
 import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
@@ -10,16 +9,9 @@ import { connect } from 'react-redux'
 
 import { meSelector } from 'store/modules/auth'
 import { PLATFORM_LABELS, URL_PREFIXES } from 'config/constants'
-const useStyles = makeStyles(theme => ({
-  chip: {
-    marginTop: theme.spacing(1) / 2,
-    width: '100%'
-  }
-}))
+import BlockChip from 'components/BlockChip'
 
 const AccountChips = ({ accounts, history, location, me }) => {
-  const classes = useStyles()
-
   const showProfileDetail = useCallback(
     id => () => {
       history.push(`/${URL_PREFIXES[me.role]}/accounts/${id}/detail`, location.pathname)
@@ -34,22 +26,20 @@ const AccountChips = ({ accounts, history, location, me }) => {
   return (
     <Grid container alignItems="center" wrap="wrap">
       {accounts.map(account => (
-        <Chip
+        <BlockChip
           key={account.id}
           label={`${account.email}(${PLATFORM_LABELS[account.platform_type]})`}
           color="primary"
           icon={<AccountIcon />}
           variant="outlined"
-          className={classes.chip}
           onClick={showProfileDetail(account.id)}
         />
       ))}
-      <Chip
+      <BlockChip
         key={accounts.length ? accounts.length : 1}
         label={accounts.length ? 'Add another account' : 'Add a new account'}
         color="primary"
         icon={<Add />}
-        className={classes.chip}
         onClick={showCreateAccountPage}
       />
     </Grid>
