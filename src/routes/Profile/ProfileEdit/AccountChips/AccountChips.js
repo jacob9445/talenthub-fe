@@ -46,7 +46,7 @@ const AccountChips = ({ accounts, history, location, me }) => {
       ))}
       <Chip
         key={accounts.length ? accounts.length : 1}
-        label={accounts.length ? 'Add an another account' : 'Create a new account'}
+        label={accounts.length ? 'Add another account' : 'Add a new account'}
         color="primary"
         icon={<AddCircle />}
         className={classes.chip}
