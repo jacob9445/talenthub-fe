@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Chip } from '@material-ui/core'
-import { Person as AccountIcon, AddCircle } from '@material-ui/icons'
+import { Person as AccountIcon, Add } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import { withRouter } from 'react-router'
 import { createStructuredSelector } from 'reselect'
@@ -12,8 +12,8 @@ import { meSelector } from 'store/modules/auth'
 import { PLATFORM_LABELS, URL_PREFIXES } from 'config/constants'
 const useStyles = makeStyles(theme => ({
   chip: {
-    margin: theme.spacing(1) / 2,
-    width: 200
+    marginTop: theme.spacing(1) / 2,
+    width: '100%'
   }
 }))
 
@@ -48,7 +48,7 @@ const AccountChips = ({ accounts, history, location, me }) => {
         key={accounts.length ? accounts.length : 1}
         label={accounts.length ? 'Add another account' : 'Add a new account'}
         color="primary"
-        icon={<AddCircle />}
+        icon={<Add />}
         className={classes.chip}
         onClick={showCreateAccountPage}
       />
