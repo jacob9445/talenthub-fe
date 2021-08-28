@@ -1,18 +1,14 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Chip } from '@material-ui/core'
-import { Face as FaceIcon } from '@material-ui/icons'
-import { makeStyles } from '@material-ui/styles'
+import { Grid } from '@material-ui/core'
+import { Face as FaceIcon, Add } from '@material-ui/icons'
 import { withRouter } from 'react-router'
 
-const useStyles = makeStyles(theme => ({
-  chip: {
-    margin: theme.spacing(1) / 2
-  }
-}))
+import { URL_PREFIXES } from 'config/constants'
+import BlockChip from 'components/BlockChip'
 
-const ProfileChips = ({ profiles, history, location }) => {
-  const classes = useStyles()
+const ProfileChips = props => {
+  const { profiles, history, location, me } = props
 
   const showProfileDetail = useCallback(
     id => () => {
@@ -20,20 +16,28 @@ const ProfileChips = ({ profiles, history, location }) => {
     },
     [history, location]
   )
+  const showProfileNew = useCallback(() => {
+    history.push(`/${URL_PREFIXES[me.role]}/profiles/new`)
+  }, [history, me])
 
   return (
     <Grid container alignItems="center" justify="center" wrap="wrap">
       {profiles.map(profile => (
-        <Chip
+        <BlockChip
           key={profile.id}
           label={`${profile.first_name} ${profile.last_name}`}
           color="primary"
           icon={<FaceIcon />}
           variant="outlined"
-          className={classes.chip}
           onClick={showProfileDetail(profile.id)}
         />
       ))}
+      <BlockChip
+        label={profiles.length === 0 ? 'Add a profile' : 'Add another profile'}
+        color="primary"
+        onClick={showProfileNew}
+        icon={<Add />}
+      />
     </Grid>
   )
 }

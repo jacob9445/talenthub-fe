@@ -17,8 +17,9 @@ import Widget from 'components/Widget'
 import ProfileChips from 'components/ProfileChips'
 import { URL_PREFIXES } from 'config/constants'
 import { roleSelector } from 'store/modules/auth'
+import { meSelector } from 'store/modules/auth'
 
-const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDetail, history, role }) => {
+const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDetail, history, role, me }) => {
   useEffect(() => {
     getUserDetail(params.id)
   }, [params, getUserDetail])
@@ -70,7 +71,7 @@ const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDeta
         </Grid>
         <Grid item xs={12} md={3}>
           <Widget title="Profiles" disableWidgetMenu>
-            <ProfileChips profiles={userDetail.profiles} />
+            <ProfileChips profiles={userDetail.profiles} me={me} />
           </Widget>
         </Grid>
       </Grid>
@@ -80,7 +81,8 @@ const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDeta
 const selectors = createStructuredSelector({
   userDetail: userDetailSelector,
   loadingSelectedUser: userDetailLoadingSelector,
-  role: roleSelector
+  role: roleSelector,
+  me: meSelector
 })
 const actions = {
   getUserDetail,
@@ -94,10 +96,4 @@ UserEdit.propTypes = {
   updateUserDetail: PropTypes.func.isRequired
 }
 
-export default compose(
-  connect(
-    selectors,
-    actions
-  ),
-  withRouter
-)(UserEdit)
+export default compose(connect(selectors, actions), withRouter)(UserEdit)
