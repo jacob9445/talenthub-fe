@@ -11,7 +11,8 @@ import {
   AccessibilityNew as PartnerIcon,
   Computer as ProjectIcon,
   ContactPhone as FRIcon,
-  Money as FRequestIcon
+  Money as FRequestIcon,
+  EventNote as LogIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
@@ -108,6 +109,26 @@ let structure = {
       label: 'Projects',
       link: '/admin/projects',
       icon: <ProjectIcon />
+    },
+    {
+      id: 10,
+      label: 'My logs',
+      link: '/admin/my-logs',
+      icon: <LogIcon />,
+      subLinks: [
+        {
+          label: 'Daily Logs',
+          link: '/admin/my-logs/daily'
+        },
+        {
+          label: 'Weekly Logs',
+          link: '/admin/my-logs/weekly'
+        },
+        {
+          label: 'Monthly Logs',
+          link: '/admin/my-logs/monthly'
+        }
+      ]
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -174,6 +195,26 @@ let structure = {
       label: 'Projects',
       link: '/team-manager/projects',
       icon: <ProjectIcon />
+    },
+    {
+      id: 9,
+      label: 'My logs',
+      link: '/team-manager/my-logs',
+      icon: <LogIcon />,
+      subLinks: [
+        {
+          label: 'Daily Logs',
+          link: '/team-manager/my-logs/daily'
+        },
+        {
+          label: 'Weekly Logs',
+          link: '/team-manager/my-logs/weekly'
+        },
+        {
+          label: 'Monthly Logs',
+          link: '/team-manager/my-logs/monthly'
+        }
+      ]
     }
   ],
   [ROLES.DEVELOPER]: [
@@ -234,6 +275,26 @@ let structure = {
       label: 'Projects',
       link: '/developer/projects',
       icon: <ProjectIcon />
+    },
+    {
+      id: 8,
+      label: 'My logs',
+      link: '/developer/my-logs',
+      icon: <LogIcon />,
+      subLinks: [
+        {
+          label: 'Daily Logs',
+          link: '/developer/my-logs/daily'
+        },
+        {
+          label: 'Weekly Logs',
+          link: '/developer/my-logs/weekly'
+        },
+        {
+          label: 'Monthly Logs',
+          link: '/developer/my-logs/monthly'
+        }
+      ]
     }
   ]
 }
