@@ -3,7 +3,7 @@ import unset from 'lodash/unset'
 import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
 
-import { REQUEST_SUCCESS, REQUEST_REJECTED, REQUEST_PENDING } from './types'
+import { REQUEST_SUCCESS, REQUEST_REJECTED, REQUEST_PENDING, SET_API_DATA } from './types'
 
 export const requests = handleActions(
   {
@@ -57,6 +57,10 @@ const cloneInPath = (state, path) => {
 export const data = handleActions(
   {
     [REQUEST_SUCCESS]: (state, { payload }) => {
+      return cloneInPath(setWith(state, payload.selectorKey, payload.data, Object), payload.selectorKey)
+    },
+
+    [SET_API_DATA]: (state, { payload }) => {
       return cloneInPath(setWith(state, payload.selectorKey, payload.data, Object), payload.selectorKey)
     },
 

@@ -171,5 +171,8 @@ export default makeStyles(theme => ({
       display: 'none'
     },
     marginRight: theme.spacing(3)
+  },
+  badge: {
+    margin: theme.spacing(1)
   }
 }))

@@ -1,23 +1,22 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { Menu as MenuIcon, Person as AccountIcon, ArrowBack as ArrowBackIcon } from '@material-ui/icons'
+import Badge from '@material-ui/core/Badge'
+import MailIcon from '@material-ui/icons/Mail'
 import classNames from 'classnames'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-// styles
 import useStyles from './styles'
-
-// components
 import { Typography } from '../Wrappers'
-
-// context
+import { openNC } from 'store/modules/notification'
 import { useLayoutState, useLayoutDispatch, toggleSidebar } from 'context/LayoutContext'
 import { authLogout } from 'store/modules/auth'
 import { meSelector } from 'store/modules/auth/selectors'
+import { getNotifications, notificationsSelector } from 'store/modules/notification'
 
-function Header({ me, authLogout }) {
+function Header({ me, authLogout, openNC, notifications, getNotifications }) {
   var classes = useStyles()
 
   // global
@@ -26,10 +25,10 @@ function Header({ me, authLogout }) {
 
   // local
   var [profileMenu, setProfileMenu] = useState(null)
-
   const handleLogout = useCallback(() => {
     authLogout()
   }, [authLogout])
+  useEffect(() => getNotifications(), [getNotifications])
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -56,6 +55,16 @@ function Header({ me, authLogout }) {
           Talents Hub
         </Typography>
         <div className={classes.grow} />
+        <IconButton aria-label="4 pending messages" className={classes.badge} onClick={() => openNC()}>
+          {notifications && notifications.count !== 0 ? (
+            <Badge badgeContent={notifications.results.length} color="secondary">
+              <MailIcon />
+            </Badge>
+          ) : (
+            <MailIcon />
+          )}
+        </IconButton>
+
         <IconButton
           aria-haspopup="true"
           color="inherit"
@@ -96,10 +105,13 @@ function Header({ me, authLogout }) {
 }
 
 const actions = {
-  authLogout
+  getNotifications,
+  authLogout,
+  openNC
 }
 const selectors = createStructuredSelector({
-  me: meSelector
+  me: meSelector,
+  notifications: notificationsSelector
 })
 
 Header.propTypes = {
@@ -107,7 +119,4 @@ Header.propTypes = {
   me: PropTypes.object.isRequired
 }
 
-export default connect(
-  selectors,
-  actions
-)(Header)
+export default connect(selectors, actions)(Header)

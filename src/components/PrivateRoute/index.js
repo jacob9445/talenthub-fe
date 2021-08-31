@@ -9,6 +9,7 @@ import { useLayoutState } from 'context/LayoutContext'
 import classnames from 'classnames'
 import Header from 'components/Header'
 import Sidebar from 'components/Sidebar'
+import NotificationCenter from 'components/NotificationCenter'
 import useStyles from './styles'
 
 const PrivateRoute = ({ path, component: Component, isAuthenticated, ...others }) => {
@@ -23,6 +24,7 @@ const PrivateRoute = ({ path, component: Component, isAuthenticated, ...others }
           <React.Fragment>
             <Header />
             <Sidebar />
+            <NotificationCenter />
             <div
               className={classnames(classes.content, {
                 [classes.contentShift]: layoutState.isSidebarOpened

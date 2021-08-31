@@ -16,7 +16,7 @@ import financialRequest from './financialRequest'
 import transaction from './transaction'
 import individualReport from './individualReport'
 import teamReport from './teamReport'
-import logging from './logging'
+import notification from './notification'
 
 export default combineReducers({
   api,
@@ -35,5 +35,5 @@ export default combineReducers({
   individualReport,
   teamReport,
   modal,
-  logging
+  notification
 })
