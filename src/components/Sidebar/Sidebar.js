@@ -12,7 +12,8 @@ import {
   Computer as ProjectIcon,
   ContactPhone as FRIcon,
   Money as FRequestIcon,
-  EventNote as LogIcon
+  EventNote as LogIcon,
+  EventAvailable as ReportIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
@@ -129,6 +130,26 @@ let structure = {
           link: '/admin/my-logs/monthly'
         }
       ]
+    },
+    {
+      id: 11,
+      label: 'Reports',
+      link: '/admin/logs',
+      icon: <ReportIcon />,
+      subLinks: [
+        {
+          label: 'Daily Logs',
+          link: '/admin/logs/daily'
+        },
+        {
+          label: 'Weekly Logs',
+          link: '/admin/logs/weekly'
+        },
+        {
+          label: 'Monthly Logs',
+          link: '/admin/logs/monthly'
+        }
+      ]
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -213,6 +234,26 @@ let structure = {
         {
           label: 'Monthly Logs',
           link: '/team-manager/my-logs/monthly'
+        }
+      ]
+    },
+    {
+      id: 10,
+      label: 'Reports',
+      link: '/team-manager/logs',
+      icon: <ReportIcon />,
+      subLinks: [
+        {
+          label: 'Daily Logs',
+          link: '/team-manager/logs/daily'
+        },
+        {
+          label: 'Weekly Logs',
+          link: '/team-manager/logs/weekly'
+        },
+        {
+          label: 'Monthly Logs',
+          link: '/team-manager/logs/monthly'
         }
       ]
     }
