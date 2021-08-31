@@ -1,24 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Field } from 'formik'
-import { Snackbar, Typography, Button } from '@material-ui/core'
+import { Typography, Button } from '@material-ui/core'
+import { connect } from 'react-redux'
 
 import FormInput from 'components/FormInput'
+import { showMessage } from 'store/modules/message'
 import useStyles from '../styles'
 import PropTypes from 'prop-types'
 
-const LoginForm = ({ handleSubmit, errors }) => {
+const LoginForm = ({ handleSubmit, errors, showMessage }) => {
   let classes = useStyles()
+  useEffect(() => {
+    if (errors._error) {
+      showMessage({
+        message: errors._error,
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'right'
+        }
+      })
+    }
+  }, [showMessage, errors._error])
   return (
     <>
       <Typography variant="h1" className={classes.greeting}>
         Sign in to Talents Hub
       </Typography>
-      <Snackbar
-        open={Boolean(errors._error)}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        message={errors._error}
-        ContentProps={{ variant: 'h6' }}
-      />
 
       <form onSubmit={handleSubmit}>
         <Field component={FormInput} htmlId="email" type="email" name="email" label="Email Address" />
@@ -37,7 +44,11 @@ const LoginForm = ({ handleSubmit, errors }) => {
 }
 
 LoginForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  showMessage: PropTypes.func.isRequired
 }
 
-export default LoginForm
+const actions = {
+  showMessage
+}
+export default connect(null, actions)(LoginForm)
