@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
 import cn from 'classnames'
@@ -49,17 +49,8 @@ function ProjectTable({
     [history, location.pathname, myRole]
   )
 
-  const [results, setResults] = useState([])
-
-  useEffect(() => {
-    if (disableActions) {
-      setResults(data)
-    } else {
-      data && setResults(data.results)
-    }
-  }, [disableActions, setResults, data])
-
   if (data) {
+    const { results } = data
     return (
       <Table className="mb-0">
         <TableHead>
@@ -125,7 +116,9 @@ function ProjectTable({
 export default withRouter(ProjectTable)
 
 ProjectTable.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.shape({
+    results: PropTypes.array.isRequired
+  }),
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
   history: PropTypes.object.isRequired,

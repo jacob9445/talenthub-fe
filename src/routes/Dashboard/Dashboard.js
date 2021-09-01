@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
@@ -82,6 +82,8 @@ const Dashboard = ({
     getApprovedRequests()
   }, [getApprovedRequests])
 
+  const projectData = useMemo(() => ({ results: ongoingProjects }), [ongoingProjects])
+
   const handleCancel = useCallback(
     id => {
       cancelFinancialRequest({
@@ -159,7 +161,7 @@ const Dashboard = ({
           <Grid item xs={12}>
             <Widget title="Ongoing Projects" disableWidgetMenu noBodyPadding>
               {ongoingProjects.length > 0 ? (
-                <ProjectTable data={ongoingProjects} myRole={me.role} disableActions />
+                <ProjectTable data={projectData} myRole={me.role} disableActions />
               ) : (
                 <Typography className={classes.noItems} variant="body1">
                   No ongoing projects.
@@ -241,7 +243,4 @@ Dashboard.prototype = {
   show: PropTypes.func.isRequired
 }
 
-export default connect(
-  selectors,
-  actions
-)(Dashboard)
+export default connect(selectors, actions)(Dashboard)
