@@ -139,15 +139,15 @@ let structure = {
       subLinks: [
         {
           label: 'Daily Logs',
-          link: '/admin/logs/daily'
+          link: '/admin/logging/daily-logs'
         },
         {
           label: 'Weekly Logs',
-          link: '/admin/logs/weekly'
+          link: '/admin/logging/weekly-logs'
         },
         {
           label: 'Monthly Logs',
-          link: '/admin/logs/monthly'
+          link: '/admin/logging/monthly-logs'
         }
       ]
     }
@@ -245,15 +245,15 @@ let structure = {
       subLinks: [
         {
           label: 'Daily Logs',
-          link: '/team-manager/logs/daily'
+          link: '/team-manager/logging/daily-logs'
         },
         {
           label: 'Weekly Logs',
-          link: '/team-manager/logs/weekly'
+          link: '/team-manager/logging/weekly-logs'
         },
         {
           label: 'Monthly Logs',
-          link: '/team-manager/logs/monthly'
+          link: '/team-manager/logging/monthly-logs'
         }
       ]
     }

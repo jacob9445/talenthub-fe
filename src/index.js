@@ -6,6 +6,8 @@ import Themes from './themes'
 import { Provider } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import { IntlProvider } from 'react-intl'
+import DateFnsUtils from '@date-io/date-fns'
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
 
 import intlConfig from './config/intl'
 import './index.css'
@@ -21,7 +23,9 @@ ReactDOM.render(
         <CssBaseline />
         <Provider store={store}>
           <IntlProvider {...intlConfig}>
-            <App />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <App />
+            </MuiPickersUtilsProvider>
           </IntlProvider>
         </Provider>
       </ThemeProvider>

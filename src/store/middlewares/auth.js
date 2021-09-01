@@ -6,7 +6,6 @@ import { API_AUTH_GET_URL } from 'config/constants'
 
 const authMiddleware = store => next => action => {
   if (action.type === REQUEST_REJECTED) {
-    console.log({ action })
     const status = path(['payload', 'data', 'response', 'status'], action)
     const url = path(['payload', 'data', 'config', 'url'], action)
 
