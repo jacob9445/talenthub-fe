@@ -83,6 +83,7 @@ const Dashboard = ({
   }, [getApprovedRequests])
 
   const projectData = useMemo(() => ({ results: ongoingProjects }), [ongoingProjects])
+  const financialRequestsData = useMemo(() => ({ results: pendingFinancialRequests }), [pendingFinancialRequests])
 
   const handleCancel = useCallback(
     id => {
@@ -177,7 +178,7 @@ const Dashboard = ({
             <Widget title="Pending Financial Requests" disableWidgetMenu noBodyPadding>
               {pendingFinancialRequests.length > 0 ? (
                 <FinancialRequestTable
-                  data={pendingFinancialRequests}
+                  data={financialRequestsData}
                   me={me}
                   onCancel={handleCancel}
                   onApprove={handleApprove}

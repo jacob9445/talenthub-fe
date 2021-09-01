@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 import { Edit as EditIcon, Cancel as CancelIcon, Check as ApproveIcon, Close as DeclineIcon } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
 import {
@@ -48,18 +48,8 @@ function FinancialRequestTable({
     },
     [history, location.pathname, me.role]
   )
-
-  const [results, setResults] = useState([])
-
-  useEffect(() => {
-    if (fromDashboard) {
-      setResults(data)
-    } else {
-      data && setResults(data.results)
-    }
-  }, [fromDashboard, setResults, data])
-
   if (data) {
+    const { results } = data
     return (
       <Table className="mb-0">
         <TableHead>
@@ -140,7 +130,9 @@ function FinancialRequestTable({
 export default withRouter(FinancialRequestTable)
 
 FinancialRequestTable.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.shape({
+    results: PropTypes.array.isRequired
+  }),
   me: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
