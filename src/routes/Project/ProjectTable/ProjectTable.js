@@ -21,7 +21,7 @@ import useStyles from './styles'
 
 function ProjectTable({
   data,
-  myRole,
+  role,
   onDelete,
   history,
   location,
@@ -39,14 +39,14 @@ function ProjectTable({
       return columns
     }
 
-    return getColumns(myRole, disableActions)
-  }, [myRole, disableActions])
+    return getColumns(role, disableActions)
+  }, [role, disableActions])
 
   const showProjectDetail = useCallback(
     id => () => {
-      history.push(`/${URL_PREFIXES[myRole]}/projects/${id}/detail`, location.pathname)
+      history.push(`/${URL_PREFIXES[role]}/projects/${id}/detail`, location.pathname)
     },
-    [history, location.pathname, myRole]
+    [history, location.pathname, role]
   )
 
   if (data) {
@@ -72,7 +72,7 @@ function ProjectTable({
               <TableCell>{weakly_limit}</TableCell>
               <TableCell>{price}</TableCell>
               <TableCell>{PROJECT_STATUS_LABELS[status]}</TableCell>
-              {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(myRole) ? (
+              {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(role) ? (
                 <TableCell>{`${project_starter.first_name} ${project_starter.last_name}`}</TableCell>
               ) : null}
               {!disableActions && (
@@ -119,7 +119,7 @@ ProjectTable.propTypes = {
   data: PropTypes.shape({
     results: PropTypes.array.isRequired
   }),
-  myRole: PropTypes.number.isRequired,
+  role: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
   history: PropTypes.object.isRequired,
   disableActions: PropTypes.bool.isRequired,

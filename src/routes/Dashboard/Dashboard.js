@@ -82,7 +82,7 @@ const Dashboard = ({
     getApprovedRequests()
   }, [getApprovedRequests])
 
-  const projectData = useMemo(() => ({ results: ongoingProjects }), [ongoingProjects])
+  const projectsData = useMemo(() => ({ results: ongoingProjects }), [ongoingProjects])
   const financialRequestsData = useMemo(() => ({ results: pendingFinancialRequests }), [pendingFinancialRequests])
 
   const handleCancel = useCallback(
@@ -162,7 +162,7 @@ const Dashboard = ({
           <Grid item xs={12}>
             <Widget title="Ongoing Projects" disableWidgetMenu noBodyPadding>
               {ongoingProjects.length > 0 ? (
-                <ProjectTable data={projectData} myRole={me.role} disableActions />
+                <ProjectTable data={projectsData} role={me.role} disableActions />
               ) : (
                 <Typography className={classes.noItems} variant="body1">
                   No ongoing projects.
