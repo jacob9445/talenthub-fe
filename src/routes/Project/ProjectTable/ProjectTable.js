@@ -49,9 +49,8 @@ function ProjectTable({
     [history, location.pathname, myRole]
   )
 
-  const { results } = data
-
   if (data) {
+    const { results } = data
     return (
       <Table className="mb-0">
         <TableHead>
@@ -117,7 +116,9 @@ function ProjectTable({
 export default withRouter(ProjectTable)
 
 ProjectTable.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.shape({
+    results: PropTypes.array.isRequired
+  }),
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
   history: PropTypes.object.isRequired,
