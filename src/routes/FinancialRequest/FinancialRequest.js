@@ -22,6 +22,7 @@ import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
 import { FINANCIALREQUEST_TYPE } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import { ListDataType } from 'helpers/prop-types'
 
 const FinancialRequest = ({
   getFinancialRequests,
@@ -131,7 +132,7 @@ const selector = createStructuredSelector({
 
 FinancialRequest.propTypes = {
   getFinancialRequests: PropTypes.func.isRequired,
-  financialRequests: PropTypes.object,
+  financialRequests: ListDataType,
   isFinancialRequestsLoading: PropTypes.bool.isRequired,
   me: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
@@ -142,11 +143,4 @@ FinancialRequest.propTypes = {
   pagination: PropTypes.object
 }
 
-export default compose(
-  withPaginationInfo,
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(FinancialRequest)
+export default compose(withPaginationInfo, withRouter, connect(selector, actions))(FinancialRequest)

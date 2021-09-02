@@ -25,6 +25,7 @@ import {
 } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedNumber } from 'react-intl'
+import { ListDataType } from 'helpers/prop-types'
 
 function FinancialRequestTable({
   data,
@@ -130,9 +131,7 @@ function FinancialRequestTable({
 export default withRouter(FinancialRequestTable)
 
 FinancialRequestTable.propTypes = {
-  data: PropTypes.shape({
-    results: PropTypes.array.isRequired
-  }),
+  data: ListDataType,
   me: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,

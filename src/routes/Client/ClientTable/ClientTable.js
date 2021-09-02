@@ -17,6 +17,7 @@ import PropTypes from 'prop-types'
 import Spinner from 'components/Spinner'
 import { CLIENT_TYPE_LABELS, CLIENT_TYPES } from 'config/constants'
 import { ROLES } from 'config/constants'
+import { ListDataType } from 'helpers/prop-types'
 
 function ClientTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = useMemo(
@@ -79,7 +80,7 @@ function ClientTable({ data, myRole, handleDelete, match: { path }, pagination, 
 }
 
 ClientTable.propTypes = {
-  data: PropTypes.object,
+  data: ListDataType,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired

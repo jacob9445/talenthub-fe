@@ -15,6 +15,7 @@ import useStyles from './styles'
 import { URL_PREFIXES, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
 import { getProjects, projectsSelector } from 'store/modules/project'
+import { ListDataType } from 'helpers/prop-types'
 
 export const validationSchema = Yup.object().shape({
   amount: Yup.number().required('This field is required!')
@@ -127,7 +128,7 @@ FinancialRequestDetailForm.propTypes = {
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   me: PropTypes.object,
-  projects: PropTypes.object,
+  projects: ListDataType,
   values: PropTypes.object.isRequired
 }
 

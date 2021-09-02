@@ -18,6 +18,7 @@ import PropTypes from 'prop-types'
 import { ROLES, PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS, URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
+import { ListDataType } from 'helpers/prop-types'
 
 function ProjectTable({
   data,
@@ -116,9 +117,7 @@ function ProjectTable({
 export default withRouter(ProjectTable)
 
 ProjectTable.propTypes = {
-  data: PropTypes.shape({
-    results: PropTypes.array.isRequired
-  }),
+  data: ListDataType,
   role: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
   history: PropTypes.object.isRequired,

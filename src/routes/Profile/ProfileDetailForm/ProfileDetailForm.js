@@ -16,6 +16,7 @@ import { getUsers, usersSelector, usersLoadingSelector } from 'store/modules/use
 import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
 import { profileTypeOptions, genderOptions, URL_PREFIXES, ROLES } from 'config/constants'
+import { ListDataType } from 'helpers/prop-types'
 
 export const validationSchema = Yup.object().shape({
   profile_type: Yup.string().required('This field is required!'),
@@ -139,7 +140,7 @@ ProfileDetailForm.propTypes = {
   history: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
-  users: PropTypes.array,
+  users: ListDataType,
   me: PropTypes.object.isRequired,
   isUsersLoading: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired

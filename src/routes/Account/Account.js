@@ -14,6 +14,7 @@ import { getAccounts, deleteAccountAndRefresh, accountsSelector, accountsLoading
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import { ListDataType } from 'helpers/prop-types'
 
 const Account = ({
   getAccounts,
@@ -84,7 +85,7 @@ const Account = ({
 Account.propTypes = {
   getAccounts: PropTypes.func.isRequired,
   deleteAccountAndRefresh: PropTypes.func.isRequired,
-  accounts: PropTypes.object,
+  accounts: ListDataType,
   loadingAccounts: PropTypes.bool.isRequired,
   me: PropTypes.object,
   show: PropTypes.func.isRequired,
@@ -103,10 +104,4 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-export default compose(
-  withPaginationInfo,
-  connect(
-    selectors,
-    actions
-  )
-)(Account)
+export default compose(withPaginationInfo, connect(selectors, actions))(Account)

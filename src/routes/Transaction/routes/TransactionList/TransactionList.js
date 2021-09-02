@@ -13,6 +13,7 @@ import Spinner from 'components/Spinner'
 import { getTransactions, transactionsSelector, transactionsLoadingSelector } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import { ListDataType } from 'helpers/prop-types'
 
 const TransactionList = ({
   getTransactions,
@@ -64,18 +65,11 @@ const selector = createStructuredSelector({
 
 TransactionList.propTypes = {
   getTransactions: PropTypes.func.isRequired,
-  transactions: PropTypes.object,
+  transactions: ListDataType,
   isTransactionLoading: PropTypes.bool.isRequired,
   me: PropTypes.object.isRequired,
   show: PropTypes.func.isRequired,
   pagination: PropTypes.object
 }
 
-export default compose(
-  withRouter,
-  withPaginationInfo,
-  connect(
-    selector,
-    actions
-  )
-)(TransactionList)
+export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionList)

@@ -16,6 +16,7 @@ import { platformOptions } from 'config/constants'
 import { getProfiles, profileSelector } from 'store/modules/profile'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
+import { ListDataType } from 'helpers/prop-types'
 
 export const validationSchema = Yup.object().shape({
   profile: Yup.string().required('This field is required!'),
@@ -100,7 +101,7 @@ AccountDetailForm.propTypes = {
   location: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   getProfiles: PropTypes.func.isRequired,
-  profiles: PropTypes.object,
+  profiles: ListDataType,
   me: PropTypes.object,
   match: PropTypes.object.isRequired
 }

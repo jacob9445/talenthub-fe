@@ -18,6 +18,7 @@ import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { profile_type_patterns, gender_patterns } from 'config/constants'
 import Spinner from 'components/Spinner'
+import { ListDataType } from 'helpers/prop-types'
 
 const columns = ['Full Name', 'Type', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
 
@@ -85,7 +86,7 @@ function ProfileTable({ data, handleDelete, match: { path }, pagination, onChang
 }
 
 ProfileTable.propTypes = {
-  data: PropTypes.object,
+  data: ListDataType,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }

@@ -13,6 +13,7 @@ import Spinner from 'components/Spinner'
 import { getProjects, deleteProjectAndRefresh, projectsSelector, projectsLoadingSelector } from 'store/modules/project'
 import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import { ListDataType } from 'helpers/prop-types'
 
 const Project = ({
   getProjects,
@@ -87,18 +88,11 @@ const selectors = createStructuredSelector({
 Project.propTypes = {
   getProjects: PropTypes.func.isRequired,
   deleteProjectAndRefresh: PropTypes.func.isRequired,
-  projects: PropTypes.object,
+  projects: ListDataType,
   isProjectsLoading: PropTypes.bool.isRequired,
   me: PropTypes.object,
   match: PropTypes.object.isRequired,
   pagination: PropTypes.object
 }
 
-export default compose(
-  withRouter,
-  withPaginationInfo,
-  connect(
-    selectors,
-    actions
-  )
-)(Project)
+export default compose(withRouter, withPaginationInfo, connect(selectors, actions))(Project)

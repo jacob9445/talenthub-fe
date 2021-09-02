@@ -14,6 +14,7 @@ import ProfileTable from './ProfileTable'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import { ListDataType } from 'helpers/prop-types'
 
 const Profile = ({
   getProfiles,
@@ -76,7 +77,7 @@ Profile.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   deleteProfileAndRefresh: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  profiles: PropTypes.object,
+  profiles: ListDataType,
   me: PropTypes.object,
   show: PropTypes.func.isRequired,
   pagination: PropTypes.object
@@ -94,10 +95,4 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-export default compose(
-  withPaginationInfo,
-  connect(
-    selectors,
-    actions
-  )
-)(Profile)
+export default compose(withPaginationInfo, connect(selectors, actions))(Profile)
