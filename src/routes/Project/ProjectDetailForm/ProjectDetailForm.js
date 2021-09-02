@@ -23,6 +23,7 @@ import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
 import { usersSelector, getUsers } from 'store/modules/user'
 import { getClients, clientsSelector } from 'store/modules/client'
+import { ListDataType } from 'helpers/prop-types'
 
 export const validationSchema = Yup.object().shape({
   title: Yup.string().required('This field is required!'),
@@ -164,9 +165,9 @@ ProjectDetailForm.propTypes = {
   history: PropTypes.object.isRequired,
   me: PropTypes.object,
   match: PropTypes.object.isRequired,
-  users: PropTypes.object,
+  users: ListDataType,
   getUsers: PropTypes.func.isRequired,
-  clients: PropTypes.object,
+  clients: ListDataType,
   getClients: PropTypes.func.isRequired
 }
 

@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
+import { ListDataType } from 'helpers/prop-types'
 
 function IndividualReportTable({ data, show, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = ['Full Name', 'Earning']
@@ -62,14 +63,11 @@ const actions = {
 }
 
 IndividualReportTable.propTypes = {
-  data: PropTypes.object,
+  data: ListDataType,
   show: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,
   onChangeRowsPerPage: PropTypes.func.isRequired
 }
 
-export default connect(
-  null,
-  actions
-)(IndividualReportTable)
+export default connect(null, actions)(IndividualReportTable)

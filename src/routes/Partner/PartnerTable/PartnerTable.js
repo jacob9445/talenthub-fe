@@ -17,6 +17,7 @@ import PropTypes from 'prop-types'
 
 import { ROLES } from 'config/constants'
 import Spinner from 'components/Spinner'
+import { ListDataType } from 'helpers/prop-types'
 
 function PartnerTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = useMemo(
@@ -89,7 +90,7 @@ function PartnerTable({ data, myRole, handleDelete, match: { path }, pagination,
 export default withRouter(PartnerTable)
 
 PartnerTable.propTypes = {
-  data: PropTypes.object,
+  data: ListDataType,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired

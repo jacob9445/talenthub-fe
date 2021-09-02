@@ -15,6 +15,7 @@ import useStyles from './styles'
 import { ROLES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import { ListDataType } from 'helpers/prop-types'
 
 const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onChangePage, onChangeRowsPerPage }) => {
   let classes = useStyles()
@@ -92,7 +93,7 @@ const selectors = createStructuredSelector({
 })
 
 DailyLogs.propTypes = {
-  logs: PropTypes.object,
+  logs: ListDataType,
   me: PropTypes.object,
   getDailyLogs: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,

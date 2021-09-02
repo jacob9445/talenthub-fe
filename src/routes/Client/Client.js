@@ -14,6 +14,7 @@ import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSele
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import { ListDataType } from 'helpers/prop-types'
 
 const Clients = ({
   getClients,
@@ -86,17 +87,11 @@ const selectors = createStructuredSelector({
 Clients.propTypes = {
   getClients: PropTypes.func.isRequired,
   deleteClientAndRefresh: PropTypes.func.isRequired,
-  clients: PropTypes.object,
+  clients: ListDataType,
   isClientsLoading: PropTypes.bool.isRequired,
   me: PropTypes.object,
   show: PropTypes.func.isRequired,
   pagination: PropTypes.object
 }
 
-export default compose(
-  withPaginationInfo,
-  connect(
-    selectors,
-    actions
-  )
-)(Clients)
+export default compose(withPaginationInfo, connect(selectors, actions))(Clients)

@@ -16,6 +16,7 @@ import PropTypes from 'prop-types'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { PLATFORM_LABELS } from 'config/constants'
 import Spinner from 'components/Spinner'
+import { ListDataType } from 'helpers/prop-types'
 
 const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'URL', 'Actions']
 
@@ -76,7 +77,7 @@ function AccountTable({ data, handleDelete, match: { path }, pagination, onChang
 }
 
 AccountTable.propTypes = {
-  data: PropTypes.object,
+  data: ListDataType,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }

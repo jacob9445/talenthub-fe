@@ -14,6 +14,7 @@ import PartnerTable from './PartnerTable'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import { ListDataType } from 'helpers/prop-types'
 
 const Partner = ({
   getPartners,
@@ -87,17 +88,11 @@ const selectors = createStructuredSelector({
 Partner.propTypes = {
   getPartners: PropTypes.func.isRequired,
   deletePartnerAndRefresh: PropTypes.func.isRequired,
-  partners: PropTypes.object,
+  partners: ListDataType,
   isPartnersLoading: PropTypes.bool.isRequired,
   me: PropTypes.object,
   show: PropTypes.func.isRequired,
   pagination: PropTypes.object
 }
 
-export default compose(
-  withPaginationInfo,
-  connect(
-    selectors,
-    actions
-  )
-)(Partner)
+export default compose(withPaginationInfo, connect(selectors, actions))(Partner)

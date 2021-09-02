@@ -15,6 +15,7 @@ import { compose } from 'redux'
 
 import Spinner from 'components/Spinner'
 import { truncateText } from 'helpers/utils'
+import { ListDataType } from 'helpers/prop-types'
 
 const columns = ['Full name', 'Plan', 'Achievement', 'Action']
 
@@ -65,7 +66,7 @@ function LogTable({ data, match: { path }, pagination, onChangePage, onChangeRow
 }
 
 LogTable.propTypes = {
-  data: PropTypes.object,
+  data: ListDataType,
   myRole: PropTypes.number.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,

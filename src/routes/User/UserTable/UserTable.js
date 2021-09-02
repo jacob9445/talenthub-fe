@@ -19,6 +19,7 @@ import useStyles from './styles'
 import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { ROLES } from 'config/constants'
 import Spinner from 'components/Spinner'
+import { ListDataType } from 'helpers/prop-types'
 
 const role_patterns = [
   {
@@ -105,7 +106,7 @@ function UserTable({ data, myRole, handleDelete, match: { path }, pagination, on
 }
 
 UserTable.propTypes = {
-  data: PropTypes.object,
+  data: ListDataType,
   myRole: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,

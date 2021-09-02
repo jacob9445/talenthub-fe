@@ -8,6 +8,7 @@ import { FormattedDate, FormattedNumber } from 'react-intl'
 import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
 import { getPlatformLabel } from 'helpers/utils'
+import { ListDataType } from 'helpers/prop-types'
 
 const briefText = (str, length) => (str && str.length > length ? str.substring(0, length) + '...' : str)
 
@@ -74,7 +75,7 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
 }
 
 TransactionTable.propTypes = {
-  data: PropTypes.object,
+  data: ListDataType,
   me: PropTypes.object.isRequired
 }
 

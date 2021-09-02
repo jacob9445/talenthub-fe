@@ -14,6 +14,7 @@ import UserTable from './UserTable'
 import Widget from 'components/Widget'
 import { ROLES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import { ListDataType } from 'helpers/prop-types'
 
 const useStyles = makeStyles(theme => ({
   tableOverflow: {
@@ -86,7 +87,7 @@ const selectors = createStructuredSelector({
 })
 
 User.propTypes = {
-  users: PropTypes.object,
+  users: ListDataType,
   me: PropTypes.object,
   getUsers: PropTypes.func.isRequired,
   deleteUserAndRefresh: PropTypes.func.isRequired,
@@ -96,10 +97,4 @@ User.propTypes = {
   onChangeRowsPerPage: PropTypes.func.isRequired
 }
 
-export default compose(
-  withPaginationInfo,
-  connect(
-    selectors,
-    actions
-  )
-)(User)
+export default compose(withPaginationInfo, connect(selectors, actions))(User)
