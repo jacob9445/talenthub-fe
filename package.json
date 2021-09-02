@@ -16,6 +16,7 @@
     "formik": "^2.0.3",
     "highcharts": "^7.2.0",
     "highcharts-react-official": "^2.2.2",
+    "material-ui-pickers": "^2.2.4",
     "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
     "react": "^17.0.1",

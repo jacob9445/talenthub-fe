@@ -37,3 +37,9 @@ export const jsonToQueryString = obj => {
 }
 
 export const getPageCount = ({ page_size }, count) => Math.ceil(count / page_size)
+
+export const truncateText = text => {
+  if (text.length > 50) {
+    return text.slice(0, 50) + '...'
+  } else return text
+}
