@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom'
 import {
   getNotifications,
   setStatusRead,
+  setAllRead,
   closeNC,
   notificationsSelector,
   ncOpenStatusSelector
@@ -22,7 +23,15 @@ import {
 import useStyles from './styles'
 import { withRouter } from 'react-router-dom'
 
-const NotificationCenter = ({ status, closeNC, notifications, getNotifications, setStatusRead, match: { path } }) => {
+const NotificationCenter = ({
+  status,
+  closeNC,
+  notifications,
+  getNotifications,
+  setStatusRead,
+  setAllRead,
+  match: { path }
+}) => {
   const classes = useStyles()
   useEffect(() => getNotifications(), [getNotifications])
 
@@ -36,13 +45,19 @@ const NotificationCenter = ({ status, closeNC, notifications, getNotifications, 
     return ary
   }
 
+  const handleReadAll = useCallback(() => setAllRead(), [setAllRead])
+
   return (
     <Drawer anchor="right" open={status} onClose={() => closeNC()}>
       <div tabIndex={0} role="button">
         <div className={classes.list}>
           <div className={classes.notificationHeader}>
             <h3>Notification Center</h3>
-            {notifications && notifications.count !== 0 ? <Button size="small">Read all</Button> : null}
+            {notifications && notifications.count !== 0 ? (
+              <Button size="small" onClick={handleReadAll}>
+                Read all
+              </Button>
+            ) : null}
           </div>
           <Divider />
           <div className={classes.notificationBody}>
@@ -94,6 +109,7 @@ const NotificationCenter = ({ status, closeNC, notifications, getNotifications, 
 const actions = {
   getNotifications,
   setStatusRead,
+  setAllRead,
   closeNC
 }
 

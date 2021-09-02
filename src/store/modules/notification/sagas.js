@@ -31,7 +31,15 @@ const setStatusRead = apiCallSaga({
   }
 })
 
-const processRead = function*(action) {
+const setAllRead = apiCallSaga({
+  type: Types.SET_ALL_READ,
+  method: 'PUT',
+  path: function*() {
+    return yield roleBasedPath(`notifications/read-all/`)
+  }
+})
+
+const processPrivateRead = function*(action) {
   const notifications = yield select(notificationsSelector)
   notifications.results = notifications.results.filter(item => item.id !== action.payload.id)
   yield put(
@@ -43,8 +51,21 @@ const processRead = function*(action) {
   yield setStatusRead(action)
 }
 
+const processAllRead = function*(action) {
+  const notifications = yield select(notificationsSelector)
+  notifications.results = []
+  yield put(
+    setApiData({
+      data: notifications,
+      selectorKey: 'notifications'
+    })
+  )
+  yield setAllRead(action)
+}
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_NOTIFICATIONS, getNotifications)
   yield takeLatest(Types.GET_NOTIFICATION_DETAIL, getNotificationDetail)
-  yield takeLatest(Types.SET_STATUS_READ, processRead)
+  yield takeLatest(Types.SET_STATUS_READ, processPrivateRead)
+  yield takeLatest(Types.SET_ALL_READ, processAllRead)
 }
