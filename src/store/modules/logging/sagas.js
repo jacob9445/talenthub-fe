@@ -18,7 +18,7 @@ const getDailyLogDetail = apiCallSaga({
   type: Types.GET_DAILY_LOG_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
-    return yield roleBasedPath(`logging/daily-logs/${payload}/`)
+    return yield roleBasedPath(`logging/daily-logs/${payload.id}/`)
   },
   selectorKey: 'dailyLogDetail'
 })
