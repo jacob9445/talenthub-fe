@@ -21,6 +21,7 @@ import {
   ncOpenStatusSelector
 } from 'store/modules/notification'
 import useStyles from './styles'
+import { NOTIFICATION_CONFIG } from 'config/constants'
 import { withRouter } from 'react-router-dom'
 
 const NotificationCenter = ({
@@ -64,7 +65,10 @@ const NotificationCenter = ({
             {notifications && notifications.count !== 0
               ? notifications.results.map((notification, index) => (
                   <Card className={classes.card} key={index} color="textSecondary">
-                    <CardHeader className={classes.title} title="Financial Request" />
+                    <CardHeader
+                      className={classes.title}
+                      title={NOTIFICATION_CONFIG[notification.content_name]['title']}
+                    />
                     <CardContent className={classes.content}>
                       <Typography color="textSecondary" variant="body1">
                         <Link
@@ -78,9 +82,12 @@ const NotificationCenter = ({
                         <Link
                           className={classes.link}
                           color="primary"
-                          to={`${path}/financial-requests/${notification.content_object.id}/detail`}
+                          to={`${path}/${NOTIFICATION_CONFIG[notification.content_name]['path']}/${
+                            notification.content_object.id
+                          }/detail`}
                           onClick={() => closeNC()}>
-                          {messageStringIntoArrary(notification.message)[2]}
+                          {' '}
+                          {NOTIFICATION_CONFIG[notification.content_name]['objectName']}
                         </Link>
                       </Typography>
                       <IconButton className={classes.cancelIcon} onClick={() => setStatusRead({ id: notification.id })}>
@@ -91,7 +98,9 @@ const NotificationCenter = ({
                       <Button
                         className={classes.detail}
                         component={Link}
-                        to={`${path}/financial-requests/${notification.content_object.id}/detail`}
+                        to={`${path}/${NOTIFICATION_CONFIG[notification.content_name]['path']}/${
+                          notification.content_object.id
+                        }/detail`}
                         onClick={() => closeNC()}>
                         See detail
                       </Button>
