@@ -27,6 +27,7 @@ function LogTable({ data, history, location, match: { path }, pagination, onChan
     },
     [location, history]
   )
+
   if (data) {
     return (
       <Table className="mb-0">

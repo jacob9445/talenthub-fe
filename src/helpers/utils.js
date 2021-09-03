@@ -62,3 +62,15 @@ export const fromMsgStrToArray = str => {
   ary.push(str.slice(startPos))
   return ary
 }
+
+export const generateDecrementArray = (startValue, count) =>
+  new Array(count).fill(0).reduce((acc, val, idx) => {
+    acc.push(startValue - idx)
+    return acc
+  }, [])
+
+export const generateIncrementArray = (startValue, count) =>
+  new Array(count).fill(0).reduce((acc, val, idx) => {
+    acc.push(startValue + idx)
+    return acc
+  }, [])
