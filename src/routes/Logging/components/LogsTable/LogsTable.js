@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {
   Table,
   TableRow,
@@ -17,9 +17,16 @@ import Spinner from 'components/Spinner'
 import { truncateText } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
 
-const columns = ['Full name', 'Plan', 'Achievement', 'Action']
+const columns = ['Full name', 'Plan', 'Achievements', 'Action']
 
-function LogTable({ data, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
+function LogTable({ data, history, location, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
+  const handleRowClick = useCallback(
+    (path, id) => e => {
+      e.preventDefault()
+      history.push(`${path}/${id}`, `${location.pathname}${location.search}`)
+    },
+    [location, history]
+  )
   if (data) {
     return (
       <Table className="mb-0">
@@ -39,7 +46,12 @@ function LogTable({ data, match: { path }, pagination, onChangePage, onChangeRow
               <TableCell>{truncateText(plan)}</TableCell>
               <TableCell>{truncateText(achievements)}</TableCell>
               <TableCell>
-                <Button component={Link} to={`${path}/${id}`} variant="text" color="primary">
+                <Button
+                  component={Link}
+                  to={`${path}/${id}`}
+                  onClick={handleRowClick(path, id)}
+                  variant="text"
+                  color="primary">
                   View
                 </Button>
               </TableCell>
