@@ -32,5 +32,8 @@ export default makeStyles(theme => ({
     '&:hover': {
       textDecoration: 'underline'
     }
+  },
+  nothing: {
+    opacity: 0.7
   }
 }))

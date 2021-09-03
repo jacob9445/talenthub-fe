@@ -41,10 +41,13 @@ const setAllRead = apiCallSaga({
 
 const processPrivateRead = function*(action) {
   const notifications = yield select(notificationsSelector)
-  notifications.results = notifications.results.filter(item => item.id !== action.payload.id)
   yield put(
     setApiData({
-      data: notifications,
+      data: {
+        ...notifications,
+        count: notifications.count - 1,
+        results: notifications.results.filter(item => item.id !== action.payload.id)
+      },
       selectorKey: 'notifications'
     })
   )
@@ -53,10 +56,13 @@ const processPrivateRead = function*(action) {
 
 const processAllRead = function*(action) {
   const notifications = yield select(notificationsSelector)
-  notifications.results = []
   yield put(
     setApiData({
-      data: notifications,
+      data: {
+        ...notifications,
+        count: notifications.count - 1,
+        results: []
+      },
       selectorKey: 'notifications'
     })
   )

@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { Menu as MenuIcon, Person as AccountIcon, ArrowBack as ArrowBackIcon } from '@material-ui/icons'
 import Badge from '@material-ui/core/Badge'
-import MailIcon from '@material-ui/icons/Mail'
+import { NotificationsActive, NotificationsNone } from '@material-ui/icons'
 import classNames from 'classnames'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -55,13 +55,13 @@ function Header({ me, authLogout, openNC, notifications, getNotifications }) {
           Talents Hub
         </Typography>
         <div className={classes.grow} />
-        <IconButton aria-label="4 pending messages" className={classes.badge} onClick={() => openNC()}>
+        <IconButton color="inherit" className={classes.badge} onClick={() => openNC()}>
           {notifications && notifications.count !== 0 ? (
             <Badge badgeContent={notifications.results.length} color="secondary">
-              <MailIcon />
+              <NotificationsActive classes={{ root: classes.notificaionIcon }} />
             </Badge>
           ) : (
-            <MailIcon />
+            <NotificationsNone classes={{ root: classes.notificaionIcon }} />
           )}
         </IconButton>
 

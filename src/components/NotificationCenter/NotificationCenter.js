@@ -4,14 +4,8 @@ import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer'
 import Divider from '@material-ui/core/Divider'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
-import { Cancel as CancelIcon } from '@material-ui/icons'
-import { IconButton } from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import NotificationCard from 'components/NotificationCard'
 import {
   getNotifications,
   setStatusRead,
@@ -21,7 +15,6 @@ import {
   ncOpenStatusSelector
 } from 'store/modules/notification'
 import useStyles from './styles'
-import { NOTIFICATION_CONFIG } from 'config/constants'
 import { withRouter } from 'react-router-dom'
 
 const NotificationCenter = ({
@@ -35,16 +28,6 @@ const NotificationCenter = ({
 }) => {
   const classes = useStyles()
   useEffect(() => getNotifications(), [getNotifications])
-
-  const messageStringIntoArrary = str => {
-    var ary = []
-    const first = str.indexOf('}}')
-    const last = str.lastIndexOf('{{')
-    ary[0] = str.slice(0, first + 2)
-    ary[1] = str.slice(first + 2, last).trim()
-    ary[2] = str.slice(last, str.length)
-    return ary
-  }
 
   const handleReadAll = useCallback(() => setAllRead(), [setAllRead])
 
@@ -62,52 +45,23 @@ const NotificationCenter = ({
           </div>
           <Divider />
           <div className={classes.notificationBody}>
-            {notifications && notifications.count !== 0
-              ? notifications.results.map((notification, index) => (
-                  <Card className={classes.card} key={index} color="textSecondary">
-                    <CardHeader
-                      className={classes.title}
-                      title={NOTIFICATION_CONFIG[notification.content_name]['title']}
-                    />
-                    <CardContent className={classes.content}>
-                      <Typography color="textSecondary" variant="body1">
-                        <Link
-                          className={classes.link}
-                          to={`${path}/users/${notification.creator.id}/detail`}
-                          color="primary"
-                          onClick={() => closeNC()}>
-                          {notification.creator.first_name} {notification.creator.last_name}
-                        </Link>{' '}
-                        {messageStringIntoArrary(notification.message)[1]}
-                        <Link
-                          className={classes.link}
-                          color="primary"
-                          to={`${path}/${NOTIFICATION_CONFIG[notification.content_name]['path']}/${
-                            notification.content_object.id
-                          }/detail`}
-                          onClick={() => closeNC()}>
-                          {' '}
-                          {NOTIFICATION_CONFIG[notification.content_name]['objectName']}
-                        </Link>
-                      </Typography>
-                      <IconButton className={classes.cancelIcon} onClick={() => setStatusRead({ id: notification.id })}>
-                        <CancelIcon />
-                      </IconButton>
-                    </CardContent>
-                    <CardActions>
-                      <Button
-                        className={classes.detail}
-                        component={Link}
-                        to={`${path}/${NOTIFICATION_CONFIG[notification.content_name]['path']}/${
-                          notification.content_object.id
-                        }/detail`}
-                        onClick={() => closeNC()}>
-                        See detail
-                      </Button>
-                    </CardActions>
-                  </Card>
-                ))
-              : 'No new notifications'}
+            {notifications && notifications.count !== 0 ? (
+              notifications.results.map((notification, index) => (
+                <NotificationCard
+                  key={index}
+                  notification={notification}
+                  classes={classes}
+                  path={path}
+                  index={index}
+                  closeNC={closeNC}
+                  setStatusRead={setStatusRead}
+                />
+              ))
+            ) : (
+              <Typography className={classes.nothing} variant="body1">
+                {'No new notifications'}
+              </Typography>
+            )}
           </div>
         </div>
       </div>
