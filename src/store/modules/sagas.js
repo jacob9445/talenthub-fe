@@ -15,6 +15,8 @@ import { saga as individualReport } from './individualReport'
 import { saga as teamReport } from './teamReport'
 import { saga as notification } from './notification'
 import { saga as logging } from './logging'
+import { saga as myLogs } from './mylogs'
+
 export default function* rootSaga() {
   yield all([
     auth(),
@@ -31,6 +33,7 @@ export default function* rootSaga() {
     individualReport(),
     teamReport(),
     logging(),
-    notification()
+    notification(),
+    myLogs()
   ])
 }

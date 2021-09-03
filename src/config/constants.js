@@ -371,6 +371,21 @@ export const periodOptions = [
   }
 ]
 
+export const LOG_OPTIONS = [
+  {
+    value: 'daily-log',
+    label: 'Daily Log'
+  },
+  {
+    value: 'weekly-log',
+    label: 'Weekly Log'
+  },
+  {
+    value: 'monthly-log',
+    label: 'Monthly Log'
+  }
+]
+
 export const NOTIFICATION_CONFIG = {
   finance_financialrequest: {
     title: 'Financial Request',
