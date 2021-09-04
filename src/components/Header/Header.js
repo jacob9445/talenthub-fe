@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState } from 'react'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { Menu as MenuIcon, Person as AccountIcon, ArrowBack as ArrowBackIcon } from '@material-ui/icons'
 import Badge from '@material-ui/core/Badge'
@@ -14,9 +14,9 @@ import { openNC } from 'store/modules/notification'
 import { useLayoutState, useLayoutDispatch, toggleSidebar } from 'context/LayoutContext'
 import { authLogout } from 'store/modules/auth'
 import { meSelector } from 'store/modules/auth/selectors'
-import { getNotifications, notificationsSelector } from 'store/modules/notification'
+import { notificationsSelector } from 'store/modules/notification'
 
-function Header({ me, authLogout, openNC, notifications, getNotifications }) {
+function Header({ me, authLogout, openNC, notifications }) {
   var classes = useStyles()
 
   // global
@@ -28,7 +28,6 @@ function Header({ me, authLogout, openNC, notifications, getNotifications }) {
   const handleLogout = useCallback(() => {
     authLogout()
   }, [authLogout])
-  useEffect(() => getNotifications(), [getNotifications])
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -105,7 +104,6 @@ function Header({ me, authLogout, openNC, notifications, getNotifications }) {
 }
 
 const actions = {
-  getNotifications,
   authLogout,
   openNC
 }
