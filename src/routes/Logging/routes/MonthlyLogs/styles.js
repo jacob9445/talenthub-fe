@@ -14,7 +14,8 @@ export default makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120
+    minWidth: 40,
+    textAlign: 'center'
   },
   buttonMargin: {
     marginRight: theme.spacing.unit

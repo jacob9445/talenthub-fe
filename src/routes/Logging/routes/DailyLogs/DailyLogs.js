@@ -9,7 +9,7 @@ import { DatePicker } from 'material-ui-pickers'
 
 import { dailyLogsSelector, getDailyLogs } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
-import DailyLogTable from '../../../../components/LogsTable'
+import DailyLogTable from '../../components/LogsTable'
 import Widget from 'components/Widget'
 import useStyles from './styles'
 import { ROLES } from 'config/constants'

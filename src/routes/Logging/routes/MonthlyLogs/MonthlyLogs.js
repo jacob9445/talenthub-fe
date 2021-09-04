@@ -13,7 +13,7 @@ import Select from '@material-ui/core/Select'
 
 import { monthlyLogsSelector, getMonthlyLogs } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
-import LogsTable from '../../../../components/LogsTable'
+import LogsTable from '../../components/LogsTable'
 import Widget from 'components/Widget'
 import useStyles from './styles'
 import { ROLES } from 'config/constants'
