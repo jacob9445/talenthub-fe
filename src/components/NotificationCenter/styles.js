@@ -20,7 +20,8 @@ export default makeStyles(theme => ({
     padding: 5
   },
   card: {
-    position: 'relative'
+    position: 'relative',
+    marginBottom: theme.spacing(1.5)
   },
   content: {
     paddingTop: theme.spacing(1) / 2,
