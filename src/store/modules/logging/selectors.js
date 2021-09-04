@@ -11,3 +11,9 @@ export const monthlyLogsLoadingSelector = state => isRequestPending('monthlyLogs
 
 export const monthlyLogDetailSelector = createDataSelector('monthlyLogDetail')
 export const monthlyLogDetailLoadingSelector = state => isRequestPending('monthlyLogDetail', 'GET')(state)
+
+export const weeklyLogsSelector = createDataSelector('weeklyLogs')
+export const weeklyLogLoadingSelector = state => isRequestPending('weeklyLogs', 'GET')(state)
+
+export const weeklyLogDetailSelector = createDataSelector('weeklyLogDetail')
+export const weeklyLogDetailLoadingSelector = state => isRequestPending('weeklyLogDetail', 'GET')(state)
