@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import useStyles from './styles'
 
 const LogDetail = ({ logDetail, onGoBack, editable }) => {
+  console.log({ logDetail })
   let classes = useStyles()
   return (
     <>
