@@ -1,10 +1,10 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 
-import DailyLogDetail from '../routes/DailyReports/routes/DailyLogDetail'
-import DailyLogs from '../routes/DailyReports/'
-import MonthlyLogs from 'routes/Logging/routes/MonthlyReports'
-import MonthlyLogDetail from 'routes/Logging/routes/MonthlyReports/routes/MonthlyLogDetail'
+import DailyLogDetail from 'routes/Logging/routes/DailyLogDetail'
+import DailyLogs from 'routes/Logging/routes/DailyLogs'
+import MonthlyLogs from 'routes/Logging/routes/MonthlyLogs'
+import MonthlyLogDetail from 'routes/Logging/routes/MonthlyLogDetail'
 
 const Logging = ({ match: { path } }) => {
   return (
