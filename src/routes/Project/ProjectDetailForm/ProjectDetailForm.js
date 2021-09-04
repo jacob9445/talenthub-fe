@@ -115,27 +115,12 @@ const ProjectDetailForm = ({
           validate={value => validateEndedAtField(value, values.status, values.type)}
         />
       ) : null}
-      <Field
-        component={FormSelect}
-        type="text"
-        htmlId="status"
-        name="status"
-        label="Status"
-        options={PROJECT_STATUS_OPTIONS}
-      />
-      <Field
-        component={FormEditableSelect}
-        type="text"
-        htmlId="client"
-        name="client"
-        label="Client"
-        options={clientList}
-      />
+      <Field component={FormSelect} htmlId="status" name="status" label="Status" options={PROJECT_STATUS_OPTIONS} />
+      <Field component={FormEditableSelect} htmlId="client" name="client" label="Client" options={clientList} />
       {role !== ROLES.DEVELOPER ? (
         <div>
           <Field
             component={FormEditableSelect}
-            type="text"
             htmlId="project_starter"
             name="project_starter"
             label="Project Starter"
