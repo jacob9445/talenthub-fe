@@ -370,3 +370,31 @@ export const periodOptions = [
     label: 'Custom'
   }
 ]
+
+export const NOTIFICATION_CONFIG = {
+  finance_financialrequest: {
+    title: 'Financial Request',
+    objectName: 'financial request',
+    path: 'financial-requests'
+  },
+  finance_project: {
+    title: 'Project',
+    objectName: 'project',
+    path: 'projects'
+  },
+  reporting_log_daily: {
+    title: 'Daily Log',
+    objectName: 'daily log',
+    path: 'logging/daily-logs'
+  },
+  reporting_log_weekly: {
+    title: 'Weekly Log',
+    objectName: 'weely log',
+    path: 'logging/weekly-logs'
+  },
+  reporting_log_monthly: {
+    title: 'Monthly Log',
+    objectName: 'monthly log',
+    path: 'logging/monthly-logs'
+  }
+}

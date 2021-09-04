@@ -43,3 +43,22 @@ export const truncateText = text => {
     return text.slice(0, 50) + '...'
   } else return text
 }
+
+export const fromMsgStrToArray = str => {
+  const splitters = ['{{', '}}']
+  let splitterIdx = 0
+  let ary = [],
+    startPos = 0
+  let foundPos = str.indexOf(splitters[splitterIdx], startPos)
+  while (foundPos !== -1) {
+    if (splitterIdx > 0) {
+      foundPos += 2
+    }
+    ary.push(str.slice(startPos, foundPos))
+    startPos = foundPos
+    splitterIdx = (splitterIdx + 1) % splitters.length
+    foundPos = str.indexOf(splitters[splitterIdx], startPos)
+  }
+  ary.push(str.slice(startPos))
+  return ary
+}
