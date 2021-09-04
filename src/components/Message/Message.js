@@ -53,7 +53,7 @@ const Message = ({ hideMessage, state, options, dispatch }) => {
   const handleClick = useCallback(() => {
     hideMessage()
     if (actionOnClick) dispatch(actionOnClick)
-  }, [hideMessage, actionOnClick])
+  }, [hideMessage, actionOnClick, dispatch])
 
   return (
     <Snackbar
