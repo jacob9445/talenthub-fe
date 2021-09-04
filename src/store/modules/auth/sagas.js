@@ -1,8 +1,11 @@
-import { put, takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { put, takeLatest, select } from 'redux-saga/effects'
+import { apiCallSaga, REQUEST_SUCCESS } from '../api'
 import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT } from './types'
 import { authSuccess, authFail } from './actions'
 import { API_AUTH_GET_URL } from 'config/constants'
+import { notificationsSelector, openNC } from '../notification'
+import { showMessage } from '../message'
+import { takeApiResult } from 'helpers/sagaHelpers'
 
 const authLogin = apiCallSaga({
   type: AUTH_LOGIN,
@@ -17,6 +20,27 @@ const authLogin = apiCallSaga({
     yield put(authFail())
   }
 })
+
+const processAuthLogin = function*(action) {
+  yield authLogin(action)
+  let nAction = yield takeApiResult('notifications')
+  if (nAction.type === REQUEST_SUCCESS) {
+    const notifications = yield select(notificationsSelector)
+    if (notifications.count > 0) {
+      yield put(
+        showMessage({
+          message: `You have ${notifications.count} new notifications`,
+          variant: 'info',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'right'
+          },
+          actionOnClick: openNC()
+        })
+      )
+    }
+  }
+}
 
 const authSignup = apiCallSaga({
   type: AUTH_SIGNUP,
@@ -36,7 +60,7 @@ const authLogout = function() {
 }
 
 export default function* rootSaga() {
-  yield takeLatest(AUTH_LOGIN, authLogin)
+  yield takeLatest(AUTH_LOGIN, processAuthLogin)
   yield takeLatest(AUTH_SIGNUP, authSignup)
   yield takeLatest(AUTH_GETME, authGetMe)
   yield takeLatest(AUTH_LOGOUT, authLogout)

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Snackbar, IconButton, Icon, SnackbarContent } from '@material-ui/core'
-import { green, amber, blue } from '@material-ui/core/colors'
+import { green, amber, teal } from '@material-ui/core/colors'
 import { Close as CloseIcon, CheckCircle, Warning, ErrorOutline, Info } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/styles'
 import { connect } from 'react-redux'
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.getContrastText(theme.palette.error.dark)
   },
   info: {
-    backgroundColor: blue[600],
+    backgroundColor: teal[600],
     color: '#ffffff'
   },
   warning: {
@@ -31,6 +31,12 @@ const useStyles = makeStyles(theme => ({
   messageWrapper: {
     display: 'flex',
     alignItems: 'center'
+  },
+  pointer: {
+    cursor: 'pointer'
+  },
+  icon: {
+    marginRight: theme.spacing(1)
   }
 }))
 
@@ -41,11 +47,17 @@ const variantIcon = {
   info: <Info />
 }
 
-const Message = ({ hideMessage, state, options }) => {
+const Message = ({ hideMessage, state, options, dispatch }) => {
   const classes = useStyles()
+  const { actionOnClick, ...props } = options
+  const handleClick = useCallback(() => {
+    hideMessage()
+    if (actionOnClick) dispatch(actionOnClick)
+  }, [hideMessage, actionOnClick])
+
   return (
     <Snackbar
-      {...options}
+      {...props}
       open={state}
       onClose={hideMessage}
       classes={{
@@ -59,11 +71,13 @@ const Message = ({ hideMessage, state, options }) => {
         }
       }}>
       <SnackbarContent
-        className={classNames(classes[options.variant])}
+        className={classes[options.variant]}
         message={
-          <div className={classes.messageWrapper}>
+          <div
+            className={classNames(classes.messageWrapper, { [classes.pointer]: Boolean(actionOnClick) })}
+            onClick={handleClick}>
             {variantIcon[options.variant] && (
-              <Icon className="mr-8" color="inherit">
+              <Icon className={classes.icon} color="inherit">
                 {variantIcon[options.variant]}
               </Icon>
             )}
@@ -80,9 +94,10 @@ const Message = ({ hideMessage, state, options }) => {
   )
 }
 
-const actions = {
-  hideMessage
-}
+const actions = dispatch => ({
+  hideMessage: () => dispatch(hideMessage()),
+  dispatch
+})
 
 const selectors = createStructuredSelector({
   state: messageStateSelector,
@@ -95,7 +110,4 @@ Message.propTypes = {
   state: PropTypes.bool
 }
 
-export default connect(
-  selectors,
-  actions
-)(Message)
+export default connect(selectors, actions)(Message)
