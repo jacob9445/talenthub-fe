@@ -61,7 +61,7 @@ const Project = ({
             }>
             <ProjectsTable
               data={projects}
-              myRole={me.role}
+              role={me.role}
               onDelete={handleDelete}
               pagination={pagination}
               onChangePage={onChangePage}
