@@ -42,7 +42,7 @@ const LogCard = ({ title, content, onSave, logId, type }) => {
           </Typography>
         )}
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.cardActions}>
         {editMode ? (
           <>
             <Button variant="text" color="primary" onClick={() => setEditMode(false)}>
@@ -53,7 +53,7 @@ const LogCard = ({ title, content, onSave, logId, type }) => {
             </Button>
           </>
         ) : (
-          <Button variant="text" color="primary" onClick={() => setEditMode(true)}>
+          <Button variant="text" color="primary" onClick={() => setEditMode(true)} alignSelf="flex-end">
             {content ? 'Edit' : 'Add'}
           </Button>
         )}

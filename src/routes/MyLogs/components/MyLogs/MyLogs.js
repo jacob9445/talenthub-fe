@@ -6,8 +6,8 @@ import MyDailyLogs from 'routes/MyLogs/routes/MyDailyLogs'
 const MyLogs = ({ match: { path } }) => {
   return (
     <Switch>
-      <Route exact path={`${path}/my-logs/daily`} component={MyDailyLogs} />
-      <Redirect to={`${path}/my-logs/daily`} />
+      <Route exact path={`${path}/daily`} component={MyDailyLogs} />
+      <Redirect to={`${path}/daily`} />
     </Switch>
   )
 }

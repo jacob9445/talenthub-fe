@@ -3,12 +3,10 @@ import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Grid, Button } from '@material-ui/core'
-import Paper from '@material-ui/core/Paper'
 import { format } from 'date-fns'
 import { DatePicker } from 'material-ui-pickers'
-import SimpleSelect from 'components/SimpleSelect'
-import { LOG_OPTIONS } from 'config/constants'
 import LogCard from 'routes/MyLogs/components/LogCard'
+import MyLogLayout from 'routes/MyLogs/components/MyLogLayout'
 import useStyles from './styles'
 import { getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDailylogSelector } from 'store/modules/mylogs'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
@@ -102,42 +100,30 @@ const MyDailyLog = ({
     [updateMyDailyLog, createMyDailyLog, myDailyLog, selectedDate]
   )
 
-  const handleLogChange = useCallback(() => {}, [])
-
   useEffect(() => getMyDailyLog(), [getMyDailyLog])
   return (
-    <>
-      <Grid container className={classes.grid} spacing={2}>
-        <Grid item xs={12}>
-          <Paper elevation={1}>
-            <Grid container className={classes.toolbar} alignItems="center">
-              <Grid item>
-                <SimpleSelect label="Logs" defaultValue="daily-log" options={LOG_OPTIONS} onChange={handleLogChange} />
-              </Grid>
-              <Grid item className={classes.actions}>
-                <DatePicker margin="normal" label="Choose a date" value={selectedDate} onChange={handleDateChange} />
-                <Button margin="normal" variant="outlined" color="primary" onClick={viewTodayLog}>
-                  Today
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
+    <MyLogLayout
+      interval="daily"
+      actions={
+        <Grid item className={classes.actions}>
+          <DatePicker margin="normal" label="Choose a date" value={selectedDate} onChange={handleDateChange} />
+          <Button margin="normal" variant="outlined" color="primary" onClick={viewTodayLog}>
+            Today
+          </Button>
         </Grid>
-        <Grid item xs={6} className={classes.cardBlock}>
-          <LogCard title="Plan" logId={myDailyLog?.id} content={myDailyLog?.plan} onSave={handleSavePlan} />
-        </Grid>
-        <Grid item xs={6} className={classes.cardBlock}>
-          {
-            <LogCard
-              title="Achievements"
-              logId={myDailyLog?.id}
-              content={myDailyLog?.achievements}
-              onSave={handleSaveAchievements}
-            />
-          }
-        </Grid>
+      }>
+      <Grid item xs={6}>
+        <LogCard title="Plan" logId={myDailyLog?.id} content={myDailyLog?.plan} onSave={handleSavePlan} />
       </Grid>
-    </>
+      <Grid item xs={6}>
+        <LogCard
+          title="Achievements"
+          logId={myDailyLog?.id}
+          content={myDailyLog?.achievements}
+          onSave={handleSaveAchievements}
+        />
+      </Grid>
+    </MyLogLayout>
   )
 }
 
