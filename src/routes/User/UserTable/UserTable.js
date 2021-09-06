@@ -46,9 +46,16 @@ const role_patterns = [
 
 const columns = ['Full name', 'Email', 'Role', 'Actions']
 
-function UserTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
+function UserTable({
+  data,
+  role: myRole,
+  handleDelete,
+  match: { path },
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) {
   const classes = useStyles()
-
   if (data) {
     return (
       <Table className="mb-0">
@@ -107,7 +114,7 @@ function UserTable({ data, myRole, handleDelete, match: { path }, pagination, on
 
 UserTable.propTypes = {
   data: ListDataType,
-  myRole: PropTypes.number.isRequired,
+  role: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,

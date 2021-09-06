@@ -15,14 +15,14 @@ const briefText = (str, length) => (str && str.length > length ? str.substring(0
 function TransactionTable({ data, history, me, pagination, onChangePage, onChangeRowsPerPage }) {
   const classes = useStyles()
   const columns = ['Date', 'From/To', 'Gross amount', 'Net Amount', 'Owner', 'Description', 'Payment Platform']
-  const myRole = me?.role
+  const role = me?.role
   const handleRowClick = useCallback(
     id => () => {
-      if (myRole) {
-        history.push(`/${URL_PREFIXES[myRole]}/transactions/${id}/detail`)
+      if (role) {
+        history.push(`/${URL_PREFIXES[role]}/transactions/${id}/detail`)
       }
     },
-    [history, myRole]
+    [history, role]
   )
   if (data) {
     return (

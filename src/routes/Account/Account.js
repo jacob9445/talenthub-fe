@@ -70,7 +70,6 @@ const Account = ({
             }>
             <AccountTable
               data={accounts}
-              myRole={me.role}
               handleDelete={handleDelete}
               pagination={pagination}
               onChangePage={onChangePage}

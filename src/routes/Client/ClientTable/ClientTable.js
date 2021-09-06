@@ -19,13 +19,13 @@ import { CLIENT_TYPE_LABELS, CLIENT_TYPES } from 'config/constants'
 import { ROLES } from 'config/constants'
 import { ListDataType } from 'helpers/prop-types'
 
-function ClientTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
+function ClientTable({ data, role, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = useMemo(
     () =>
-      myRole === ROLES.DEVELOPER
+      role === ROLES.DEVELOPER
         ? ['Full Name', 'Type', 'Company Name', 'Started at', 'Actions']
         : ['Full Name', 'Type', 'Company Name', 'Started at', 'Owner', 'Actions'],
-    [myRole]
+    [role]
   )
   if (data) {
     return (
@@ -44,7 +44,7 @@ function ClientTable({ data, myRole, handleDelete, match: { path }, pagination, 
               <TableCell>{CLIENT_TYPE_LABELS[type]}</TableCell>
               <TableCell>{type === CLIENT_TYPES.INDIVIDUAL ? null : company_name}</TableCell>
               <TableCell>{started_at}</TableCell>
-              {myRole === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
+              {role === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
               <TableCell>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">
                   <IconButton component={Link} to={`${path}/${id}/detail`}>
@@ -81,7 +81,7 @@ function ClientTable({ data, myRole, handleDelete, match: { path }, pagination, 
 
 ClientTable.propTypes = {
   data: ListDataType,
-  myRole: PropTypes.number.isRequired,
+  role: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }

@@ -118,7 +118,8 @@ const MonthlyLogs = ({
       }>
       <LogsTable
         data={monthlyLogs}
-        myRole={me.role}
+        role={me.role}
+        interval="monthly-logs"
         pagination={pagination}
         onChangePage={onChangePage}
         onChangeRowsPerPage={onChangeRowsPerPage}

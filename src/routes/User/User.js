@@ -62,7 +62,7 @@ const User = ({ getUsers, users, me, deleteUserAndRefresh, show, pagination, onC
             }>
             <UserTable
               data={users}
-              myRole={me.role}
+              role={me.role}
               handleDelete={handleDelete}
               pagination={pagination}
               onChangePage={onChangePage}

@@ -60,7 +60,7 @@ const Clients = ({
             }>
             <ClientTable
               data={clients}
-              myRole={me.role}
+              role={me.role}
               handleDelete={handleDelete}
               pagination={pagination}
               onChangePage={onChangePage}
