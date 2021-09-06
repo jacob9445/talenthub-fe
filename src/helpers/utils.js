@@ -1,4 +1,5 @@
 import * as R from 'ramda'
+import { format } from 'date-fns'
 import { PAYMENT_PLATFORM_OPTIONS } from 'config/constants'
 
 export const getPlatformLabel = paymentPlatform =>
@@ -74,3 +75,37 @@ export const generateIncrementArray = (startValue, count) =>
     acc.push(startValue + idx)
     return acc
   }, [])
+
+const isLeapYear = year => {
+  if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export const getFirstDateOfWeek = (year, week) => {
+  const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  const firstdateOfYear = new Date(year, 0, 1)
+  const weekNumberOfFirstDate = format(firstdateOfYear, 'ii')
+  if (isLeapYear(year)) days[1] = 29
+  var period = (week - 2) * 7 + 7 - parseInt(weekNumberOfFirstDate) + 2
+  var i = 0
+  while (period >= days[i]) {
+    period -= days[i]
+    i++
+  }
+  const month = i + 1
+  const day = period
+  const firstdate = new Date(year, month - 1, day)
+  return firstdate
+}
+
+export const getWeekOfMonth = date => {
+  const year = format(date, 'yyyy')
+  const month = format(date, 'MM')
+  const week = format(date, 'ww')
+  const firstDateOfMonth = new Date(year, month - 1, 1)
+  const weekOfFirstDate = format(firstDateOfMonth, 'ww')
+  return parseInt(week) - parseInt(weekOfFirstDate) + 1
+}

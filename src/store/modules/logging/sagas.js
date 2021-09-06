@@ -43,9 +43,31 @@ const getMonthlyLogDetail = apiCallSaga({
   selectorKey: 'monthlyLogDetail'
 })
 
+const getWeeklyLogs = apiCallSaga({
+  type: Types.GET_WEEKLY_LOGS,
+  method: 'GET',
+  path: function*({ payload: { year, week } = {} }) {
+    const path = year ? `logging/weekly-logs/${year}-${week}/` : 'logging/weekly-logs/'
+    return yield roleBasedPath(path)
+  },
+  selectorKey: 'weeklyLogs',
+  allowedParamKeys: ['page', 'page_size']
+})
+
+const getWeeklyLogDetail = apiCallSaga({
+  type: Types.GET_WEEKLY_LOG_DETAIL,
+  method: 'GET',
+  path: function*({ payload }) {
+    return yield roleBasedPath(`logging/weekly-logs/${payload.id}/`)
+  },
+  selectorKey: 'weeklyLogDetail'
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_DAILY_LOGS, getDailyLogs)
   yield takeLatest(Types.GET_DAILY_LOG_DETAIL, getDailyLogDetail)
   yield takeLatest(Types.GET_MONTHLY_LOGS, getMonthlyLogs)
   yield takeLatest(Types.GET_MONTHLY_LOG_DETAIL, getMonthlyLogDetail)
+  yield takeLatest(Types.GET_WEEKLY_LOGS, getWeeklyLogs)
+  yield takeLatest(Types.GET_WEEKLY_LOG_DETAIL, getWeeklyLogDetail)
 }
