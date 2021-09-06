@@ -115,21 +115,7 @@ let structure = {
       id: 10,
       label: 'My logs',
       link: '/admin/my-logs',
-      icon: <LogIcon />,
-      subLinks: [
-        {
-          label: 'Daily Logs',
-          link: '/admin/my-logs/daily'
-        },
-        {
-          label: 'Weekly Logs',
-          link: '/admin/my-logs/weekly'
-        },
-        {
-          label: 'Monthly Logs',
-          link: '/admin/my-logs/monthly'
-        }
-      ]
+      icon: <LogIcon />
     },
     {
       id: 11,
@@ -221,21 +207,7 @@ let structure = {
       id: 9,
       label: 'My logs',
       link: '/team-manager/my-logs',
-      icon: <LogIcon />,
-      subLinks: [
-        {
-          label: 'Daily Logs',
-          link: '/team-manager/my-logs/daily'
-        },
-        {
-          label: 'Weekly Logs',
-          link: '/team-manager/my-logs/weekly'
-        },
-        {
-          label: 'Monthly Logs',
-          link: '/team-manager/my-logs/monthly'
-        }
-      ]
+      icon: <LogIcon />
     },
     {
       id: 10,
@@ -321,21 +293,7 @@ let structure = {
       id: 8,
       label: 'My logs',
       link: '/developer/my-logs',
-      icon: <LogIcon />,
-      subLinks: [
-        {
-          label: 'Daily Logs',
-          link: '/developer/my-logs/daily'
-        },
-        {
-          label: 'Weekly Logs',
-          link: '/developer/my-logs/weekly'
-        },
-        {
-          label: 'Monthly Logs',
-          link: '/developer/my-logs/monthly'
-        }
-      ]
+      icon: <LogIcon />
     }
   ]
 }

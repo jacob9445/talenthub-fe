@@ -58,6 +58,7 @@ const IndividualReport = ({
 
   const handlePeriodChange = useCallback(
     event => {
+      console.log(event.target.value)
       if (event.target.value !== 'custom') {
         setShowCustom(0)
         let { period, page, page_size } = parseQueryString(location.search)
@@ -155,11 +156,4 @@ IndividualReport.propTypes = {
   history: PropTypes.object.isRequired
 }
 
-export default compose(
-  withRouter,
-  withPaginationInfo,
-  connect(
-    selector,
-    actions
-  )
-)(IndividualReport)
+export default compose(withRouter, withPaginationInfo, connect(selector, actions))(IndividualReport)

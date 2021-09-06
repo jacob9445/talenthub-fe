@@ -18,6 +18,7 @@ import individualReport from './individualReport'
 import teamReport from './teamReport'
 import notification from './notification'
 import logging from './logging'
+import myLogs from './mylogs'
 
 export default combineReducers({
   api,
@@ -37,5 +38,6 @@ export default combineReducers({
   teamReport,
   modal,
   logging,
-  notification
+  notification,
+  myLogs
 })
