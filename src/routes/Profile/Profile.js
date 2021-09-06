@@ -61,7 +61,6 @@ const Profile = ({
             }>
             <ProfileTable
               data={profiles}
-              myRole={me.role}
               handleDelete={handleDelete}
               pagination={pagination}
               onChangePage={onChangePage}

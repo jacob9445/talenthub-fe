@@ -61,7 +61,7 @@ const Partner = ({
             }>
             <PartnerTable
               data={partners}
-              myRole={me.role}
+              role={me.role}
               handleDelete={handleDelete}
               pagination={pagination}
               onChangePage={onChangePage}

@@ -93,7 +93,8 @@ const WeeklyLogs = ({ getWeeklyLogs, logs, me, pagination, location, history, on
       }>
       <WeeklyLogTable
         data={logs}
-        myRole={me.role}
+        role={me.role}
+        interval="weekly-logs"
         pagination={pagination}
         onChangePage={onChangePage}
         onChangeRowsPerPage={onChangeRowsPerPage}

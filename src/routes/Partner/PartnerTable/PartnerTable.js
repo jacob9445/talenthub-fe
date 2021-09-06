@@ -19,13 +19,13 @@ import { ROLES } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
 
-function PartnerTable({ data, myRole, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
+function PartnerTable({ data, role, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = useMemo(
     () =>
-      myRole === ROLES.DEVELOPER
+      role === ROLES.DEVELOPER
         ? ['Full Name', 'Email', 'Address', 'Date of Birth', 'Phone Number', 'Contact Method', 'Actions']
         : ['Full Name', 'Email', 'Address', 'Date of Birth', 'Phone Number', 'Contact Method', 'Owner', 'Actions'],
-    [myRole]
+    [role]
   )
   if (data) {
     return (
@@ -52,7 +52,7 @@ function PartnerTable({ data, myRole, handleDelete, match: { path }, pagination,
                   </Tooltip>
                 ))}
               </TableCell>
-              {myRole === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
+              {role === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
               <TableCell>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">
                   <IconButton component={Link} to={`${path}/${id}/detail`}>
@@ -91,7 +91,7 @@ export default withRouter(PartnerTable)
 
 PartnerTable.propTypes = {
   data: ListDataType,
-  myRole: PropTypes.number.isRequired,
+  role: PropTypes.number.isRequired,
   handleDelete: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
 }

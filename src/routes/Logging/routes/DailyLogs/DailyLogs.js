@@ -74,7 +74,8 @@ const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onCh
       }>
       <DailyLogTable
         data={logs}
-        myRole={me.role}
+        interval="daily-logs"
+        role={me.role}
         pagination={pagination}
         onChangePage={onChangePage}
         onChangeRowsPerPage={onChangeRowsPerPage}

@@ -16,14 +16,25 @@ import { compose } from 'redux'
 import Spinner from 'components/Spinner'
 import { truncateText } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
+import { URL_PREFIXES } from 'config/constants'
 
 const columns = ['Full name', 'Plan', 'Achievements', 'Action']
 
-function LogTable({ data, history, location, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
+function LogsTable({
+  data,
+  history,
+  location,
+  match: { path },
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage,
+  role,
+  interval
+}) {
   const handleRowClick = useCallback(
-    (path, id) => e => {
+    id => e => {
       e.preventDefault()
-      history.push(`${path}/${id}`, `${location.pathname}${location.search}`)
+      history.push(`/${URL_PREFIXES[role]}/logging/${interval}/${id}`, `${location.pathname}${location.search}`)
     },
     [location, history]
   )
@@ -50,7 +61,7 @@ function LogTable({ data, history, location, match: { path }, pagination, onChan
                 <Button
                   component={Link}
                   to={`${path}/${id}`}
-                  onClick={handleRowClick(path, id)}
+                  onClick={handleRowClick(id)}
                   variant="text"
                   color="primary">
                   View
@@ -78,12 +89,12 @@ function LogTable({ data, history, location, match: { path }, pagination, onChan
   }
 }
 
-LogTable.propTypes = {
+LogsTable.propTypes = {
   data: ListDataType,
-  myRole: PropTypes.number.isRequired,
+  role: PropTypes.number.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,
   onChangeRowsPerPage: PropTypes.func.isRequired
 }
 
-export default compose(withRouter)(LogTable)
+export default compose(withRouter)(LogsTable)

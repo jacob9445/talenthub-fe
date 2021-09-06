@@ -32,7 +32,7 @@ const TransactionDetail = ({
     getTransactionDetail(params.id)
   }, [getTransactionDetail, params])
   const fr = transactionDetail?.financial_request
-  const myRole = me?.role
+  const role = me?.role
   if (isTransactionDetailLoading) return <Spinner />
   else
     return (
@@ -44,7 +44,7 @@ const TransactionDetail = ({
                 title="Transaction Detail"
                 disableWidgetMenu
                 WidgetButton={
-                  <Button color="primary" component={Link} to={`/${URL_PREFIXES[myRole]}/transactions`}>
+                  <Button color="primary" component={Link} to={`/${URL_PREFIXES[role]}/transactions`}>
                     Back to list
                   </Button>
                 }>
@@ -74,17 +74,17 @@ const TransactionDetail = ({
                       {fr.address}
                     </LabelValue>
                     <LabelValue label="Requested by">
-                      {myRole === ROLES.DEVELOPER ? (
+                      {role === ROLES.DEVELOPER ? (
                         getFullName(fr.requester)
                       ) : (
-                        <Link to={`/${URL_PREFIXES[myRole]}/users/${fr.requester.id}/detail`}>
+                        <Link to={`/${URL_PREFIXES[role]}/users/${fr.requester.id}/detail`}>
                           {getFullName(fr.requester)}
                         </Link>
                       )}
                     </LabelValue>
                     {fr.type !== FINANCIALREQUEST_TYPE.SENDPAYMENT && (
                       <LabelValue label="Associated Project">
-                        <Link to={`/${URL_PREFIXES[myRole]}/projects/${fr.project.id}/detail`}>{fr.project.title}</Link>
+                        <Link to={`/${URL_PREFIXES[role]}/projects/${fr.project.id}/detail`}>{fr.project.title}</Link>
                       </LabelValue>
                     )}
                   </Grid>
