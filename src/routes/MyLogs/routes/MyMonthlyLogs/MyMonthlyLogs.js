@@ -16,6 +16,7 @@ import MyLogLayout from 'routes/MyLogs/components/MyLogLayout'
 import useStyles from './styles'
 import { getMyMonthlyLog, createMyMonthlyLog, updateMyMonthlyLog, myMonthlyLogSelector } from 'store/modules/mylogs'
 import { parseQueryString, jsonToQueryString, generateDecrementArray, generateIncrementArray } from 'helpers/utils'
+import { MyLogType } from 'helpers/prop-types'
 
 const MyMonthlyLog = ({ getMyMonthlyLog, createMyMonthlyLog, updateMyMonthlyLog, myMonthlyLog, location, history }) => {
   const classes = useStyles()
@@ -177,13 +178,7 @@ MyMonthlyLog.propTypes = {
   getMyMonthlyLog: PropTypes.func.isRequired,
   createMyMonthlyLog: PropTypes.func.isRequired,
   updateMyMonthlyLog: PropTypes.func.isRequired,
-  myMonthlyLog: PropTypes.shape({
-    plan: PropTypes.string,
-    achievements: PropTypes.string,
-    created_at: PropTypes.string.isRequired,
-    updated_at: PropTypes.string.isRequired,
-    interval: PropTypes.string.isRequired
-  }),
+  myMonthlyLog: MyLogType,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
 }

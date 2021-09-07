@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 import { Grid, Button } from '@material-ui/core'
 import { format } from 'date-fns'
 import { DatePicker } from 'material-ui-pickers'
+
 import LogCard from 'routes/MyLogs/components/LogCard'
 import MyLogLayout from 'routes/MyLogs/components/MyLogLayout'
 import useStyles from './styles'
 import { getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDailylogSelector } from 'store/modules/mylogs'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import PropTypes from 'prop-types'
+import { MyLogType } from 'helpers/prop-types'
 
 const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDailyLog, location, history }) => {
   const classes = useStyles()
@@ -132,12 +134,7 @@ MyDailyLog.propTypes = {
   getMyDailyLog: PropTypes.func.isRequired,
   createMyDailyLog: PropTypes.func.isRequired,
   updateMyDailyLog: PropTypes.func.isRequired,
-  myDailyLog: PropTypes.shape({
-    plan: PropTypes.string,
-    achievements: PropTypes.string,
-    created_at: PropTypes.string,
-    updated_at: PropTypes.string
-  }),
+  myDailyLog: MyLogType,
   location: PropTypes.object,
   history: PropTypes.object
 }

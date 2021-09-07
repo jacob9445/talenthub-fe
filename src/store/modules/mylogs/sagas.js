@@ -52,6 +52,26 @@ const createMyMonthlyLog = apiCallSaga({
   }
 })
 
+const getMyWeeklyLog = apiCallSaga({
+  type: Types.GET_MY_WEEKLY_LOG,
+  method: 'GET',
+  path: function*({ payload: { year, week } = {} }) {
+    const path = year ? `my-logs/weekly/${year}-${week}/` : 'my-logs/weekly/'
+    return yield roleBasedPath(path)
+  },
+  selectorKey: 'myWeeklyLog',
+  allowedParamKeys: ['page', 'page_size']
+})
+
+const createMyWeeklyLog = apiCallSaga({
+  type: Types.CREATE_MY_WEEKLY_LOG,
+  method: 'POST',
+  selectorKey: 'myWeeklyLog',
+  path: function*() {
+    return yield roleBasedPath('my-logs/')
+  }
+})
+
 const updateMyMonthlyLog = apiCallSaga({
   type: Types.UPDATE_MY_MONTHLY_LOG,
   method: 'patch',
@@ -60,6 +80,16 @@ const updateMyMonthlyLog = apiCallSaga({
     return yield roleBasedPath(`my-logs/${payload.id}/`)
   }
 })
+
+const updateMyWeeklyLog = apiCallSaga({
+  type: Types.UPDATE_MY_WEEKLY_LOG,
+  method: 'patch',
+  selectorKey: 'myWeeklyLog',
+  path: function*({ payload }) {
+    return yield roleBasedPath(`my-logs/${payload.id}/`)
+  }
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_MY_Daily_LOG, getMyDailyLog)
   yield takeLatest(Types.CREATE_MY_Daily_LOG, createMyDailyLog)
@@ -67,4 +97,7 @@ export default function* rootSaga() {
   yield takeLatest(Types.GET_MY_MONTHLY_LOG, getMyMonthlyLog)
   yield takeLatest(Types.CREATE_MY_MONTHLY_LOG, createMyMonthlyLog)
   yield takeLatest(Types.UPDATE_MY_MONTHLY_LOG, updateMyMonthlyLog)
+  yield takeLatest(Types.GET_MY_WEEKLY_LOG, getMyWeeklyLog)
+  yield takeLatest(Types.CREATE_MY_WEEKLY_LOG, createMyWeeklyLog)
+  yield takeLatest(Types.UPDATE_MY_WEEKLY_LOG, updateMyWeeklyLog)
 }
