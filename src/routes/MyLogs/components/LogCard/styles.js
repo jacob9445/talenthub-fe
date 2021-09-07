@@ -13,11 +13,14 @@ export default makeStyles(theme => ({
   cardActions: {
     justifyContent: 'flex-end'
   },
-  head: {
-    marginBottom: theme.spacing(2)
+  typography: {
+    marginBottom: theme.spacing(2),
+    whiteSpace: 'pre-wrap'
   },
   textField: {
-    width: 580,
-    minHeight: 100
+    width: '100%'
+  },
+  title: {
+    marginBottom: theme.spacing(2)
   }
 }))

@@ -17,7 +17,7 @@ import { MyLogType } from 'helpers/prop-types'
 const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDailyLog, location, history }) => {
   const classes = useStyles()
   const queryObj = parseQueryString(location.search)
-  const selectedDate = queryObj.date || undefined
+  const selectedDate = queryObj.date || format(new Date(), 'yyyy-MM-dd')
 
   const handleDateChange = useCallback(
     date => {
@@ -34,6 +34,7 @@ const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDaily
     },
     [history, location, getMyDailyLog]
   )
+
   const viewTodayLog = useCallback(() => {
     const date = Date.now()
     getMyDailyLog({
@@ -106,15 +107,10 @@ const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDaily
         </Grid>
       }>
       <Grid item xs={6}>
-        <LogCard title="Plan" logId={myDailyLog?.id} content={myDailyLog?.plan} onSave={handleSavePlan} />
+        <LogCard title="Plan" content={myDailyLog?.plan} onSave={handleSavePlan} />
       </Grid>
       <Grid item xs={6}>
-        <LogCard
-          title="Achievements"
-          logId={myDailyLog?.id}
-          content={myDailyLog?.achievements}
-          onSave={handleSaveAchievements}
-        />
+        <LogCard title="Achievements" content={myDailyLog?.achievements} onSave={handleSaveAchievements} />
       </Grid>
     </MyLogLayout>
   )
