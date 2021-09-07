@@ -1,11 +1,13 @@
-import { takeLatest } from 'redux-saga/effects'
-import { select, put, take, fork, cancel, delay } from 'redux-saga/effects'
+import { select, takeLatest, take, delay, cancel, fork, put } from 'redux-saga/effects'
 import { apiCallSaga, setApiData } from '../api'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { notificationsSelector } from './selectors'
-import { NOTIFICATION_PING_DELAY } from 'config/constants'
+import { NOTIFICATION_PING_DELAY, NOTIFICATION_IDS } from 'config/constants'
+import { showMessage } from '../message'
 import * as Types from './types'
-import * as Actions from './actions'
+import * as actions from './actions'
+import { countDelta, setSnackbarTouched, getBool } from 'helpers/utils'
+import { SNACKBAR_TOUCHED } from 'config/constants'
 
 const getNotifications = apiCallSaga({
   type: Types.GET_NOTIFICATIONS,
@@ -73,14 +75,42 @@ const processAllRead = function*(action) {
 
 const pingToBackend = function*() {
   while (true) {
-    yield put(Actions.getNotifications())
+    yield put(actions.getNotifications())
+
+    const notifications = yield select(notificationsSelector)
+    if (notifications) {
+      var notificationIDs = []
+      notificationIDs = notifications.results.map(notification => notification.id)
+      notificationIDs.sort()
+      const oldNotificationIDs = JSON.parse(localStorage.getItem(NOTIFICATION_IDS)) || []
+      const delta = countDelta(oldNotificationIDs, notificationIDs)
+      const touched = getBool(localStorage.getItem(SNACKBAR_TOUCHED))
+      if (delta !== 0) {
+        localStorage.setItem(NOTIFICATION_IDS, JSON.stringify(notificationIDs))
+        setSnackbarTouched(false)
+      }
+      if (delta > 0 && touched === false) {
+        yield put(
+          showMessage({
+            message: `You have ${notifications.count} new notifications`,
+            variant: 'info',
+            anchorOrigin: {
+              vertical: 'top',
+              horizontal: 'right'
+            },
+            actionOnClick: actions.openNC()
+          })
+        )
+      }
+    }
+
     yield delay(NOTIFICATION_PING_DELAY)
   }
 }
 
 const subscribeToNotifications = function*() {
   const task = yield fork(pingToBackend)
-  yield take(Types.UNSUBCRIBE_FROM_NOTIFICATIONS)
+  yield take(Types.UNSUBSCRIBE_FROM_NOTIFICATIONS)
   yield cancel(task)
 }
 
@@ -89,5 +119,5 @@ export default function* rootSaga() {
   yield takeLatest(Types.GET_NOTIFICATION_DETAIL, getNotificationDetail)
   yield takeLatest(Types.SET_STATUS_READ, processPrivateRead)
   yield takeLatest(Types.SET_ALL_READ, processAllRead)
-  yield takeLatest(Types.SUBCRIBE_TO_NOTIFICATIONS, subscribeToNotifications)
+  yield takeLatest(Types.SUBSCRIBE_TO_NOTIFICATIONS, subscribeToNotifications)
 }

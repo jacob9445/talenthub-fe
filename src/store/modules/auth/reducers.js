@@ -1,9 +1,10 @@
 import * as R from 'ramda'
 import { handleActions } from 'redux-actions'
 import * as types from './types'
+import { TOKEN } from 'config/constants'
 
 const getIntialState = () => {
-  const token = JSON.parse(localStorage.getItem('TH_TOKEN'))
+  const token = JSON.parse(localStorage.getItem(TOKEN))
   return Boolean(token)
 }
 
