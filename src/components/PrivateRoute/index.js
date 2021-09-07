@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -10,11 +10,26 @@ import classnames from 'classnames'
 import Header from 'components/Header'
 import Sidebar from 'components/Sidebar'
 import NotificationCenter from 'components/NotificationCenter'
+import { subscribeToNotification, unsubscribeToNotification } from 'store/modules/notification'
 import useStyles from './styles'
 
-const PrivateRoute = ({ path, component: Component, isAuthenticated, ...others }) => {
+const PrivateRoute = ({
+  path,
+  component: Component,
+  isAuthenticated,
+  subscribeToNotification,
+  unsubscribeToNotification,
+  ...others
+}) => {
   let classes = useStyles()
   let layoutState = useLayoutState()
+  useEffect(() => {
+    subscribeToNotification()
+    return () => {
+      unsubscribeToNotification()
+    }
+  }, [subscribeToNotification, unsubscribeToNotification])
+
   return (
     <Route
       path={path}
@@ -45,10 +60,17 @@ const selectors = createStructuredSelector({
   isAuthenticated: isAuthenticatedSelector
 })
 
+const actions = {
+  subscribeToNotification,
+  unsubscribeToNotification
+}
+
 PrivateRoute.propTypes = {
+  subscribeToNotification: PropTypes.func.isRequired,
+  unsubscribeToNotification: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   component: PropTypes.elementType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired
 }
 
-export default connect(selectors)(PrivateRoute)
+export default connect(selectors, actions)(PrivateRoute)
