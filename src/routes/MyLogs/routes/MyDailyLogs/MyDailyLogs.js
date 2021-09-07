@@ -10,16 +10,9 @@ import MyLogLayout from 'routes/MyLogs/components/MyLogLayout'
 import useStyles from './styles'
 import { getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDailylogSelector } from 'store/modules/mylogs'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import PropTypes from 'prop-types'
 
-const MyDailyLog = ({
-  getMyDailyLog,
-  createMyDailyLog,
-  updateMyDailyLog,
-  myDailyLog,
-  pagination,
-  location,
-  history
-}) => {
+const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDailyLog, location, history }) => {
   const classes = useStyles()
   const queryObj = parseQueryString(location.search)
   const selectedDate = queryObj.date || undefined
@@ -134,5 +127,19 @@ const actions = {
 const selectors = createStructuredSelector({
   myDailyLog: myDailylogSelector
 })
+
+MyDailyLog.propTypes = {
+  getMyDailyLog: PropTypes.func.isRequired,
+  createMyDailyLog: PropTypes.func.isRequired,
+  updateMyDailyLog: PropTypes.func.isRequired,
+  myDailyLog: PropTypes.shape({
+    plan: PropTypes.string,
+    achievements: PropTypes.string,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string
+  }),
+  location: PropTypes.object,
+  history: PropTypes.object
+}
 
 export default connect(selectors, actions)(withRouter(MyDailyLog))

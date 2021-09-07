@@ -5,8 +5,9 @@ import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import useStyles from './styles'
+import PropTypes from 'prop-types'
 
-const LogCard = ({ title, content, onSave, logId, type }) => {
+const LogCard = ({ title, content, onSave }) => {
   const [contentValue, setContentValue] = useState(content || '')
   const [editMode, setEditMode] = useState(false)
   const classes = useStyles()
@@ -60,6 +61,12 @@ const LogCard = ({ title, content, onSave, logId, type }) => {
       </CardActions>
     </Card>
   )
+}
+
+LogCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string,
+  onSave: PropTypes.func.isRequired
 }
 
 export default LogCard
