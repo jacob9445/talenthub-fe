@@ -53,7 +53,7 @@ const LogCard = ({ title, content, onSave, logId, type }) => {
             </Button>
           </>
         ) : (
-          <Button variant="text" color="primary" onClick={() => setEditMode(true)} alignSelf="flex-end">
+          <Button variant="text" color="primary" onClick={() => setEditMode(true)}>
             {content ? 'Edit' : 'Add'}
           </Button>
         )}

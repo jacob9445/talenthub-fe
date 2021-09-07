@@ -62,13 +62,12 @@ const MyDailyLog = ({
           }
         })
       } else {
-        const date = new Date(selectedDate)
         createMyDailyLog({
           data: {
             plan: '',
             achievements: content,
             interval: 'daily',
-            created_at: format(date, 'yyyy-MM-dd')
+            created_at: selectedDate
           }
         })
       }
@@ -86,13 +85,12 @@ const MyDailyLog = ({
           }
         })
       } else {
-        const date = new Date(selectedDate)
         createMyDailyLog({
           data: {
             plan: content,
             achievements: '',
             interval: 'daily',
-            created_at: format(date, 'yyyy-MM-dd')
+            created_at: selectedDate
           }
         })
       }

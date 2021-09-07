@@ -19,7 +19,6 @@ const createMyDailyLog = apiCallSaga({
   method: 'POST',
   selectorKey: 'myDailyLog',
   path: function*({ payload }) {
-    console.log({ payload })
     return yield roleBasedPath('my-logs/')
   }
 })
@@ -29,7 +28,6 @@ const updateMyDailyLog = apiCallSaga({
   method: 'patch',
   selectorKey: 'myDailyLog',
   path: function*({ payload }) {
-    console.log({ payload })
     return yield roleBasedPath(`my-logs/${payload.id}/`)
   }
 })

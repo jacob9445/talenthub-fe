@@ -12,7 +12,7 @@ const MyLogLayout = ({ history, interval, location, actions, children, me }) => 
   const handleLogChange = useCallback(
     event => {
       const interval = event.target.value
-      history.push(`${URL_PREFIXES[me.role]}/my-logs/${interval}`)
+      history.push(`/${URL_PREFIXES[me.role]}/my-logs/${interval}`)
     },
     [history, me.role]
   )
