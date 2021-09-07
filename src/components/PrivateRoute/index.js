@@ -28,7 +28,7 @@ const PrivateRoute = ({
     return () => {
       unsubscribeToNotification()
     }
-  }, [subscribeToNotification, unsubscribeToNotification])
+  }, [])
 
   return (
     <Route
