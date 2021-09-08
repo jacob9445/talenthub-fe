@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 import { format } from 'date-fns'
-import { PAYMENT_PLATFORM_OPTIONS } from 'config/constants'
+import { PAYMENT_PLATFORM_OPTIONS, SNACKBAR_TOUCHED } from 'config/constants'
 
 export const getPlatformLabel = paymentPlatform =>
   R.compose(
@@ -109,3 +109,14 @@ export const getWeekOfMonth = date => {
   const weekOfFirstDate = format(firstDateOfMonth, 'ww')
   return parseInt(week) - parseInt(weekOfFirstDate) + 1
 }
+
+export const countDelta = (oldArray, newArray) => {
+  return newArray.length - oldArray.length
+}
+
+export const setSnackbarTouched = status => {
+  const statusString = JSON.stringify(status)
+  localStorage.setItem(SNACKBAR_TOUCHED, statusString)
+}
+
+export const getBool = R.compose(Boolean, JSON.parse, R.defaultTo('false'))

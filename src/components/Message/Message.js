@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
+import { setSnackbarTouched } from 'helpers/utils'
+import { OPEN_NC } from 'store/modules/notification/types'
 
 import { hideMessage, messageStateSelector, messageOptionSelector } from 'store/modules/message'
 
@@ -52,8 +54,14 @@ const Message = ({ hideMessage, state, options, dispatch }) => {
   const { actionOnClick, ...props } = options
   const handleClick = useCallback(() => {
     hideMessage()
+    if (actionOnClick && actionOnClick.type === OPEN_NC) setSnackbarTouched(true)
     if (actionOnClick) dispatch(actionOnClick)
   }, [hideMessage, actionOnClick, dispatch])
+
+  const handleClose = useCallback(() => {
+    hideMessage()
+    if (actionOnClick && actionOnClick.type === OPEN_NC) setSnackbarTouched(true)
+  }, [hideMessage, actionOnClick])
 
   return (
     <Snackbar
@@ -85,7 +93,7 @@ const Message = ({ hideMessage, state, options, dispatch }) => {
           </div>
         }
         action={[
-          <IconButton key="close" aria-label="Close" color="inherit" onClick={hideMessage}>
+          <IconButton key="close" aria-label="Close" color="inherit" onClick={handleClose}>
             <CloseIcon />
           </IconButton>
         ]}

@@ -4,9 +4,10 @@ import { call, put } from 'redux-saga/effects'
 
 import { API_BASE } from '../../../config/constants'
 import { requestRejected, requestPending, requestSuccess } from './actions'
+import { TOKEN } from 'config/constants'
 
 const defaultHeaders = request => {
-  const token = localStorage.getItem('TH_TOKEN')
+  const token = localStorage.getItem(TOKEN)
   let baseHeaders = {}
   if (token) {
     baseHeaders = {
@@ -130,4 +131,4 @@ const createApiCallSaga = ({
     }
   }
 
-  export default createApiCallSaga
+export default createApiCallSaga

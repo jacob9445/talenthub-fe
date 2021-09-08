@@ -6,6 +6,8 @@ import { API_AUTH_GET_URL } from 'config/constants'
 import { notificationsSelector, openNC } from '../notification'
 import { showMessage } from '../message'
 import { takeApiResult } from 'helpers/sagaHelpers'
+import { SNACKBAR_TOUCHED, NOTIFICATION_IDS, TOKEN } from 'config/constants'
+import { setSnackbarTouched } from 'helpers/utils'
 
 const authLogin = apiCallSaga({
   type: AUTH_LOGIN,
@@ -13,7 +15,7 @@ const authLogin = apiCallSaga({
   path: 'api/auth/login/',
   selectorKey: 'auth',
   success: function*(resData) {
-    localStorage.setItem('TH_TOKEN', JSON.stringify(resData.token))
+    localStorage.setItem(TOKEN, JSON.stringify(resData.token))
     yield put(authSuccess())
   },
   fail: function*() {
@@ -25,6 +27,7 @@ const processAuthLogin = function*(action) {
   yield authLogin(action)
   let nAction = yield takeApiResult('notifications')
   if (nAction.type === REQUEST_SUCCESS) {
+    setSnackbarTouched(false)
     const notifications = yield select(notificationsSelector)
     if (notifications.count > 0) {
       yield put(
@@ -56,7 +59,9 @@ const authGetMe = apiCallSaga({
 })
 
 const authLogout = function() {
-  localStorage.removeItem('TH_TOKEN')
+  localStorage.removeItem(TOKEN)
+  localStorage.removeItem(SNACKBAR_TOUCHED)
+  localStorage.removeItem(NOTIFICATION_IDS)
 }
 
 export default function* rootSaga() {
