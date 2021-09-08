@@ -50,7 +50,6 @@ const NotificationCenter = ({
                 <NotificationCard
                   key={index}
                   notification={notification}
-                  classes={classes}
                   path={path}
                   index={index}
                   closeNC={closeNC}
