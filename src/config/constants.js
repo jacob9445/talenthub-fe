@@ -413,3 +413,5 @@ export const NOTIFICATION_CONFIG = {
     path: 'logging/monthly-logs'
   }
 }
+
+export const NOTIFICATION_PING_DELAY = 5000
