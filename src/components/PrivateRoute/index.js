@@ -10,25 +10,25 @@ import classnames from 'classnames'
 import Header from 'components/Header'
 import Sidebar from 'components/Sidebar'
 import NotificationCenter from 'components/NotificationCenter'
-import { subscribeToNotification, unsubscribeToNotification } from 'store/modules/notification'
+import { subscribeToNotifications, unsubscribeFromNotifications } from 'store/modules/notification'
 import useStyles from './styles'
 
 const PrivateRoute = ({
   path,
   component: Component,
   isAuthenticated,
-  subscribeToNotification,
-  unsubscribeToNotification,
+  subscribeToNotifications,
+  unsubscribeFromNotifications,
   ...others
 }) => {
   let classes = useStyles()
   let layoutState = useLayoutState()
   useEffect(() => {
-    subscribeToNotification()
+    subscribeToNotifications()
     return () => {
-      unsubscribeToNotification()
+      unsubscribeFromNotifications()
     }
-  }, [])
+  }, [subscribeToNotifications, unsubscribeFromNotifications])
 
   return (
     <Route
@@ -61,13 +61,13 @@ const selectors = createStructuredSelector({
 })
 
 const actions = {
-  subscribeToNotification,
-  unsubscribeToNotification
+  subscribeToNotifications,
+  unsubscribeFromNotifications
 }
 
 PrivateRoute.propTypes = {
-  subscribeToNotification: PropTypes.func.isRequired,
-  unsubscribeToNotification: PropTypes.func.isRequired,
+  subscribeToNotifications: PropTypes.func.isRequired,
+  unsubscribeFromNotifications: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   component: PropTypes.elementType.isRequired,
   isAuthenticated: PropTypes.bool.isRequired

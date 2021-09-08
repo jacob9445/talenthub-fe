@@ -3,6 +3,7 @@ import { select, put, take, fork, cancel, delay } from 'redux-saga/effects'
 import { apiCallSaga, setApiData } from '../api'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { notificationsSelector } from './selectors'
+import { NOTIFICATION_PING_DELAY } from 'config/constants'
 import * as Types from './types'
 import * as Actions from './actions'
 
@@ -73,13 +74,13 @@ const processAllRead = function*(action) {
 const pingToBackend = function*() {
   while (true) {
     yield put(Actions.getNotifications())
-    yield delay(5000)
+    yield delay(NOTIFICATION_PING_DELAY)
   }
 }
 
-const subscribeToNotification = function*() {
+const subscribeToNotifications = function*() {
   const task = yield fork(pingToBackend)
-  yield take(Types.UNSUBCRIBE_TO_NOTIFICATION)
+  yield take(Types.UNSUBCRIBE_FROM_NOTIFICATIONS)
   yield cancel(task)
 }
 
@@ -88,5 +89,5 @@ export default function* rootSaga() {
   yield takeLatest(Types.GET_NOTIFICATION_DETAIL, getNotificationDetail)
   yield takeLatest(Types.SET_STATUS_READ, processPrivateRead)
   yield takeLatest(Types.SET_ALL_READ, processAllRead)
-  yield takeLatest(Types.SUBCRIBE_TO_NOTIFICATION, subscribeToNotification)
+  yield takeLatest(Types.SUBCRIBE_TO_NOTIFICATIONS, subscribeToNotifications)
 }
