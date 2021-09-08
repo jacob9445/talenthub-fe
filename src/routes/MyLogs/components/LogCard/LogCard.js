@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent'
 import useStyles from './styles'
 import PropTypes from 'prop-types'
 
-const LogCard = ({ title, content, onSave }) => {
+const LogCard = ({ title, content, onSave, editable }) => {
   const [contentValue, setContentValue] = useState(content || '')
   const [editMode, setEditMode] = useState(false)
   const classes = useStyles()
@@ -24,7 +24,7 @@ const LogCard = ({ title, content, onSave }) => {
   return (
     <Card className={classes.card}>
       <CardContent className={classes.cardContent}>
-        <Typography variant="h5" component="h2" className={classes.head}>
+        <Typography variant="h5" component="h2" className={classes.title}>
           {title}
         </Typography>
         {editMode ? (
@@ -34,31 +34,33 @@ const LogCard = ({ title, content, onSave }) => {
             margin="normal"
             variant="outlined"
             value={contentValue}
-            row={15}
+            rows={10}
             onChange={e => setContentValue(e.target.value)}
           />
         ) : (
-          <Typography component="pre" className={classes.head}>
+          <Typography component="pre" className={classes.typography}>
             {content || `No ${title} added yet`}
           </Typography>
         )}
       </CardContent>
-      <CardActions className={classes.cardActions}>
-        {editMode ? (
-          <>
-            <Button variant="text" color="primary" onClick={() => setEditMode(false)}>
-              Cancel
+      {editable && (
+        <CardActions className={classes.cardActions}>
+          {editMode ? (
+            <>
+              <Button variant="text" color="primary" onClick={() => setEditMode(false)}>
+                Cancel
+              </Button>
+              <Button variant="text" color="primary" onClick={handleSave}>
+                Save
+              </Button>
+            </>
+          ) : (
+            <Button variant="text" color="primary" onClick={() => setEditMode(true)}>
+              {content ? 'Edit' : 'Add'}
             </Button>
-            <Button variant="text" color="primary" onClick={handleSave}>
-              Save
-            </Button>
-          </>
-        ) : (
-          <Button variant="text" color="primary" onClick={() => setEditMode(true)}>
-            {content ? 'Edit' : 'Add'}
-          </Button>
-        )}
-      </CardActions>
+          )}
+        </CardActions>
+      )}
     </Card>
   )
 }
@@ -69,4 +71,7 @@ LogCard.propTypes = {
   onSave: PropTypes.func.isRequired
 }
 
+LogCard.defaultProps = {
+  editable: true
+}
 export default LogCard
