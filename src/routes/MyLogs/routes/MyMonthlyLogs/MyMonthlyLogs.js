@@ -149,7 +149,7 @@ const MyMonthlyLog = ({ getMyMonthlyLog, createMyMonthlyLog, updateMyMonthlyLog,
               </Select>
             </FormControl>
           </form>
-          <Button className={classes.button} onClick={viewThisMonthLog} variant="contained" color="primary">
+          <Button className={classes.button} onClick={viewThisMonthLog} variant="outlined" color="primary">
             THIS MONTH
           </Button>
         </Grid>
