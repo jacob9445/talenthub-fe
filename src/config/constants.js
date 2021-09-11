@@ -8,6 +8,21 @@ export const ROLES = {
   DEVELOPER: 3
 }
 
+export const ROLE_OPTIONS = [
+  {
+    value: ROLES.ADMIN,
+    label: 'Admin'
+  },
+  {
+    value: ROLES.TEAM_MANAGER,
+    label: 'Team Manager'
+  },
+  {
+    value: ROLES.DEVELOPER,
+    label: 'Developer'
+  }
+]
+
 export const URL_PREFIXES = {
   [ROLES.ADMIN]: 'admin',
   [ROLES.TEAM_MANAGER]: 'team-manager',
