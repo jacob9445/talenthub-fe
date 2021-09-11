@@ -28,6 +28,7 @@ import Account from 'routes/Account'
 import AccountEdit from 'routes/Account/AccountEdit'
 import AccountNew from 'routes/Account/AccountNew'
 import Logging from 'routes/Logging'
+import MyLogs from 'routes/MyLogs'
 
 const TeamManager = ({ match: { path } }) => {
   return (
@@ -57,6 +58,7 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
       <Route path={`${path}/accounts/new`} component={AccountNew} />
       <Route path={`${path}/logging`} component={Logging} />
+      <Route path={`${path}/my-logs`} component={MyLogs} />
     </Switch>
   )
 }
