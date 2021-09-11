@@ -125,7 +125,6 @@ const Dashboard = ({
     [show, declineFinancialRequest, getPendingRequests]
   )
 
-  // console.log({dashboardInfo})
   return (
     <>
       <Grid container spacing={4}>
@@ -134,16 +133,16 @@ const Dashboard = ({
         ) : (
           <>
             <Grid item xs={3}>
-              <StatCard title="This Month's Expectation" amount={stats.this_month_expectation} />
+              <StatCard title="This Month's Expectation" amount={stats ? stats.this_month_expectation : 0} />
             </Grid>
             <Grid item xs={3}>
-              <StatCard title="This Month's Earning" amount={stats.this_month_earning} />
+              <StatCard title="This Month's Earning" amount={stats ? stats.this_month_earning : 0} />
             </Grid>
             <Grid item xs={3}>
-              <StatCard title="This Quarter's Expectation" amount={stats.this_quarter_expectation} />
+              <StatCard title="This Quarter's Expectation" amount={stats ? stats.this_quarter_expectation : 0} />
             </Grid>
             <Grid item xs={3}>
-              <StatCard title="This Quarter's Earning" amount={stats.this_quarter_earning} />
+              <StatCard title="This Quarter's Earning" amount={stats ? stats.this_quarter_earning : 0} />
             </Grid>
           </>
         )}
@@ -161,7 +160,7 @@ const Dashboard = ({
         ) : (
           <Grid item xs={12}>
             <Widget title="Ongoing Projects" disableWidgetMenu noBodyPadding>
-              {ongoingProjects.length > 0 ? (
+              {ongoingProjects && ongoingProjects.length > 0 ? (
                 <ProjectTable data={projectsData} role={me.role} disableActions />
               ) : (
                 <Typography className={classes.noItems} variant="body1">
@@ -176,7 +175,7 @@ const Dashboard = ({
         ) : (
           <Grid item xs={12}>
             <Widget title="Pending Financial Requests" disableWidgetMenu noBodyPadding>
-              {pendingFinancialRequests.length > 0 ? (
+              {pendingFinancialRequests && pendingFinancialRequests.length > 0 ? (
                 <FinancialRequestTable
                   data={financialRequestsData}
                   me={me}
