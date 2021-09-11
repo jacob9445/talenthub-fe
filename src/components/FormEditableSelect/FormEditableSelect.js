@@ -1,8 +1,9 @@
-import React from 'react'
-import { TextField, Paper, Typography, MenuItem, IconButton, FormLabel } from '@material-ui/core'
+import React, { useCallback } from 'react'
+import { TextField, Paper, Typography, MenuItem, IconButton, FormLabel, FormHelperText } from '@material-ui/core'
 import { Cancel as CancelIcon, ArrowDropDown as ArrowDropDownIcon } from '@material-ui/icons'
 import Select from 'react-select'
 import { useStyles } from './styles'
+import * as R from 'ramda'
 
 const inputComponent = ({ inputRef, ...props }) => <div ref={inputRef} {...props} />
 
@@ -12,6 +13,7 @@ const Control = props => (
     variant="outlined"
     InputProps={{
       inputComponent,
+      error: props.selectProps.error,
       inputProps: {
         className: props.selectProps.classes.input,
         inputRef: props.innerRef,
@@ -71,10 +73,14 @@ const DropdownIndicator = props => (
 
 const FormEditableSelect = props => {
   const { label, htmlId, field, form, ...selectProps } = props
+  const error = R.path(R.split('.', field.name), form.touched) && R.path(R.split('.', field.name), form.errors)
   const classes = useStyles()
-  const handleChange = option => {
-    option ? form.setFieldValue(field.name, option.value) : form.setFieldValue(field.name, null)
-  }
+  const handleChange = useCallback(
+    option => (option ? form.setFieldValue(field.name, option.value) : form.setFieldValue(field.name, '')),
+    [form, field.name]
+  )
+
+  const handleBlur = useCallback(() => form.setFieldTouched(field.name, true), [form, field.name])
 
   return (
     <div className={classes.wrapper}>
@@ -83,14 +89,18 @@ const FormEditableSelect = props => {
         {...selectProps}
         value={selectProps.options.find(option => option.value === field.value) || null}
         onChange={handleChange}
-        onBlur={field.onBlur}
+        onBlur={handleBlur}
         textFieldProps={{
           InputLabelProps: {
             shrink: true
           }
         }}
+        error={Boolean(error)}
         classes={classes}
       />
+      <FormHelperText className={classes.helperText} error={Boolean(error)}>
+        {error}
+      </FormHelperText>
     </div>
   )
 }
