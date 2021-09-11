@@ -42,5 +42,9 @@ export const useStyles = makeStyles(theme => ({
   ClearIndicator: {
     position: 'absolute',
     right: 20
+  },
+  helperText: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2)
   }
 }))
