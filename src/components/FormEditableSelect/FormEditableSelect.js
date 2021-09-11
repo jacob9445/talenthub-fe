@@ -73,7 +73,7 @@ const FormEditableSelect = props => {
   const { label, htmlId, field, form, ...selectProps } = props
   const classes = useStyles()
   const handleChange = option => {
-    form.setFieldValue(field.name, option.value)
+    option ? form.setFieldValue(field.name, option.value) : form.setFieldValue(field.name, null)
   }
 
   return (
