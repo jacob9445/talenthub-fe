@@ -24,7 +24,7 @@ import Project from 'routes/Project'
 import ProjectNew from 'routes/Project/ProjectNew'
 import ProjectEdit from 'routes/Project/ProjectEdit'
 import FinancialRequest from 'routes/FinancialRequest'
-import FinancialRequestEdit from 'routes/FinancialRequest/FinancialRequestEdit'
+import FinancialRequestDetail from 'routes/FinancialRequest/FinancialRequestDetail'
 import FinancialRequestNew from 'routes/FinancialRequest/FinancialRequestNew'
 import TransactionList from 'routes/Transaction/routes/TransactionList'
 import TransactionDetail from 'routes/Transaction/routes/TransactionDetail'
@@ -56,7 +56,7 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
       <Route exact path={`${path}/financial-requests`} component={FinancialRequest} />
-      <Route path={`${path}/financial-requests/:id/detail`} component={FinancialRequestEdit} />
+      <Route path={`${path}/financial-requests/:id/detail`} component={FinancialRequestDetail} />
       <Route path={`${path}/financial-requests/new`} component={FinancialRequestNew} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />

@@ -47,7 +47,7 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
       <Route exact path={`${path}/financial-requests`} component={FinancialRequest} />
-      <Route path={`${path}/financial-requests/:id/detail`} component={FinancialRequestEdit} />
+      <Route path={`${path}/financial-requests/:id/edit`} component={FinancialRequestEdit} />
       <Route path={`${path}/financial-requests/new`} component={FinancialRequestNew} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />

@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react'
-import { Edit as EditIcon, Cancel as CancelIcon, Check as ApproveIcon, Close as DeclineIcon } from '@material-ui/icons'
+import {
+  Edit as EditIcon,
+  Details as DetailsIcon,
+  Cancel as CancelIcon,
+  Check as ApproveIcon,
+  Close as DeclineIcon
+} from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
 import {
   Table,
@@ -43,12 +49,20 @@ function FinancialRequestTable({
   const classes = useStyles()
   const columns = ['Time', 'Project', 'Sender', 'To', 'Amount', 'Type', 'Status', 'Actions']
 
+  const showFinancialRequestEdit = useCallback(
+    id => () => {
+      history.push(`/${URL_PREFIXES[me.role]}/financial-requests/${id}/edit`, location.pathname)
+    },
+    [history, location.pathname, me.role]
+  )
+
   const showFinancialRequestDetail = useCallback(
     id => () => {
       history.push(`/${URL_PREFIXES[me.role]}/financial-requests/${id}/detail`, location.pathname)
     },
     [history, location.pathname, me.role]
   )
+
   if (data) {
     const { results } = data
     return (
@@ -75,32 +89,41 @@ function FinancialRequestTable({
               <TableCell>{FINANCIALREQUEST_TYPE_LABELS[type]}</TableCell>
               <TableCell>{FINANCIALREQUEST_STATUS_LABELS[status]}</TableCell>
               <TableCell>
-                {status === FINANCIALREQUEST_STATUS.PENDING ? (
-                  <Tooltip key={`${id}Edit`} title="Edit" placement="top">
-                    <IconButton onClick={showFinancialRequestDetail(id)}>
-                      <EditIcon color="primary" />
-                    </IconButton>
-                  </Tooltip>
-                ) : null}
                 {ROLES.ADMIN !== me.role && requester.id === me.id && status === FINANCIALREQUEST_STATUS.PENDING ? (
-                  <Tooltip key={`${id}Cancel`} title="Cancel" placement="top">
-                    <IconButton onClick={() => onCancel(id)}>
-                      <CancelIcon />
-                    </IconButton>
-                  </Tooltip>
-                ) : null}
-                {ROLES.ADMIN === me.role && status === FINANCIALREQUEST_STATUS.PENDING ? (
                   <>
-                    <Tooltip key={`${id}Approve`} title="Approve" placement="top">
-                      <IconButton onClick={() => onApprove(id, amount, type)}>
-                        <ApproveIcon className={classes.success} />
+                    <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                      <IconButton onClick={showFinancialRequestEdit(id)}>
+                        <EditIcon color="primary" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip key={`${id}Decline`} title="Decline" placement="top">
-                      <IconButton onClick={() => onDecline(id)}>
-                        <DeclineIcon color="error" />
+                    <Tooltip key={`${id}Cancel`} title="Cancel" placement="top">
+                      <IconButton onClick={() => onCancel(id)}>
+                        <CancelIcon />
                       </IconButton>
                     </Tooltip>
+                  </>
+                ) : null}
+                {ROLES.ADMIN === me.role ? (
+                  <>
+                    <Tooltip key={`${id}Detail`} title="Detail" placement="top">
+                      <IconButton onClick={showFinancialRequestDetail(id)}>
+                        <DetailsIcon color="primary" />
+                      </IconButton>
+                    </Tooltip>
+                    {status === FINANCIALREQUEST_STATUS.PENDING ? (
+                      <>
+                        <Tooltip key={`${id}Approve`} title="Approve" placement="top">
+                          <IconButton onClick={() => onApprove(id, amount, type)}>
+                            <ApproveIcon className={classes.success} />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip key={`${id}Decline`} title="Decline" placement="top">
+                          <IconButton onClick={() => onDecline(id)}>
+                            <DeclineIcon color="error" />
+                          </IconButton>
+                        </Tooltip>
+                      </>
+                    ) : null}
                   </>
                 ) : null}
               </TableCell>
