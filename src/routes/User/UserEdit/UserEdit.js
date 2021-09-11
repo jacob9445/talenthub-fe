@@ -18,6 +18,7 @@ import ProfileChips from 'components/ProfileChips'
 import { URL_PREFIXES } from 'config/constants'
 import { roleSelector } from 'store/modules/auth'
 import { meSelector } from 'store/modules/auth'
+import { initialValues as values } from '../UserDetailForm/UserDetailForm'
 
 const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDetail, history, role, me }) => {
   useEffect(() => {
@@ -26,14 +27,9 @@ const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDeta
 
   const initialValues = useMemo(() => {
     return !userDetail
-      ? {
-          first_name: '',
-          last_name: '',
-          email: '',
-          team: ''
-        }
+      ? values
       : {
-          ...pick(userDetail, ['first_name', 'last_name', 'email']),
+          ...pick(userDetail, ['first_name', 'last_name', 'email', 'role']),
           team: get(userDetail, 'team.id')
         }
   }, [userDetail])

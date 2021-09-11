@@ -12,7 +12,20 @@ import FormInput from 'components/FormInput'
 import FormEditableSelect from 'components/FormEditableSelect'
 import useStyles from './styles'
 import { getTeams, teamsSelector } from 'store/modules/team'
+import { meSelector } from 'store/modules/auth/selectors'
 import Spinner from 'components/Spinner'
+import FormSelect from 'components/FormSelect'
+import { ROLE_OPTIONS, ROLES } from 'config/constants'
+
+export const initialValues = {
+  first_name: '',
+  last_name: '',
+  email: '',
+  password: '',
+  confirm_password: '',
+  team: '',
+  role: ROLES.DEVELOPER
+}
 
 export const validationSchema = Yup.object().shape({
   first_name: Yup.string().required('This field is required!'),
@@ -29,7 +42,7 @@ export const validatePwds = values => {
   }
 }
 
-const UserDetailForm = ({ match: { path }, location, history, handleSubmit, teams, getTeams }) => {
+const UserDetailForm = ({ match: { path }, location, history, handleSubmit, teams, getTeams, me }) => {
   const classes = useStyles()
 
   useEffect(() => {
@@ -59,6 +72,9 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
         <Field component={FormInput} htmlId="first_name" type="text" name="first_name" label="First Name" />
         <Field component={FormInput} htmlId="last_name" type="text" name="last_name" label="Last Name" />
         <Field component={FormInput} htmlId="email" type="email" name="email" label="Email" />
+        {me.role === ROLES.ADMIN && (
+          <Field component={FormSelect} htmlId="role" name="role" label="Role" options={ROLE_OPTIONS} />
+        )}
         {!isEdit && (
           <React.Fragment>
             <Field component={FormInput} htmlId="password" type="password" name="password" label="Password" />
@@ -89,7 +105,8 @@ const actions = {
 }
 
 const selectors = createStructuredSelector({
-  teams: teamsSelector
+  teams: teamsSelector,
+  me: meSelector
 })
 
 UserDetailForm.propTypes = {

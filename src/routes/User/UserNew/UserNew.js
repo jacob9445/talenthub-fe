@@ -13,15 +13,7 @@ import { createUser } from 'store/modules/user'
 import { roleSelector } from 'store/modules/auth'
 import { getTeams, teamsSelector } from 'store/modules/team'
 import { URL_PREFIXES } from 'config/constants'
-
-const initialValues = {
-  first_name: '',
-  last_name: '',
-  email: '',
-  password: '',
-  confirm_password: '',
-  team: ''
-}
+import { initialValues } from '../UserDetailForm/UserDetailForm'
 
 const UserNew = ({ createUser, getTeams, teams, history, role }) => {
   const handleSubmit = useCallback(
