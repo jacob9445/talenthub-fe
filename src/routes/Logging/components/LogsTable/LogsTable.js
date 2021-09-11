@@ -36,7 +36,7 @@ function LogsTable({
       e.preventDefault()
       history.push(`/${URL_PREFIXES[role]}/logging/${interval}/${id}`, `${location.pathname}${location.search}`)
     },
-    [location, history]
+    [location, history, interval, role]
   )
 
   if (data) {
