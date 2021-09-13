@@ -1,4 +1,4 @@
-const config =  {
+const config = {
   locale: 'en',
   formats: {
     date: {

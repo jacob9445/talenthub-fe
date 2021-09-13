@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import FinancialRequestDetailForm, { validationSchema } from '../FinancialRequestDetailForm'
+import FinancialRequestEditForm, { validationSchema } from '../FinancialRequestEditForm'
 import {
   getFinancialRequestDetail,
   updateFinancialRequestDetail,
@@ -69,9 +69,9 @@ const FinancialRequestEdit = ({
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Widget title="Financial Request Detail" disableWidgetMenu>
+          <Widget title="Financial Request Edit" disableWidgetMenu>
             <Formik
-              component={FinancialRequestDetailForm}
+              component={FinancialRequestEditForm}
               initialValues={initialValues}
               validationSchema={validationSchema}
               enableReinitialize

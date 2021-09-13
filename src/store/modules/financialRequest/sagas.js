@@ -36,7 +36,8 @@ const updateFinancialRequestDetail = apiCallSaga({
   method: 'PUT',
   path: function*({ payload }) {
     return yield roleBasedPath(`financial-requests/${payload.id}/`)
-  }
+  },
+  selectorKey: 'financialRequestDetail'
 })
 
 const createFinancialRequest = apiCallSaga({
@@ -45,6 +46,7 @@ const createFinancialRequest = apiCallSaga({
   path: function*() {
     return yield roleBasedPath(`financial-requests/`)
   },
+  selectorKey: 'financialRequestDetail',
   success: function*(resData) {
     yield put(
       showMessage({
@@ -57,6 +59,7 @@ const createFinancialRequest = apiCallSaga({
 const cancelFinancialRequest = apiCallSaga({
   type: Types.CANCEL_FINANCIALREQUEST,
   method: 'PUT',
+  selectorKey: 'financialRequestDetail',
   path: function*({ payload }) {
     return yield roleBasedPath(`financial-requests/${payload.id}/cancel/`)
   }
@@ -67,7 +70,8 @@ const approveFinancialRequest = apiCallSaga({
   method: 'PUT',
   path: function*({ payload }) {
     return yield roleBasedPath(`financial-requests/${payload.id}/approve/`)
-  }
+  },
+  selectorKey: 'financialRequestDetail'
 })
 
 const declineFinancialRequest = apiCallSaga({
@@ -75,7 +79,8 @@ const declineFinancialRequest = apiCallSaga({
   method: 'PUT',
   path: function*({ payload }) {
     return yield roleBasedPath(`financial-requests/${payload.id}/decline/`)
-  }
+  },
+  selectorKey: 'financialRequestDetail'
 })
 
 export default function* rootSaga() {

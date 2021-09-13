@@ -28,7 +28,7 @@ const formatDate = date => {
 
 const ApproveRequestModal = ({
   requestId,
-  gross_amount,
+  grossAmount,
   show,
   handleHide,
   approveFinancialRequest,
@@ -37,7 +37,7 @@ const ApproveRequestModal = ({
   dashboard
 }) => {
   const initialValues = {
-    gross_amount: gross_amount,
+    gross_amount: grossAmount,
     net_amount: 0,
     created_at: formatDate(new Date()),
     payment_platform: PAYMENT_PLATFORM_TYPE.PAYPAL
@@ -92,7 +92,7 @@ ApproveRequestModal.propTypes = {
   getFinancialRequests: PropTypes.func.isRequired,
   getPendingRequests: PropTypes.func.isRequired,
   requestId: PropTypes.number.isRequired,
-  gross_amount: PropTypes.number.isRequired,
+  grossAmount: PropTypes.number.isRequired,
   dashboard: PropTypes.bool.isRequired,
   show: PropTypes.bool.isRequired,
   handleHide: PropTypes.func.isRequired

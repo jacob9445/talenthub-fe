@@ -20,7 +20,7 @@ import {
 } from 'store/modules/financialRequest'
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
-import { FINANCIALREQUEST_TYPE } from 'config/constants'
+import { FINANCIALREQUEST_TYPE, ROLES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
@@ -29,7 +29,7 @@ const FinancialRequest = ({
   financialRequests,
   isFinancialRequestsLoading,
   me,
-  match: { path },
+  match: { url },
   cancelFinancialRequest,
   declineFinancialRequest,
   show,
@@ -94,9 +94,13 @@ const FinancialRequest = ({
               title="Financial Requests"
               disableWidgetMenu
               WidgetButton={
-                <Button color="primary" component={Link} to={`${path}/new`}>
-                  Add FinancialRequest
-                </Button>
+                [ROLES.DEVELOPER, ROLES.TEAM_MANAGER].includes(me.role) ? (
+                  <Button color="primary" component={Link} to={`${url}/new`}>
+                    Add a Financial Request
+                  </Button>
+                ) : (
+                  undefined
+                )
               }>
               <FinancialRequestsTable
                 data={financialRequests}
