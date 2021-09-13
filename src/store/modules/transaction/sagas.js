@@ -1,9 +1,9 @@
 import { takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 
-const getTransactions = apiCallSaga({
+const getTransactions = createApiCallSaga({
   type: Types.GET_TRANSACTIONS,
   method: 'GET',
   path: function*() {
@@ -13,7 +13,7 @@ const getTransactions = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const getTransactionDetail = apiCallSaga({
+const getTransactionDetail = createApiCallSaga({
   type: Types.GET_TRANSACTION_DETAIL,
   method: 'GET',
   path: function*({ payload }) {

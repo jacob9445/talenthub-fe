@@ -1,5 +1,5 @@
 import { put, takeLatest, select } from 'redux-saga/effects'
-import { apiCallSaga, REQUEST_SUCCESS } from '../api'
+import { createApiCallSaga, REQUEST_SUCCESS } from '../api'
 import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT } from './types'
 import { authSuccess, authFail } from './actions'
 import { clearApiState } from '../api'
@@ -10,7 +10,7 @@ import { takeApiResult } from 'helpers/sagaHelpers'
 import { SNACKBAR_TOUCHED, NOTIFICATION_IDS, TOKEN } from 'config/constants'
 import { setSnackbarTouched } from 'helpers/utils'
 
-const authLogin = apiCallSaga({
+const authLogin = createApiCallSaga({
   type: AUTH_LOGIN,
   method: 'post',
   path: 'api/auth/login/',
@@ -46,13 +46,13 @@ const processAuthLogin = function*(action) {
   }
 }
 
-const authSignup = apiCallSaga({
+const authSignup = createApiCallSaga({
   type: AUTH_SIGNUP,
   method: 'post',
   path: '/auth/register/'
 })
 
-const authGetMe = apiCallSaga({
+const authGetMe = createApiCallSaga({
   type: AUTH_GETME,
   method: 'get',
   path: API_AUTH_GET_URL,

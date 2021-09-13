@@ -1,5 +1,5 @@
 import { select, takeLatest, take, delay, cancel, fork, put } from 'redux-saga/effects'
-import { apiCallSaga, setApiData } from '../api'
+import { createApiCallSaga, setApiData } from '../api'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { notificationsSelector } from './selectors'
 import { NOTIFICATION_PING_DELAY, NOTIFICATION_IDS } from 'config/constants'
@@ -9,7 +9,7 @@ import * as actions from './actions'
 import { countDelta, setSnackbarTouched, getBool } from 'helpers/utils'
 import { SNACKBAR_TOUCHED } from 'config/constants'
 
-const getNotifications = apiCallSaga({
+const getNotifications = createApiCallSaga({
   type: Types.GET_NOTIFICATIONS,
   method: 'GET',
   path: function*() {
@@ -18,7 +18,7 @@ const getNotifications = apiCallSaga({
   selectorKey: 'notifications'
 })
 
-const getNotificationDetail = apiCallSaga({
+const getNotificationDetail = createApiCallSaga({
   type: Types.GET_NOTIFICATION_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
@@ -27,7 +27,7 @@ const getNotificationDetail = apiCallSaga({
   selectorKey: 'notificationDetail'
 })
 
-const setStatusRead = apiCallSaga({
+const setStatusRead = createApiCallSaga({
   type: Types.SET_STATUS_READ,
   method: 'PUT',
   path: function*({ payload }) {
@@ -35,7 +35,7 @@ const setStatusRead = apiCallSaga({
   }
 })
 
-const setAllRead = apiCallSaga({
+const setAllRead = createApiCallSaga({
   type: Types.SET_ALL_READ,
   method: 'PUT',
   path: function*() {

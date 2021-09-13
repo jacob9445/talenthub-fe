@@ -1,10 +1,10 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
-const getAccounts = apiCallSaga({
+const getAccounts = createApiCallSaga({
   type: Types.GET_ACCOUNTS,
   method: 'GET',
   path: function*() {
@@ -14,7 +14,7 @@ const getAccounts = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const deleteAccount = apiCallSaga({
+const deleteAccount = createApiCallSaga({
   type: Types.DELETE_ACCOUNT,
   method: 'DELETE',
   path: function*({ payload }) {
@@ -29,7 +29,7 @@ const deleteAccountAndRefresh = function*(action) {
   })
 }
 
-const getAccountDetail = apiCallSaga({
+const getAccountDetail = createApiCallSaga({
   type: Types.GET_ACCOUNTDETAIL,
   method: 'GET',
   path: function*({ payload }) {
@@ -38,7 +38,7 @@ const getAccountDetail = apiCallSaga({
   selectorKey: 'accountDetail'
 })
 
-const updateAccount = apiCallSaga({
+const updateAccount = createApiCallSaga({
   type: Types.GET_ACCOUNTDETAIL,
   method: 'PUT',
   path: function*({ payload: { id } }) {
@@ -46,7 +46,7 @@ const updateAccount = apiCallSaga({
   }
 })
 
-const createAccount = apiCallSaga({
+const createAccount = createApiCallSaga({
   type: Types.CREATE_ACCOUNT,
   method: 'POST',
   path: function*() {

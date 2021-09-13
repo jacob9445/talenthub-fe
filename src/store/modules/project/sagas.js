@@ -1,10 +1,10 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
-const getProjects = apiCallSaga({
+const getProjects = createApiCallSaga({
   type: Types.GET_PROJECTS,
   method: 'GET',
   path: function*() {
@@ -14,7 +14,7 @@ const getProjects = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const deleteProject = apiCallSaga({
+const deleteProject = createApiCallSaga({
   type: Types.DELETE_PROJECT,
   method: 'DELETE',
   path: function*({ payload }) {
@@ -29,7 +29,7 @@ const deleteProjectAndRefresh = function*(action) {
   })
 }
 
-const getProjectDetail = apiCallSaga({
+const getProjectDetail = createApiCallSaga({
   type: Types.GET_PROJECT_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
@@ -38,7 +38,7 @@ const getProjectDetail = apiCallSaga({
   selectorKey: 'projectDetail'
 })
 
-const updateProjectDetail = apiCallSaga({
+const updateProjectDetail = createApiCallSaga({
   type: Types.UPDATE_PROJECT_DETAIL,
   method: 'PUT',
   path: function*({ payload }) {
@@ -46,7 +46,7 @@ const updateProjectDetail = apiCallSaga({
   }
 })
 
-const createProject = apiCallSaga({
+const createProject = createApiCallSaga({
   type: Types.CREATE_PROJECT,
   method: 'POST',
   path: function*() {
