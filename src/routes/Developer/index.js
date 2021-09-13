@@ -25,6 +25,7 @@ import Account from 'routes/Account'
 import AccountEdit from 'routes/Account/AccountEdit'
 import AccountNew from 'routes/Account/AccountNew'
 import MyLogs from 'routes/MyLogs'
+import Settings from 'routes/Settings'
 
 const Developer = ({ match: { path } }) => {
   return (
@@ -51,6 +52,7 @@ const Developer = ({ match: { path } }) => {
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route path={`${path}/profiles/new`} component={ProfileNew} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
+      <Route path={`${path}/settings`} component={Settings} />
     </Switch>
   )
 }

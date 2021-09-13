@@ -1,6 +1,6 @@
 import { put, takeLatest, select } from 'redux-saga/effects'
 import { createApiCallSaga, REQUEST_SUCCESS } from '../api'
-import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT } from './types'
+import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT, AUTH_UPDATEME } from './types'
 import { authSuccess, authFail } from './actions'
 import { clearApiState } from '../api'
 import { API_AUTH_GET_URL } from 'config/constants'
@@ -59,6 +59,13 @@ const authGetMe = createApiCallSaga({
   selectorKey: 'me'
 })
 
+const authUpdateMe = createApiCallSaga({
+  type: AUTH_UPDATEME,
+  method: 'put',
+  path: API_AUTH_GET_URL,
+  selectorKey: 'me'
+})
+
 const authLogout = function*() {
   localStorage.removeItem(TOKEN)
   localStorage.removeItem(SNACKBAR_TOUCHED)
@@ -70,5 +77,6 @@ export default function* rootSaga() {
   yield takeLatest(AUTH_LOGIN, processAuthLogin)
   yield takeLatest(AUTH_SIGNUP, authSignup)
   yield takeLatest(AUTH_GETME, authGetMe)
+  yield takeLatest(AUTH_UPDATEME, authUpdateMe)
   yield takeLatest(AUTH_LOGOUT, authLogout)
 }
