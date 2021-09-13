@@ -81,7 +81,6 @@ const MonthlyLogs = ({
 
   const yearArray = generateDecrementArray(new Date().getFullYear(), 10)
   const monthArray = generateIncrementArray(1, 12)
-  console.log({ yearArray, monthArray })
 
   return (
     <Widget
@@ -111,7 +110,7 @@ const MonthlyLogs = ({
               </Select>
             </FormControl>
           </form>
-          <Button className={classes.button} onClick={viewThisMonthLog} variant="contained" color="primary">
+          <Button className={classes.button} onClick={viewThisMonthLog} variant="outlined" color="primary">
             this month
           </Button>
         </Grid>
