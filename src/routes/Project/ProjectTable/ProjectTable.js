@@ -34,7 +34,7 @@ function ProjectTable({
   const classes = useStyles()
   const columns = useMemo(() => {
     function getColumns(role, disableActions) {
-      let columns = ['Title', 'Type', 'Weakly Limit', 'Price', 'Status']
+      let columns = ['Title', 'Type', 'Weekly Limit', 'Price', 'Status']
       if ([ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(role)) columns.push('Project Starter')
       if (!disableActions) columns.push('Actions')
       return columns
@@ -62,7 +62,7 @@ function ProjectTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {results.map(({ id, title, type, weakly_limit, price, status, project_starter }) => (
+          {results.map(({ id, title, type, weekly_limit, price, status, project_starter }) => (
             <TableRow
               key={id}
               hover
@@ -70,7 +70,7 @@ function ProjectTable({
               onClick={disableActions ? showProjectDetail(id) : undefined}>
               <TableCell>{title}</TableCell>
               <TableCell>{PROJECT_TYPE_LABELS[type]}</TableCell>
-              <TableCell>{weakly_limit}</TableCell>
+              <TableCell>{weekly_limit}</TableCell>
               <TableCell>{price}</TableCell>
               <TableCell>{PROJECT_STATUS_LABELS[status]}</TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(role) ? (
