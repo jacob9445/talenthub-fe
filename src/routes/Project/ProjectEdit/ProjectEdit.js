@@ -37,7 +37,7 @@ const ProjectEdit = ({
     () => ({
       title: projectDetail?.title || '',
       type: projectDetail?.type || '',
-      weakly_limit: projectDetail?.weakly_limit || '',
+      weekly_limit: projectDetail?.weekly_limit || '',
       price: projectDetail?.price || '',
       started_at: projectDetail?.started_at || '',
       ended_at: projectDetail?.ended_at || '',
@@ -57,7 +57,7 @@ const ProjectEdit = ({
             ...values,
             ended_at:
               values.type === PROJECT_TYPE.BUDGET || values.status === PROJECT_STATUS.ENDED ? values.ended_at : null,
-            weakly_limit: values.type !== PROJECT_TYPE.BUDGET ? values.weakly_limit : null,
+            weekly_limit: values.type !== PROJECT_TYPE.BUDGET ? values.weekly_limit : null,
             ...(me.role === ROLES.DEVELOPER
               ? {
                   project_starter: me.id,
@@ -114,10 +114,4 @@ ProjectEdit.propTypes = {
   me: PropTypes.object
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selectors,
-    actions
-  )
-)(ProjectEdit)
+export default compose(withRouter, connect(selectors, actions))(ProjectEdit)

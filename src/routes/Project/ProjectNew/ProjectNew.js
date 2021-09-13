@@ -17,7 +17,7 @@ import { ROLES, PROJECT_STATUS, PROJECT_TYPE, URL_PREFIXES } from 'config/consta
 const initialValues = {
   title: '',
   type: PROJECT_TYPE.HOURLYFT,
-  weakly_limit: '',
+  weekly_limit: '',
   price: '',
   started_at: '',
   ended_at: '',
@@ -36,7 +36,7 @@ const ProjectNew = ({ createProject, me, history }) => {
             ...values,
             ended_at:
               values.type === PROJECT_TYPE.BUDGET || values.status === PROJECT_STATUS.ENDED ? values.ended_at : null,
-            weakly_limit: values.type !== PROJECT_TYPE.BUDGET ? values.weakly_limit : null,
+            weekly_limit: values.type !== PROJECT_TYPE.BUDGET ? values.weekly_limit : null,
             ...(me.role === ROLES.DEVELOPER
               ? {
                   project_starter: me.id,

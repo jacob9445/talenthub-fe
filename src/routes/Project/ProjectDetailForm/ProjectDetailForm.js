@@ -27,7 +27,7 @@ import { ListDataType } from 'helpers/prop-types'
 
 export const validationSchema = Yup.object().shape({
   title: Yup.string().required('This field is required!'),
-  weakly_limit: Yup.number().when('type', {
+  weekly_limit: Yup.number().when('type', {
     is: PROJECT_TYPE.HOULRYFT || PROJECT_TYPE.HOURLYPT || PROJECT_TYPE.CONTRACT,
     then: Yup.number().required('This field name is required!'),
     otherwise: Yup.number()
@@ -101,7 +101,7 @@ const ProjectDetailForm = ({
       <Field component={FormInput} type="text" htmlId="title" name="title" label="Title" />
       <Field component={FormSelect} type="text" htmlId="type" name="type" label="Type" options={PROJECT_TYPE_OPTIONS} />
       {values.type !== PROJECT_TYPE.BUDGET ? (
-        <Field component={FormInput} type="number" htmlId="weakly_limit" name="weakly_limit" label="Weakly Limit" />
+        <Field component={FormInput} type="number" htmlId="weekly_limit" name="weekly_limit" label="Weekly Limit" />
       ) : null}
       <Field component={FormInput} type="number" htmlId="price" name="price" label="Price" />
       <Field component={FormInput} type="date" htmlId="started_at" name="started_at" label="Started At" />
