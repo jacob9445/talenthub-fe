@@ -23,7 +23,6 @@ const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onCh
   const selectedDate = queryObj.date || undefined
   const handleDateChange = useCallback(
     date => {
-      console.log('date', format(date, 'yyyy-MM-dd'))
       history.push({
         search: jsonToQueryString({
           ...parseQueryString(location.search),
@@ -40,7 +39,6 @@ const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onCh
       params: pagination
     })
   }, [getDailyLogs, me.role, selectedDate, pagination])
-  console.log({ logs })
 
   const viewTodayLog = useCallback(() => {
     const date = Date.now()
