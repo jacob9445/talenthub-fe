@@ -135,7 +135,7 @@ const ProjectDetailForm = ({
           {isUpdateMode ? 'Update' : 'Create'}
         </Button>
         <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleCancel}>
-          Cancel
+          Go Back
         </Button>
       </div>
     </form>

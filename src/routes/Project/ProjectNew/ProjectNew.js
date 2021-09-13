@@ -46,7 +46,7 @@ const ProjectNew = ({ createProject, me, history }) => {
                   participants: [values.project_starter]
                 })
           },
-          success: () => history.push(`/${URL_PREFIXES[me.role]}/projects`)
+          success: resData => history.push(`/${URL_PREFIXES[me.role]}/projects/${resData.id}/detail`)
         },
         formActions
       )
