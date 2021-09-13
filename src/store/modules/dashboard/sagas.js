@@ -1,9 +1,9 @@
 import { takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import * as Types from './types'
 
-const getOngoingProjects = apiCallSaga({
+const getOngoingProjects = createApiCallSaga({
   type: Types.GET_ONGOING_PROJECTS,
   method: 'get',
   path: function*() {
@@ -12,7 +12,7 @@ const getOngoingProjects = apiCallSaga({
   selectorKey: 'ongoing_projects'
 })
 
-const getWeeklyIncome = apiCallSaga({
+const getWeeklyIncome = createApiCallSaga({
   type: Types.GET_WEEKLY_INCONE,
   method: 'get',
   path: function*() {
@@ -21,7 +21,7 @@ const getWeeklyIncome = apiCallSaga({
   selectorKey: 'weekly_income'
 })
 
-const getStats = apiCallSaga({
+const getStats = createApiCallSaga({
   type: Types.GET_STATS,
   method: 'get',
   path: function*() {
@@ -30,7 +30,7 @@ const getStats = apiCallSaga({
   selectorKey: 'stats'
 })
 
-const getPendingRequests = apiCallSaga({
+const getPendingRequests = createApiCallSaga({
   type: Types.GET_PENDING_REQUESTS,
   method: 'get',
   path: function*() {
@@ -39,7 +39,7 @@ const getPendingRequests = apiCallSaga({
   selectorKey: 'pending_requests'
 })
 
-const getApprovedRequests = apiCallSaga({
+const getApprovedRequests = createApiCallSaga({
   type: Types.GET_APPROVED_REQUESTS,
   method: 'get',
   path: function*() {

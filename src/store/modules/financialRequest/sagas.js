@@ -1,10 +1,10 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
-const getFinancialRequests = apiCallSaga({
+const getFinancialRequests = createApiCallSaga({
   type: Types.GET_FINANCIALREQUESTS,
   method: 'GET',
   path: function*() {
@@ -14,7 +14,7 @@ const getFinancialRequests = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const deleteFinancialRequest = apiCallSaga({
+const deleteFinancialRequest = createApiCallSaga({
   type: Types.DELETE_FINANCIALREQUEST,
   method: 'DELETE',
   path: function*({ payload }) {
@@ -22,7 +22,7 @@ const deleteFinancialRequest = apiCallSaga({
   }
 })
 
-const getFinancialRequestDetail = apiCallSaga({
+const getFinancialRequestDetail = createApiCallSaga({
   type: Types.GET_FINANCIALREQUEST_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
@@ -31,7 +31,7 @@ const getFinancialRequestDetail = apiCallSaga({
   selectorKey: 'financialRequestDetail'
 })
 
-const updateFinancialRequestDetail = apiCallSaga({
+const updateFinancialRequestDetail = createApiCallSaga({
   type: Types.UPDATE_FINANCIALREQUEST_DETAIL,
   method: 'PUT',
   path: function*({ payload }) {
@@ -40,7 +40,7 @@ const updateFinancialRequestDetail = apiCallSaga({
   selectorKey: 'financialRequestDetail'
 })
 
-const createFinancialRequest = apiCallSaga({
+const createFinancialRequest = createApiCallSaga({
   type: Types.CREATE_FINANCIALREQUEST,
   method: 'POST',
   path: function*() {
@@ -56,7 +56,7 @@ const createFinancialRequest = apiCallSaga({
   }
 })
 
-const cancelFinancialRequest = apiCallSaga({
+const cancelFinancialRequest = createApiCallSaga({
   type: Types.CANCEL_FINANCIALREQUEST,
   method: 'PUT',
   selectorKey: 'financialRequestDetail',
@@ -65,7 +65,7 @@ const cancelFinancialRequest = apiCallSaga({
   }
 })
 
-const approveFinancialRequest = apiCallSaga({
+const approveFinancialRequest = createApiCallSaga({
   type: Types.APPROVE_FINANCIALREQUEST,
   method: 'PUT',
   path: function*({ payload }) {
@@ -74,7 +74,7 @@ const approveFinancialRequest = apiCallSaga({
   selectorKey: 'financialRequestDetail'
 })
 
-const declineFinancialRequest = apiCallSaga({
+const declineFinancialRequest = createApiCallSaga({
   type: Types.DECLINE_FINANCIALREQUEST,
   method: 'PUT',
   path: function*({ payload }) {

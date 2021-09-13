@@ -1,10 +1,10 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
-const getPartners = apiCallSaga({
+const getPartners = createApiCallSaga({
   type: Types.GET_PARTNERS,
   method: 'GET',
   path: function*() {
@@ -14,7 +14,7 @@ const getPartners = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const deletePartner = apiCallSaga({
+const deletePartner = createApiCallSaga({
   type: Types.DELETE_PARTNER,
   method: 'DELETE',
   path: function*({ payload }) {
@@ -29,7 +29,7 @@ const deletePartnerAndRefresh = function*(action) {
   })
 }
 
-const getPartnerDetail = apiCallSaga({
+const getPartnerDetail = createApiCallSaga({
   type: Types.GET_PARTNER_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
@@ -38,7 +38,7 @@ const getPartnerDetail = apiCallSaga({
   selectorKey: 'partnerDetail'
 })
 
-const updatePartnerDetail = apiCallSaga({
+const updatePartnerDetail = createApiCallSaga({
   type: Types.UPDATE_PARTNER_DETAIL,
   method: 'PUT',
   path: function*({ payload }) {
@@ -46,7 +46,7 @@ const updatePartnerDetail = apiCallSaga({
   }
 })
 
-const createPartner = apiCallSaga({
+const createPartner = createApiCallSaga({
   type: Types.CREATE_PARTNER,
   method: 'POST',
   path: function*() {

@@ -1,10 +1,10 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { ROLES } from 'config/constants'
 import { showMessage } from '../message'
 
-const getUsers = apiCallSaga({
+const getUsers = createApiCallSaga({
   type: Types.USERS_GETUSERS,
   method: 'GET',
   path: ({ payload }) => {
@@ -15,7 +15,7 @@ const getUsers = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const deleteUser = apiCallSaga({
+const deleteUser = createApiCallSaga({
   type: Types.USERS_DELETEUSER,
   method: 'DELETE',
   path: ({ payload }) => `api/admin/users/${payload.id}/`
@@ -31,20 +31,20 @@ const deleteUserAndRefresh = function*(action) {
   })
 }
 
-const getUserDetail = apiCallSaga({
+const getUserDetail = createApiCallSaga({
   type: Types.GET_USER_DETAIL,
   method: 'GET',
   path: ({ payload }) => `api/admin/users/${payload}/`,
   selectorKey: 'userDetail'
 })
 
-const updateUserDetail = apiCallSaga({
+const updateUserDetail = createApiCallSaga({
   type: Types.UPDATE_USER_DETAIL,
   method: 'PUT',
   path: ({ payload: { id } }) => `api/admin/users/${id}/`
 })
 
-const createUser = apiCallSaga({
+const createUser = createApiCallSaga({
   type: Types.CREATE_USER,
   method: 'POST',
   path: 'api/auth/register/',

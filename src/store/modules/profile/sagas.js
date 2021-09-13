@@ -1,10 +1,10 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
-const getProfiles = apiCallSaga({
+const getProfiles = createApiCallSaga({
   type: Types.GET_PROFILES,
   method: 'GET',
   path: function*() {
@@ -14,7 +14,7 @@ const getProfiles = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const getProfileDetail = apiCallSaga({
+const getProfileDetail = createApiCallSaga({
   type: Types.GET_PROFILE_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
@@ -23,7 +23,7 @@ const getProfileDetail = apiCallSaga({
   selectorKey: 'profileDetail'
 })
 
-const updateProfile = apiCallSaga({
+const updateProfile = createApiCallSaga({
   type: Types.UPDATE_PROFILE,
   method: 'PUT',
   path: function*({ payload: { id } }) {
@@ -31,7 +31,7 @@ const updateProfile = apiCallSaga({
   }
 })
 
-const deleteProfile = apiCallSaga({
+const deleteProfile = createApiCallSaga({
   type: Types.DELETE_PROFILE,
   method: 'DELETE',
   path: function*({ payload }) {
@@ -46,7 +46,7 @@ const deleteProfileAndRefresh = function*(action) {
   })
 }
 
-const createProfile = apiCallSaga({
+const createProfile = createApiCallSaga({
   type: Types.CREATE_PROFILE,
   method: 'POST',
   path: function*() {

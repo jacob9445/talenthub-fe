@@ -1,9 +1,9 @@
 import { takeLatest } from 'redux-saga/effects'
-import { apiCallSaga } from '../api'
+import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 
-const getMyDailyLog = apiCallSaga({
+const getMyDailyLog = createApiCallSaga({
   type: Types.GET_MY_Daily_LOG,
   method: 'GET',
   path: function*({ payload: { date } = {} }) {
@@ -14,7 +14,7 @@ const getMyDailyLog = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const createMyDailyLog = apiCallSaga({
+const createMyDailyLog = createApiCallSaga({
   type: Types.CREATE_MY_Daily_LOG,
   method: 'POST',
   selectorKey: 'myDailyLog',
@@ -23,7 +23,7 @@ const createMyDailyLog = apiCallSaga({
   }
 })
 
-const updateMyDailyLog = apiCallSaga({
+const updateMyDailyLog = createApiCallSaga({
   type: Types.UPDATE_MY_Daily_LOG,
   method: 'patch',
   selectorKey: 'myDailyLog',
@@ -32,7 +32,7 @@ const updateMyDailyLog = apiCallSaga({
   }
 })
 
-const getMyMonthlyLog = apiCallSaga({
+const getMyMonthlyLog = createApiCallSaga({
   type: Types.GET_MY_MONTHLY_LOG,
   method: 'GET',
   path: function*({ payload: { year, month } = {} }) {
@@ -43,7 +43,7 @@ const getMyMonthlyLog = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const createMyMonthlyLog = apiCallSaga({
+const createMyMonthlyLog = createApiCallSaga({
   type: Types.CREATE_MY_MONTHLY_LOG,
   method: 'POST',
   selectorKey: 'myMonthlyLog',
@@ -52,7 +52,7 @@ const createMyMonthlyLog = apiCallSaga({
   }
 })
 
-const getMyWeeklyLog = apiCallSaga({
+const getMyWeeklyLog = createApiCallSaga({
   type: Types.GET_MY_WEEKLY_LOG,
   method: 'GET',
   path: function*({ payload: { year, week } = {} }) {
@@ -63,7 +63,7 @@ const getMyWeeklyLog = apiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
-const createMyWeeklyLog = apiCallSaga({
+const createMyWeeklyLog = createApiCallSaga({
   type: Types.CREATE_MY_WEEKLY_LOG,
   method: 'POST',
   selectorKey: 'myWeeklyLog',
@@ -72,7 +72,7 @@ const createMyWeeklyLog = apiCallSaga({
   }
 })
 
-const updateMyMonthlyLog = apiCallSaga({
+const updateMyMonthlyLog = createApiCallSaga({
   type: Types.UPDATE_MY_MONTHLY_LOG,
   method: 'patch',
   selectorKey: 'myMonthlyLog',
@@ -81,7 +81,7 @@ const updateMyMonthlyLog = apiCallSaga({
   }
 })
 
-const updateMyWeeklyLog = apiCallSaga({
+const updateMyWeeklyLog = createApiCallSaga({
   type: Types.UPDATE_MY_WEEKLY_LOG,
   method: 'patch',
   selectorKey: 'myWeeklyLog',
