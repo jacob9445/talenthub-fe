@@ -1,9 +1,10 @@
 import setWith from 'lodash/setWith'
 import unset from 'lodash/unset'
+import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
 
-import { REQUEST_SUCCESS, REQUEST_REJECTED, REQUEST_PENDING, SET_API_DATA } from './types'
+import { REQUEST_SUCCESS, REQUEST_REJECTED, REQUEST_PENDING, SET_API_DATA, CLEAR_API_STATE } from './types'
 
 export const requests = handleActions(
   {
@@ -38,7 +39,9 @@ export const requests = handleActions(
           [payload.method]: REQUEST_REJECTED
         }
       }
-    }
+    },
+
+    [CLEAR_API_STATE]: R.always({})
   },
   {}
 )
@@ -63,6 +66,8 @@ export const data = handleActions(
     [SET_API_DATA]: (state, { payload }) => {
       return cloneInPath(setWith(state, payload.selectorKey, payload.data, Object), payload.selectorKey)
     },
+
+    [CLEAR_API_STATE]: R.always({}),
 
     [REQUEST_REJECTED]: (state, { payload }) => {
       if (payload.method.toLowerCase() === 'get') {

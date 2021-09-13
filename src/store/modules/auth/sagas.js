@@ -2,6 +2,7 @@ import { put, takeLatest, select } from 'redux-saga/effects'
 import { apiCallSaga, REQUEST_SUCCESS } from '../api'
 import { AUTH_LOGIN, AUTH_SIGNUP, AUTH_GETME, AUTH_LOGOUT } from './types'
 import { authSuccess, authFail } from './actions'
+import { clearApiState } from '../api'
 import { API_AUTH_GET_URL } from 'config/constants'
 import { notificationsSelector, openNC } from '../notification'
 import { showMessage } from '../message'
@@ -58,10 +59,11 @@ const authGetMe = apiCallSaga({
   selectorKey: 'me'
 })
 
-const authLogout = function() {
+const authLogout = function*() {
   localStorage.removeItem(TOKEN)
   localStorage.removeItem(SNACKBAR_TOUCHED)
   localStorage.removeItem(NOTIFICATION_IDS)
+  yield put(clearApiState())
 }
 
 export default function* rootSaga() {
