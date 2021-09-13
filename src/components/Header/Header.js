@@ -92,8 +92,9 @@ function Header({ me, authLogout, openNC, notifications }) {
           </div>
           <MenuItem
             component={Link}
-            to={`/${URL_PREFIXES[me.role]}/users/${me.id}/detail`}
-            className={classNames(classes.profileMenuItem, classes.headerMenuItem)}>
+            to={`/${URL_PREFIXES[me.role]}/settings/me`}
+            className={classNames(classes.profileMenuItem, classes.headerMenuItem)}
+            onClick={() => setProfileMenu(null)}>
             <AccountIcon className={classes.profileMenuIcon} /> me
           </MenuItem>
           <div className={classes.profileMenuUser}>

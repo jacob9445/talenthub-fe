@@ -41,7 +41,8 @@ const getUserDetail = createApiCallSaga({
 const updateUserDetail = createApiCallSaga({
   type: Types.UPDATE_USER_DETAIL,
   method: 'PUT',
-  path: ({ payload: { id } }) => `api/admin/users/${id}/`
+  path: ({ payload: { id } }) => `api/admin/users/${id}/`,
+  selectorKey: 'userDetail'
 })
 
 const createUser = createApiCallSaga({

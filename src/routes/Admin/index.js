@@ -34,6 +34,7 @@ import IndividualReport from './routes/IndividualReport'
 import TeamReport from './routes/TeamReport'
 import Logging from 'routes/Logging'
 import MyLogs from 'routes/MyLogs'
+import Settings from 'routes/Settings'
 
 const Admin = ({ match: { path } }) => {
   return (
@@ -72,6 +73,7 @@ const Admin = ({ match: { path } }) => {
       <Route exact path={`${path}/transaction-reports`} component={TransactionList} />
       <Route path={`${path}/logging`} component={Logging} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
+      <Route path={`${path}/settings`} component={Settings} />
     </Switch>
   )
 }
