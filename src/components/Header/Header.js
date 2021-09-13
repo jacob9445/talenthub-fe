@@ -15,6 +15,7 @@ import { useLayoutState, useLayoutDispatch, toggleSidebar } from 'context/Layout
 import { authLogout } from 'store/modules/auth'
 import { meSelector } from 'store/modules/auth/selectors'
 import { notificationsSelector } from 'store/modules/notification'
+import { URL_PREFIXES } from 'config/constants'
 
 function Header({ me, authLogout, openNC, notifications }) {
   var classes = useStyles()
@@ -85,11 +86,14 @@ function Header({ me, authLogout, openNC, notifications }) {
             <Typography variant="h4" weight="medium">
               {`${me.first_name} ${me.last_name}`}
             </Typography>
-            <Typography className={classes.profileMenuLink} component="a" color="primary" href="https://flatlogic.com">
+            <Typography className={classes.profileMenuLink} component="a" color="primary">
               {me.email}
             </Typography>
           </div>
-          <MenuItem className={classNames(classes.profileMenuItem, classes.headerMenuItem)}>
+          <MenuItem
+            component={Link}
+            to={`/${URL_PREFIXES[me.role]}/users/${me.id}/detail`}
+            className={classNames(classes.profileMenuItem, classes.headerMenuItem)}>
             <AccountIcon className={classes.profileMenuIcon} /> me
           </MenuItem>
           <div className={classes.profileMenuUser}>
