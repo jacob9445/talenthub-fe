@@ -7,5 +7,9 @@ export default makeStyles(theme => ({
   },
   chip: {
     margin: theme.spacing(1) / 2
+  },
+  buttonWrapper: {
+    textAlign: 'right',
+    width: '100%'
   }
 }))

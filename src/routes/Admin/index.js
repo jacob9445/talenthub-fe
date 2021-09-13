@@ -7,6 +7,8 @@ import UserEdit from 'routes/User/UserEdit'
 import User from 'routes/User'
 import UserNew from 'routes/User/UserNew'
 import Team from './routes/Team'
+import TeamNew from './routes/Team/TeamNew'
+import TeamEdit from './routes/Team/TeamEdit'
 import Profile from 'routes/Profile'
 import ProfileDetail from 'routes/Profile/ProfileEdit'
 import ProfileNew from 'routes/Profile/ProfileNew'
@@ -40,7 +42,9 @@ const Admin = ({ match: { path } }) => {
       <Route exact path={`${path}/users`} component={User} />
       <Route path={`${path}/users/new`} component={UserNew} />
       <Route path={`${path}/users/:id/detail`} component={UserEdit} />
-      <Route path={`${path}/teams`} component={Team} />
+      <Route exact path={`${path}/teams`} component={Team} />
+      <Route path={`${path}/teams/new`} component={TeamNew} />
+      <Route path={`${path}/teams/:id/edit`} component={TeamEdit} />
       <Route exact path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route exact path={`${path}/accounts`} component={Account} />
