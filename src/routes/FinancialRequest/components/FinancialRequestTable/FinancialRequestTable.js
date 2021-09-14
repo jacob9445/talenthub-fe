@@ -89,6 +89,11 @@ function FinancialRequestTable({
               <TableCell>{FINANCIALREQUEST_TYPE_LABELS[type]}</TableCell>
               <TableCell>{FINANCIALREQUEST_STATUS_LABELS[status]}</TableCell>
               <TableCell>
+                <Tooltip key={`${id}Detail`} title="Detail" placement="top">
+                  <IconButton onClick={showFinancialRequestDetail(id)}>
+                    <DetailsIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
                 {ROLES.ADMIN !== me.role && requester.id === me.id && status === FINANCIALREQUEST_STATUS.PENDING ? (
                   <>
                     <Tooltip key={`${id}Edit`} title="Edit" placement="top">
@@ -105,11 +110,6 @@ function FinancialRequestTable({
                 ) : null}
                 {ROLES.ADMIN === me.role ? (
                   <>
-                    <Tooltip key={`${id}Detail`} title="Detail" placement="top">
-                      <IconButton onClick={showFinancialRequestDetail(id)}>
-                        <DetailsIcon color="primary" />
-                      </IconButton>
-                    </Tooltip>
                     {status === FINANCIALREQUEST_STATUS.PENDING ? (
                       <>
                         <Tooltip key={`${id}Approve`} title="Approve" placement="top">

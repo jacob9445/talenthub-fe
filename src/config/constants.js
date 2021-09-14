@@ -235,6 +235,11 @@ export const FINANCIALREQUEST_STATUS_OPTIONS = [
   }
 ]
 
+export const FINANCIALREQUEST_ORDERBY_KEYS = {
+  ASCENDING: 'reqeusted_at',
+  DESCENDING: '-requested_at'
+}
+
 export const FINANCIALREQUEST_COUNTER_PARTY_TYPE = {
   CLIENT: 6,
   PARTNER: 8

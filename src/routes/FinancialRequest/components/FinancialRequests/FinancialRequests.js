@@ -21,7 +21,7 @@ const FinancialRequests = ({ match: { path } }) => {
       <Route exact path={`${path}/new`} component={FinancialRequestNew} />
       <Route exact path={`${path}/:id/detail`} component={FinancialRequestDetail} />
       <Route exact path={`${path}/:id/edit`} component={FinancialRequestEdit} />
-      <Redirect to={`${path}/all`} />
+      <Redirect to={`${path}/pending`} />
     </Switch>
   )
 }

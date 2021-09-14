@@ -4,54 +4,14 @@ import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
-const getAllFinancialRequests = createApiCallSaga({
-  type: Types.GET_ALL_FINANCIALREQUESTS,
+const getFinancialRequests = createApiCallSaga({
+  type: Types.GET_FINANCIALREQUESTS,
   method: 'GET',
   path: function*() {
-    return yield roleBasedPath('financial-requests?ordering=-requested_at')
+    return yield roleBasedPath('financial-requests')
   },
   selectorKey: 'financialRequests',
-  allowedParamKeys: ['page', 'page_size']
-})
-
-const getPendingFinancialRequests = createApiCallSaga({
-  type: Types.GET_PENDING_FINANCIALREQUESTS,
-  method: 'GET',
-  path: function*() {
-    return yield roleBasedPath('financial-requests?status=1&ordering=requested_at')
-  },
-  selectorKey: 'financialRequests',
-  allowedParamKeys: ['page', 'page_size']
-})
-
-const getApprovedFinancialRequests = createApiCallSaga({
-  type: Types.GET_APPROVED_FINANCIALREQUESTS,
-  method: 'GET',
-  path: function*() {
-    return yield roleBasedPath('financial-requests?status=2&ordering=-requested_at')
-  },
-  selectorKey: 'financialRequests',
-  allowedParamKeys: ['page', 'page_size']
-})
-
-const getDeclinedFinancialRequests = createApiCallSaga({
-  type: Types.GET_DECLINED_FINALCIALREQUESTS,
-  method: 'GET',
-  path: function*() {
-    return yield roleBasedPath('financial-requests?status=3&ordering=-requested_at')
-  },
-  selectorKey: 'financialRequests',
-  allowedParamKeys: ['page', 'page_size']
-})
-
-const getCanceledFinancialRequests = createApiCallSaga({
-  type: Types.GET_CANCELED_FINANCIALREQUESTS,
-  method: 'GET',
-  path: function*() {
-    return yield roleBasedPath('financial-requests?status=4&ordering=-requested_at')
-  },
-  selectorKey: 'financialRequests',
-  allowedParamKeys: ['page', 'page_size']
+  allowedParamKeys: ['page', 'page_size', 'status', 'ordering']
 })
 
 const deleteFinancialRequest = createApiCallSaga({
@@ -124,11 +84,7 @@ const declineFinancialRequest = createApiCallSaga({
 })
 
 export default function* rootSaga() {
-  yield takeLatest(Types.GET_ALL_FINANCIALREQUESTS, getAllFinancialRequests)
-  yield takeLatest(Types.GET_PENDING_FINANCIALREQUESTS, getPendingFinancialRequests)
-  yield takeLatest(Types.GET_APPROVED_FINANCIALREQUESTS, getApprovedFinancialRequests)
-  yield takeLatest(Types.GET_DECLINED_FINALCIALREQUESTS, getDeclinedFinancialRequests)
-  yield takeLatest(Types.GET_CANCELED_FINANCIALREQUESTS, getCanceledFinancialRequests)
+  yield takeLatest(Types.GET_FINANCIALREQUESTS, getFinancialRequests)
   yield takeLatest(Types.DELETE_FINANCIALREQUEST, deleteFinancialRequest)
   yield takeLatest(Types.GET_FINANCIALREQUEST_DETAIL, getFinancialRequestDetail)
   yield takeLatest(Types.UPDATE_FINANCIALREQUEST_DETAIL, updateFinancialRequestDetail)
