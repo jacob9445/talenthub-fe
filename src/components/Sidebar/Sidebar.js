@@ -169,7 +169,7 @@ let structure = {
     },
     {
       id: 3,
-      label: 'Users',
+      label: 'Team Members',
       link: `/team-manager/users`,
       icon: <UserIcon />
     },
