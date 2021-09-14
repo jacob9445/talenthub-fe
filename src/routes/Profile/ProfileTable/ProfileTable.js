@@ -20,11 +20,10 @@ import { profile_type_patterns, gender_patterns } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
 
-const columns = ['Full Name', 'Type', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
+const columns = ['Owner', 'Full Name', 'Type', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
 
 function ProfileTable({ data, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const classes = useStyles()
-
   if (data) {
     return (
       <Table className="mb-0">
@@ -36,8 +35,11 @@ function ProfileTable({ data, handleDelete, match: { path }, pagination, onChang
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, profile_type, first_name, last_name, address, country, dob, gender }) => (
+          {data.results.map(({ id, profile_type, first_name, last_name, address, country, dob, gender, user }) => (
             <TableRow key={id} hover>
+              <TableCell>
+                {user.first_name} {user.last_name}
+              </TableCell>
               <TableCell>
                 {first_name} {last_name}
               </TableCell>

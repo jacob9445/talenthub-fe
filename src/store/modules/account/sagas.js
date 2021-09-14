@@ -11,7 +11,7 @@ const getAccounts = createApiCallSaga({
     return yield roleBasedPath('accounts/')
   },
   selectorKey: 'accounts',
-  allowedParamKeys: ['page', 'page_size']
+  allowedParamKeys: ['page', 'page_size', 'search']
 })
 
 const deleteAccount = createApiCallSaga({
