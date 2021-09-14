@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import Widget from 'components/Widget'
 import ApproveRequestModal from 'components/ApproveRequestModal'
 import {
-  getFinancialRequests,
+  getAllFinancialRequests,
   getFinancialRequestDetail,
   updateFinancialRequestDetail,
   financialRequestDetailSelector,
@@ -70,7 +70,7 @@ const FinancialRequestDetail = ({
 
   const handleDecline = useCallback(() => {
     show('confirmModal', {
-      confirmation: 'Are you sure to delete the request?',
+      confirmation: 'Are you sure to decline the request?',
       proceed: () => {
         declineFinancialRequest({
           id: financialRequestDetail.id
@@ -154,7 +154,7 @@ const FinancialRequestDetail = ({
 }
 
 const actions = {
-  getFinancialRequests,
+  getAllFinancialRequests,
   getFinancialRequestDetail,
   updateFinancialRequestDetail,
   cancelFinancialRequest,
@@ -170,7 +170,7 @@ const selectors = createStructuredSelector({
 })
 
 FinancialRequestDetail.propTypes = {
-  getFinancialRequestDetail: PropTypes.func.isRequired,
+  getAllFinancialRequestDetail: PropTypes.func.isRequired,
   updateFinancialRequestDetail: PropTypes.func.isRequired,
   financialRequestDetail: PropTypes.object,
   isDetailLoading: PropTypes.bool.isRequired,

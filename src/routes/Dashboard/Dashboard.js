@@ -27,7 +27,7 @@ import {
   approvedRequestsLoadingSelector
 } from 'store/modules/dashboard'
 import ProjectTable from 'routes/Project/ProjectTable'
-import FinancialRequestTable from 'routes/FinancialRequest/FinancialRequestTable'
+import FinancialRequestTable from 'routes/FinancialRequest/components/FinancialRequestTable'
 import { meSelector } from 'store/modules/auth'
 import {
   cancelFinancialRequest,
@@ -113,7 +113,7 @@ const Dashboard = ({
   const handleDecline = useCallback(
     id => {
       show('confirmModal', {
-        confirmation: 'Are you sure to delete the request?',
+        confirmation: 'Are you sure to decline the request?',
         proceed: () => {
           declineFinancialRequest({
             id,

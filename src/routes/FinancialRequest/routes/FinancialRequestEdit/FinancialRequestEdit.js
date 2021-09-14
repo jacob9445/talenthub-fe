@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import FinancialRequestEditForm, { validationSchema } from '../FinancialRequestEditForm'
+import FinancialRequestEditForm, { validationSchema } from '../../components/FinancialRequestEditForm'
 import {
   getFinancialRequestDetail,
   updateFinancialRequestDetail,
