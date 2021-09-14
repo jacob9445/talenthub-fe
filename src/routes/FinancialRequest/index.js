@@ -1,1 +1,1 @@
-export { default } from './FinancialRequest'
+export { default } from './components/FinancialRequests'

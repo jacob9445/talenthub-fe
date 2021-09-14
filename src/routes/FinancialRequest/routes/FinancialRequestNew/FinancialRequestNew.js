@@ -8,7 +8,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import FinancialRequestDetailForm, { validationSchema } from '../FinancialRequestEditForm'
+import FinancialRequestDetailForm, { validationSchema } from '../../components/FinancialRequestEditForm'
 import { formSubmit } from 'helpers/form'
 import { meSelector } from 'store/modules/auth'
 import { createFinancialRequest } from 'store/modules/financialRequest'

@@ -1,7 +1,11 @@
 import { createAction } from 'redux-actions'
 import * as Types from './types'
 
-export const getFinancialRequests = createAction(Types.GET_FINANCIALREQUESTS)
+export const getAllFinancialRequests = createAction(Types.GET_ALL_FINANCIALREQUESTS)
+export const getApprovedFinancialRequests = createAction(Types.GET_APPROVED_FINANCIALREQUESTS)
+export const getPendingFinancialRequests = createAction(Types.GET_PENDING_FINANCIALREQUESTS)
+export const getDeclinedFinancialRequests = createAction(Types.GET_DECLINED_FINALCIALREQUESTS)
+export const getCanceledFinancialRequests = createAction(Types.GET_CANCELED_FINANCIALREQUESTS)
 export const deleteFinancialRequest = createAction(Types.DELETE_FINANCIALREQUEST)
 export const getFinancialRequestDetail = createAction(Types.GET_FINANCIALREQUEST_DETAIL)
 export const updateFinancialRequestDetail = createAction(Types.UPDATE_FINANCIALREQUEST_DETAIL)

@@ -25,9 +25,7 @@ import ClientEdit from 'routes/Client/ClientEdit'
 import Project from 'routes/Project'
 import ProjectNew from 'routes/Project/ProjectNew'
 import ProjectEdit from 'routes/Project/ProjectEdit'
-import FinancialRequest from 'routes/FinancialRequest'
-import FinancialRequestDetail from 'routes/FinancialRequest/FinancialRequestDetail'
-import FinancialRequestNew from 'routes/FinancialRequest/FinancialRequestNew'
+import FinancialRequests from 'routes/FinancialRequest'
 import TransactionList from 'routes/Transaction/routes/TransactionList'
 import TransactionDetail from 'routes/Transaction/routes/TransactionDetail'
 import IndividualReport from './routes/IndividualReport'
@@ -60,9 +58,7 @@ const Admin = ({ match: { path } }) => {
       <Route exact path={`${path}/projects`} component={Project} />
       <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
-      <Route exact path={`${path}/financial-requests`} component={FinancialRequest} />
-      <Route path={`${path}/financial-requests/:id/detail`} component={FinancialRequestDetail} />
-      <Route path={`${path}/financial-requests/new`} component={FinancialRequestNew} />
+      <Route path={`${path}/financial-requests`} component={FinancialRequests} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
       <Route exact path={`${path}/profiles`} component={Profile} />

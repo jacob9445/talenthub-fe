@@ -8,10 +8,10 @@ import { compose } from 'redux'
 import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
-import FinancialRequestsTable from './FinancialRequestTable'
+import FinancialRequestsTable from '../../components/FinancialRequestTable'
 import Spinner from 'components/Spinner'
 import {
-  getFinancialRequests,
+  getPendingFinancialRequests,
   financialRequestsSelector,
   financialRequestsLoadingSelector,
   cancelFinancialRequest,
@@ -24,8 +24,8 @@ import { FINANCIALREQUEST_TYPE, ROLES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
-const FinancialRequest = ({
-  getFinancialRequests,
+const PendingFinancialRequest = ({
+  getPendingFinancialRequests,
   financialRequests,
   isFinancialRequestsLoading,
   me,
@@ -39,20 +39,20 @@ const FinancialRequest = ({
   onChangeRowsPerPage
 }) => {
   useEffect(() => {
-    getFinancialRequests({
+    getPendingFinancialRequests({
       me: me,
       params: pagination
     })
-  }, [getFinancialRequests, me, pagination])
+  }, [getPendingFinancialRequests, me, pagination])
 
   const handleCancel = useCallback(
     id => {
       cancelFinancialRequest({
         id,
-        success: () => getFinancialRequests()
+        success: () => getPendingFinancialRequests()
       })
     },
-    [cancelFinancialRequest, getFinancialRequests]
+    [cancelFinancialRequest, getPendingFinancialRequests]
   )
 
   const handleApprove = useCallback(
@@ -60,28 +60,28 @@ const FinancialRequest = ({
       if (request_type === FINANCIALREQUEST_TYPE.SENDINVOICE) {
         approveFinancialRequest({
           id: requestId,
-          success: () => getFinancialRequests()
+          success: () => getPendingFinancialRequests()
         })
       } else {
         show('approveRequestModal', { requestId, gross_amount })
       }
     },
-    [show, approveFinancialRequest, getFinancialRequests]
+    [show, approveFinancialRequest, getPendingFinancialRequests]
   )
 
   const handleDecline = useCallback(
     id => {
       show('confirmModal', {
-        confirmation: 'Are you sure to delete the request?',
+        confirmation: 'Are you sure to decline the request?',
         proceed: () => {
           declineFinancialRequest({
             id,
-            success: () => getFinancialRequests()
+            success: () => getPendingFinancialRequests()
           })
         }
       })
     },
-    [show, declineFinancialRequest, getFinancialRequests]
+    [show, declineFinancialRequest, getPendingFinancialRequests]
   )
 
   if (isFinancialRequestsLoading) return <Spinner />
@@ -91,7 +91,7 @@ const FinancialRequest = ({
         <Grid container>
           <Grid item xs={12}>
             <Widget
-              title="Financial Requests"
+              title="Pending Financial Requests"
               disableWidgetMenu
               WidgetButton={
                 [ROLES.DEVELOPER, ROLES.TEAM_MANAGER].includes(me.role) ? (
@@ -121,7 +121,7 @@ const FinancialRequest = ({
 }
 
 const actions = {
-  getFinancialRequests,
+  getPendingFinancialRequests,
   cancelFinancialRequest,
   declineFinancialRequest,
   approveFinancialRequest,
@@ -134,8 +134,8 @@ const selector = createStructuredSelector({
   me: meSelector
 })
 
-FinancialRequest.propTypes = {
-  getFinancialRequests: PropTypes.func.isRequired,
+PendingFinancialRequest.propTypes = {
+  getPendingFinancialRequests: PropTypes.func.isRequired,
   financialRequests: ListDataType,
   isFinancialRequestsLoading: PropTypes.bool.isRequired,
   me: PropTypes.object.isRequired,
@@ -147,4 +147,4 @@ FinancialRequest.propTypes = {
   pagination: PropTypes.object
 }
 
-export default compose(withPaginationInfo, withRouter, connect(selector, actions))(FinancialRequest)
+export default compose(withPaginationInfo, withRouter, connect(selector, actions))(PendingFinancialRequest)

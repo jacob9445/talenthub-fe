@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import PropTypes from 'prop-types'
 
 import TransactionForm from 'components/TransactionForm'
-import { approveFinancialRequest, getFinancialRequests } from 'store/modules/financialRequest'
+import { approveFinancialRequest, getAllFinancialRequests } from 'store/modules/financialRequest'
 import { formSubmit } from 'helpers/form'
 import { PAYMENT_PLATFORM_TYPE } from 'config/constants'
 import { getPendingRequests } from 'store/modules/dashboard'
@@ -32,7 +32,7 @@ const ApproveRequestModal = ({
   show,
   handleHide,
   approveFinancialRequest,
-  getFinancialRequests,
+  getAllFinancialRequests,
   getPendingRequests,
   dashboard
 }) => {
@@ -54,7 +54,7 @@ const ApproveRequestModal = ({
             if (dashboard) {
               getPendingRequests()
             } else {
-              getFinancialRequests()
+              getAllFinancialRequests()
             }
             handleHide()
           }
@@ -62,7 +62,7 @@ const ApproveRequestModal = ({
         formActions
       )
     },
-    [approveFinancialRequest, requestId, getFinancialRequests, handleHide, getPendingRequests, dashboard]
+    [approveFinancialRequest, requestId, getAllFinancialRequests, handleHide, getPendingRequests, dashboard]
   )
 
   return (
@@ -79,7 +79,7 @@ const ApproveRequestModal = ({
 
 const actions = {
   approveFinancialRequest,
-  getFinancialRequests,
+  getAllFinancialRequests,
   getPendingRequests
 }
 
@@ -89,7 +89,7 @@ ApproveRequestModal.defaultProps = {
 
 ApproveRequestModal.propTypes = {
   approveFinancialRequest: PropTypes.func.isRequired,
-  getFinancialRequests: PropTypes.func.isRequired,
+  getAllFinancialRequests: PropTypes.func.isRequired,
   getPendingRequests: PropTypes.func.isRequired,
   requestId: PropTypes.number.isRequired,
   grossAmount: PropTypes.number.isRequired,

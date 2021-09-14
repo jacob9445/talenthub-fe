@@ -47,7 +47,29 @@ let structure = {
       id: 1,
       label: 'Financial Requests',
       link: '/admin/financial-requests',
-      icon: <FRIcon />
+      icon: <FRIcon />,
+      subLinks: [
+        {
+          label: 'Pending Requests',
+          link: '/admin/financial-requests/pending'
+        },
+        {
+          label: 'Approved Requests',
+          link: '/admin/financial-requests/approved'
+        },
+        {
+          label: 'Declined Requests',
+          link: '/admin/financial-requests/declined'
+        },
+        {
+          label: 'Canceled Requests',
+          link: '/admin/financial-requests/canceled'
+        },
+        {
+          label: 'All Requests',
+          link: '/admin/financial-requests/all'
+        }
+      ]
     },
     {
       id: 2,
@@ -149,7 +171,29 @@ let structure = {
       id: 1,
       label: 'Financial Requests',
       link: '/team-manager/financial-requests',
-      icon: <FRIcon />
+      icon: <FRIcon />,
+      subLinks: [
+        {
+          label: 'Pending Requests',
+          link: '/team-manager/financial-requests/pending'
+        },
+        {
+          label: 'Approved Requests',
+          link: '/team-manager/financial-requests/approved'
+        },
+        {
+          label: 'Declined Requests',
+          link: '/team-manager/financial-requests/declined'
+        },
+        {
+          label: 'Canceled Requests',
+          link: '/team-manager/financial-requests/canceled'
+        },
+        {
+          label: 'All Requests',
+          link: '/team-manager/financial-requests/all'
+        }
+      ]
     },
     {
       id: 2,
@@ -241,7 +285,29 @@ let structure = {
       id: 1,
       label: 'Financial Requests',
       link: '/developer/financial-requests',
-      icon: <FRIcon />
+      icon: <FRIcon />,
+      subLinks: [
+        {
+          label: 'Pending Requests',
+          link: '/developer/financial-requests/pending'
+        },
+        {
+          label: 'Approved Requests',
+          link: '/developer/financial-requests/approved'
+        },
+        {
+          label: 'Declined Requests',
+          link: '/developer/financial-requests/declined'
+        },
+        {
+          label: 'Canceled Requests',
+          link: '/developer/financial-requests/canceled'
+        },
+        {
+          label: 'All Requests',
+          link: '/developer/financial-requests/all'
+        }
+      ]
     },
     {
       id: 2,
