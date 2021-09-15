@@ -1,8 +1,10 @@
-import { put, takeLatest } from 'redux-saga/effects'
-import { createApiCallSaga } from '../api'
+import { put, takeLatest, select } from 'redux-saga/effects'
+import { createApiCallSaga, setApiData } from '../api'
 import * as Types from './types'
 import { ROLES } from 'config/constants'
 import { showMessage } from '../message'
+import { createTeamMembersSelector } from 'store/modules/team'
+import { unassignedUsersSelector } from 'store/modules/user'
 
 const getUsers = createApiCallSaga({
   type: Types.USERS_GETUSERS,
@@ -40,10 +42,54 @@ const getUserDetail = createApiCallSaga({
 
 const updateUserDetail = createApiCallSaga({
   type: Types.UPDATE_USER_DETAIL,
-  method: 'PUT',
+  method: 'PATCH',
   path: ({ payload: { id } }) => `api/admin/users/${id}/`,
   selectorKey: 'userDetail'
 })
+
+const changeUserTeam = createApiCallSaga({
+  type: Types.CHANGE_USER_TEAM,
+  method: 'PATCH',
+  path: ({ payload: { id } }) => `api/admin/users/${id}/`,
+  selectorKey: 'userDetail'
+})
+
+const processChangeUserTeam = function*(action) {
+  const { teamId, status, id: userId } = action.payload || {}
+  const teamMembers = yield select(createTeamMembersSelector(teamId))
+  const unassignedUsers = yield select(unassignedUsersSelector)
+  const selectedUser = unassignedUsers.find(item => item.id === userId)
+  const deselectedUser = teamMembers.find(item => item.id === userId)
+
+  if (status) {
+    yield put(
+      setApiData({
+        data: [...teamMembers, selectedUser],
+        selectorKey: `teamMembers_${teamId}`
+      })
+    )
+    yield put(
+      setApiData({
+        data: unassignedUsers.filter(item => item.id !== action.payload.id),
+        selectorKey: 'unassignedUsers'
+      })
+    )
+  } else {
+    yield put(
+      setApiData({
+        data: teamMembers.filter(item => item.id !== action.payload.id),
+        selectorKey: `teamMembers_${teamId}`
+      })
+    )
+    yield put(
+      setApiData({
+        data: [...unassignedUsers, deselectedUser],
+        selectorKey: 'unassignedUsers'
+      })
+    )
+  }
+  yield changeUserTeam(action)
+}
 
 const createUser = createApiCallSaga({
   type: Types.CREATE_USER,
@@ -58,6 +104,13 @@ const createUser = createApiCallSaga({
   }
 })
 
+const getTeamUnassignedUsers = createApiCallSaga({
+  type: Types.GET_TEAM_UNASSIGNED_USERS,
+  method: 'get',
+  path: 'api/admin/teams/unassigned-users/',
+  selectorKey: 'unassignedUsers'
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.USERS_GETUSERS, getUsers)
   yield takeLatest(Types.USERS_DELETEUSER, deleteUser)
@@ -65,4 +118,6 @@ export default function* rootSaga() {
   yield takeLatest(Types.GET_USER_DETAIL, getUserDetail)
   yield takeLatest(Types.UPDATE_USER_DETAIL, updateUserDetail)
   yield takeLatest(Types.CREATE_USER, createUser)
+  yield takeLatest(Types.CHANGE_USER_TEAM, processChangeUserTeam)
+  yield takeLatest(Types.GET_TEAM_UNASSIGNED_USERS, getTeamUnassignedUsers)
 }

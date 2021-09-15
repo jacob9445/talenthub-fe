@@ -10,7 +10,8 @@ import { getTeams, teamsSelector, deleteTeamAndRefresh } from 'store/modules/tea
 
 import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
-import TeamMemberExpansion from './TeamMemberExpansion'
+import TeamMemberExpansion from '../../components/TeamMemberExpansion'
+import TeamUnassignedUsers from '../../components/TeamUnassignedUsers'
 
 const Team = ({ getTeams, teams, show, deleteTeamAndRefresh }) => {
   useEffect(() => {
@@ -49,6 +50,7 @@ const Team = ({ getTeams, teams, show, deleteTeamAndRefresh }) => {
                 onDeleteTeam={handleDeleteTeam}
               />
             ))}
+            <TeamUnassignedUsers />
           </Widget>
         </Grid>
       </Grid>

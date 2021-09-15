@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { formSubmit } from 'helpers/form'
 import { getTeamDetail, teamDetailSelector, teamDetailLoadingSelector } from 'store/modules/team'
 import { updateTeamAndRefresh } from 'store/modules/team'
-import TeamEditForm, { validationSchema } from 'routes/Admin/routes/Team/TeamEditForm'
+import TeamEditForm, { validationSchema } from 'routes/Admin/routes/Team/components/TeamEditForm'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 

@@ -6,7 +6,7 @@ import { withRouter } from 'react-router'
 import { compose } from 'redux'
 
 import Widget from 'components/Widget'
-import TeamEditForm, { validationSchema } from 'routes/Admin/routes/Team/TeamEditForm'
+import TeamEditForm, { validationSchema } from 'routes/Admin/routes/Team/components/TeamEditForm'
 import { formSubmit } from 'helpers/form'
 import { createTeamAndRefresh } from 'store/modules/team'
 
