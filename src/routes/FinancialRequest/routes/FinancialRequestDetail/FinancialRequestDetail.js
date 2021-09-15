@@ -29,7 +29,8 @@ import {
   FINANCIALREQUEST_TYPE_LABELS,
   FINANCIALREQUEST_TYPE,
   FINANCIALREQUEST_STATUS,
-  FINANCIALREQUEST_STATUS_LABELS
+  FINANCIALREQUEST_STATUS_LABELS,
+  ROLES
 } from 'config/constants'
 import LabelValue from 'components/LabelValue'
 
@@ -51,7 +52,7 @@ const FinancialRequestDetail = ({
 
   const classes = useStyles()
 
-  const handleCancel = useCallback(() => {
+  const handleGoBack = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/financial-requests`)
   }, [location, history, me])
 
@@ -79,13 +80,35 @@ const FinancialRequestDetail = ({
     })
   }, [show, declineFinancialRequest, financialRequestDetail])
 
+  const showFinancialRequestEdit = useCallback(
+    id => () => {
+      history.push(`/${URL_PREFIXES[me.role]}/financial-requests/${id}/edit`, location.pathname)
+    },
+    [history, location.pathname, me.role]
+  )
+
   if (isDetailLoading) return <Spinner />
   else
     return (
       <>
         <Grid container>
           <Grid item xs={12}>
-            <Widget title="Financial Request Details" disableWidgetMenu>
+            <Widget
+              title="Financial Request Details"
+              disableWidgetMenu
+              WidgetButton={
+                ROLES.ADMIN !== me.role &&
+                financialRequestDetail &&
+                financialRequestDetail.requester.id === me.id &&
+                financialRequestDetail.status === FINANCIALREQUEST_STATUS.PENDING ? (
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={showFinancialRequestEdit(financialRequestDetail.id)}>
+                    Edit
+                  </Button>
+                ) : null
+              }>
               {financialRequestDetail && (
                 <>
                   <Grid container className={classes.row} spacing={2}>
@@ -126,7 +149,7 @@ const FinancialRequestDetail = ({
                     </Grid>
                   </Grid>
                   <div className={classes.hrline} />
-                  {financialRequestDetail.status === FINANCIALREQUEST_STATUS.PENDING && (
+                  {ROLES.ADMIN === me.role && financialRequestDetail.status === FINANCIALREQUEST_STATUS.PENDING ? (
                     <>
                       <Button
                         className={classes.approveButton}
@@ -139,9 +162,9 @@ const FinancialRequestDetail = ({
                         Decline
                       </Button>
                     </>
-                  )}
-                  <Button className={classes.cancelButton} onClick={handleCancel} color="secondary">
-                    Cancel
+                  ) : null}
+                  <Button className={classes.cancelButton} onClick={handleGoBack} color="secondary">
+                    Go Back
                   </Button>
                 </>
               )}
