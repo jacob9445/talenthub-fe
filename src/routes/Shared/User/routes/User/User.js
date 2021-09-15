@@ -10,7 +10,7 @@ import { compose } from 'redux'
 
 import { getUsers, usersSelector, deleteUserAndRefresh } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
-import UserTable from './UserTable'
+import UserTable from '../../components/UserTable'
 import Widget from 'components/Widget'
 import { ROLES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'

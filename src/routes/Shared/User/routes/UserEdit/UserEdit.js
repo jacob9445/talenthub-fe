@@ -11,14 +11,13 @@ import { Grid } from '@material-ui/core'
 import { formSubmit } from 'helpers/form'
 import { getUserDetail, userDetailSelector, userDetailLoadingSelector } from 'store/modules/user'
 import { updateUserDetail } from 'store/modules/user'
-import UserDetailForm, { validationSchema } from 'routes/Shared/User/UserDetailForm'
+import UserDetailForm, { validationSchema, initialValues as values } from '../../components/UserDetailForm'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 import ProfileChips from 'components/ProfileChips'
 import { URL_PREFIXES } from 'config/constants'
 import { roleSelector } from 'store/modules/auth'
 import { meSelector } from 'store/modules/auth'
-import { initialValues as values } from '../UserDetailForm/UserDetailForm'
 
 const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDetail, history, role, me }) => {
   useEffect(() => {

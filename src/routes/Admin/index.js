@@ -3,9 +3,7 @@ import { Route, Switch } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Dashboard from 'routes/Shared/Dashboard'
-import UserEdit from 'routes/Shared/User/UserEdit'
 import User from 'routes/Shared/User'
-import UserNew from 'routes/Shared/User/UserNew'
 import Team from './routes/Team'
 import Profile from 'routes/Shared/Profile'
 import Account from 'routes/Shared/Account'
@@ -32,19 +30,17 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/projects`} component={Project} />
-
-      <Route exact path={`${path}/users`} component={User} />
-      <Route path={`${path}/users/new`} component={UserNew} />
-      <Route path={`${path}/users/:id/detail`} component={UserEdit} />
+      <Route path={`${path}/users`} component={User} />
       <Route path={`${path}/teams`} component={Team} />
+      <Route path={`${path}/logging`} component={Logging} />
+      <Route path={`${path}/my-logs`} component={MyLogs} />
+      <Route path={`${path}/settings`} component={Settings} />
+
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
       <Route exact path={`${path}/individual-reports`} component={IndividualReport} />
       <Route exact path={`${path}/team-reports`} component={TeamReport} />
       <Route exact path={`${path}/transaction-reports`} component={TransactionList} />
-      <Route path={`${path}/logging`} component={Logging} />
-      <Route path={`${path}/my-logs`} component={MyLogs} />
-      <Route path={`${path}/settings`} component={Settings} />
     </Switch>
   )
 }

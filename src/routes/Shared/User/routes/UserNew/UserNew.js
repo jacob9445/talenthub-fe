@@ -7,13 +7,12 @@ import { withRouter } from 'react-router'
 import { compose } from 'redux'
 
 import Widget from 'components/Widget'
-import UserDetailForm, { validationSchema, validatePwds } from 'routes/Shared/User/UserDetailForm'
+import UserDetailForm, { validationSchema, validatePwds, initialValues } from '../../components/UserDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createUser } from 'store/modules/user'
 import { roleSelector } from 'store/modules/auth'
 import { getTeams, teamsSelector } from 'store/modules/team'
 import { URL_PREFIXES } from 'config/constants'
-import { initialValues } from '../UserDetailForm/UserDetailForm'
 
 const UserNew = ({ createUser, getTeams, teams, history, role }) => {
   const handleSubmit = useCallback(

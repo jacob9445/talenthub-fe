@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 
 import Dashboard from 'routes/Shared/Dashboard'
 import User from 'routes/Shared/User'
-import UserNew from 'routes/Shared/User/UserNew'
-import UserEdit from 'routes/Shared/User/UserEdit'
 import Partner from 'routes/Shared/Partner'
 import Client from 'routes/Shared/Client'
 import Project from 'routes/Shared/Project'
@@ -15,9 +13,9 @@ import Account from 'routes/Shared/Account'
 import Logging from 'routes/Shared/Logging'
 import MyLogs from 'routes/Shared/MyLogs'
 import Settings from 'routes/Shared/Settings'
-import { isTeamManagerOrRedir } from 'hocs/withRoles'
 import TransactionList from 'routes/Shared/Transaction/routes/TransactionList'
 import TransactionDetail from 'routes/Shared/Transaction/routes/TransactionDetail'
+import { isTeamManagerOrRedir } from 'hocs/withRoles'
 
 const TeamManager = ({ match: { path } }) => {
   return (
@@ -29,15 +27,13 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/projects`} component={Project} />
-
-      <Route exact path={`${path}/users`} component={User} />
-      <Route path={`${path}/users/new`} component={UserNew} />
-      <Route path={`${path}/users/:id/detail`} component={UserEdit} />
-      <Route exact path={`${path}/transactions`} component={TransactionList} />
-      <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
+      <Route path={`${path}/users`} component={User} />
       <Route path={`${path}/logging`} component={Logging} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
+
+      <Route exact path={`${path}/transactions`} component={TransactionList} />
+      <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
     </Switch>
   )
 }
