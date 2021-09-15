@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import Widget from 'components/Widget'
 import ApproveRequestModal from 'components/ApproveRequestModal'
 import {
-  getAllFinancialRequests,
+  getFinancialRequests,
   getFinancialRequestDetail,
   updateFinancialRequestDetail,
   financialRequestDetailSelector,
@@ -87,6 +87,12 @@ const FinancialRequestDetail = ({
     [history, location.pathname, me.role]
   )
 
+  const canEdit =
+    ROLES.ADMIN !== me.role &&
+    financialRequestDetail &&
+    financialRequestDetail.requester.id === me.id &&
+    financialRequestDetail.status === FINANCIALREQUEST_STATUS.PENDING
+
   if (isDetailLoading) return <Spinner />
   else
     return (
@@ -97,10 +103,7 @@ const FinancialRequestDetail = ({
               title="Financial Request Details"
               disableWidgetMenu
               WidgetButton={
-                ROLES.ADMIN !== me.role &&
-                financialRequestDetail &&
-                financialRequestDetail.requester.id === me.id &&
-                financialRequestDetail.status === FINANCIALREQUEST_STATUS.PENDING ? (
+                canEdit ? (
                   <Button
                     color="primary"
                     variant="contained"
@@ -177,7 +180,7 @@ const FinancialRequestDetail = ({
 }
 
 const actions = {
-  getAllFinancialRequests,
+  getFinancialRequests,
   getFinancialRequestDetail,
   updateFinancialRequestDetail,
   cancelFinancialRequest,
