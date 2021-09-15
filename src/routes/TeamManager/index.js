@@ -13,8 +13,7 @@ import Account from 'routes/Shared/Account'
 import Logging from 'routes/Shared/Logging'
 import MyLogs from 'routes/Shared/MyLogs'
 import Settings from 'routes/Shared/Settings'
-import TransactionList from 'routes/Shared/Transaction/routes/TransactionList'
-import TransactionDetail from 'routes/Shared/Transaction/routes/TransactionDetail'
+import Transaction from 'routes/Shared/Transaction'
 import { isTeamManagerOrRedir } from 'hocs/withRoles'
 
 const TeamManager = ({ match: { path } }) => {
@@ -31,9 +30,7 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/logging`} component={Logging} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
-
-      <Route exact path={`${path}/transactions`} component={TransactionList} />
-      <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
+      <Route path={`${path}/transactions`} component={Transaction} />
     </Switch>
   )
 }

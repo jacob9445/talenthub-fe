@@ -16,8 +16,7 @@ import TeamReport from './routes/TeamReport'
 import Logging from 'routes/Shared/Logging'
 import MyLogs from 'routes/Shared/MyLogs'
 import Settings from 'routes/Shared/Settings'
-import TransactionList from 'routes/Shared/Transaction/routes/TransactionList'
-import TransactionDetail from 'routes/Shared/Transaction/routes/TransactionDetail'
+import Transaction from 'routes/Shared/Transaction'
 import { isAdminOrRedir } from 'hocs/withRoles'
 
 const Admin = ({ match: { path } }) => {
@@ -35,12 +34,11 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/logging`} component={Logging} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
+      <Route path={`${path}/transactions`} component={Transaction} />
 
-      <Route exact path={`${path}/transactions`} component={TransactionList} />
-      <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
       <Route exact path={`${path}/individual-reports`} component={IndividualReport} />
       <Route exact path={`${path}/team-reports`} component={TeamReport} />
-      <Route exact path={`${path}/transaction-reports`} component={TransactionList} />
+      <Route exact path={`${path}/transaction-reports`} component={Transaction} />
     </Switch>
   )
 }
