@@ -44,14 +44,24 @@ const AllFinancialRequest = ({
     })
   }, [getFinancialRequests, me, pagination])
 
+  const getAllFinancialRequests = useCallback(() => {
+    getFinancialRequests({
+      me: me,
+      params: {
+        ...pagination,
+        ordering: FINANCIALREQUEST_ORDERBY_KEYS.ASCENDING
+      }
+    })
+  }, [me, pagination, getFinancialRequests])
+
   const handleCancel = useCallback(
     id => {
       cancelFinancialRequest({
         id,
-        success: () => getFinancialRequests()
+        success: getAllFinancialRequests
       })
     },
-    [cancelFinancialRequest, getFinancialRequests]
+    [cancelFinancialRequest, getAllFinancialRequests]
   )
 
   const handleApprove = useCallback(
@@ -59,13 +69,13 @@ const AllFinancialRequest = ({
       if (requestType === FINANCIALREQUEST_TYPE.SENDINVOICE) {
         approveFinancialRequest({
           id: requestId,
-          success: () => getFinancialRequests()
+          success: getAllFinancialRequests
         })
       } else {
         show('approveRequestModal', { requestId, grossAmount })
       }
     },
-    [show, approveFinancialRequest, getFinancialRequests]
+    [show, approveFinancialRequest, getAllFinancialRequests]
   )
 
   const handleDecline = useCallback(
@@ -75,12 +85,12 @@ const AllFinancialRequest = ({
         proceed: () => {
           declineFinancialRequest({
             id,
-            success: () => getFinancialRequests()
+            success: getAllFinancialRequests
           })
         }
       })
     },
-    [show, declineFinancialRequest, getFinancialRequests]
+    [show, declineFinancialRequest, getAllFinancialRequests]
   )
 
   if (isFinancialRequestsLoading) return <Spinner />
