@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import FormInput from 'components/FormInput'
 import { showMessage } from 'store/modules/message'
-import useStyles from '../styles'
+import useStyles from './styles'
 import PropTypes from 'prop-types'
 
 const LoginForm = ({ handleSubmit, errors, showMessage }) => {
