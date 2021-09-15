@@ -8,7 +8,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import ProjectDetailForm, { validationSchema } from '../ProjectDetailForm'
+import ProjectDetailForm, { validationSchema } from '../../components/ProjectDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createProject } from 'store/modules/project'
 import { meSelector } from 'store/modules/auth'

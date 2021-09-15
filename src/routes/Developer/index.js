@@ -7,8 +7,6 @@ import Dashboard from 'routes/Shared/Dashboard'
 import Client from 'routes/Shared/Client'
 import Partner from 'routes/Shared/Partner'
 import Project from 'routes/Shared/Project'
-import ProjectNew from 'routes/Shared/Project/ProjectNew'
-import ProjectEdit from 'routes/Shared/Project/ProjectEdit'
 import FinancialRequests from 'routes/Shared/FinancialRequest'
 import Profile from 'routes/Shared/Profile'
 import Account from 'routes/Shared/Account'
@@ -26,10 +24,8 @@ const Developer = ({ match: { path } }) => {
       <Route path={`${path}/financial-requests`} component={FinancialRequests} />
       <Route path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/profiles`} component={Profile} />
+      <Route path={`${path}/projects`} component={Project} />
 
-      <Route exact path={`${path}/projects`} component={Project} />
-      <Route path={`${path}/projects/new`} component={ProjectNew} />
-      <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
 

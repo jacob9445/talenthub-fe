@@ -8,7 +8,7 @@ import { compose } from 'redux'
 import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
-import ProjectsTable from './ProjectTable'
+import ProjectsTable from '../../components/ProjectTable'
 import Spinner from 'components/Spinner'
 import { getProjects, deleteProjectAndRefresh, projectsSelector, projectsLoadingSelector } from 'store/modules/project'
 import { meSelector } from 'store/modules/auth'

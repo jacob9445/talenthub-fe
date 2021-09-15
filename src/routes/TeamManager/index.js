@@ -9,8 +9,6 @@ import UserEdit from 'routes/Shared/User/UserEdit'
 import Partner from 'routes/Shared/Partner'
 import Client from 'routes/Shared/Client'
 import Project from 'routes/Shared/Project'
-import ProjectNew from 'routes/Shared/Project/ProjectNew'
-import ProjectEdit from 'routes/Shared/Project/ProjectEdit'
 import FinancialRequests from 'routes/Shared/FinancialRequest'
 import Profile from 'routes/Shared/Profile'
 import Account from 'routes/Shared/Account'
@@ -30,13 +28,11 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/financial-requests`} component={FinancialRequests} />
       <Route path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/profiles`} component={Profile} />
+      <Route path={`${path}/projects`} component={Project} />
 
       <Route exact path={`${path}/users`} component={User} />
       <Route path={`${path}/users/new`} component={UserNew} />
       <Route path={`${path}/users/:id/detail`} component={UserEdit} />
-      <Route exact path={`${path}/projects`} component={Project} />
-      <Route path={`${path}/projects/new`} component={ProjectNew} />
-      <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
       <Route path={`${path}/logging`} component={Logging} />

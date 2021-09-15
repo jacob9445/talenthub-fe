@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import ProjectDetailForm, { validationSchema } from '../ProjectDetailForm'
+import ProjectDetailForm, { validationSchema } from '../../components/ProjectDetailForm'
 import {
   getProjectDetail,
   updateProjectDetail,

@@ -26,7 +26,7 @@ import {
   pendingRequestsLoadingSelector,
   approvedRequestsLoadingSelector
 } from 'store/modules/dashboard'
-import ProjectTable from 'routes/Shared/Project/ProjectTable'
+import ProjectTable from 'routes/Shared/Project/components/ProjectTable'
 import FinancialRequestTable from 'routes/Shared/FinancialRequest/components/FinancialRequestTable'
 import { meSelector } from 'store/modules/auth'
 import {
