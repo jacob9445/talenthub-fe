@@ -20,7 +20,13 @@ import {
 } from 'store/modules/financialRequest'
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
-import { FINANCIALREQUEST_TYPE, ROLES, FINANCIALREQUEST_STATUS, FINANCIALREQUEST_ORDERBY_KEYS } from 'config/constants'
+import {
+  FINANCIALREQUEST_TYPE,
+  ROLES,
+  FINANCIALREQUEST_STATUS,
+  FINANCIALREQUEST_ORDERBY_KEYS,
+  URL_PREFIXES
+} from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
@@ -99,7 +105,7 @@ const PendingFinancialRequest = ({
               disableWidgetMenu
               WidgetButton={
                 [ROLES.DEVELOPER, ROLES.TEAM_MANAGER].includes(me.role) ? (
-                  <Button color="primary" component={Link} to={`${url}/new`}>
+                  <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/financial-requests/new`}>
                     Add a Financial Request
                   </Button>
                 ) : (
