@@ -79,15 +79,15 @@ let structure = {
       subLinks: [
         {
           label: 'Transaction Report',
-          link: '/admin/transactions'
+          link: '/admin/reports/transactions'
         },
         {
           label: 'Individual Report',
-          link: '/admin/individual-reports'
+          link: '/admin/reports/individuals'
         },
         {
           label: 'Team Report',
-          link: '/admin/team-reports'
+          link: '/admin/reports/teams'
         }
       ]
     },
@@ -203,7 +203,7 @@ let structure = {
       subLinks: [
         {
           label: 'Transaction Report',
-          link: '/team-manager/transactions'
+          link: '/team-manager/reports/transactions'
         },
         {
           label: 'My Team Report',
