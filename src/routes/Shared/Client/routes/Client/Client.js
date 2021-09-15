@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
-import ClientTable from './ClientTable'
+import ClientTable from '../../components/ClientTable'
 import Spinner from 'components/Spinner'
 import { getClients, deleteClientAndRefresh, clientsSelector, clientsLoadingSelector } from 'store/modules/client'
 import { meSelector } from 'store/modules/auth'

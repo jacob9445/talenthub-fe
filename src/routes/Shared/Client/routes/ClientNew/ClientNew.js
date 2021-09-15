@@ -13,7 +13,7 @@ import { createClient } from 'store/modules/client'
 import { formSubmit } from 'helpers/form'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
-import ClientDetailForm, { validationSchema } from '../ClientDetailForm'
+import ClientDetailForm, { validationSchema } from '../../components/ClientDetailForm'
 import Widget from 'components/Widget'
 
 const initialValues = {

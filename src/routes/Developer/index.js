@@ -5,8 +5,6 @@ import PropTypes from 'prop-types'
 import { isDeveloperOrRedir } from 'hocs/withRoles'
 import Dashboard from 'routes/Shared/Dashboard'
 import Client from 'routes/Shared/Client'
-import ClientNew from 'routes/Shared/Client/ClientNew'
-import ClientEdit from 'routes/Shared/Client/ClientEdit'
 import Partner from 'routes/Shared/Partner'
 import PartnerNew from 'routes/Shared/Partner/PartnerNew'
 import PartnerEdit from 'routes/Shared/Partner/PartnerEdit'
@@ -27,10 +25,9 @@ const Developer = ({ match: { path } }) => {
   return (
     <Switch>
       <Route path={`${path}/accounts`} component={Account} />
+      <Route path={`${path}/clients`} component={Client} />
+
       <Route path={`${path}/dashboard`} component={Dashboard} />
-      <Route exact path={`${path}/clients`} component={Client} />
-      <Route path={`${path}/clients/new`} component={ClientNew} />
-      <Route path={`${path}/clients/:id/detail`} component={ClientEdit} />
       <Route exact path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/partners/new`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />

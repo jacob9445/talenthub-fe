@@ -10,8 +10,6 @@ import Partner from 'routes/Shared/Partner'
 import PartnerNew from 'routes/Shared/Partner/PartnerNew'
 import PartnerEdit from 'routes/Shared/Partner/PartnerEdit'
 import Client from 'routes/Shared/Client'
-import ClientNew from 'routes/Shared/Client/ClientNew'
-import ClientEdit from 'routes/Shared/Client/ClientEdit'
 import Project from 'routes/Shared/Project'
 import ProjectNew from 'routes/Shared/Project/ProjectNew'
 import ProjectEdit from 'routes/Shared/Project/ProjectEdit'
@@ -31,6 +29,8 @@ const TeamManager = ({ match: { path } }) => {
   return (
     <Switch>
       <Route path={`${path}/accounts`} component={Account} />
+      <Route path={`${path}/clients`} component={Client} />
+
       <Route path={`${path}/dashboard`} component={Dashboard} />
       <Route exact path={`${path}/users`} component={User} />
       <Route path={`${path}/users/new`} component={UserNew} />
@@ -38,9 +38,6 @@ const TeamManager = ({ match: { path } }) => {
       <Route exact path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/partners/new`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
-      <Route exact path={`${path}/clients`} component={Client} />
-      <Route path={`${path}/clients/new`} component={ClientNew} />
-      <Route path={`${path}/clients/:id/detail`} component={ClientEdit} />
       <Route exact path={`${path}/projects`} component={Project} />
       <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />

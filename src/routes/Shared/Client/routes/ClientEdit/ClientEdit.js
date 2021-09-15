@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import ClientDetailForm, { validationSchema } from '../ClientDetailForm'
+import ClientDetailForm, { validationSchema } from '../../components/ClientDetailForm'
 import { getClientDetail, updateClient, clientDetailSelector, clientDetailLoadingSelector } from 'store/modules/client'
 import Spinner from 'components/Spinner'
 import { CLIENT_TYPES } from 'config/constants'
