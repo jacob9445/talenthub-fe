@@ -8,7 +8,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import AccountDetailForm, { validationSchema } from '../AccountDetailForm'
+import AccountDetailForm, { validationSchema } from '../../components/AccountDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createAccount } from 'store/modules/account'
 import { PLATFORMS, URL_PREFIXES } from 'config/constants'

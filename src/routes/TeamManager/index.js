@@ -20,8 +20,6 @@ import Profile from 'routes/Shared/Profile'
 import ProfileDetail from 'routes/Shared/Profile/ProfileEdit'
 import ProfileNew from 'routes/Shared/Profile/ProfileNew'
 import Account from 'routes/Shared/Account'
-import AccountEdit from 'routes/Shared/Account/AccountEdit'
-import AccountNew from 'routes/Shared/Account/AccountNew'
 import Logging from 'routes/Shared/Logging'
 import MyLogs from 'routes/Shared/MyLogs'
 import Settings from 'routes/Shared/Settings'
@@ -32,6 +30,7 @@ import TransactionDetail from 'routes/Shared/Transaction/routes/TransactionDetai
 const TeamManager = ({ match: { path } }) => {
   return (
     <Switch>
+      <Route path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/dashboard`} component={Dashboard} />
       <Route exact path={`${path}/users`} component={User} />
       <Route path={`${path}/users/new`} component={UserNew} />
@@ -51,9 +50,6 @@ const TeamManager = ({ match: { path } }) => {
       <Route exact path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route path={`${path}/profiles/new`} component={ProfileNew} />
-      <Route exact path={`${path}/accounts`} component={Account} />
-      <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
-      <Route path={`${path}/accounts/new`} component={AccountNew} />
       <Route path={`${path}/logging`} component={Logging} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />

@@ -15,7 +15,7 @@ import {
 } from 'store/modules/account'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import AccountDetailFrom, { validationSchema } from '../AccountDetailForm'
+import AccountDetailFrom, { validationSchema } from '../../components/AccountDetailForm'
 import Spinner from 'components/Spinner'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'

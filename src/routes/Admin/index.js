@@ -11,8 +11,6 @@ import Profile from 'routes/Shared/Profile'
 import ProfileDetail from 'routes/Shared/Profile/ProfileEdit'
 import ProfileNew from 'routes/Shared/Profile/ProfileNew'
 import Account from 'routes/Shared/Account'
-import AccountEdit from 'routes/Shared/Account/AccountEdit'
-import AccountNew from 'routes/Shared/Account/AccountNew'
 import Partner from 'routes/Shared/Partner'
 import PartnerNew from 'routes/Shared/Partner/PartnerNew'
 import PartnerEdit from 'routes/Shared/Partner/PartnerEdit'
@@ -35,6 +33,7 @@ import { isAdminOrRedir } from 'hocs/withRoles'
 const Admin = ({ match: { path } }) => {
   return (
     <Switch>
+      <Route path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/dashboard`} component={Dashboard} />
       <Route exact path={`${path}/users`} component={User} />
       <Route path={`${path}/users/new`} component={UserNew} />
@@ -42,9 +41,6 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/teams`} component={Team} />
       <Route exact path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
-      <Route exact path={`${path}/accounts`} component={Account} />
-      <Route path={`${path}/accounts/:id/detail`} component={AccountEdit} />
-      <Route path={`${path}/accounts/new`} component={AccountNew} />
       <Route exact path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/partners/new`} component={PartnerNew} />
       <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
