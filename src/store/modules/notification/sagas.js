@@ -64,7 +64,7 @@ const processAllRead = function*(action) {
     setApiData({
       data: {
         ...notifications,
-        count: notifications.count - 1,
+        count: 0,
         results: []
       },
       selectorKey: 'notifications'

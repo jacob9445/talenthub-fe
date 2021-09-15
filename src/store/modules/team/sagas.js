@@ -13,7 +13,7 @@ const getTeams = createApiCallSaga({
 const getTeamMembers = createApiCallSaga({
   type: Types.GET_TEAM_MEMBERS,
   method: 'GET',
-  path: ({ payload }) => `api/admin/teams/${payload}/users/`,
+  path: ({ payload }) => `api/admin/teams/${payload}/members/`,
   selectorKey: payload => `teamMembers_${payload}`
 })
 

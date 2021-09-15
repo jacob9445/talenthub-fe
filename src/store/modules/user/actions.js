@@ -7,3 +7,5 @@ export const deleteUserAndRefresh = createAction(Types.USERS_DELETE_USER_AND_REF
 export const getUserDetail = createAction(Types.GET_USER_DETAIL)
 export const updateUserDetail = createAction(Types.UPDATE_USER_DETAIL)
 export const createUser = createAction(Types.CREATE_USER)
+export const changeUserTeam = createAction(Types.CHANGE_USER_TEAM)
+export const getTeamUnassigendUsers = createAction(Types.GET_TEAM_UNASSIGNED_USERS)
