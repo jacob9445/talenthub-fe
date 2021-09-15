@@ -18,7 +18,7 @@ import { PLATFORM_LABELS } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
 
-const columns = ['Profile', 'Platform Type', 'Email', 'Password', 'Location', 'URL', 'Actions']
+const columns = ['Owner', 'Profile', 'Platform Type', 'Email', 'Password', 'Location', 'URL', 'Actions']
 
 function AccountTable({ data, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   if (data) {
@@ -34,6 +34,9 @@ function AccountTable({ data, handleDelete, match: { path }, pagination, onChang
         <TableBody>
           {data.results.map(({ id, profile, platform_type, email, password, location, url }) => (
             <TableRow key={id} hover>
+              <TableCell>
+                {profile.user.first_name} {profile.user.last_name}
+              </TableCell>
               <TableCell>
                 {profile.first_name} {profile.last_name}
               </TableCell>

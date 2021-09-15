@@ -1,20 +1,25 @@
-import React, { useEffect, useCallback } from 'react'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
-import { Grid, Button } from '@material-ui/core'
-import { Link } from 'react-router-dom'
-import { show } from 'redux-modal'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
+import * as R from 'ramda'
+import { withRouter } from 'react-router'
+import { show } from 'redux-modal'
+import { Link } from 'react-router-dom'
+import { Grid, Button } from '@material-ui/core'
+import { Formik } from 'formik'
+import { createStructuredSelector } from 'reselect'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 
-import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndRefresh } from 'store/modules/profile'
-import { meSelector } from 'store/modules/auth'
-import { URL_PREFIXES } from 'config/constants'
-import ProfileTable from './ProfileTable'
-import Spinner from 'components/Spinner'
-import Widget from 'components/Widget'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import Widget from 'components/Widget'
+import Spinner from 'components/Spinner'
+import SearchForm from 'components/SearchForm'
+import ProfileTable from './ProfileTable'
+import { URL_PREFIXES } from 'config/constants'
+import { meSelector } from 'store/modules/auth'
 import { ListDataType } from 'helpers/prop-types'
+import { jsonToQueryString, parseQueryString } from 'helpers/utils'
+import { getProfiles, profileSelector, profileLoadingSelector, deleteProfileAndRefresh } from 'store/modules/profile'
 
 const Profile = ({
   getProfiles,
@@ -25,13 +30,19 @@ const Profile = ({
   show,
   pagination,
   onChangePage,
-  onChangeRowsPerPage
+  onChangeRowsPerPage,
+  history,
+  location
 }) => {
+  const initialValues = useMemo(() => {
+    return R.pick(['search'], parseQueryString(location.search))
+  }, [location])
+
   useEffect(() => {
     getProfiles({
-      params: pagination
+      params: { ...pagination, ...initialValues }
     })
-  }, [getProfiles, pagination])
+  }, [getProfiles, pagination, initialValues])
 
   const handleDelete = useCallback(
     id => {
@@ -43,6 +54,18 @@ const Profile = ({
       })
     },
     [show, deleteProfileAndRefresh]
+  )
+
+  const handleSubmit = useCallback(
+    (formValues, formActinos) => {
+      history.push({
+        search: jsonToQueryString({
+          ...pagination,
+          ...formValues
+        })
+      })
+    },
+    [history, pagination]
   )
 
   if (isLoading) return <Spinner />
@@ -59,6 +82,7 @@ const Profile = ({
                 Add Profile
               </Button>
             }>
+            <Formik initialValues={initialValues} component={SearchForm} onSubmit={handleSubmit} />
             <ProfileTable
               data={profiles}
               handleDelete={handleDelete}
@@ -94,4 +118,4 @@ const selectors = createStructuredSelector({
   me: meSelector
 })
 
-export default compose(withPaginationInfo, connect(selectors, actions))(Profile)
+export default compose(withRouter, withPaginationInfo, connect(selectors, actions))(Profile)
