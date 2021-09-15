@@ -8,7 +8,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import ProfileDetailForm, { validationSchema } from '../ProfileDetailForm'
+import ProfileDetailForm, { validationSchema } from '../../components/ProfileDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createProfile } from 'store/modules/profile'
 import { meSelector } from 'store/modules/auth'

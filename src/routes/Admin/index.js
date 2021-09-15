@@ -8,8 +8,6 @@ import User from 'routes/Shared/User'
 import UserNew from 'routes/Shared/User/UserNew'
 import Team from './routes/Team'
 import Profile from 'routes/Shared/Profile'
-import ProfileDetail from 'routes/Shared/Profile/ProfileEdit'
-import ProfileNew from 'routes/Shared/Profile/ProfileNew'
 import Account from 'routes/Shared/Account'
 import Partner from 'routes/Shared/Partner'
 import Client from 'routes/Shared/Client'
@@ -34,21 +32,17 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/dashboard`} component={Dashboard} />
       <Route path={`${path}/financial-requests`} component={FinancialRequests} />
       <Route path={`${path}/partners`} component={Partner} />
+      <Route path={`${path}/profiles`} component={Profile} />
 
       <Route exact path={`${path}/users`} component={User} />
       <Route path={`${path}/users/new`} component={UserNew} />
       <Route path={`${path}/users/:id/detail`} component={UserEdit} />
       <Route path={`${path}/teams`} component={Team} />
-      <Route exact path={`${path}/profiles`} component={Profile} />
-      <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
       <Route exact path={`${path}/projects`} component={Project} />
       <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
-      <Route exact path={`${path}/profiles`} component={Profile} />
-      <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
-      <Route path={`${path}/profiles/new`} component={ProfileNew} />
       <Route exact path={`${path}/individual-reports`} component={IndividualReport} />
       <Route exact path={`${path}/team-reports`} component={TeamReport} />
       <Route exact path={`${path}/transaction-reports`} component={TransactionList} />

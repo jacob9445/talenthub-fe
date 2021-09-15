@@ -15,9 +15,9 @@ import {
 } from 'store/modules/profile'
 import Widget from 'components/Widget'
 import { formSubmit } from 'helpers/form'
-import ProfileDetailForm, { validationSchema } from '../ProfileDetailForm'
+import ProfileDetailForm, { validationSchema } from '../../components/ProfileDetailForm'
 import Spinner from 'components/Spinner'
-import AccountChips from './AccountChips'
+import AccountChips from '../../components/AccountChips'
 import { meSelector } from 'store/modules/auth'
 import { ROLES, URL_PREFIXES } from 'config/constants'
 

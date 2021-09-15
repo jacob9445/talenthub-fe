@@ -11,8 +11,6 @@ import ProjectNew from 'routes/Shared/Project/ProjectNew'
 import ProjectEdit from 'routes/Shared/Project/ProjectEdit'
 import FinancialRequests from 'routes/Shared/FinancialRequest'
 import Profile from 'routes/Shared/Profile'
-import ProfileDetail from 'routes/Shared/Profile/ProfileEdit'
-import ProfileNew from 'routes/Shared/Profile/ProfileNew'
 import Account from 'routes/Shared/Account'
 import MyLogs from 'routes/Shared/MyLogs'
 import Settings from 'routes/Shared/Settings'
@@ -27,15 +25,14 @@ const Developer = ({ match: { path } }) => {
       <Route path={`${path}/dashboard`} component={Dashboard} />
       <Route path={`${path}/financial-requests`} component={FinancialRequests} />
       <Route path={`${path}/partners`} component={Partner} />
+      <Route path={`${path}/profiles`} component={Profile} />
 
       <Route exact path={`${path}/projects`} component={Project} />
       <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
-      <Route exact path={`${path}/profiles`} component={Profile} />
-      <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
-      <Route path={`${path}/profiles/new`} component={ProfileNew} />
+
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
     </Switch>
