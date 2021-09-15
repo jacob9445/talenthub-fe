@@ -6,7 +6,7 @@ import useStyles from './styles'
 import logo from './logo.svg'
 import LoginForm from './LoginForm'
 import { authLogin } from 'store/modules/auth'
-import { formSubmit } from '../../helpers/form'
+import { formSubmit } from 'helpers/form'
 import PropTypes from 'prop-types'
 import * as Yup from 'yup'
 
