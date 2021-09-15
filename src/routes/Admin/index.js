@@ -12,8 +12,6 @@ import ProfileDetail from 'routes/Shared/Profile/ProfileEdit'
 import ProfileNew from 'routes/Shared/Profile/ProfileNew'
 import Account from 'routes/Shared/Account'
 import Partner from 'routes/Shared/Partner'
-import PartnerNew from 'routes/Shared/Partner/PartnerNew'
-import PartnerEdit from 'routes/Shared/Partner/PartnerEdit'
 import Client from 'routes/Shared/Client'
 import Project from 'routes/Shared/Project'
 import ProjectNew from 'routes/Shared/Project/ProjectNew'
@@ -33,21 +31,19 @@ const Admin = ({ match: { path } }) => {
     <Switch>
       <Route path={`${path}/accounts`} component={Account} />
       <Route path={`${path}/clients`} component={Client} />
-
       <Route path={`${path}/dashboard`} component={Dashboard} />
+      <Route path={`${path}/financial-requests`} component={FinancialRequests} />
+      <Route path={`${path}/partners`} component={Partner} />
+
       <Route exact path={`${path}/users`} component={User} />
       <Route path={`${path}/users/new`} component={UserNew} />
       <Route path={`${path}/users/:id/detail`} component={UserEdit} />
       <Route path={`${path}/teams`} component={Team} />
       <Route exact path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/profiles/:id/detail`} component={ProfileDetail} />
-      <Route exact path={`${path}/partners`} component={Partner} />
-      <Route path={`${path}/partners/new`} component={PartnerNew} />
-      <Route path={`${path}/partners/:id/detail`} component={PartnerEdit} />
       <Route exact path={`${path}/projects`} component={Project} />
       <Route path={`${path}/projects/new`} component={ProjectNew} />
       <Route path={`${path}/projects/:id/detail`} component={ProjectEdit} />
-      <Route path={`${path}/financial-requests`} component={FinancialRequests} />
       <Route exact path={`${path}/transactions`} component={TransactionList} />
       <Route path={`${path}/transactions/:id/detail`} component={TransactionDetail} />
       <Route exact path={`${path}/profiles`} component={Profile} />

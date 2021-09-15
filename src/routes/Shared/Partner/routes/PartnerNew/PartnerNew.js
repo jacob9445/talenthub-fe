@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 
 import Widget from 'components/Widget'
-import PartnerDetailForm, { validationSchema } from '../PartnerDetailForm'
+import PartnerDetailForm, { validationSchema } from '../../components/PartnerDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createPartner } from 'store/modules/partner'
 import { meSelector } from 'store/modules/auth'

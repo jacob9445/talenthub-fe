@@ -1,1 +1,1 @@
-export { default } from './Partner'
+export { default } from './components/PartnerRoute'
