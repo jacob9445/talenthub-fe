@@ -38,7 +38,7 @@ const ApproveRequestModal = ({
 }) => {
   const initialValues = {
     gross_amount: grossAmount,
-    net_amount: 0,
+    net_amount: grossAmount,
     created_at: formatDate(new Date()),
     payment_platform: PAYMENT_PLATFORM_TYPE.PAYPAL
   }

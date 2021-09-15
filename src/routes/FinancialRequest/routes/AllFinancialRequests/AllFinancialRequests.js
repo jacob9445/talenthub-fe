@@ -55,14 +55,14 @@ const AllFinancialRequest = ({
   )
 
   const handleApprove = useCallback(
-    (requestId, gross_amount, request_type) => {
-      if (request_type === FINANCIALREQUEST_TYPE.SENDINVOICE) {
+    (requestId, grossAmount, requestType) => {
+      if (requestType === FINANCIALREQUEST_TYPE.SENDINVOICE) {
         approveFinancialRequest({
           id: requestId,
           success: () => getFinancialRequests()
         })
       } else {
-        show('approveRequestModal', { requestId, gross_amount })
+        show('approveRequestModal', { requestId, grossAmount })
       }
     },
     [show, approveFinancialRequest, getFinancialRequests]
