@@ -1,8 +1,8 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback, useState, useMemo } from 'react'
+import { Grid, Button } from '@material-ui/core'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { Grid, Button } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
 import DatePicker from 'components/DatePicker'
 import PropTypes from 'prop-types'
@@ -19,9 +19,12 @@ import { periodOptions } from 'config/constants'
 import SimpleSelect from 'components/SimpleSelect'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import { getTeams, teamsSelector } from 'store/modules/team'
 import useStyles from './styles'
 
 const IndividualReportList = ({
+  teams,
+  getTeams,
   individualReport,
   getIndividualReport,
   isIndividualReportLoading,
@@ -35,34 +38,83 @@ const IndividualReportList = ({
   const [filterFrom, setFilterFrom] = useState(null)
   const [filterTo, setFilterTo] = useState(null)
   const classes = useStyles()
-  const { period = 'this-month', from, to } = parseQueryString(location.search)
+  const queryObj = useMemo(
+    () => ({
+      period: 'this-month',
+      ...parseQueryString(location.search)
+    }),
+    [location.search]
+  )
+
   useEffect(() => {
-    const { from, to } = parseQueryString(location.search)
+    const { from, to, team = 'all', period } = queryObj
     if (!from) {
       getIndividualReport({
         period,
-        params: pagination
+        params: {
+          team: team === 'all' ? undefined : team,
+          pagination
+        }
       })
     } else {
       getIndividualReport({
         period: 'custom',
         params: {
           ...pagination,
+          team,
           from,
           to
         }
       })
     }
-  }, [getIndividualReport, pagination, location.search, period])
+    getTeams()
+  }, [getIndividualReport, getTeams, pagination, queryObj])
+
+  const teamOptions = useMemo(
+    () => [
+      { value: 'all', label: 'All' },
+      ...(teams
+        ? teams.map(team => ({
+            value: team.id.toString(),
+            label: team.name
+          }))
+        : [])
+    ],
+    [teams]
+  )
+
+  const handleTeamChange = useCallback(
+    event => {
+      const { period } = parseQueryString(location.search)
+      const team = event.target.value
+      if (team !== 'all') {
+        history.push({
+          search: jsonToQueryString({
+            period,
+            team
+          })
+        })
+      } else {
+        history.push({
+          search: jsonToQueryString({
+            period
+          })
+        })
+      }
+    },
+    [history, location.search]
+  )
 
   const handlePeriodChange = useCallback(
     event => {
       if (event.target.value !== 'custom') {
         setShowCustom(0)
-        const { page, page_size } = parseQueryString(location.search)
+        const { team, page, page_size } = parseQueryString(location.search)
+        const period = event.target.value
         history.push({
           search: jsonToQueryString({
-            period: event.target.value,
+            team,
+            period,
             page,
             page_size
           })
@@ -107,9 +159,15 @@ const IndividualReportList = ({
           <Widget title="Individual Reports" disableWidgetMenu>
             <SimpleSelect
               label="Period"
-              defaultValue="this-month"
+              value={queryObj.period}
               options={periodOptions}
               onChange={handlePeriodChange}
+            />
+            <SimpleSelect
+              label="Team"
+              value={queryObj.team || 'all'}
+              options={teamOptions}
+              onChange={handleTeamChange}
             />
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
@@ -125,7 +183,7 @@ const IndividualReportList = ({
               pagination={pagination}
               onChangePage={onChangePage}
               onChangeRowsPerPage={onChangeRowsPerPage}
-              period={{ period: period, from: from, to: to }}
+              period={queryObj}
             />
           </Widget>
         </Grid>
@@ -135,10 +193,12 @@ const IndividualReportList = ({
 }
 
 const actions = {
-  getIndividualReport
+  getIndividualReport,
+  getTeams
 }
 
 const selector = createStructuredSelector({
+  teams: teamsSelector,
   individualReport: individualReportSelector,
   isIndividualReportLoading: individualReportLoadingSelector
 })
