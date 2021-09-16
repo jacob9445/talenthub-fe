@@ -15,6 +15,7 @@ import MyLogs from 'routes/Shared/MyLogs'
 import Settings from 'routes/Shared/Settings'
 import Transaction from 'routes/Shared/Transaction'
 import { isTeamManagerOrRedir } from 'hocs/withRoles'
+import MyTeamReportList from './routes/MyTeamReportList'
 
 const TeamManager = ({ match: { path } }) => {
   return (
@@ -31,6 +32,7 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
       <Route path={`${path}/reports/transactions`} component={Transaction} />
+      <Route exact path={`${path}/my-team-reports`} component={MyTeamReportList} />
     </Switch>
   )
 }

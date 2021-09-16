@@ -33,8 +33,20 @@ const getTeamReport = createApiCallSaga({
   allowedParamKeys: ['from', 'to']
 })
 
+const getMyTeamReports = createApiCallSaga({
+  type: Types.GET_MY_TEAM_REPORTS,
+  method: 'GET',
+  path: function*({ payload }) {
+    return yield roleBasedPath(`reports/${payload.period}/`)
+  },
+  selectorKey: 'myTeamReports',
+  allowedParamKeys: ['page', 'page_size', 'from', 'to']
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_INDIVIDUALREPORT, getIndividualReport)
   yield takeLatest(Types.GET_MY_REPORT, getMyReport)
   yield takeLatest(Types.GET_TEAMREPORT, getTeamReport)
+  yield takeLatest(Types.GET_MY_TEAM_REPORTS, getMyTeamReports)
+
 }

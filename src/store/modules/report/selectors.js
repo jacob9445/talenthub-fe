@@ -8,3 +8,6 @@ export const myReportLoadingSelector = state => isRequestPending('myReport', 'GE
 
 export const teamReportSelector = createDataSelector('teamReport')
 export const teamReportLoadingSelector = state => isRequestPending('teamReport', 'GET')(state)
+
+export const myTeamReportSelector = createDataSelector('myTeamReports')
+export const myTeamReportLoadingSelector = state => isRequestPending('myTeamReports', 'GET')(state)
