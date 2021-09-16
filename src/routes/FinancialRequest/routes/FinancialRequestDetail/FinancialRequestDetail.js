@@ -93,6 +93,12 @@ const FinancialRequestDetail = ({
     financialRequestDetail.requester.id === me.id &&
     financialRequestDetail.status === FINANCIALREQUEST_STATUS.PENDING
 
+  const shouldShowProjectField = Boolean(
+    financialRequestDetail &&
+      financialRequestDetail.project &&
+      financialRequestDetail.type !== FINANCIALREQUEST_TYPE.SENDPAYMENT
+  )
+
   if (isDetailLoading) return <Spinner />
   else
     return (
@@ -131,15 +137,17 @@ const FinancialRequestDetail = ({
                         <FormattedNumber format="currency" value={financialRequestDetail.amount} />
                       </LabelValue>
                     </Grid>
-                    <Grid item sm={6}>
-                      <LabelValue label="Project Related">
-                        <Link
-                          to={`/${URL_PREFIXES[me.role]}/projects/${financialRequestDetail.project.id}/detail`}
-                          color="primary">
-                          {financialRequestDetail.project.title}
-                        </Link>
-                      </LabelValue>
-                    </Grid>
+                    {shouldShowProjectField && (
+                      <Grid item sm={6}>
+                        <LabelValue label="Project Related">
+                          <Link
+                            to={`/${URL_PREFIXES[me.role]}/projects/${financialRequestDetail.project.id}/detail`}
+                            color="primary">
+                            {financialRequestDetail.project.title}
+                          </Link>
+                        </LabelValue>
+                      </Grid>
+                    )}
                   </Grid>
                   <Grid container className={classes.row} spacing={2}>
                     <Grid item>
