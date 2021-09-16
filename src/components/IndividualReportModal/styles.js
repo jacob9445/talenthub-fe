@@ -6,5 +6,8 @@ export default makeStyles(theme => ({
     paddingRight: theme.spacing(4),
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2)
+  },
+  paper: {
+    minWidth: 360
   }
 }))

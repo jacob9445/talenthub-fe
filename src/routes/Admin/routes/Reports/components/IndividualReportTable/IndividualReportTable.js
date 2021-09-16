@@ -8,17 +8,20 @@ import Spinner from 'components/Spinner'
 import useStyles from './styles'
 import { ListDataType } from 'helpers/prop-types'
 
-function IndividualReportTable({ data, show, pagination, onChangePage, onChangeRowsPerPage }) {
+function IndividualReportTable({ data, show, pagination, onChangePage, onChangeRowsPerPage, period }) {
   const columns = ['Full Name', 'Earning']
   const classes = useStyles()
-
+  const getResults = useCallback(id => data.results.find((value, index, array) => array[index].id === id), [data])
   const handleRowClick = useCallback(
     id => () => {
       show('IndividualReportModal', {
-        project_earning: data.results.find((value, index, array) => array[index].id === id).project_earnings
+        project_earning: getResults(id).project_earnings,
+        developer: getResults(id).first_name + ' ' + getResults(id).last_name,
+        earning: getResults(id).earning,
+        period
       })
     },
-    [show, data]
+    [show, getResults, period]
   )
 
   if (data) {
@@ -32,12 +35,14 @@ function IndividualReportTable({ data, show, pagination, onChangePage, onChangeR
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, first_name, last_name, earning }) => (
-            <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
-              <TableCell>{`${first_name} ${last_name}`}</TableCell>
-              <TableCell>{earning}</TableCell>
-            </TableRow>
-          ))}
+          {data.results
+            ? data.results.map(({ id, first_name, last_name, earning }) => (
+                <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
+                  <TableCell>{`${first_name} ${last_name}`}</TableCell>
+                  <TableCell>{earning}</TableCell>
+                </TableRow>
+              ))
+            : null}
         </TableBody>
         <TableFooter>
           <TableRow>

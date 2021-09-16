@@ -1,14 +1,14 @@
 import React, { useEffect, useCallback, useState } from 'react'
-import { Grid, Button } from '@material-ui/core'
-import { createStructuredSelector } from 'reselect'
-import { connect } from 'react-redux'
 import { compose } from 'redux'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+import { Grid, Button } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
-
-import Widget from 'components/Widget'
-import Spinner from 'components/Spinner'
 import DatePicker from 'components/DatePicker'
+import PropTypes from 'prop-types'
+import Spinner from 'components/Spinner'
+import Widget from 'components/Widget'
+
 import {
   individualReportSelector,
   getIndividualReport,
@@ -35,10 +35,9 @@ const IndividualReportList = ({
   const [filterFrom, setFilterFrom] = useState(null)
   const [filterTo, setFilterTo] = useState(null)
   const classes = useStyles()
-
+  const { period = 'this-month', from, to } = parseQueryString(location.search)
   useEffect(() => {
-    let { period, from, to } = parseQueryString(location.search)
-    if (!period && !from) period = 'this-month'
+    const { from, to } = parseQueryString(location.search)
     if (!from) {
       getIndividualReport({
         period,
@@ -54,18 +53,16 @@ const IndividualReportList = ({
         }
       })
     }
-  }, [getIndividualReport, pagination, location.search])
+  }, [getIndividualReport, pagination, location.search, period])
 
   const handlePeriodChange = useCallback(
     event => {
-      console.log(event.target.value)
       if (event.target.value !== 'custom') {
         setShowCustom(0)
-        let { period, page, page_size } = parseQueryString(location.search)
-        period = event.target.value
+        const { page, page_size } = parseQueryString(location.search)
         history.push({
           search: jsonToQueryString({
-            period,
+            period: event.target.value,
             page,
             page_size
           })
@@ -128,6 +125,7 @@ const IndividualReportList = ({
               pagination={pagination}
               onChangePage={onChangePage}
               onChangeRowsPerPage={onChangeRowsPerPage}
+              period={{ period: period, from: from, to: to }}
             />
           </Widget>
         </Grid>
