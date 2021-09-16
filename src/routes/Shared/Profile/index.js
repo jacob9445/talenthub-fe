@@ -1,1 +1,1 @@
-export { default } from './components/ProfileRoute'
+export { default } from './components/Profile'

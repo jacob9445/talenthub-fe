@@ -1,1 +1,1 @@
-export { default } from './components/ClientRoute'
+export { default } from './components/Client'

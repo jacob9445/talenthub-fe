@@ -16,7 +16,7 @@ const Settings = ({ match: { path } }) => {
 }
 
 Settings.propTypes = {
-  path: PropTypes.string
+  match: PropTypes.object.isRequired
 }
 
 export default Settings

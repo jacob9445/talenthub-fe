@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
-
+import PropTypes from 'prop-types'
 import AllFinancialRequests from '../../routes/AllFinancialRequests'
 import PendingFinancialRequests from '../../routes/PendingFinancialRequests'
 import ApprovedFinancialRequests from '../../routes/ApprovedFinancialRequests'
@@ -24,6 +24,10 @@ const FinancialRequests = ({ match: { path } }) => {
       <Redirect to={`${path}/pending`} />
     </Switch>
   )
+}
+
+FinancialRequests.propTypes = {
+  match: PropTypes.object.isRequired
 }
 
 export default FinancialRequests

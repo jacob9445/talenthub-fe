@@ -1,1 +1,1 @@
-export { default } from './components/AccountRoute'
+export { default } from './components/Account'

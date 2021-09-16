@@ -1,1 +1,1 @@
-export { default } from './components/ProjectRoute'
+export { default } from './components/Project'

@@ -1,1 +1,1 @@
-export { default } from './components/UserRoute'
+export { default } from './components/User'

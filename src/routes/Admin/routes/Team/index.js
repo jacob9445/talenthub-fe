@@ -1,1 +1,1 @@
-export { default } from './components/TeamRoutes'
+export { default } from './components/Team'

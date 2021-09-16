@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
-
+import PropTypes from 'prop-types'
 import DailyLogDetail from 'routes/Shared/Logging/routes/DailyLogDetail'
 import DailyLogs from 'routes/Shared/Logging/routes/DailyLogs'
 import MonthlyLogs from 'routes/Shared/Logging/routes/MonthlyLogs'
@@ -20,6 +20,10 @@ const Logging = ({ match: { path } }) => {
       <Redirect to={`${path}/daily-logs`} />
     </Switch>
   )
+}
+
+Logging.propTypes = {
+  match: PropTypes.object.isRequired
 }
 
 export default Logging
