@@ -63,7 +63,4 @@ TeamReportTable.propTypes = {
   show: PropTypes.func.isRequired
 }
 
-export default connect(
-  null,
-  actions
-)(TeamReportTable)
+export default connect(null, actions)(TeamReportTable)

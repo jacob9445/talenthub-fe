@@ -10,13 +10,13 @@ import Widget from 'components/Widget'
 import Spinner from 'components/Spinner'
 import DatePicker from 'components/DatePicker'
 import { teamReportSelector, getTeamReport, teamReportLoadingSelector } from 'store/modules/teamReport'
-import TeamReportTable from './TeamReportTable'
+import TeamReportTable from '../../components/TeamReportTable'
 import { periodOptions } from 'config/constants'
 import SimpleSelect from 'components/SimpleSelect'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import useStyles from './styles'
 
-const TeamReport = ({ teamReport, getTeamReport, isTeamReportLoading, location, history }) => {
+const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, location, history }) => {
   const [showCustom, setShowCustom] = useState(0)
   const [filterFrom, setFilterFrom] = useState(null)
   const [filterTo, setFilterTo] = useState(null)
@@ -118,7 +118,7 @@ const selector = createStructuredSelector({
   isTeamReportLoading: teamReportLoadingSelector
 })
 
-TeamReport.propTypes = {
+TeamReportList.propTypes = {
   teamReport: PropTypes.array,
   getTeamReport: PropTypes.func.isRequired,
   isTeamReportLoading: PropTypes.bool.isRequired,
@@ -126,10 +126,4 @@ TeamReport.propTypes = {
   history: PropTypes.object.isRequired
 }
 
-export default compose(
-  withRouter,
-  connect(
-    selector,
-    actions
-  )
-)(TeamReport)
+export default compose(withRouter, connect(selector, actions))(TeamReportList)

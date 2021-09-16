@@ -1,1 +1,1 @@
-export { default } from './components/TransactionRoute'
+export { default } from './components/Transaction'

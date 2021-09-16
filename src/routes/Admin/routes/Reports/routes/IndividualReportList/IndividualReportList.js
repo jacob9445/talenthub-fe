@@ -14,14 +14,14 @@ import {
   getIndividualReport,
   individualReportLoadingSelector
 } from 'store/modules/individualReport'
-import IndividualReportTable from './IndividualReportTable'
+import IndividualReportTable from '../../components/IndividualReportTable'
 import { periodOptions } from 'config/constants'
 import SimpleSelect from 'components/SimpleSelect'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import useStyles from './styles'
 
-const IndividualReport = ({
+const IndividualReportList = ({
   individualReport,
   getIndividualReport,
   isIndividualReportLoading,
@@ -145,7 +145,7 @@ const selector = createStructuredSelector({
   isIndividualReportLoading: individualReportLoadingSelector
 })
 
-IndividualReport.propTypes = {
+IndividualReportList.propTypes = {
   individualReport: PropTypes.object,
   getIndividualReport: PropTypes.func.isRequired,
   isIndividualReportLoading: PropTypes.bool.isRequired,
@@ -156,4 +156,4 @@ IndividualReport.propTypes = {
   history: PropTypes.object.isRequired
 }
 
-export default compose(withRouter, withPaginationInfo, connect(selector, actions))(IndividualReport)
+export default compose(withRouter, withPaginationInfo, connect(selector, actions))(IndividualReportList)

@@ -30,7 +30,7 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/logging`} component={Logging} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
-      <Route path={`${path}/transactions`} component={Transaction} />
+      <Route path={`${path}/reports/transactions`} component={Transaction} />
     </Switch>
   )
 }

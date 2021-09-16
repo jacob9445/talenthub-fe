@@ -15,7 +15,7 @@ import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
-const TransactionList = ({
+const TransactionReportList = ({
   getTransactions,
   transactions,
   isTransactionLoading,
@@ -63,7 +63,7 @@ const selector = createStructuredSelector({
   me: meSelector
 })
 
-TransactionList.propTypes = {
+TransactionReportList.propTypes = {
   getTransactions: PropTypes.func.isRequired,
   transactions: ListDataType,
   isTransactionLoading: PropTypes.bool.isRequired,
@@ -72,4 +72,4 @@ TransactionList.propTypes = {
   pagination: PropTypes.object
 }
 
-export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionList)
+export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionReportList)
