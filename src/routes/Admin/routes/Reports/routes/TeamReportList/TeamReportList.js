@@ -49,9 +49,9 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
 
   const handlePeriodChange = useCallback(
     event => {
-      if (event.target.value !== 'custom') {
+      const period = event.target.value
+      if (period !== 'custom') {
         setShowCustom(0)
-        const period = event.target.value
         history.push({
           search: jsonToQueryString({
             period
