@@ -44,7 +44,7 @@ const TransactionReportDetail = ({
                 title="Transaction Detail"
                 disableWidgetMenu
                 WidgetButton={
-                  <Button color="primary" component={Link} to={`/${URL_PREFIXES[role]}/transactions`}>
+                  <Button color="primary" component={Link} to={`/${URL_PREFIXES[role]}/financial-reports/transactions`}>
                     Back to list
                   </Button>
                 }>

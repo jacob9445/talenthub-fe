@@ -119,7 +119,7 @@ const MyReportList = ({
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Widget title="My Reports" disableWidgetMenu>
+          <Widget title="My Report" disableWidgetMenu>
             <SimpleSelect
               label="Period"
               value={queryObj.period}

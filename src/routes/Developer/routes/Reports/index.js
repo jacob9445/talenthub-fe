@@ -1,1 +1,1 @@
-export { default } from './routes/MyReportList'
+export { default } from './components/FinancialReports'
