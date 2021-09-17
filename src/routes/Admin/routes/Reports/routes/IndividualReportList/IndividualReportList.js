@@ -206,6 +206,8 @@ const selector = createStructuredSelector({
 })
 
 IndividualReportList.propTypes = {
+  team: PropTypes.object,
+  getTeams: PropTypes.func.isRequired,
   individualReport: PropTypes.object,
   getIndividualReport: PropTypes.func.isRequired,
   isIndividualReportLoading: PropTypes.bool.isRequired,
