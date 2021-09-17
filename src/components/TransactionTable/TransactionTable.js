@@ -19,7 +19,7 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
   const handleRowClick = useCallback(
     id => () => {
       if (role) {
-        history.push(`/${URL_PREFIXES[role]}/transactions/${id}/detail`)
+        history.push(`/${URL_PREFIXES[role]}/reports/transactions/${id}/detail`)
       }
     },
     [history, role]
