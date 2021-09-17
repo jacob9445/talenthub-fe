@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 import useStyles from './style'
 
-const SimpleSelect = ({ options, label, onChange, defaultValue }) => {
+const SimpleSelect = ({ options, label, onChange, defaultValue, value }) => {
   const classes = useStyles()
   const [labelWidth, setLabelWidth] = useState(0)
   const inputLabelRef = useRef(null)
@@ -25,6 +25,7 @@ const SimpleSelect = ({ options, label, onChange, defaultValue }) => {
       </InputLabel>
       <Select
         defaultValue={defaultValue}
+        value={value}
         onChange={onChange}
         input={<OutlinedInput labelWidth={labelWidth} name="select" id="outlined-simple" />}>
         {options.map(option => (

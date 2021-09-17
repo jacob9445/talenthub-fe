@@ -1,24 +1,22 @@
 import React, { useCallback } from 'react'
 import { Table, TableRow, TableHead, TableBody, TableCell, Typography } from '@material-ui/core'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 import { show } from 'redux-modal'
 import { connect } from 'react-redux'
-
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
 
-function TeamReportTable({ data, show }) {
+function TeamReportTable({ data, show, location, history, match: { path } }) {
   const columns = ['Team Name', 'Earning']
   const classes = useStyles()
   let totalEarning = 0
 
   const handleRowClick = useCallback(
     id => () => {
-      show('TeamReportModal', {
-        earning: data.find((value, index, array) => array[index].id === id).team_earnings
-      })
+      history.push(`/admin/reports/individuals?team=${id}`, location.pathname)
     },
-    [show, data]
+    [history, location.pathname]
   )
 
   if (data) {
@@ -63,4 +61,4 @@ TeamReportTable.propTypes = {
   show: PropTypes.func.isRequired
 }
 
-export default connect(null, actions)(TeamReportTable)
+export default connect(null, actions)(withRouter(TeamReportTable))

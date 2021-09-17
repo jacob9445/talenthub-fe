@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { Grid, Button } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -22,9 +22,16 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
   const [filterTo, setFilterTo] = useState(null)
   const classes = useStyles()
 
+  const queryObj = useMemo(
+    () => ({
+      period: 'this-month',
+      ...parseQueryString(location.search)
+    }),
+    [location.search]
+  )
+
   useEffect(() => {
-    let { period, from, to } = parseQueryString(location.search)
-    if (!period && !from) period = 'this-month'
+    const { from, to, period } = queryObj
     if (!from) {
       getTeamReport({
         period
@@ -38,14 +45,13 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
         }
       })
     }
-  }, [getTeamReport, location.search])
+  }, [getTeamReport, queryObj])
 
   const handlePeriodChange = useCallback(
     event => {
       if (event.target.value !== 'custom') {
         setShowCustom(0)
-        let { period } = parseQueryString(location.search)
-        period = event.target.value
+        const period = event.target.value
         history.push({
           search: jsonToQueryString({
             period
@@ -55,7 +61,7 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
         setShowCustom(1)
       }
     },
-    [history, location.search]
+    [history]
   )
 
   const handleFromChange = useCallback(event => {
@@ -88,7 +94,7 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
           <Widget title="Team Reports" disableWidgetMenu>
             <SimpleSelect
               label="Period"
-              defaultValue="this-month"
+              value={queryObj.period}
               options={periodOptions}
               onChange={handlePeriodChange}
             />

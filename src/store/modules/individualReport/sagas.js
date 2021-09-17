@@ -10,7 +10,7 @@ const getIndividualReport = createApiCallSaga({
     return yield roleBasedPath(`reports/developer/${payload.period}/`)
   },
   selectorKey: 'individualReport',
-  allowedParamKeys: ['page', 'page_size', 'from', 'to']
+  allowedParamKeys: ['page', 'page_size', 'from', 'to', 'team']
 })
 
 export default function* rootSaga() {
