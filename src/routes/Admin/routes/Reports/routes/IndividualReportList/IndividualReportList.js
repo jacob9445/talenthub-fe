@@ -48,7 +48,7 @@ const IndividualReportList = ({
 
   useEffect(() => {
     const { from, to, team = 'all', period } = queryObj
-    if (!from) {
+    if (!from && period !== 'custom') {
       getIndividualReport({
         period,
         params: {
@@ -56,12 +56,13 @@ const IndividualReportList = ({
           pagination
         }
       })
-    } else {
+    }
+    if (from) {
       getIndividualReport({
-        period: 'custom',
+        period,
         params: {
-          ...pagination,
-          team,
+          team: team === 'all' ? undefined : team,
+          pagination,
           from,
           to
         }
@@ -85,7 +86,7 @@ const IndividualReportList = ({
 
   const handleTeamChange = useCallback(
     event => {
-      const { period } = parseQueryString(location.search)
+      const { period } = queryObj
       const team = event.target.value
       if (team !== 'all') {
         history.push({
@@ -102,15 +103,15 @@ const IndividualReportList = ({
         })
       }
     },
-    [history, location.search]
+    [history, queryObj]
   )
 
   const handlePeriodChange = useCallback(
     event => {
-      if (event.target.value !== 'custom') {
+      const { team, page, page_size } = queryObj
+      const period = event.target.value
+      if (period !== 'custom') {
         setShowCustom(0)
-        const { team, page, page_size } = parseQueryString(location.search)
-        const period = event.target.value
         history.push({
           search: jsonToQueryString({
             team,
@@ -121,9 +122,14 @@ const IndividualReportList = ({
         })
       } else {
         setShowCustom(1)
+        history.push({
+          search: jsonToQueryString({
+            period
+          })
+        })
       }
     },
-    [history, location.search]
+    [history, queryObj]
   )
 
   const handleFromChange = useCallback(event => {
@@ -138,7 +144,7 @@ const IndividualReportList = ({
     if (!filterFrom || !filterTo) {
       alert('Select date range!')
     } else {
-      const { page, page_size } = parseQueryString(location.search)
+      const { page, page_size } = queryObj
       history.push({
         search: jsonToQueryString({
           from: filterFrom,
@@ -148,7 +154,7 @@ const IndividualReportList = ({
         })
       })
     }
-  }, [filterFrom, filterTo, location.search, history])
+  }, [filterFrom, filterTo, queryObj, history])
 
   if (isIndividualReportLoading) {
     return <Spinner />
