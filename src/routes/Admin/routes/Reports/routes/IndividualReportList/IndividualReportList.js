@@ -9,11 +9,7 @@ import PropTypes from 'prop-types'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 
-import {
-  individualReportSelector,
-  getIndividualReport,
-  individualReportLoadingSelector
-} from 'store/modules/individualReport'
+import { individualReportSelector, getIndividualReport, individualReportLoadingSelector } from 'store/modules/report'
 import IndividualReportTable from '../../components/IndividualReportTable'
 import { periodOptions } from 'config/constants'
 import SimpleSelect from 'components/SimpleSelect'

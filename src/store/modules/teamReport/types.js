@@ -1,1 +1,0 @@
-export const GET_TEAMREPORT = 'TH.GET_TEAMREPORT'

@@ -11,12 +11,10 @@ import { saga as project } from './project'
 import { saga as dashboard } from './dashboard'
 import { saga as financialRequest } from './financialRequest'
 import { saga as transaction } from './transaction'
-import { saga as individualReport } from './individualReport'
-import { saga as teamReport } from './teamReport'
+import { saga as report } from './report'
 import { saga as notification } from './notification'
 import { saga as logging } from './logging'
 import { saga as myLogs } from './mylogs'
-import { saga as myReport } from './myReport'
 
 export default function* rootSaga() {
   yield all([
@@ -31,11 +29,9 @@ export default function* rootSaga() {
     dashboard(),
     financialRequest(),
     transaction(),
-    individualReport(),
-    teamReport(),
     logging(),
     notification(),
     myLogs(),
-    myReport()
+    report()
   ])
 }
