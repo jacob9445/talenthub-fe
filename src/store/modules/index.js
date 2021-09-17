@@ -14,8 +14,7 @@ import project from './project'
 import dashboard from './dashboard'
 import financialRequest from './financialRequest'
 import transaction from './transaction'
-import individualReport from './individualReport'
-import teamReport from './teamReport'
+import report from './report'
 import notification from './notification'
 import logging from './logging'
 import myLogs from './mylogs'
@@ -34,8 +33,7 @@ export default combineReducers({
   dashboard,
   financialRequest,
   transaction,
-  individualReport,
-  teamReport,
+  report,
   modal,
   logging,
   notification,

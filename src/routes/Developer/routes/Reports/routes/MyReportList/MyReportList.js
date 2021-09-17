@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 
-import { myReportSelector, myReportLoadingSelector, getMyReport } from 'store/modules/myReport'
+import { myReportSelector, myReportLoadingSelector, getMyReport } from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
 import MyReportTable from '../../components/MyReportTable'
