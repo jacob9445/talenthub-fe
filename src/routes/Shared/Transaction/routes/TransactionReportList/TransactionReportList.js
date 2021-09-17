@@ -37,7 +37,7 @@ const TransactionReportList = ({
       <>
         <Grid container>
           <Grid item xs={12}>
-            <Widget title="Transaction" disableWidgetMenu>
+            <Widget title="Transactions" disableWidgetMenu>
               <TransactionTable
                 data={transactions}
                 me={me}

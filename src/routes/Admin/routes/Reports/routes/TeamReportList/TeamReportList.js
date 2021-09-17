@@ -91,7 +91,7 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Widget title="Team Reports" disableWidgetMenu>
+          <Widget title="Teams" disableWidgetMenu>
             <SimpleSelect
               label="Period"
               value={queryObj.period}

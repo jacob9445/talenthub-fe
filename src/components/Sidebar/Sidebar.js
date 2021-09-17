@@ -74,20 +74,20 @@ let structure = {
     {
       id: 2,
       label: 'Financial Report',
-      link: '/admin/reports',
+      link: '/admin/financial-reports',
       icon: <FRequestIcon />,
       subLinks: [
         {
-          label: 'Transaction Report',
-          link: '/admin/reports/transactions'
+          label: 'Transactions',
+          link: '/admin/financial-reports/transactions'
         },
         {
-          label: 'Individual Report',
-          link: '/admin/reports/individuals'
+          label: 'Individual Reports',
+          link: '/admin/financial-reports/individuals'
         },
         {
-          label: 'Team Report',
-          link: '/admin/reports/teams'
+          label: 'Teams',
+          link: '/admin/financial-reports/teams'
         }
       ]
     },
@@ -198,16 +198,16 @@ let structure = {
     {
       id: 2,
       label: 'Financial Report',
-      link: '/team-manager/reports',
+      link: '/team-manager/financial-reports',
       icon: <FRequestIcon />,
       subLinks: [
         {
-          label: 'Transaction Report',
-          link: '/team-manager/reports/transactions'
+          label: 'Transactions',
+          link: '/team-manager/financial-reports/transactions'
         },
         {
           label: 'My Team Report',
-          link: '/team-manager/my-team-reports'
+          link: '/team-manager/financial-reports/my-team-reports'
         }
       ]
     },
@@ -312,16 +312,16 @@ let structure = {
     {
       id: 2,
       label: 'Financial Report',
-      link: '/developer/reports',
+      link: '/developer/financial-reports',
       icon: <FRequestIcon />,
       subLinks: [
         {
-          label: 'Transaction Report',
-          link: '/developer/transactions'
+          label: 'Transactions',
+          link: '/developer/financial-reports/transactions'
         },
         {
           label: 'My Report',
-          link: '/developer/my-reports'
+          link: '/developer/financial-reports/my-reports'
         }
       ]
     },

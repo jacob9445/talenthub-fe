@@ -14,7 +14,7 @@ function TeamReportTable({ data, show, location, history, match: { path } }) {
 
   const handleRowClick = useCallback(
     id => () => {
-      history.push(`/admin/reports/individuals?team=${id}`, location.pathname)
+      history.push(`/admin/financial-reports/individuals?team=${id}`, location.pathname)
     },
     [history, location.pathname]
   )

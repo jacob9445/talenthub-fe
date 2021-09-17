@@ -12,8 +12,7 @@ import Profile from 'routes/Shared/Profile'
 import Account from 'routes/Shared/Account'
 import MyLogs from 'routes/Shared/MyLogs'
 import Settings from 'routes/Shared/Settings'
-import Transaction from 'routes/Shared/Transaction'
-import MyReportList from 'routes/Developer/routes/Reports'
+import FinancialReports from './routes/Reports'
 
 const Developer = ({ match: { path } }) => {
   return (
@@ -25,10 +24,9 @@ const Developer = ({ match: { path } }) => {
       <Route path={`${path}/partners`} component={Partner} />
       <Route path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/projects`} component={Project} />
-      <Route path={`${path}/transactions`} component={Transaction} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
-      <Route path={`${path}/my-reports`} component={MyReportList} />
+      <Route path={`${path}/financial-reports`} component={FinancialReports} />
     </Switch>
   )
 }
