@@ -1,8 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
-import { Grid } from '@material-ui/core'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -13,24 +12,13 @@ import Select from '@material-ui/core/Select'
 
 import { monthlyLogsSelector, getMonthlyLogs } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
-import LogsTable from '../../components/LogsTable'
-import Widget from 'components/Widget'
 import useStyles from './styles'
-import { ROLES } from 'config/constants'
+import LoggingLayout from 'routes/Shared/Logging/components/LoggingLayout'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString, generateDecrementArray, generateIncrementArray } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
 
-const MonthlyLogs = ({
-  getMonthlyLogs,
-  monthlyLogs,
-  me,
-  pagination,
-  location,
-  history,
-  onChangePage,
-  onChangeRowsPerPage
-}) => {
+const MonthlyLogs = ({ getMonthlyLogs, monthlyLogs, me, pagination, location, history }) => {
   let classes = useStyles()
   const queryObj = parseQueryString(location.search)
   const selectedYear = queryObj.year || new Date().getFullYear()
@@ -83,47 +71,44 @@ const MonthlyLogs = ({
   const monthArray = generateIncrementArray(1, 12)
 
   return (
-    <Widget
+    <LoggingLayout
       title="Monthly Logs"
-      upperTitle
-      noBodyPadding
-      bodyClass={classes.tableOverflow}
-      disableWidgetMenu
-      disableWidgetButton={me.role !== ROLES.ADMIN}
-      WidgetButton={
-        <Grid className={classes.selectMonth}>
-          <form className={classes.container}>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="year">Year</InputLabel>
-              <Select value={selectedYear} onChange={handleYearChange} input={<Input id="year" />}>
-                {yearArray.map(year => (
-                  <MenuItem value={year}>{year}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="month">Month</InputLabel>
-              <Select value={selectedMonth} onChange={handleMonthChange} input={<Input id="month" />}>
-                {monthArray.map(month => (
-                  <MenuItem value={month}>{month}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </form>
-          <Button className={classes.button} onClick={viewThisMonthLog} variant="outlined" color="primary">
-            this month
-          </Button>
-        </Grid>
-      }>
-      <LogsTable
-        data={monthlyLogs}
-        role={me.role}
-        interval="monthly-logs"
-        pagination={pagination}
-        onChangePage={onChangePage}
-        onChangeRowsPerPage={onChangeRowsPerPage}
-      />
-    </Widget>
+      interval="monthly"
+      logs={monthlyLogs}
+      actions={
+        <>
+          <Grid item>
+            <form className={classes.container}>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="year">Year</InputLabel>
+                <Select value={selectedYear} onChange={handleYearChange} input={<Input id="year" />}>
+                  {yearArray.map((year, id) => (
+                    <MenuItem key={id} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="month">Month</InputLabel>
+                <Select value={selectedMonth} onChange={handleMonthChange} input={<Input id="month" />}>
+                  {monthArray.map((month, id) => (
+                    <MenuItem key={id} value={month}>
+                      {month}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </form>
+          </Grid>
+          <Grid item>
+            <Button className={classes.button} onClick={viewThisMonthLog} variant="outlined" color="primary">
+              this month
+            </Button>
+          </Grid>
+        </>
+      }
+    />
   )
 }
 
@@ -137,12 +122,10 @@ const selectors = createStructuredSelector({
 })
 
 MonthlyLogs.propTypes = {
-  logs: ListDataType,
+  monthlyLogs: ListDataType,
   me: PropTypes.object,
   getMonthlyLogs: PropTypes.func.isRequired,
-  pagination: PropTypes.object.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  onChangeRowsPerPage: PropTypes.func.isRequired
+  pagination: PropTypes.object.isRequired
 }
 
 export default compose(withPaginationInfo, connect(selectors, actions))(MonthlyLogs)

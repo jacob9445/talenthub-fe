@@ -23,7 +23,7 @@ const WeeklyLogDetail = ({ getWeeklyLogDetail, weeklyLogDetail, me, pagination, 
   }, [getWeeklyLogDetail, me.role, pagination, id])
 
   const handleGoBack = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/weekly-logs/`)
+    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/weekly/`)
   }, [location, history, me.role])
 
   return <LogDetail logDetail={weeklyLogDetail} onGoBack={handleGoBack} />

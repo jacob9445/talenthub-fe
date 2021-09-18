@@ -9,16 +9,12 @@ import { DatePicker } from 'material-ui-pickers'
 
 import { dailyLogsSelector, getDailyLogs } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
-import DailyLogTable from '../../components/LogsTable'
-import Widget from 'components/Widget'
-import useStyles from './styles'
-import { ROLES } from 'config/constants'
+import LoggingLayout from 'routes/Shared/Logging/components/LoggingLayout'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
 
-const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onChangePage, onChangeRowsPerPage }) => {
-  let classes = useStyles()
+const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history }) => {
   const queryObj = parseQueryString(location.search)
   const selectedDate = queryObj.date || undefined
   const handleDateChange = useCallback(
@@ -51,15 +47,12 @@ const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onCh
   }, [history, location])
 
   return (
-    <Widget
+    <LoggingLayout
       title="Daily Logs"
-      upperTitle
-      noBodyPadding
-      bodyClass={classes.tableOverflow}
-      disableWidgetMenu
-      disableWidgetButton={me.role !== ROLES.ADMIN}
-      WidgetButton={
-        <Grid container className={classes.grid} spacing={2} alignItems="center" justify="flex-end">
+      interval="daily"
+      logs={dailyLogs}
+      actions={
+        <>
           <Grid item>
             <DatePicker margin="normal" label="Choose a date" value={selectedDate} onChange={handleDateChange} />
           </Grid>
@@ -68,17 +61,9 @@ const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onCh
               Today
             </Button>
           </Grid>
-        </Grid>
-      }>
-      <DailyLogTable
-        data={logs}
-        interval="daily-logs"
-        role={me.role}
-        pagination={pagination}
-        onChangePage={onChangePage}
-        onChangeRowsPerPage={onChangeRowsPerPage}
-      />
-    </Widget>
+        </>
+      }
+    />
   )
 }
 
@@ -87,7 +72,7 @@ const actions = {
 }
 
 const selectors = createStructuredSelector({
-  logs: dailyLogsSelector,
+  dailyLogs: dailyLogsSelector,
   me: meSelector
 })
 
@@ -95,9 +80,7 @@ DailyLogs.propTypes = {
   logs: ListDataType,
   me: PropTypes.object,
   getDailyLogs: PropTypes.func.isRequired,
-  pagination: PropTypes.object.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  onChangeRowsPerPage: PropTypes.func.isRequired
+  pagination: PropTypes.object.isRequired
 }
 
 export default compose(withPaginationInfo, connect(selectors, actions))(DailyLogs)

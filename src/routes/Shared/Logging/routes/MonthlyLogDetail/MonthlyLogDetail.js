@@ -22,7 +22,7 @@ const MonthlyLogDetail = ({ getMonthlyLogDetail, monthlyLogDetail, me, paginatio
     })
   }, [getMonthlyLogDetail, me.role, pagination, id])
   const handleGoBack = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/monthly-logs/`)
+    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/monthly/`)
   }, [location, history, me.role])
 
   return <LogDetail logDetail={monthlyLogDetail} onGoBack={handleGoBack} />
