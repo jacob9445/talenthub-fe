@@ -19,6 +19,7 @@ import { ROLES, PROJECT_STATUS_LABELS, PROJECT_TYPE_LABELS, URL_PREFIXES } from 
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 function ProjectTable({
   data,
@@ -74,7 +75,7 @@ function ProjectTable({
               <TableCell>{price}</TableCell>
               <TableCell>{PROJECT_STATUS_LABELS[status]}</TableCell>
               {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(role) ? (
-                <TableCell>{`${project_starter.first_name} ${project_starter.last_name}`}</TableCell>
+                <TableCell>{getFullName(project_starter)}</TableCell>
               ) : null}
               {!disableActions && (
                 <TableCell>

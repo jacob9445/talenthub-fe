@@ -24,6 +24,7 @@ import { ROLES } from 'config/constants'
 import { usersSelector, getUsers } from 'store/modules/user'
 import { getClients, clientsSelector } from 'store/modules/client'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 export const validationSchema = Yup.object().shape({
   title: Yup.string().required('This field is required!'),
@@ -76,7 +77,7 @@ const ProjectDetailForm = ({
   const userList = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        label: `${user.first_name} ${user.last_name}`,
+        label: getFullName(user),
         value: user.id
       }))
     } else {

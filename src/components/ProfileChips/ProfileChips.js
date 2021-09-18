@@ -6,6 +6,7 @@ import { withRouter } from 'react-router'
 
 import { URL_PREFIXES } from 'config/constants'
 import BlockChip from 'components/BlockChip'
+import { getFullName } from 'helpers/utils'
 
 const ProfileChips = props => {
   const { profiles, history, location, me } = props
@@ -25,7 +26,7 @@ const ProfileChips = props => {
       {profiles.map(profile => (
         <BlockChip
           key={profile.id}
-          label={`${profile.first_name} ${profile.last_name}`}
+          label={getFullName(profile)}
           color="primary"
           icon={<FaceIcon />}
           variant="outlined"

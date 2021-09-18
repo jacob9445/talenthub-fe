@@ -17,6 +17,7 @@ import { meSelector } from 'store/modules/auth'
 import Spinner from 'components/Spinner'
 import { profileTypeOptions, genderOptions, URL_PREFIXES, ROLES } from 'config/constants'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 export const validationSchema = Yup.object().shape({
   profile_type: Yup.string().required('This field is required!'),
@@ -57,7 +58,7 @@ const ProfileDetailForm = ({
   const userOptions = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        label: `${user.first_name} ${user.last_name}`,
+        label: getFullName(user),
         value: user.id
       }))
     } else {

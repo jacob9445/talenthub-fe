@@ -17,6 +17,7 @@ import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { PLATFORM_LABELS } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 const columns = ['Owner', 'Profile', 'Platform Type', 'Email', 'Password', 'Location', 'URL', 'Actions']
 
@@ -34,12 +35,8 @@ function AccountTable({ data, handleDelete, match: { path }, pagination, onChang
         <TableBody>
           {data.results.map(({ id, profile, platform_type, email, password, location, url }) => (
             <TableRow key={id} hover>
-              <TableCell>
-                {profile.user.first_name} {profile.user.last_name}
-              </TableCell>
-              <TableCell>
-                {profile.first_name} {profile.last_name}
-              </TableCell>
+              <TableCell>{getFullName(profile.user)}</TableCell>
+              <TableCell>{getFullName(profile)}</TableCell>
               <TableCell>{PLATFORM_LABELS[platform_type]}</TableCell>
               <TableCell>{email}</TableCell>
               <TableCell>*****</TableCell>

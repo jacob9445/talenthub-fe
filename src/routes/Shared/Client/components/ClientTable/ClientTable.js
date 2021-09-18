@@ -18,6 +18,7 @@ import Spinner from 'components/Spinner'
 import { CLIENT_TYPE_LABELS, CLIENT_TYPES } from 'config/constants'
 import { ROLES } from 'config/constants'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 function ClientTable({ data, role, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = useMemo(
@@ -44,7 +45,7 @@ function ClientTable({ data, role, handleDelete, match: { path }, pagination, on
               <TableCell>{CLIENT_TYPE_LABELS[type]}</TableCell>
               <TableCell>{type === CLIENT_TYPES.INDIVIDUAL ? null : company_name}</TableCell>
               <TableCell>{started_at}</TableCell>
-              {role === ROLES.DEVELOPER ? null : <TableCell>{`${owner.first_name} ${owner.last_name}`}</TableCell>}
+              {role === ROLES.DEVELOPER ? null : <TableCell>{getFullName(owner)}</TableCell>}
               <TableCell>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">
                   <IconButton component={Link} to={`${path}/${id}/detail`}>
