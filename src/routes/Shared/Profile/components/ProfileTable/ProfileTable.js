@@ -19,6 +19,7 @@ import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
 import { profile_type_patterns, gender_patterns } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 const columns = ['Owner', 'Full Name', 'Type', 'Address', 'Country', 'Date of Birth', 'Gender', 'Actions']
 
@@ -37,9 +38,7 @@ function ProfileTable({ data, handleDelete, match: { path }, pagination, onChang
         <TableBody>
           {data.results.map(({ id, profile_type, first_name, last_name, address, country, dob, gender, user }) => (
             <TableRow key={id} hover>
-              <TableCell>
-                {user.first_name} {user.last_name}
-              </TableCell>
+              <TableCell>{getFullName(user)}</TableCell>
               <TableCell>
                 {first_name} {last_name}
               </TableCell>

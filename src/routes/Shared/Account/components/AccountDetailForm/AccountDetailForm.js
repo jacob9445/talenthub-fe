@@ -17,6 +17,7 @@ import { getProfiles, profileSelector } from 'store/modules/profile'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 export const validationSchema = Yup.object().shape({
   profile: Yup.string().required('This field is required!'),
@@ -44,7 +45,7 @@ const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSub
       profiles
         ? profiles.results.map(profile => ({
             value: profile.id,
-            label: `${profile.first_name} ${profile.last_name}`
+            label: getFullName(profile)
           }))
         : [],
     [profiles]

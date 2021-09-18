@@ -7,7 +7,7 @@ import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedNumber } from 'react-intl'
 import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
-import { getPlatformLabel } from 'helpers/utils'
+import { getPlatformLabel, getFullName } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
 
 const briefText = (str, length) => (str && str.length > length ? str.substring(0, length) + '...' : str)
@@ -47,9 +47,7 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
               <TableCell>
                 <FormattedNumber format="currency" value={net_amount} />
               </TableCell>
-              <TableCell>
-                {financial_request.requester.first_name} {financial_request.requester.last_name}
-              </TableCell>
+              <TableCell>{getFullName(financial_request.requester)}</TableCell>
               <TableCell>{briefText(financial_request.description, 30)}</TableCell>
               <TableCell>{getPlatformLabel(payment_platform)}</TableCell>
             </TableRow>

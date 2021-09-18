@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 function IndividualReportTable({ data, show, pagination, onChangePage, onChangeRowsPerPage, period }) {
   const columns = ['Full Name', 'Earning']
@@ -16,7 +17,7 @@ function IndividualReportTable({ data, show, pagination, onChangePage, onChangeR
     id => () => {
       show('IndividualReportModal', {
         project_earning: getResults(id).project_earnings,
-        developer: getResults(id).first_name + ' ' + getResults(id).last_name,
+        developer: getFullName(getResults(id)),
         earning: getResults(id).earning,
         period
       })

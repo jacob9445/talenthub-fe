@@ -9,7 +9,7 @@ import { Cancel as CancelIcon } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import { NOTIFICATION_CONFIG } from 'config/constants'
-import { fromMsgStrToArray } from 'helpers/utils'
+import { fromMsgStrToArray, getFullName } from 'helpers/utils'
 import useStyles from './styles'
 
 const renderMsgItem = (props, str, idx, classes) => {
@@ -22,7 +22,7 @@ const renderMsgItem = (props, str, idx, classes) => {
         to={`${path}/users/${notification.creator.id}/detail`}
         color="primary"
         onClick={() => closeNC()}>
-        {notification.creator.first_name} {notification.creator.last_name}
+        {getFullName(notification.creator)}
       </Link>
     )
   } else if (str === '{{object}}') {

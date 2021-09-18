@@ -32,6 +32,7 @@ import {
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedNumber } from 'react-intl'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 function FinancialRequestTable({
   data,
@@ -81,7 +82,7 @@ function FinancialRequestTable({
                 <FormattedDate value={requested_at} />
               </TableCell>
               <TableCell>{type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? project.title : null}</TableCell>
-              <TableCell>{`${requester.first_name} ${requester.last_name}`}</TableCell>
+              <TableCell>{getFullName(requester)}</TableCell>
               <TableCell>{address}</TableCell>
               <TableCell>
                 <FormattedNumber format="currency" value={amount} />

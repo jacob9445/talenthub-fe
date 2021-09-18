@@ -16,6 +16,7 @@ import useStyles from './styles'
 import { meSelector } from 'store/modules/auth'
 import { usersSelector, getUsers } from 'store/modules/user'
 import { ListDataType } from 'helpers/prop-types'
+import { getFullName } from 'helpers/utils'
 
 export const validationSchema = Yup.object().shape({
   full_name: Yup.string().required('This field is required!'),
@@ -45,7 +46,7 @@ const ClientDetailForm = ({ handleSubmit, values, location, history, me, match: 
   const userLists = useMemo(() => {
     if (users) {
       return users.results.map(user => ({
-        label: `${user.first_name} ${user.last_name}`,
+        label: getFullName(user),
         value: user.id
       }))
     } else {

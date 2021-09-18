@@ -6,7 +6,9 @@ import { connect } from 'react-redux'
 import Select from 'react-select'
 import { show } from 'redux-modal'
 import PropTypes from 'prop-types'
+
 import { useStyles } from './styles'
+import { getFullName } from 'helpers/utils'
 
 const inputComponent = ({ inputRef, ...props }) => <div ref={inputRef} {...props} />
 
@@ -86,7 +88,7 @@ const TeamMemberSelect = ({ show, onClick, onDelete, options, defaultOptions, ..
       options
         ? options.map(userItem => ({
             value: userItem.id,
-            label: `${userItem.first_name} ${userItem.last_name}`
+            label: getFullName(userItem)
           }))
         : [],
     [options]
@@ -97,7 +99,7 @@ const TeamMemberSelect = ({ show, onClick, onDelete, options, defaultOptions, ..
       defaultOptions
         ? defaultOptions.map(userItem => ({
             value: userItem.id,
-            label: `${userItem.first_name} ${userItem.last_name}`
+            label: getFullName(userItem)
           }))
         : [],
     [defaultOptions]
