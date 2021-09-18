@@ -12,7 +12,8 @@ import { meSelector } from 'store/modules/auth'
 import WeeklyLogTable from '../../components/LogsTable'
 import Widget from 'components/Widget'
 import useStyles from './styles'
-import { ROLES } from 'config/constants'
+import SimpleSelect from 'components/SimpleSelect'
+import { ROLES, LOG_OPTIONS, URL_PREFIXES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString, getFirstDateOfWeek, getWeekOfMonth } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
@@ -65,6 +66,14 @@ const WeeklyLogs = ({ getWeeklyLogs, logs, me, pagination, location, history, on
     })
   }, [history, location])
 
+  const handleLogChange = useCallback(
+    event => {
+      const interval = event.target.value
+      history.push(`/${URL_PREFIXES[me.role]}/logging/${interval}`)
+    },
+    [history, me.role]
+  )
+
   return (
     <Widget
       title="Weekly Logs"
@@ -72,9 +81,12 @@ const WeeklyLogs = ({ getWeeklyLogs, logs, me, pagination, location, history, on
       noBodyPadding
       bodyClass={classes.tableOverflow}
       disableWidgetMenu
-      disableWidgetButton={me.role !== ROLES.ADMIN}
+      disableWidgetButton={me.role === ROLES.DEVELOPER}
       WidgetButton={
         <Grid container className={classes.grid} spacing={2} alignItems="center" justify="flex-end">
+          <Grid item>
+            <SimpleSelect label="Period" value="weekly" options={LOG_OPTIONS} onChange={handleLogChange} />
+          </Grid>
           <Grid item>
             <DatePicker
               margin="normal"
@@ -94,7 +106,7 @@ const WeeklyLogs = ({ getWeeklyLogs, logs, me, pagination, location, history, on
       <WeeklyLogTable
         data={logs}
         role={me.role}
-        interval="weekly-logs"
+        interval="weekly"
         pagination={pagination}
         onChangePage={onChangePage}
         onChangeRowsPerPage={onChangeRowsPerPage}

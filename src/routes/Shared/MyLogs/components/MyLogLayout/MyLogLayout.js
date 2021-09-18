@@ -24,7 +24,7 @@ const MyLogLayout = ({ history, interval, location, actions, children, me }) => 
         <Paper elevation={1}>
           <Grid container className={classes.toolbar} alignItems="center">
             <Grid item>
-              <SimpleSelect label="Logs" value={interval} options={LOG_OPTIONS} onChange={handleLogChange} />
+              <SimpleSelect label="Period" value={interval} options={LOG_OPTIONS} onChange={handleLogChange} />
             </Grid>
             {actions}
           </Grid>

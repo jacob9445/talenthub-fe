@@ -394,15 +394,15 @@ export const periodOptions = [
 export const LOG_OPTIONS = [
   {
     value: 'daily',
-    label: 'Daily Log'
+    label: 'Daily'
   },
   {
     value: 'weekly',
-    label: 'Weekly Log'
+    label: 'Weekly'
   },
   {
     value: 'monthly',
-    label: 'Monthly Log'
+    label: 'Monthly'
   }
 ]
 

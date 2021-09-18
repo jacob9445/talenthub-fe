@@ -12,7 +12,8 @@ import { meSelector } from 'store/modules/auth'
 import DailyLogTable from '../../components/LogsTable'
 import Widget from 'components/Widget'
 import useStyles from './styles'
-import { ROLES } from 'config/constants'
+import SimpleSelect from 'components/SimpleSelect'
+import { ROLES, LOG_OPTIONS, URL_PREFIXES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
@@ -50,6 +51,14 @@ const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onCh
     })
   }, [history, location])
 
+  const handleLogChange = useCallback(
+    event => {
+      const interval = event.target.value
+      history.push(`/${URL_PREFIXES[me.role]}/logging/${interval}`)
+    },
+    [history, me.role]
+  )
+
   return (
     <Widget
       title="Daily Logs"
@@ -57,9 +66,12 @@ const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onCh
       noBodyPadding
       bodyClass={classes.tableOverflow}
       disableWidgetMenu
-      disableWidgetButton={me.role !== ROLES.ADMIN}
+      disableWidgetButton={me.role === ROLES.DEVELOPER}
       WidgetButton={
         <Grid container className={classes.grid} spacing={2} alignItems="center" justify="flex-end">
+          <Grid item>
+            <SimpleSelect label="Period" value="daily" options={LOG_OPTIONS} onChange={handleLogChange} />
+          </Grid>
           <Grid item>
             <DatePicker margin="normal" label="Choose a date" value={selectedDate} onChange={handleDateChange} />
           </Grid>
@@ -72,7 +84,7 @@ const DailyLogs = ({ getDailyLogs, logs, me, pagination, location, history, onCh
       }>
       <DailyLogTable
         data={logs}
-        interval="daily-logs"
+        interval="daily"
         role={me.role}
         pagination={pagination}
         onChangePage={onChangePage}

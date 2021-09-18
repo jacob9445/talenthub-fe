@@ -16,7 +16,8 @@ import { meSelector } from 'store/modules/auth'
 import LogsTable from '../../components/LogsTable'
 import Widget from 'components/Widget'
 import useStyles from './styles'
-import { ROLES } from 'config/constants'
+import SimpleSelect from 'components/SimpleSelect'
+import { ROLES, LOG_OPTIONS, URL_PREFIXES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString, generateDecrementArray, generateIncrementArray } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
@@ -82,6 +83,14 @@ const MonthlyLogs = ({
   const yearArray = generateDecrementArray(new Date().getFullYear(), 10)
   const monthArray = generateIncrementArray(1, 12)
 
+  const handleLogChange = useCallback(
+    event => {
+      const interval = event.target.value
+      history.push(`/${URL_PREFIXES[me.role]}/logging/${interval}`)
+    },
+    [history, me.role]
+  )
+
   return (
     <Widget
       title="Monthly Logs"
@@ -89,23 +98,30 @@ const MonthlyLogs = ({
       noBodyPadding
       bodyClass={classes.tableOverflow}
       disableWidgetMenu
-      disableWidgetButton={me.role !== ROLES.ADMIN}
+      disableWidgetButton={me.role === ROLES.DEVELOPER}
       WidgetButton={
-        <Grid className={classes.selectMonth}>
+        <Grid container className={classes.selectMonth}>
+          <Grid item>
+            <SimpleSelect label="Period" value="monthly" options={LOG_OPTIONS} onChange={handleLogChange} />
+          </Grid>
           <form className={classes.container}>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="year">Year</InputLabel>
               <Select value={selectedYear} onChange={handleYearChange} input={<Input id="year" />}>
-                {yearArray.map(year => (
-                  <MenuItem value={year}>{year}</MenuItem>
+                {yearArray.map((year, id) => (
+                  <MenuItem key={id} value={year}>
+                    {year}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="month">Month</InputLabel>
               <Select value={selectedMonth} onChange={handleMonthChange} input={<Input id="month" />}>
-                {monthArray.map(month => (
-                  <MenuItem value={month}>{month}</MenuItem>
+                {monthArray.map((month, id) => (
+                  <MenuItem key={id} value={month}>
+                    {month}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -118,7 +134,7 @@ const MonthlyLogs = ({
       <LogsTable
         data={monthlyLogs}
         role={me.role}
-        interval="monthly-logs"
+        interval="monthly"
         pagination={pagination}
         onChangePage={onChangePage}
         onChangeRowsPerPage={onChangeRowsPerPage}

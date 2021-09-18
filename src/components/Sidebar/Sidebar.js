@@ -142,22 +142,8 @@ let structure = {
     {
       id: 11,
       label: 'Reports',
-      link: '/admin/logs',
-      icon: <ReportIcon />,
-      subLinks: [
-        {
-          label: 'Daily Logs',
-          link: '/admin/logging/daily-logs'
-        },
-        {
-          label: 'Weekly Logs',
-          link: '/admin/logging/weekly-logs'
-        },
-        {
-          label: 'Monthly Logs',
-          link: '/admin/logging/monthly-logs'
-        }
-      ]
+      link: '/admin/logging',
+      icon: <ReportIcon />
     }
   ],
   [ROLES.TEAM_MANAGER]: [
@@ -256,22 +242,8 @@ let structure = {
     {
       id: 10,
       label: 'Reports',
-      link: '/team-manager/logs',
-      icon: <ReportIcon />,
-      subLinks: [
-        {
-          label: 'Daily Logs',
-          link: '/team-manager/logging/daily-logs'
-        },
-        {
-          label: 'Weekly Logs',
-          link: '/team-manager/logging/weekly-logs'
-        },
-        {
-          label: 'Monthly Logs',
-          link: '/team-manager/logging/monthly-logs'
-        }
-      ]
+      link: '/team-manager/logging',
+      icon: <ReportIcon />
     }
   ],
   [ROLES.DEVELOPER]: [

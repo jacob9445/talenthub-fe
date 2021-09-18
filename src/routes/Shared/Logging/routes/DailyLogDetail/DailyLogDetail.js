@@ -23,7 +23,7 @@ const DailyLogDetail = ({ getDailyLogDetail, dailyLogDetail, me, pagination, loc
   }, [getDailyLogDetail, me.role, pagination, id])
 
   const handleGoBack = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/daily-logs/`)
+    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/daily/`)
   }, [location, history, me.role])
 
   return <LogDetail logDetail={dailyLogDetail} onGoBack={handleGoBack} />
