@@ -158,19 +158,29 @@ const IndividualReportList = ({
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Widget title="Individual Reports" disableWidgetMenu>
-            <SimpleSelect
-              label="Period"
-              value={queryObj.period}
-              options={periodOptions}
-              onChange={handlePeriodChange}
-            />
-            <SimpleSelect
-              label="Team"
-              value={queryObj.team || 'all'}
-              options={teamOptions}
-              onChange={handleTeamChange}
-            />
+          <Widget
+            title="Individuals"
+            disableWidgetMenu
+            WidgetButton={
+              <Grid container spacing={2} alignItems="center" justify="flex-end">
+                <Grid item>
+                  <SimpleSelect
+                    label="Period"
+                    value={queryObj.period}
+                    options={periodOptions}
+                    onChange={handlePeriodChange}
+                  />
+                </Grid>
+                <Grid item>
+                  <SimpleSelect
+                    label="Team"
+                    value={queryObj.team || 'all'}
+                    options={teamOptions}
+                    onChange={handleTeamChange}
+                  />
+                </Grid>
+              </Grid>
+            }>
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
                 <DatePicker label="From" onChange={handleFromChange} id="from" />

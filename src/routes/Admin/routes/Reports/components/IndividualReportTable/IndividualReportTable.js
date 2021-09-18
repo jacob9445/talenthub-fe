@@ -3,6 +3,7 @@ import { Table, TableRow, TableHead, TableBody, TableCell, TablePagination, Tabl
 import PropTypes from 'prop-types'
 import { show } from 'redux-modal'
 import { connect } from 'react-redux'
+import { FormattedNumber } from 'react-intl'
 
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
@@ -40,7 +41,9 @@ function IndividualReportTable({ data, show, pagination, onChangePage, onChangeR
             ? data.results.map(({ id, first_name, last_name, earning }) => (
                 <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
                   <TableCell>{`${first_name} ${last_name}`}</TableCell>
-                  <TableCell>{earning}</TableCell>
+                  <TableCell>
+                    <FormattedNumber format="currency" value={earning} />
+                  </TableCell>
                 </TableRow>
               ))
             : null}
