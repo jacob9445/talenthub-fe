@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 
 import useStyles from './style'
 
-const SimpleSelect = ({ options, label, onChange, defaultValue, value }) => {
+const SimpleSelect = ({ options, label, onChange, defaultValue, value, fullWidth }) => {
   const classes = useStyles()
   const [labelWidth, setLabelWidth] = useState(0)
   const inputLabelRef = useRef(null)
@@ -19,7 +19,7 @@ const SimpleSelect = ({ options, label, onChange, defaultValue, value }) => {
   }, [inputLabelRef])
 
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
+    <FormControl fullWidth={fullWidth} variant="outlined" className={classes.formControl}>
       <InputLabel ref={inputLabelRef} htmlFor="outlined-simple">
         {label}
       </InputLabel>

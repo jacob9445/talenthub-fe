@@ -26,6 +26,7 @@ import {
   pendingRequestsLoadingSelector,
   approvedRequestsLoadingSelector
 } from 'store/modules/dashboard'
+import { getTeams, teamsSelector } from 'store/modules/team'
 import ProjectTable from 'routes/Shared/Project/components/ProjectTable'
 import FinancialRequestTable from 'routes/Shared/FinancialRequest/components/FinancialRequestTable'
 import { meSelector } from 'store/modules/auth'
@@ -37,6 +38,10 @@ import {
 import ApproveRequestModal from 'components/ApproveRequestModal'
 import { FINANCIALREQUEST_TYPE } from 'config/constants'
 import StatCard from 'components/StatCard'
+import DashboardFilter from 'routes/Shared/Dashboard/components/DashboardFilter'
+
+import { ROLES } from 'config/constants'
+import { parseQueryString } from 'helpers/utils'
 
 const Dashboard = ({
   getOngoingProjects,
@@ -58,29 +63,60 @@ const Dashboard = ({
   weeklyIncomeIsLoading,
   statsIsLoading,
   pendingRequestsIsLoading,
-  approvedRequestsIsLoading
+  approvedRequestsIsLoading,
+  teams,
+  getTeams,
+  location,
+  history
 }) => {
   const classes = useStyles()
+  const queryObj = useMemo(
+    () => ({
+      ...parseQueryString(location.search)
+    }),
+    [location.search]
+  )
+
+  const { team: teamId } = queryObj
 
   useEffect(() => {
-    getOngoingProjects()
-  }, [getOngoingProjects])
+    const { team, user } = queryObj
+    getOngoingProjects({
+      params: { team, user }
+    })
+  }, [getOngoingProjects, queryObj])
 
   useEffect(() => {
-    getWeeklyIncome()
-  }, [getWeeklyIncome])
+    const { team, user } = queryObj
+    getWeeklyIncome({
+      params: { team, user }
+    })
+  }, [getWeeklyIncome, queryObj])
 
   useEffect(() => {
-    getStats()
-  }, [getStats])
+    const { team, user } = queryObj
+    getStats({
+      params: { team, user }
+    })
+  }, [getStats, queryObj])
 
   useEffect(() => {
-    getPendingRequests()
-  }, [getPendingRequests])
+    const { team, user } = queryObj
+    getPendingRequests({
+      params: { team, user }
+    })
+  }, [getPendingRequests, queryObj])
 
   useEffect(() => {
-    getApprovedRequests()
-  }, [getApprovedRequests])
+    const { team, user } = queryObj
+    getApprovedRequests({
+      params: { team, user }
+    })
+  }, [getApprovedRequests, queryObj])
+
+  useEffect(() => {
+    if (me.role === ROLES.ADMIN) getTeams()
+  }, [getTeams, me.role])
 
   const projectsData = useMemo(() => ({ results: ongoingProjects }), [ongoingProjects])
   const financialRequestsData = useMemo(() => ({ results: pendingFinancialRequests }), [pendingFinancialRequests])
@@ -125,9 +161,23 @@ const Dashboard = ({
     [show, declineFinancialRequest, getPendingRequests]
   )
 
+  const teamOptions = useMemo(
+    () => [
+      { value: 'all', label: 'All' },
+      ...(teams
+        ? teams.map(team => ({
+            value: team.id.toString(),
+            label: team.name
+          }))
+        : [])
+    ],
+    [teams]
+  )
+
   return (
     <>
       <Grid container spacing={4}>
+        <DashboardFilter teamId={teamId} teamOptions={teamOptions} location={location} history={history} />
         {statsIsLoading ? (
           <Spinner />
         ) : (
@@ -207,7 +257,8 @@ const actions = {
   cancelFinancialRequest,
   declineFinancialRequest,
   approveFinancialRequest,
-  show
+  show,
+  getTeams
 }
 
 const selectors = createStructuredSelector({
@@ -221,7 +272,8 @@ const selectors = createStructuredSelector({
   statsIsLoading: statsLoadingSelector,
   pendingRequestsIsLoading: pendingRequestsLoadingSelector,
   approvedRequestsIsLoading: approvedRequestsLoadingSelector,
-  me: meSelector
+  me: meSelector,
+  teams: teamsSelector
 })
 
 Dashboard.prototype = {

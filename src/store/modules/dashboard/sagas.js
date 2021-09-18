@@ -9,7 +9,8 @@ const getOngoingProjects = createApiCallSaga({
   path: function*() {
     return yield roleBasedPath('dashboard/ongoing-projects/')
   },
-  selectorKey: 'ongoing_projects'
+  selectorKey: 'ongoing_projects',
+  allowedParamKeys: ['team', 'user']
 })
 
 const getWeeklyIncome = createApiCallSaga({
@@ -18,7 +19,8 @@ const getWeeklyIncome = createApiCallSaga({
   path: function*() {
     return yield roleBasedPath('dashboard/weekly-income/')
   },
-  selectorKey: 'weekly_income'
+  selectorKey: 'weekly_income',
+  allowedParamKeys: ['team', 'user']
 })
 
 const getStats = createApiCallSaga({
@@ -27,7 +29,8 @@ const getStats = createApiCallSaga({
   path: function*() {
     return yield roleBasedPath('dashboard/stats/')
   },
-  selectorKey: 'stats'
+  selectorKey: 'stats',
+  allowedParamKeys: ['team', 'user']
 })
 
 const getPendingRequests = createApiCallSaga({
@@ -36,7 +39,8 @@ const getPendingRequests = createApiCallSaga({
   path: function*() {
     return yield roleBasedPath('dashboard/pending-requests/')
   },
-  selectorKey: 'pending_requests'
+  selectorKey: 'pending_requests',
+  allowedParamKeys: ['team', 'user']
 })
 
 const getApprovedRequests = createApiCallSaga({
@@ -45,7 +49,8 @@ const getApprovedRequests = createApiCallSaga({
   path: function*() {
     return yield roleBasedPath('dashboard/approved-requests/')
   },
-  selectorKey: 'approved_requests'
+  selectorKey: 'approved_requests',
+  allowedParamKeys: ['team', 'user']
 })
 
 export default function* rootSaga() {
