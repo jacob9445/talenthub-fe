@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router'
 import PropTypes from 'prop-types'
 
-import Dashboard from 'routes/Shared/Dashboard'
+import Dashboard from 'routes/Shared/Dashboard/routes'
 import User from 'routes/Shared/User'
 import Partner from 'routes/Shared/Partner'
 import Client from 'routes/Shared/Client'
