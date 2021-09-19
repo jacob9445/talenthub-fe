@@ -9,11 +9,7 @@ import { DatePicker } from 'material-ui-pickers'
 
 import { weeklyLogsSelector, getWeeklyLogs } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
-import WeeklyLogTable from '../../components/LogsTable'
-import Widget from 'components/Widget'
-import useStyles from './styles'
-import SimpleSelect from 'components/SimpleSelect'
-import { ROLES, LOG_OPTIONS, URL_PREFIXES } from 'config/constants'
+import LoggingLayout from 'routes/Shared/Logging/components/LoggingLayout'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString, getFirstDateOfWeek, getWeekOfMonth } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
@@ -23,8 +19,7 @@ const datePickerLabelFunc = (date, invalidLabel) => {
   return `Week #${weekOfMonth} of ${format(date, 'MMM. yyyy')}`
 }
 
-const WeeklyLogs = ({ getWeeklyLogs, logs, me, pagination, location, history, onChangePage, onChangeRowsPerPage }) => {
-  let classes = useStyles()
+const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, history }) => {
   const queryObj = parseQueryString(location.search)
   const selectedYear = queryObj.year || new Date().getFullYear()
   const selectedWeek = parseInt(queryObj.week) - 1 || parseInt(format(new Date(), 'ww')) - 1
@@ -66,27 +61,13 @@ const WeeklyLogs = ({ getWeeklyLogs, logs, me, pagination, location, history, on
     })
   }, [history, location])
 
-  const handleLogChange = useCallback(
-    event => {
-      const interval = event.target.value
-      history.push(`/${URL_PREFIXES[me.role]}/logging/${interval}`)
-    },
-    [history, me.role]
-  )
-
   return (
-    <Widget
+    <LoggingLayout
       title="Weekly Logs"
-      upperTitle
-      noBodyPadding
-      bodyClass={classes.tableOverflow}
-      disableWidgetMenu
-      disableWidgetButton={me.role === ROLES.DEVELOPER}
-      WidgetButton={
-        <Grid container className={classes.grid} spacing={2} alignItems="center" justify="flex-end">
-          <Grid item>
-            <SimpleSelect label="Period" value="weekly" options={LOG_OPTIONS} onChange={handleLogChange} />
-          </Grid>
+      interval="weekly"
+      logs={weeklyLogs}
+      actions={
+        <>
           <Grid item>
             <DatePicker
               margin="normal"
@@ -101,17 +82,9 @@ const WeeklyLogs = ({ getWeeklyLogs, logs, me, pagination, location, history, on
               This Week
             </Button>
           </Grid>
-        </Grid>
-      }>
-      <WeeklyLogTable
-        data={logs}
-        role={me.role}
-        interval="weekly"
-        pagination={pagination}
-        onChangePage={onChangePage}
-        onChangeRowsPerPage={onChangeRowsPerPage}
-      />
-    </Widget>
+        </>
+      }
+    />
   )
 }
 
@@ -120,7 +93,7 @@ const actions = {
 }
 
 const selectors = createStructuredSelector({
-  logs: weeklyLogsSelector,
+  weeklyLogs: weeklyLogsSelector,
   me: meSelector
 })
 
@@ -128,9 +101,7 @@ WeeklyLogs.propTypes = {
   logs: ListDataType,
   me: PropTypes.object,
   getWeeklyLogs: PropTypes.func.isRequired,
-  pagination: PropTypes.object.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  onChangeRowsPerPage: PropTypes.func.isRequired
+  pagination: PropTypes.object.isRequired
 }
 
 export default compose(withPaginationInfo, connect(selectors, actions))(WeeklyLogs)
