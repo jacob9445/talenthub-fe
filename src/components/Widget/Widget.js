@@ -46,7 +46,7 @@ export default function Widget({
             header
           ) : (
             <React.Fragment>
-              <Typography variant="h5" color="textSecondary" noWrap>
+              <Typography variant="h5" color="textSecondary">
                 {title}
               </Typography>
               {!disableWidgetButton && WidgetButton}
@@ -99,10 +99,7 @@ export default function Widget({
 Widget.propTypes = {
   title: PropTypes.string.isRequired,
   disableWidgetMenu: PropTypes.bool,
-  children: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array
-  ]),
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   noBodyPadding: PropTypes.any, //ToDo
   bodyClass: PropTypes.any, //ToDo
   header: PropTypes.any, //ToDo

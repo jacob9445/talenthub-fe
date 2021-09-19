@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { show } from 'redux-modal'
 import { connect } from 'react-redux'
+import { FormattedNumber } from 'react-intl'
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
 
@@ -35,15 +36,19 @@ function TeamReportTable({ data, show, location, history, match: { path } }) {
               totalEarning += total
               return (
                 <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
-                  <TableCell>{name}</TableCell>
-                  <TableCell>{total}</TableCell>
+                  <TableCell>
+                    <FormattedNumber format="currency" value={name} />
+                  </TableCell>
+                  <TableCell>
+                    <FormattedNumber format="currency" value={total} />
+                  </TableCell>
                 </TableRow>
               )
             })}
           </TableBody>
         </Table>
         <Typography variant="h5" className={classes.totalEarning}>
-          Total Earning: {totalEarning}
+          Total Earning: <FormattedNumber format="currency" value={totalEarning} />
         </Typography>
       </>
     )
