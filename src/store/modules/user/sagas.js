@@ -17,6 +17,14 @@ const getUsers = createApiCallSaga({
   allowedParamKeys: ['page', 'page_size']
 })
 
+const searchUsers = createApiCallSaga({
+  type: Types.SEARCH_USERS,
+  method: 'GET',
+  path: `api/search/users/`,
+  selectorKey: 'userSearchResults',
+  allowedParamKeys: ['team', 'search']
+})
+
 const deleteUser = createApiCallSaga({
   type: Types.USERS_DELETEUSER,
   method: 'DELETE',
@@ -120,4 +128,5 @@ export default function* rootSaga() {
   yield takeLatest(Types.CREATE_USER, createUser)
   yield takeLatest(Types.CHANGE_USER_TEAM, processChangeUserTeam)
   yield takeLatest(Types.GET_TEAM_UNASSIGNED_USERS, getTeamUnassignedUsers)
+  yield takeLatest(Types.SEARCH_USERS, searchUsers)
 }

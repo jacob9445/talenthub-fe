@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import useStyles from './styles'
 import EditableSelect from 'components/EditableSelect'
 import { getTeamMembers, teamMemberSelector } from 'store/modules/team'
-import { getUsers, usersSelector } from 'store/modules/user'
+import { searchUsers, userSearchResultsSelector } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
 import { parseQueryString, jsonToQueryString, getFullName } from 'helpers/utils'
@@ -19,7 +19,7 @@ const DashboardFilter = ({
   history,
   teamMembers,
   getTeamMembers,
-  getUsers,
+  searchUsers,
   users,
   teamOptions
 }) => {
@@ -33,10 +33,12 @@ const DashboardFilter = ({
   )
 
   useEffect(() => {
-    getUsers({
-      role: me.role
+    const { team, user } = queryObj
+    searchUsers({
+      team,
+      user
     })
-  }, [me.role, getUsers])
+  }, [searchUsers, queryObj])
 
   useEffect(() => {
     if (me.role === ROLES.ADMIN && teamId) getTeamMembers(teamId)
@@ -45,11 +47,9 @@ const DashboardFilter = ({
   const handleTeamChange = useCallback(
     value => {
       const team = value
-      if (team === 'all') {
+      if (team === 'all' || team === '') {
         setShowAllUsers(1)
-        getUsers({
-          role: me.role
-        })
+        searchUsers()
         history.push({
           search: jsonToQueryString({})
         })
@@ -62,7 +62,7 @@ const DashboardFilter = ({
         })
       }
     },
-    [history, getUsers, me.role]
+    [history, searchUsers]
   )
 
   const handleUserChange = useCallback(
@@ -88,9 +88,9 @@ const DashboardFilter = ({
             }))
           : [{ label: '', value: '' }]
         : users
-        ? users.results.map(user => ({
+        ? users.map(user => ({
             value: user.id.toString(),
-            label: getFullName(user)
+            label: user.full_name
           }))
         : [{ label: '', value: '' }],
     [users, teamMembers, showAllUsers]
@@ -99,9 +99,9 @@ const DashboardFilter = ({
   return (
     <Grid item xs={12}>
       <Paper>
-        <Grid container spacing={2} className={classes.wraper}>
+        <Grid container spacing={2} className={classes.wrapper}>
           {[ROLES.ADMIN].includes(me.role) && (
-            <Grid item xs={4} className={classes.selectorWrapper}>
+            <Grid item xs={4}>
               <EditableSelect
                 fullWidth
                 label="Team"
@@ -112,7 +112,7 @@ const DashboardFilter = ({
             </Grid>
           )}
           {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(me.role) && (
-            <Grid item xs={8} className={classes.selectorWrapper}>
+            <Grid item xs={me.role === ROLES.ADMIN ? 8 : 12}>
               <EditableSelect
                 fullWidth
                 label="User"
@@ -130,12 +130,12 @@ const DashboardFilter = ({
 
 const actions = {
   getTeamMembers,
-  getUsers
+  searchUsers
 }
 
 const selectors = createStructuredSelector({
   teamMembers: teamMemberSelector,
-  users: usersSelector,
+  users: userSearchResultsSelector,
   me: meSelector
 })
 
@@ -146,8 +146,8 @@ DashboardFilter.proptype = {
   history: PropTypes.object.isRequired,
   teamMembers: PropTypes.array,
   getTeamMembers: PropTypes.func.isRequired,
-  getUsers: PropTypes.func.isRequired,
-  users: PropTypes.object,
+  searchUsers: PropTypes.func.isRequired,
+  users: PropTypes.array,
   teamOptions: PropTypes.object
 }
 

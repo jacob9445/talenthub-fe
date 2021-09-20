@@ -72,13 +72,14 @@ const DropdownIndicator = props => (
 )
 
 const EditableSelect = props => {
-  const { name, value, onChange, onBlur, ...selectProps } = props
+  const { name, value, onChange, onBlur, onInputChange, ...selectProps } = props
   const classes = useStyles()
 
   const handleChange = useCallback(option => onChange && onChange(option ? option.value : ''), [onChange])
 
   const handleBlur = useCallback(() => onBlur && onBlur(value), [onBlur, value])
 
+  const handleInputChange = useCallback(value => onInputChange && onInputChange(value), [onInputChange])
   return (
     <Select
       {...selectProps}
@@ -87,6 +88,7 @@ const EditableSelect = props => {
       value={selectProps.options.find(option => option.value === value) || null}
       onChange={handleChange}
       onBlur={handleBlur}
+      onInputChange={handleInputChange}
       textFieldProps={{
         InputLabelProps: {
           shrink: true
