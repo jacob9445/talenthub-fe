@@ -82,13 +82,15 @@ const IndividualReportList = ({
 
   const handleTeamChange = useCallback(
     event => {
-      const { period } = queryObj
+      const { period, from, to } = queryObj
       const team = event.target.value
       if (team !== 'all') {
         history.push({
           search: jsonToQueryString({
             period,
-            team
+            team,
+            from,
+            to
           })
         })
       } else {
@@ -143,6 +145,7 @@ const IndividualReportList = ({
       const { page, page_size } = queryObj
       history.push({
         search: jsonToQueryString({
+          period: 'custom',
           from: filterFrom,
           to: filterTo,
           page,
