@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import useStyles from './styles'
 import EditableSelect from 'components/EditableSelect'
 import { getTeamMembers, teamMemberSelector } from 'store/modules/team'
-import { searchUsers, searchedUsersSelector } from 'store/modules/user'
+import { searchUsers, userSearchResultsSelector } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
 import { parseQueryString, jsonToQueryString, getFullName } from 'helpers/utils'
@@ -78,19 +78,6 @@ const DashboardFilter = ({
     [history, queryObj]
   )
 
-  const handleUserInputChange = useCallback(
-    value => {
-      const search = value
-      history.push({
-        search: jsonToQueryString({
-          team: queryObj.team,
-          search
-        })
-      })
-    },
-    [history, queryObj]
-  )
-
   const userOptions = useMemo(
     () =>
       !showAllUsers
@@ -112,9 +99,9 @@ const DashboardFilter = ({
   return (
     <Grid item xs={12}>
       <Paper>
-        <Grid container spacing={2} className={classes.wraper}>
+        <Grid container spacing={2} className={classes.wrapper}>
           {[ROLES.ADMIN].includes(me.role) && (
-            <Grid item xs={4} className={classes.selectorWrapper}>
+            <Grid item xs={4}>
               <EditableSelect
                 fullWidth
                 label="Team"
@@ -125,13 +112,12 @@ const DashboardFilter = ({
             </Grid>
           )}
           {[ROLES.ADMIN, ROLES.TEAM_MANAGER].includes(me.role) && (
-            <Grid item xs={8} className={classes.selectorWrapper}>
+            <Grid item xs={me.role === ROLES.ADMIN ? 8 : 12}>
               <EditableSelect
                 fullWidth
                 label="User"
                 value={queryObj.user}
                 options={userOptions}
-                onInputChange={handleUserInputChange}
                 onChange={handleUserChange}
               />
             </Grid>
@@ -149,7 +135,7 @@ const actions = {
 
 const selectors = createStructuredSelector({
   teamMembers: teamMemberSelector,
-  users: searchedUsersSelector,
+  users: userSearchResultsSelector,
   me: meSelector
 })
 
@@ -161,7 +147,7 @@ DashboardFilter.proptype = {
   teamMembers: PropTypes.array,
   getTeamMembers: PropTypes.func.isRequired,
   searchUsers: PropTypes.func.isRequired,
-  users: PropTypes.object,
+  users: PropTypes.array,
   teamOptions: PropTypes.object
 }
 

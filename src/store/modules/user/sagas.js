@@ -21,7 +21,7 @@ const searchUsers = createApiCallSaga({
   type: Types.SEARCH_USERS,
   method: 'GET',
   path: `api/search/users/`,
-  selectorKey: 'searchedUsers',
+  selectorKey: 'userSearchResults',
   allowedParamKeys: ['team', 'search']
 })
 
