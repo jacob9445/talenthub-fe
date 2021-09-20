@@ -7,3 +7,4 @@ export const usersLoadingSelector = state => isRequestPending('users', 'GET')(st
 export const userDetailSelector = createDataSelector('userDetail')
 export const userDetailLoadingSelector = state => isRequestPending('userDetail', 'get')(state)
 export const unassignedUsersSelector = createDataSelector('unassignedUsers')
+export const searchedUsersSelector = createDataSelector('searchedUsers', [])

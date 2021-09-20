@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import useStyles from './styles'
 import EditableSelect from 'components/EditableSelect'
 import { getTeamMembers, teamMemberSelector } from 'store/modules/team'
-import { getUsers, usersSelector } from 'store/modules/user'
+import { searchUsers, searchedUsersSelector } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
 import { ROLES } from 'config/constants'
 import { parseQueryString, jsonToQueryString, getFullName } from 'helpers/utils'
@@ -19,7 +19,7 @@ const DashboardFilter = ({
   history,
   teamMembers,
   getTeamMembers,
-  getUsers,
+  searchUsers,
   users,
   teamOptions
 }) => {
@@ -33,10 +33,12 @@ const DashboardFilter = ({
   )
 
   useEffect(() => {
-    getUsers({
-      role: me.role
+    const { team, user } = queryObj
+    searchUsers({
+      team,
+      user
     })
-  }, [me.role, getUsers])
+  }, [searchUsers, queryObj])
 
   useEffect(() => {
     if (me.role === ROLES.ADMIN && teamId) getTeamMembers(teamId)
@@ -45,11 +47,9 @@ const DashboardFilter = ({
   const handleTeamChange = useCallback(
     value => {
       const team = value
-      if (team === 'all') {
+      if (team === 'all' || team === '') {
         setShowAllUsers(1)
-        getUsers({
-          role: me.role
-        })
+        searchUsers()
         history.push({
           search: jsonToQueryString({})
         })
@@ -62,7 +62,7 @@ const DashboardFilter = ({
         })
       }
     },
-    [history, getUsers, me.role]
+    [history, searchUsers]
   )
 
   const handleUserChange = useCallback(
@@ -72,6 +72,19 @@ const DashboardFilter = ({
         search: jsonToQueryString({
           team: queryObj.team,
           user
+        })
+      })
+    },
+    [history, queryObj]
+  )
+
+  const handleUserInputChange = useCallback(
+    value => {
+      const search = value
+      history.push({
+        search: jsonToQueryString({
+          team: queryObj.team,
+          search
         })
       })
     },
@@ -88,9 +101,9 @@ const DashboardFilter = ({
             }))
           : [{ label: '', value: '' }]
         : users
-        ? users.results.map(user => ({
+        ? users.map(user => ({
             value: user.id.toString(),
-            label: getFullName(user)
+            label: user.full_name
           }))
         : [{ label: '', value: '' }],
     [users, teamMembers, showAllUsers]
@@ -118,6 +131,7 @@ const DashboardFilter = ({
                 label="User"
                 value={queryObj.user}
                 options={userOptions}
+                onInputChange={handleUserInputChange}
                 onChange={handleUserChange}
               />
             </Grid>
@@ -130,12 +144,12 @@ const DashboardFilter = ({
 
 const actions = {
   getTeamMembers,
-  getUsers
+  searchUsers
 }
 
 const selectors = createStructuredSelector({
   teamMembers: teamMemberSelector,
-  users: usersSelector,
+  users: searchedUsersSelector,
   me: meSelector
 })
 
@@ -146,7 +160,7 @@ DashboardFilter.proptype = {
   history: PropTypes.object.isRequired,
   teamMembers: PropTypes.array,
   getTeamMembers: PropTypes.func.isRequired,
-  getUsers: PropTypes.func.isRequired,
+  searchUsers: PropTypes.func.isRequired,
   users: PropTypes.object,
   teamOptions: PropTypes.object
 }
