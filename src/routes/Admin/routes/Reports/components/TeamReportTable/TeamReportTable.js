@@ -36,9 +36,7 @@ function TeamReportTable({ data, show, location, history, match: { path } }) {
               totalEarning += total
               return (
                 <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
-                  <TableCell>
-                    <FormattedNumber format="currency" value={name} />
-                  </TableCell>
+                  <TableCell>{name}</TableCell>
                   <TableCell>
                     <FormattedNumber format="currency" value={total} />
                   </TableCell>
