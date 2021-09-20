@@ -11,7 +11,7 @@ const getDailyLogs = createApiCallSaga({
     return yield roleBasedPath(path)
   },
   selectorKey: 'dailyLogs',
-  allowedParamKeys: ['page', 'page_size']
+  allowedParamKeys: ['page', 'page_size', 'owner']
 })
 
 const getDailyLogDetail = createApiCallSaga({
@@ -31,7 +31,7 @@ const getMonthlyLogs = createApiCallSaga({
     return yield roleBasedPath(path)
   },
   selectorKey: 'monthlyLogs',
-  allowedParamKeys: ['page', 'page_size']
+  allowedParamKeys: ['page', 'page_size', 'owner']
 })
 
 const getMonthlyLogDetail = createApiCallSaga({
@@ -51,7 +51,7 @@ const getWeeklyLogs = createApiCallSaga({
     return yield roleBasedPath(path)
   },
   selectorKey: 'weeklyLogs',
-  allowedParamKeys: ['page', 'page_size']
+  allowedParamKeys: ['page', 'page_size', 'owner']
 })
 
 const getWeeklyLogDetail = createApiCallSaga({

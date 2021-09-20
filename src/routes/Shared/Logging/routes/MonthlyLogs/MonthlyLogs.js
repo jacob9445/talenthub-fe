@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { Button, Grid } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -20,7 +20,7 @@ import { ListDataType } from 'helpers/prop-types'
 
 const MonthlyLogs = ({ getMonthlyLogs, monthlyLogs, me, pagination, location, history }) => {
   let classes = useStyles()
-  const queryObj = parseQueryString(location.search)
+  const queryObj = useMemo(() => parseQueryString(location.search), [location])
   const selectedYear = queryObj.year || new Date().getFullYear()
   const selectedMonth = queryObj.month || new Date().getMonth() + 1
   const handleYearChange = useCallback(
@@ -48,13 +48,17 @@ const MonthlyLogs = ({ getMonthlyLogs, monthlyLogs, me, pagination, location, hi
     [history, location, selectedYear]
   )
   useEffect(() => {
+    const { owner } = queryObj
     getMonthlyLogs({
       role: me.role,
       year: selectedYear,
       month: selectedMonth,
-      params: pagination
+      params: {
+        pagination,
+        owner
+      }
     })
-  }, [getMonthlyLogs, me.role, selectedMonth, selectedYear, pagination])
+  }, [getMonthlyLogs, me.role, selectedMonth, selectedYear, pagination, queryObj])
 
   const viewThisMonthLog = useCallback(() => {
     const date = new Date()
