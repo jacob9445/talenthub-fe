@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { Grid, Button } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -15,8 +15,8 @@ import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
 
 const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history }) => {
-  const queryObj = parseQueryString(location.search)
-  const selectedDate = queryObj.date || undefined
+  const queryObj = useMemo(() => parseQueryString(location.search), [location])
+  const selectedDate = queryObj.date || format(new Date(), 'yyyy-MM-dd')
   const handleDateChange = useCallback(
     date => {
       history.push({
@@ -29,12 +29,16 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history 
     [history, location]
   )
   useEffect(() => {
+    const { owner } = queryObj
     getDailyLogs({
       role: me.role,
       date: selectedDate,
-      params: pagination
+      params: {
+        pagination,
+        owner
+      }
     })
-  }, [getDailyLogs, me.role, selectedDate, pagination])
+  }, [getDailyLogs, me.role, selectedDate, pagination, queryObj])
 
   const viewTodayLog = useCallback(() => {
     const date = Date.now()

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { Grid, Button } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -20,7 +20,7 @@ const datePickerLabelFunc = (date, invalidLabel) => {
 }
 
 const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, history }) => {
-  const queryObj = parseQueryString(location.search)
+  const queryObj = useMemo(() => parseQueryString(location.search), [location])
   const selectedYear = queryObj.year || new Date().getFullYear()
   const selectedWeek = parseInt(queryObj.week) - 1 || parseInt(format(new Date(), 'ww')) - 1
   const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek + 1)
@@ -39,13 +39,17 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
     [history, location]
   )
   useEffect(() => {
+    const { owner } = queryObj
     getWeeklyLogs({
       role: me.role,
       year: selectedYear,
       week: selectedWeek,
-      params: pagination
+      params: {
+        pagination,
+        owner
+      }
     })
-  }, [getWeeklyLogs, me.role, selectedYear, selectedWeek, pagination])
+  }, [getWeeklyLogs, me.role, selectedYear, selectedWeek, pagination, queryObj])
 
   const viewThisWeekLog = useCallback(() => {
     const date = new Date()
