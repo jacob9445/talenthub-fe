@@ -1,4 +1,4 @@
-import { createDataSelector, isRequestPending } from '../api'
+import { createDataSelector, isRequestPending, createRequestStatusSelector } from '../api'
 
 export const dailyLogsSelector = createDataSelector('dailyLogs')
 export const dailyLogsLoadingSelector = state => isRequestPending('dailyLogs', 'GET')(state)
@@ -17,3 +17,5 @@ export const weeklyLogLoadingSelector = state => isRequestPending('weeklyLogs', 
 
 export const weeklyLogDetailSelector = createDataSelector('weeklyLogDetail')
 export const weeklyLogDetailLoadingSelector = state => isRequestPending('weeklyLogDetail', 'GET')(state)
+export const weeklyLogStatusSelector = createRequestStatusSelector('retrieveWeeklyLog')
+export const weeklyLogStatusLodaingSelector = state => isRequestPending('retrieveWeeklyLog', 'GET')(state)
