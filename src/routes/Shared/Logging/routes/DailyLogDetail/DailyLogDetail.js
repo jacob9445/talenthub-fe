@@ -8,10 +8,11 @@ import { dailyLogDetailSelector, getDailyLogDetail } from 'store/modules/logging
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
-const DailyLogDetail = ({ getDailyLogDetail, dailyLogDetail, me, location, history, match }) => {
+const DailyLogDetail = ({ getDailyLogDetail, dailyLogDetail, me, location, history, match, interval }) => {
   const {
     params: { id }
   } = match
+
   useEffect(() => {
     getDailyLogDetail({
       id: id,
@@ -24,7 +25,7 @@ const DailyLogDetail = ({ getDailyLogDetail, dailyLogDetail, me, location, histo
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/daily/`)
   }, [location, history, me.role])
 
-  return <LogDetail logDetail={dailyLogDetail} onGoBack={handleGoBack} />
+  return <LogDetail logDetail={dailyLogDetail} onGoBack={handleGoBack} interval={interval} />
 }
 
 const actions = {

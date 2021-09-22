@@ -9,8 +9,18 @@ import Spinner from 'components/Spinner'
 import { weeklyLogDetailSelector, retrieveWeeklyLog, weeklyLogStatusLoadingSelector } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
+import { shouldRedirect } from '../utils'
 
-const RetrieveWeeklyLog = ({ retrieveWeeklyLog, weeklyLog, weeklyLogIsLoading, me, location, history, match }) => {
+const RetrieveWeeklyLog = ({
+  retrieveWeeklyLog,
+  weeklyLog,
+  weeklyLogIsLoading,
+  me,
+  location,
+  history,
+  match,
+  interval
+}) => {
   const {
     params: { year, week, userId }
   } = match
@@ -33,10 +43,10 @@ const RetrieveWeeklyLog = ({ retrieveWeeklyLog, weeklyLog, weeklyLogIsLoading, m
   if (weeklyLogIsLoading) {
     return <Spinner />
   } else {
-    return weeklyLog ? (
+    return weeklyLog && shouldRedirect(weeklyLog, year, null, week, null, userId) ? (
       <Redirect to={`/${URL_PREFIXES[me.role]}/logging/weekly/${weeklyLog.id}`} />
     ) : (
-      <LogDetail logDetail={weeklyLog} onGoBack={handleGoBack} />
+      <LogDetail logDetail={weeklyLog} onGoBack={handleGoBack} interval={interval} />
     )
   }
 }

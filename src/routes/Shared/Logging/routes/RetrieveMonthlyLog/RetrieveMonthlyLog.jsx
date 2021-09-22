@@ -9,12 +9,21 @@ import Spinner from 'components/Spinner'
 import { monthlyLogDetailSelector, retrieveMonthlyLog, monthlyLogStatusLoadingSelector } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
+import { shouldRedirect } from '../utils'
 
-const RetrieveMonthlyLog = ({ retrieveMonthlyLog, monthlyLog, monthlyLogIsLoading, me, location, history, match }) => {
+const RetrieveMonthlyLog = ({
+  retrieveMonthlyLog,
+  monthlyLog,
+  monthlyLogIsLoading,
+  me,
+  location,
+  history,
+  match,
+  interval
+}) => {
   const {
     params: { year, month, userId }
   } = match
-
   useEffect(() => {
     retrieveMonthlyLog({
       role: me.role,
@@ -33,10 +42,10 @@ const RetrieveMonthlyLog = ({ retrieveMonthlyLog, monthlyLog, monthlyLogIsLoadin
   if (monthlyLogIsLoading) {
     return <Spinner />
   } else {
-    return monthlyLog ? (
+    return monthlyLog && shouldRedirect(monthlyLog, year, month, null, null, userId) ? (
       <Redirect to={`/${URL_PREFIXES[me.role]}/logging/monthly/${monthlyLog.id}`} />
     ) : (
-      <LogDetail logDetail={monthlyLog} onGoBack={handleGoBack} />
+      <LogDetail logDetail={monthlyLog} onGoBack={handleGoBack} interval={interval} />
     )
   }
 }

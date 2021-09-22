@@ -5,17 +5,14 @@ import PropTypes from 'prop-types'
 import LogCard from 'routes/Shared/MyLogs/components/LogCard'
 import LoggingActionBar from 'routes/Shared/Logging/components/LoggingActionBar'
 import useStyles from './styles'
-import { getFullName } from 'helpers/utils'
 
-const LogDetail = ({ logDetail, onGoBack, editable }) => {
+const LogDetail = ({ logDetail, onGoBack, editable, interval }) => {
   let classes = useStyles()
-  const fullName = logDetail ? getFullName(logDetail.owner) : ''
-
   return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <LoggingActionBar fullName={fullName} />
+          <LoggingActionBar logDetail={logDetail} interval={interval} />
         </Grid>
         <Grid item xs={6}>
           <LogCard title="Plan" content={logDetail?.plan} editable={false} />

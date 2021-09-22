@@ -11,19 +11,45 @@ import RetrieveWeeklyLog from 'routes/Shared/Logging/routes/RetrieveWeeklyLog'
 import RetrieveDailyLog from 'routes/Shared/Logging/routes/RetrieveDailyLog'
 import RetrieveMonthlyLog from 'routes/Shared/Logging/routes/RetrieveMonthlyLog'
 
-const Logging = ({ match: { path } }) => {
+const Logging = ({ match: { path }, match }) => {
+  const parentPath = path.replace('/:interval?', '')
+  const { interval } = match.params
   return (
     <Switch>
-      <Route exact path={`${path}/daily`} component={DailyLogs} />
-      <Route exact path={`${path}/daily/:id`} component={DailyLogDetail} />
-      <Route exact path={`${path}/monthly`} component={MonthlyLogs} />
-      <Route exact path={`${path}/monthly/:id`} component={MonthlyLogDetail} />
-      <Route exact path={`${path}/weekly`} component={WeeklyLogs} />
-      <Route exact path={`${path}/weekly/:id`} component={WeeklyLogDetail} />
-      <Route exact path={`${path}/daily/:year-:month-:day/:userId`} component={RetrieveDailyLog} />
-      <Route exact path={`${path}/weekly/:year-:week/:userId`} component={RetrieveWeeklyLog} />
-      <Route exact path={`${path}/monthly/:year-:month/:userId`} component={RetrieveMonthlyLog} />
-      <Redirect to={`${path}/daily`} />
+      <Route exact path={`${parentPath}/daily`} component={DailyLogs} />
+      <Route
+        exact
+        path={`${parentPath}/daily/:id`}
+        render={props => <DailyLogDetail {...props} interval={interval} />}
+      />
+      <Route exact path={`${parentPath}/monthly`} component={MonthlyLogs} />
+      <Route
+        exact
+        path={`${parentPath}/monthly/:id`}
+        render={props => <MonthlyLogDetail {...props} interval={interval} />}
+      />
+      <Route exact path={`${parentPath}/weekly`} component={WeeklyLogs} />
+      <Route
+        exact
+        path={`${parentPath}/weekly/:id`}
+        render={props => <WeeklyLogDetail {...props} interval={interval} />}
+      />
+      <Route
+        exact
+        path={`${parentPath}/daily/:year-:month-:day/:userId`}
+        render={props => <RetrieveDailyLog {...props} interval={interval} />}
+      />
+      <Route
+        exact
+        path={`${parentPath}/weekly/:year-:week/:userId`}
+        render={props => <RetrieveWeeklyLog {...props} interval={interval} />}
+      />
+      <Route
+        exact
+        path={`${parentPath}/monthly/:year-:month/:userId`}
+        render={props => <RetrieveMonthlyLog {...props} interval={interval} />}
+      />
+      <Redirect to={`${parentPath}/daily`} />
     </Switch>
   )
 }

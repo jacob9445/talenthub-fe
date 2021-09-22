@@ -406,6 +406,12 @@ export const LOG_OPTIONS = [
   }
 ]
 
+export const INTERVALS = {
+  DAILY: 'daily',
+  WEEKLY: 'weekly',
+  MONTHLY: 'monthly'
+}
+
 export const NOTIFICATION_CONFIG = {
   finance_financialrequest: {
     title: 'Financial Request',
