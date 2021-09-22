@@ -9,4 +9,6 @@ export const getMonthlyLogDetail = createAction(Types.GET_MONTHLY_LOG_DETAIL)
 
 export const getWeeklyLogs = createAction(Types.GET_WEEKLY_LOGS)
 export const getWeeklyLogDetail = createAction(Types.GET_WEEKLY_LOG_DETAIL)
+
 export const retrieveWeeklyLog = createAction(Types.RETRIEVE_WEEKLY_LOG)
+export const retrieveDailyLog = createAction(Types.RETRIEVE_DAILY_LOG)
