@@ -68,7 +68,7 @@ const LogCard = ({ title, content, onSave, editable }) => {
 LogCard.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string,
-  onSave: PropTypes.func.isRequired
+  onSave: PropTypes.func
 }
 
 LogCard.defaultProps = {

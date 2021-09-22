@@ -23,6 +23,21 @@ const getDailyLogDetail = createApiCallSaga({
   selectorKey: 'dailyLogDetail'
 })
 
+const retrieveDailyLog = createApiCallSaga({
+  type: Types.RETRIEVE_DAILY_LOG,
+  method: 'GET',
+  path: function*({ payload: { date } = {} }) {
+    const path = date ? `logging/daily-logs/${date}/` : 'logging/daily-logs/'
+    return yield roleBasedPath(path)
+  },
+  payloadOnSuccess: (resData, action) => {
+    return resData.results ? resData.results[0] : {}
+  },
+  selectorKey: 'dailyLogDetail',
+  requestSelectorKey: 'retrieveDailyLog',
+  allowedParamKeys: ['page', 'page_size', 'owner']
+})
+
 const getMonthlyLogs = createApiCallSaga({
   type: Types.GET_MONTHLY_LOGS,
   method: 'GET',
@@ -84,4 +99,5 @@ export default function* rootSaga() {
   yield takeLatest(Types.GET_WEEKLY_LOGS, getWeeklyLogs)
   yield takeLatest(Types.GET_WEEKLY_LOG_DETAIL, getWeeklyLogDetail)
   yield takeLatest(Types.RETRIEVE_WEEKLY_LOG, retrieveWeeklyLog)
+  yield takeLatest(Types.RETRIEVE_DAILY_LOG, retrieveDailyLog)
 }
