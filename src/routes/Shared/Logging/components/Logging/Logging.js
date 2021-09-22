@@ -7,6 +7,7 @@ import MonthlyLogs from 'routes/Shared/Logging/routes/MonthlyLogs'
 import MonthlyLogDetail from 'routes/Shared/Logging/routes/MonthlyLogDetail'
 import WeeklyLogs from 'routes/Shared/Logging/routes/WeeklyLogs'
 import WeeklyLogDetail from 'routes/Shared/Logging/routes/WeeklyLogDetail'
+import RetrieveWeeklyLog from 'routes/Shared/Logging/routes/RetrieveWeeklyLog'
 
 const Logging = ({ match: { path } }) => {
   return (
@@ -17,6 +18,7 @@ const Logging = ({ match: { path } }) => {
       <Route exact path={`${path}/monthly/:id`} component={MonthlyLogDetail} />
       <Route exact path={`${path}/weekly`} component={WeeklyLogs} />
       <Route exact path={`${path}/weekly/:id`} component={WeeklyLogDetail} />
+      <Route exact path={`${path}/weekly/:year-:week/:userId`} component={RetrieveWeeklyLog} />
       <Redirect to={`${path}/daily`} />
     </Switch>
   )
