@@ -1,23 +1,23 @@
-import { createDataSelector, isRequestPending, createRequestStatusSelector } from '../api'
+import { createDataSelector, isRequestPending } from '../api'
 
 export const dailyLogsSelector = createDataSelector('dailyLogs')
-export const dailyLogsLoadingSelector = state => isRequestPending('dailyLogs', 'GET')(state)
+export const dailyLogsLoadingSelector = isRequestPending('dailyLogs', 'GET')
 
 export const dailyLogDetailSelector = createDataSelector('dailyLogDetail')
-export const dailyLogDetailLoadingSelector = state => isRequestPending('dailyLogDetail', 'GET')(state)
-
-export const monthlyLogsSelector = createDataSelector('monthlyLogs')
-export const monthlyLogsLoadingSelector = state => isRequestPending('monthlyLogs', 'GET')(state)
-
-export const monthlyLogDetailSelector = createDataSelector('monthlyLogDetail')
-export const monthlyLogDetailLoadingSelector = state => isRequestPending('monthlyLogDetail', 'GET')(state)
+export const dailyLogDetailLoadingSelector = isRequestPending('dailyLogDetail', 'GET')
 
 export const weeklyLogsSelector = createDataSelector('weeklyLogs')
-export const weeklyLogLoadingSelector = state => isRequestPending('weeklyLogs', 'GET')(state)
+export const weeklyLogLoadingSelector = isRequestPending('weeklyLogs', 'GET')
 
 export const weeklyLogDetailSelector = createDataSelector('weeklyLogDetail')
-export const weeklyLogDetailLoadingSelector = state => isRequestPending('weeklyLogDetail', 'GET')(state)
-export const weeklyLogStatusSelector = createRequestStatusSelector('retrieveWeeklyLog')
+export const weeklyLogDetailLoadingSelector = isRequestPending('weeklyLogDetail', 'GET')
 
-export const weeklyLogStatusLodaingSelector = state => isRequestPending('retrieveWeeklyLog', 'GET')(state)
+export const monthlyLogsSelector = createDataSelector('monthlyLogs')
+export const monthlyLogsLoadingSelector = isRequestPending('monthlyLogs', 'GET')
+
+export const monthlyLogDetailSelector = createDataSelector('monthlyLogDetail')
+export const monthlyLogDetailLoadingSelector = isRequestPending('monthlyLogDetail', 'GET')
+
 export const dailyLogStatusLoadingSelector = isRequestPending('retrieveDailyLog', 'GET')
+export const weeklyLogStatusLoadingSelector = isRequestPending('retrieveWeeklyLog', 'GET')
+export const monthlyLogStatusLoadingSelector = isRequestPending('retrieveMonthlyLog', 'GET')

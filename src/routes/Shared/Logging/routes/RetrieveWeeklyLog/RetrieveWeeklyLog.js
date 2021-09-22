@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import LogDetail from 'routes/Shared/Logging/components/LogDetail'
 import Spinner from 'components/Spinner'
-import { weeklyLogsSelector, retrieveWeeklyLog, weeklyLogStatusLodaingSelector } from 'store/modules/logging'
+import { weeklyLogsSelector, retrieveWeeklyLog, weeklyLogStatusLoadingSelector } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
@@ -42,7 +42,7 @@ const actions = {
 
 const selectors = createStructuredSelector({
   weeklyLog: weeklyLogsSelector,
-  weeklyLogIsLoading: weeklyLogStatusLodaingSelector,
+  weeklyLogIsLoading: weeklyLogStatusLoadingSelector,
   me: meSelector
 })
 
