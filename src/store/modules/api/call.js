@@ -1,10 +1,11 @@
 import axios from 'axios'
 import * as R from 'ramda'
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 
 import { API_BASE } from '../../../config/constants'
 import { requestRejected, requestPending, requestSuccess } from './actions'
 import { TOKEN } from 'config/constants'
+import { createDataSelector } from './selectors'
 
 const defaultHeaders = request => {
   const token = localStorage.getItem(TOKEN)
@@ -48,6 +49,7 @@ const createApiCallSaga = ({
     const {
       data,
       params,
+      useCache,
       headers: customHeaders,
       success: successCallback,
       fail: failCallback,
@@ -59,6 +61,13 @@ const createApiCallSaga = ({
     const requestSelectorKey =
       typeof requestSelectorKeyOrFunc === 'function' ? requestSelectorKeyOrFunc(payload) : requestSelectorKeyOrFunc
     const selectorKey = typeof selectorKeyOrFunc === 'function' ? selectorKeyOrFunc(payload) : selectorKeyOrFunc
+
+    if (useCache) {
+      const previousDataSelector = createDataSelector(selectorKey)
+      const previousData = yield select(previousDataSelector)
+      if (previousData) return true
+    }
+
     try {
       if (pending) {
         yield pending(payload)
