@@ -14,7 +14,7 @@ export const requests = handleActions(
         ...state,
         [selectorKey]: {
           ...state[selectorKey],
-          [payload.method]: REQUEST_PENDING
+          [R.toLower(payload.method)]: REQUEST_PENDING
         }
       }
     },
@@ -25,7 +25,7 @@ export const requests = handleActions(
         ...state,
         [selectorKey]: {
           ...state[selectorKey],
-          [payload.method]: REQUEST_SUCCESS
+          [R.toLower(payload.method)]: REQUEST_SUCCESS
         }
       }
     },
@@ -36,7 +36,7 @@ export const requests = handleActions(
         ...state,
         [selectorKey]: {
           ...state[selectorKey],
-          [payload.method]: REQUEST_REJECTED
+          [R.toLower(payload.method)]: REQUEST_REJECTED
         }
       }
     },

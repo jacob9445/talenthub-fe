@@ -42,7 +42,8 @@ const createApiCallSaga = ({
   payloadOnSuccess,
   payloadOnFail,
   requestSelectorKey: requestSelectorKeyOrFunc,
-  selectorKey: selectorKeyOrFunc
+  selectorKey: selectorKeyOrFunc,
+  footprint
 }) =>
   function*(action) {
     const payload = action.payload || {}
@@ -63,9 +64,13 @@ const createApiCallSaga = ({
     const selectorKey = typeof selectorKeyOrFunc === 'function' ? selectorKeyOrFunc(payload) : selectorKeyOrFunc
 
     if (useCache) {
-      const previousDataSelector = createDataSelector(selectorKey)
-      const previousData = yield select(previousDataSelector)
-      if (previousData) return true
+      const reqFootprint = footprint ? footprint(payload) : null
+      if (reqFootprint) {
+        const previousDataSelector = createDataSelector(selectorKey)
+        const previousData = yield select(previousDataSelector)
+        const prevFootprint = previousData ? R.pick(R.keys(reqFootprint), previousData) : null
+        if (R.equals(prevFootprint, reqFootprint)) return true
+      }
     }
 
     try {
@@ -91,6 +96,7 @@ const createApiCallSaga = ({
       })
 
       const resData = payloadOnSuccess ? payloadOnSuccess(res.data, action) : res.data
+
       yield put(
         requestSuccess({
           selectorKey,
@@ -113,7 +119,6 @@ const createApiCallSaga = ({
 
       return true
     } catch (err) {
-      console.error(err)
       const errRes = R.path('response', err) || err
       const payload = payloadOnFail ? payloadOnFail(errRes, action) : errRes
       yield put(

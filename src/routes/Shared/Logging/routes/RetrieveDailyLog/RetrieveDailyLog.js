@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import { createStructuredSelector } from 'reselect'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { format } from 'date-fns'
@@ -31,7 +32,11 @@ const RetrieveDailyLog = ({ retrieveDailyLog, isDailyLogLoading, dailyLog, me, l
   if (isDailyLogLoading) {
     return <Spinner />
   } else {
-    return <LogDetail logDetail={dailyLog} onGoBack={handleGoBack} />
+    return dailyLog ? (
+      <Redirect to={`/admin/logging/daily/${dailyLog.id}`} />
+    ) : (
+      <LogDetail logDetail={dailyLog} onGoBack={handleGoBack} />
+    )
   }
 }
 

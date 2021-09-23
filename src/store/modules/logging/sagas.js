@@ -20,7 +20,8 @@ const getDailyLogDetail = createApiCallSaga({
   path: function*({ payload }) {
     return yield roleBasedPath(`logging/daily-logs/${payload.id}/`)
   },
-  selectorKey: 'dailyLogDetail'
+  selectorKey: 'dailyLogDetail',
+  footprint: payload => ({ id: Number(payload.id) })
 })
 
 const retrieveDailyLog = createApiCallSaga({
@@ -35,7 +36,8 @@ const retrieveDailyLog = createApiCallSaga({
   },
   selectorKey: 'dailyLogDetail',
   requestSelectorKey: 'retrieveDailyLog',
-  allowedParamKeys: ['page', 'page_size', 'owner']
+  allowedParamKeys: ['page', 'page_size', 'owner'],
+  footprint: payload => ({ createdAt: payload.date, owner: payload.params.owner })
 })
 
 const getMonthlyLogs = createApiCallSaga({
