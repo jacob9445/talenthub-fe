@@ -43,7 +43,7 @@ const DeclinedFinancialRequest = ({
   onChangePage,
   onChangeRowsPerPage
 }) => {
-  useEffect(() => {
+  const getDeclinedFinancialRequests = useEffect(() => {
     getFinancialRequests({
       me: me,
       params: {
@@ -58,10 +58,10 @@ const DeclinedFinancialRequest = ({
     id => {
       cancelFinancialRequest({
         id,
-        success: () => getFinancialRequests()
+        success: () => getDeclinedFinancialRequests()
       })
     },
-    [cancelFinancialRequest, getFinancialRequests]
+    [cancelFinancialRequest, getDeclinedFinancialRequests]
   )
 
   const handleApprove = useCallback(
@@ -69,13 +69,13 @@ const DeclinedFinancialRequest = ({
       if (request_type === FINANCIALREQUEST_TYPE.SENDINVOICE) {
         approveFinancialRequest({
           id: requestId,
-          success: () => getFinancialRequests()
+          success: () => getDeclinedFinancialRequests()
         })
       } else {
         show('approveRequestModal', { requestId, gross_amount })
       }
     },
-    [show, approveFinancialRequest, getFinancialRequests]
+    [show, approveFinancialRequest, getDeclinedFinancialRequests]
   )
 
   const handleDecline = useCallback(
@@ -85,12 +85,12 @@ const DeclinedFinancialRequest = ({
         proceed: () => {
           declineFinancialRequest({
             id,
-            success: () => getFinancialRequests()
+            success: () => getDeclinedFinancialRequests()
           })
         }
       })
     },
-    [show, declineFinancialRequest, getFinancialRequests]
+    [show, declineFinancialRequest, getDeclinedFinancialRequests]
   )
 
   if (isFinancialRequestsLoading) return <Spinner />

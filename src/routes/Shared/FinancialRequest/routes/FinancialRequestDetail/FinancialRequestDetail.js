@@ -12,9 +12,7 @@ import { Link } from 'react-router-dom'
 import Widget from 'components/Widget'
 import ApproveRequestModal from 'components/ApproveRequestModal'
 import {
-  getFinancialRequests,
   getFinancialRequestDetail,
-  updateFinancialRequestDetail,
   financialRequestDetailSelector,
   financialRequestDetailLoadingSelector,
   cancelFinancialRequest,
@@ -44,6 +42,7 @@ const FinancialRequestDetail = ({
   location,
   approveFinancialRequest,
   declineFinancialRequest,
+  cancelFinancialRequest,
   show
 }) => {
   useEffect(() => {
@@ -79,6 +78,13 @@ const FinancialRequestDetail = ({
       }
     })
   }, [show, declineFinancialRequest, financialRequestDetail])
+
+  const handleCancel = useCallback(() => {
+    cancelFinancialRequest({
+      id: financialRequestDetail.id,
+      success: () => getFinancialRequestDetail(params.id)
+    })
+  }, [cancelFinancialRequest, getFinancialRequestDetail, params.id, financialRequestDetail])
 
   const showFinancialRequestEdit = useCallback(
     id => () => {
@@ -174,6 +180,11 @@ const FinancialRequestDetail = ({
                       </Button>
                     </>
                   ) : null}
+                  {ROLES.ADMIN !== me.role && financialRequestDetail.status === FINANCIALREQUEST_STATUS.DECLINED ? (
+                    <Button variant="contained" onClick={handleCancel} color="secondary">
+                      Cancel
+                    </Button>
+                  ) : null}
                   <Button className={classes.cancelButton} onClick={handleGoBack} color="secondary">
                     Go Back
                   </Button>
@@ -188,9 +199,7 @@ const FinancialRequestDetail = ({
 }
 
 const actions = {
-  getFinancialRequests,
   getFinancialRequestDetail,
-  updateFinancialRequestDetail,
   cancelFinancialRequest,
   declineFinancialRequest,
   approveFinancialRequest,
@@ -204,8 +213,6 @@ const selectors = createStructuredSelector({
 })
 
 FinancialRequestDetail.propTypes = {
-  getAllFinancialRequestDetail: PropTypes.func.isRequired,
-  updateFinancialRequestDetail: PropTypes.func.isRequired,
   financialRequestDetail: PropTypes.object,
   isDetailLoading: PropTypes.bool.isRequired,
   cancelFinancialRequest: PropTypes.func.isRequired,
