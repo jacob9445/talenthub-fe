@@ -95,18 +95,22 @@ function FinancialRequestTable({
                     <DetailsIcon color="primary" />
                   </IconButton>
                 </Tooltip>
-                {ROLES.ADMIN !== me.role && requester.id === me.id && status === FINANCIALREQUEST_STATUS.PENDING ? (
+                {ROLES.ADMIN !== me.role && requester.id === me.id ? (
                   <>
-                    <Tooltip key={`${id}Edit`} title="Edit" placement="top">
-                      <IconButton onClick={showFinancialRequestEdit(id)}>
-                        <EditIcon color="primary" />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip key={`${id}Cancel`} title="Cancel" placement="top">
-                      <IconButton onClick={() => onCancel(id)}>
-                        <CancelIcon />
-                      </IconButton>
-                    </Tooltip>
+                    {status === FINANCIALREQUEST_STATUS.PENDING ? (
+                      <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                        <IconButton onClick={showFinancialRequestEdit(id)}>
+                          <EditIcon color="primary" />
+                        </IconButton>
+                      </Tooltip>
+                    ) : null}
+                    {[FINANCIALREQUEST_STATUS.PENDING, FINANCIALREQUEST_STATUS.DECLINED].includes(status) && (
+                      <Tooltip key={`${id}Cancel`} title="Cancel" placement="top">
+                        <IconButton onClick={() => onCancel(id)}>
+                          <CancelIcon />
+                        </IconButton>
+                      </Tooltip>
+                    )}
                   </>
                 ) : null}
                 {ROLES.ADMIN === me.role ? (
