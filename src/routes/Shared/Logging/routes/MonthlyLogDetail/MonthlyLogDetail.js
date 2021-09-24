@@ -15,7 +15,8 @@ const MonthlyLogDetail = ({ getMonthlyLogDetail, monthlyLogDetail, me, location,
   useEffect(() => {
     getMonthlyLogDetail({
       id: id,
-      role: me.role
+      role: me.role,
+      useCache: true
     })
   }, [getMonthlyLogDetail, me.role, id])
   const handleGoBack = useCallback(() => {

@@ -1,4 +1,3 @@
-import setWith from 'lodash/setWith'
 import unset from 'lodash/unset'
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
@@ -46,25 +45,25 @@ export const requests = handleActions(
   {}
 )
 
-// TODO: find a better way to resolve cloning issue
-const cloneInPath = (state, path) => {
-  if (!path) return state
-  const pathArray = Array.isArray(path) ? path : path.split('.')
-  pathArray.reduce((subState, path) => {
-    subState[path] = Array.isArray(subState[path]) ? [...subState[path]] : { ...subState[path] }
-    return subState[path]
-  }, state)
-  return { ...state }
+const deepSetWith = (state, path, data) => {
+  if (!path) return data
+  const pathArray = path.split('.')
+  const [firstKey, ...remaining] = pathArray
+
+  return {
+    ...state,
+    [firstKey]: deepSetWith(state[firstKey], remaining.join('.'), data)
+  }
 }
 
 export const data = handleActions(
   {
     [REQUEST_SUCCESS]: (state, { payload }) => {
-      return cloneInPath(setWith(state, payload.selectorKey, payload.data, Object), payload.selectorKey)
+      return deepSetWith(state, payload.selectorKey, payload.data)
     },
 
     [SET_API_DATA]: (state, { payload }) => {
-      return cloneInPath(setWith(state, payload.selectorKey, payload.data, Object), payload.selectorKey)
+      return deepSetWith(state, payload.selectorKey, payload.data)
     },
 
     [CLEAR_API_STATE]: R.always({}),
