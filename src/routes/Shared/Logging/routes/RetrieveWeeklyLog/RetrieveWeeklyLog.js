@@ -1,11 +1,12 @@
 import React, { useEffect, useCallback } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import LogDetail from 'routes/Shared/Logging/components/LogDetail'
 import Spinner from 'components/Spinner'
-import { weeklyLogsSelector, retrieveWeeklyLog, weeklyLogStatusLoadingSelector } from 'store/modules/logging'
+import { weeklyLogDetailSelector, retrieveWeeklyLog, weeklyLogStatusLoadingSelector } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
@@ -32,7 +33,11 @@ const RetrieveWeeklyLog = ({ retrieveWeeklyLog, weeklyLog, weeklyLogIsLoading, m
   if (weeklyLogIsLoading) {
     return <Spinner />
   } else {
-    return <LogDetail logDetail={weeklyLog} onGoBack={handleGoBack} />
+    return weeklyLog ? (
+      <Redirect to={`/admin/logging/weekly/${weeklyLog.id}`} />
+    ) : (
+      <LogDetail logDetail={weeklyLog} onGoBack={handleGoBack} />
+    )
   }
 }
 
@@ -41,7 +46,7 @@ const actions = {
 }
 
 const selectors = createStructuredSelector({
-  weeklyLog: weeklyLogsSelector,
+  weeklyLog: weeklyLogDetailSelector,
   weeklyLogIsLoading: weeklyLogStatusLoadingSelector,
   me: meSelector
 })

@@ -18,11 +18,11 @@ const Logging = ({ match: { path } }) => {
       <Route exact path={`${path}/daily/:id`} component={DailyLogDetail} />
       <Route exact path={`${path}/monthly`} component={MonthlyLogs} />
       <Route exact path={`${path}/monthly/:id`} component={MonthlyLogDetail} />
-      <Route exact path={`${path}/monthly/:year-:month/:userId`} component={RetrieveMonthlyLog} />
       <Route exact path={`${path}/weekly`} component={WeeklyLogs} />
       <Route exact path={`${path}/weekly/:id`} component={WeeklyLogDetail} />
-      <Route exact path={`${path}/weekly/:year-:week/:userId`} component={RetrieveWeeklyLog} />
       <Route exact path={`${path}/daily/:year-:month-:day/:userId`} component={RetrieveDailyLog} />
+      <Route exact path={`${path}/weekly/:year-:week/:userId`} component={RetrieveWeeklyLog} />
+      <Route exact path={`${path}/monthly/:year-:month/:userId`} component={RetrieveMonthlyLog} />
       <Redirect to={`${path}/daily`} />
     </Switch>
   )

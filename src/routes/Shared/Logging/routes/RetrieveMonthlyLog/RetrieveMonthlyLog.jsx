@@ -1,11 +1,12 @@
 import React, { useEffect, useCallback } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import LogDetail from 'routes/Shared/Logging/components/LogDetail'
 import Spinner from 'components/Spinner'
-import { monthlyLogsSelector, retrieveMonthlyLog, monthlyLogStatusLoadingSelector } from 'store/modules/logging'
+import { monthlyLogDetailSelector, retrieveMonthlyLog, monthlyLogStatusLoadingSelector } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
@@ -32,7 +33,11 @@ const RetrieveMonthlyLog = ({ retrieveMonthlyLog, monthlyLog, monthlyLogIsLoadin
   if (monthlyLogIsLoading) {
     return <Spinner />
   } else {
-    return <LogDetail logDetail={monthlyLog} onGoBack={handleGoBack} />
+    return monthlyLog ? (
+      <Redirect to={`/admin/logging/monthly/${monthlyLog.id}`} />
+    ) : (
+      <LogDetail logDetail={monthlyLog} onGoBack={handleGoBack} />
+    )
   }
 }
 
@@ -41,7 +46,7 @@ const actions = {
 }
 
 const selectors = createStructuredSelector({
-  monthlyLog: monthlyLogsSelector,
+  monthlyLog: monthlyLogDetailSelector,
   monthlyLogIsLoading: monthlyLogStatusLoadingSelector,
   me: meSelector
 })

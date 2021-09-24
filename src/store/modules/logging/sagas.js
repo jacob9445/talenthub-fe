@@ -24,22 +24,6 @@ const getDailyLogDetail = createApiCallSaga({
   footprint: payload => ({ id: Number(payload.id) })
 })
 
-const retrieveDailyLog = createApiCallSaga({
-  type: Types.RETRIEVE_DAILY_LOG,
-  method: 'GET',
-  path: function*({ payload: { date } = {} }) {
-    const path = date ? `logging/daily-logs/${date}/` : 'logging/daily-logs/'
-    return yield roleBasedPath(path)
-  },
-  payloadOnSuccess: (resData, action) => {
-    return resData.results ? resData.results[0] : {}
-  },
-  selectorKey: 'dailyLogDetail',
-  requestSelectorKey: 'retrieveDailyLog',
-  allowedParamKeys: ['page', 'page_size', 'owner'],
-  footprint: payload => ({ createdAt: payload.date, owner: payload.params.owner })
-})
-
 const getMonthlyLogs = createApiCallSaga({
   type: Types.GET_MONTHLY_LOGS,
   method: 'GET',
@@ -51,26 +35,14 @@ const getMonthlyLogs = createApiCallSaga({
   allowedParamKeys: ['page', 'page_size', 'owner']
 })
 
-const retrieveMonthlyLog = createApiCallSaga({
-  type: Types.RETRIEVE_MONTHLY_LOG,
-  method: 'GET',
-  path: function*({ payload: { year, month } = {} }) {
-    const path = year ? `logging/monthly-logs/${year}-${month}/` : 'logging/monthly-logs/'
-    return yield roleBasedPath(path)
-  },
-  payloadOnSuccess: (resData, action) => (resData.results.length ? resData.results[0] : {}),
-  selectorKey: 'monthlyLogDetail',
-  requestSelectorKey: 'retrieveMonthlyLog',
-  allowedParamKeys: ['page', 'page_size', 'owner']
-})
-
 const getMonthlyLogDetail = createApiCallSaga({
   type: Types.GET_MONTHLY_LOG_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
     return yield roleBasedPath(`logging/monthly-logs/${payload.id}/`)
   },
-  selectorKey: 'monthlyLogDetail'
+  selectorKey: 'monthlyLogDetail',
+  footprint: payload => ({ id: Number(payload.id) })
 })
 
 const getWeeklyLogs = createApiCallSaga({
@@ -90,7 +62,22 @@ const getWeeklyLogDetail = createApiCallSaga({
   path: function*({ payload }) {
     return yield roleBasedPath(`logging/weekly-logs/${payload.id}/`)
   },
-  selectorKey: 'weeklyLogDetail'
+  selectorKey: 'weeklyLogDetail',
+  footprint: payload => ({ id: Number(payload.id) })
+})
+
+const retrieveDailyLog = createApiCallSaga({
+  type: Types.RETRIEVE_DAILY_LOG,
+  method: 'GET',
+  path: function*({ payload: { date } = {} }) {
+    const path = date ? `logging/daily-logs/${date}/` : 'logging/daily-logs/'
+    return yield roleBasedPath(path)
+  },
+  payloadOnSuccess: (resData, action) => (resData.results.length ? resData.results[0] : null),
+  selectorKey: 'dailyLogDetail',
+  requestSelectorKey: 'retrieveDailyLog',
+  allowedParamKeys: ['page', 'page_size', 'owner'],
+  footprint: payload => ({ createdAt: payload.date, owner: payload.params.owner })
 })
 
 const retrieveWeeklyLog = createApiCallSaga({
@@ -100,10 +87,25 @@ const retrieveWeeklyLog = createApiCallSaga({
     const path = year ? `logging/weekly-logs/${year}-${week}/` : 'logging/weekly-logs/'
     return yield roleBasedPath(path)
   },
-  payloadOnSuccess: (resData, action) => (resData.results.length ? resData.results[0] : {}),
+  payloadOnSuccess: (resData, action) => (resData.results.length ? resData.results[0] : null),
   selectorKey: 'weeklyLogDetail',
   requestSelectorKey: 'retrieveWeeklyLog',
-  allowedParamKeys: ['page', 'page_size', 'owner']
+  allowedParamKeys: ['page', 'page_size', 'owner'],
+  footprint: payload => ({ createdAt: payload.date, owner: payload.params.owner })
+})
+
+const retrieveMonthlyLog = createApiCallSaga({
+  type: Types.RETRIEVE_MONTHLY_LOG,
+  method: 'GET',
+  path: function*({ payload: { year, month } = {} }) {
+    const path = year ? `logging/monthly-logs/${year}-${month}/` : 'logging/monthly-logs/'
+    return yield roleBasedPath(path)
+  },
+  payloadOnSuccess: (resData, action) => (resData.results.length ? resData.results[0] : null),
+  selectorKey: 'monthlyLogDetail',
+  requestSelectorKey: 'retrieveMonthlyLog',
+  allowedParamKeys: ['page', 'page_size', 'owner'],
+  footprint: payload => ({ createdAt: payload.date, owner: payload.params.owner })
 })
 
 export default function* rootSaga() {
