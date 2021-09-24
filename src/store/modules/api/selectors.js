@@ -2,10 +2,15 @@ import * as R from 'ramda'
 import * as types from './types'
 
 export const createDataSelector = (selectorKey, defaultVal = null) =>
-  R.compose(R.defaultTo(defaultVal), R.prop(selectorKey), R.path(['api', 'data']))
+  R.compose(R.defaultTo(defaultVal), R.compose(R.path, R.split('.'))(selectorKey), R.path(['api', 'data']))
 
 export const createRequestStatusSelector = (selectorKey, method = 'get') =>
-  R.compose(R.defaultTo('INIT'), R.prop(method.toLowerCase()), R.prop(selectorKey), R.path(['api', 'requests']))
+  R.compose(
+    R.defaultTo('INIT'),
+    R.prop(method.toLowerCase()),
+    R.compose(R.path, R.split('.'))(selectorKey),
+    R.path(['api', 'requests'])
+  )
 
 export const isRequestNil = (selectorKey, method) =>
   R.compose(R.equals('INIT'), createRequestStatusSelector(selectorKey, method))
