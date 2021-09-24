@@ -120,3 +120,5 @@ export const setSnackbarTouched = status => {
 }
 
 export const getBool = R.compose(Boolean, JSON.parse, R.defaultTo('false'))
+
+export const prettifyMethod = R.toLower()

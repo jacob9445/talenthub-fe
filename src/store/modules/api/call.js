@@ -6,6 +6,8 @@ import { API_BASE } from '../../../config/constants'
 import { requestRejected, requestPending, requestSuccess } from './actions'
 import { TOKEN } from 'config/constants'
 import { createDataSelector } from './selectors'
+import { prettifyMethod } from 'helpers/utils'
+import { createRequestFootprintSelector } from 'store/modules/api'
 
 const defaultHeaders = request => {
   const token = localStorage.getItem(TOKEN)
@@ -43,7 +45,8 @@ const createApiCallSaga = ({
   payloadOnFail,
   requestSelectorKey: requestSelectorKeyOrFunc,
   selectorKey: selectorKeyOrFunc,
-  footprint
+  footprint,
+  footprintKeys
 }) =>
   function*(action) {
     const payload = action.payload || {}
@@ -63,13 +66,19 @@ const createApiCallSaga = ({
       typeof requestSelectorKeyOrFunc === 'function' ? requestSelectorKeyOrFunc(payload) : requestSelectorKeyOrFunc
     const selectorKey = typeof selectorKeyOrFunc === 'function' ? selectorKeyOrFunc(payload) : selectorKeyOrFunc
 
-    if (useCache) {
-      const reqFootprint = footprint ? footprint(payload) : null
-      if (reqFootprint) {
+    const reqFootprint = footprintKeys ? R.pick(footprintKeys, payload) : null
+
+    if (useCache && prettifyMethod(method) === 'get') {
+      const previousFootprintSelector = createRequestFootprintSelector(requestSelectorKey || selectorKey)
+      const prevReqFootprint = yield select(previousFootprintSelector)
+      if (R.equals(prevReqFootprint, reqFootprint)) return true
+
+      const reqFootprintForRetrieve = footprint ? footprint(payload) : null
+      if (reqFootprintForRetrieve) {
         const previousDataSelector = createDataSelector(selectorKey)
         const previousData = yield select(previousDataSelector)
-        const prevFootprint = previousData ? R.pick(R.keys(reqFootprint), previousData) : null
-        if (R.equals(prevFootprint, reqFootprint)) return true
+        const prevResFootprint = previousData ? R.pick(R.keys(reqFootprintForRetrieve), previousData) : null
+        if (R.equals(prevResFootprint, reqFootprintForRetrieve)) return true
       }
     }
 
@@ -84,7 +93,7 @@ const createApiCallSaga = ({
 
       const res = yield call(axios.request, {
         url: typeof path === 'function' ? yield path(action) : path,
-        method: method.toLowerCase(),
+        method: prettifyMethod(method),
         headers: {
           ...defaultHeaders({ method }),
           ...headers,
@@ -96,9 +105,9 @@ const createApiCallSaga = ({
       })
 
       const resData = payloadOnSuccess ? payloadOnSuccess(res.data, action) : res.data
-
       yield put(
         requestSuccess({
+          footprint: reqFootprint,
           selectorKey,
           requestSelectorKey,
           method,

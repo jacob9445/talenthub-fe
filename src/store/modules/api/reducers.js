@@ -4,6 +4,7 @@ import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
 
 import { REQUEST_SUCCESS, REQUEST_REJECTED, REQUEST_PENDING, SET_API_DATA, CLEAR_API_STATE } from './types'
+import { prettifyMethod } from 'helpers/utils'
 
 export const requests = handleActions(
   {
@@ -13,7 +14,9 @@ export const requests = handleActions(
         ...state,
         [selectorKey]: {
           ...state[selectorKey],
-          [R.toLower(payload.method)]: REQUEST_PENDING
+          [prettifyMethod(payload.method)]: {
+            status: REQUEST_PENDING
+          }
         }
       }
     },
@@ -24,7 +27,10 @@ export const requests = handleActions(
         ...state,
         [selectorKey]: {
           ...state[selectorKey],
-          [R.toLower(payload.method)]: REQUEST_SUCCESS
+          [prettifyMethod(payload.method)]: {
+            status: REQUEST_SUCCESS,
+            footprint: payload.footprint
+          }
         }
       }
     },
@@ -35,7 +41,9 @@ export const requests = handleActions(
         ...state,
         [selectorKey]: {
           ...state[selectorKey],
-          [R.toLower(payload.method)]: REQUEST_REJECTED
+          [prettifyMethod(payload.method)]: {
+            status: REQUEST_REJECTED
+          }
         }
       }
     },
@@ -69,9 +77,11 @@ export const data = handleActions(
     [CLEAR_API_STATE]: R.always({}),
 
     [REQUEST_REJECTED]: (state, { payload }) => {
-      if (payload.method.toLowerCase() === 'get') {
-        unset(state, payload.selectorKey)
-      }
+      if (prettifyMethod(payload.method) === 'get')
+        state = {
+          ...state,
+          ...unset(state, payload.selectorKey)
+        }
       return state
     }
   },
