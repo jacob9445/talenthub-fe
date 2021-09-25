@@ -27,7 +27,7 @@ const TeamManager = ({ match: { path } }) => {
       <Route path={`${path}/profiles`} component={Profile} />
       <Route path={`${path}/projects`} component={Project} />
       <Route path={`${path}/users`} component={User} />
-      <Route path={`${path}/logging`} component={Logging} />
+      <Route path={`${path}/logging/:interval?`} component={Logging} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
       <Route path={`${path}/financial-reports`} component={FinancialReports} />
