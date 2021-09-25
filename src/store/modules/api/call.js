@@ -67,7 +67,6 @@ const createApiCallSaga = ({
     const selectorKey = typeof selectorKeyOrFunc === 'function' ? selectorKeyOrFunc(payload) : selectorKeyOrFunc
 
     const reqFootprint = footprintKeys ? R.pick(footprintKeys, payload) : null
-
     if (useCache && prettifyMethod(method) === 'get') {
       const previousFootprintSelector = createRequestFootprintSelector(requestSelectorKey || selectorKey)
       const prevReqFootprint = yield select(previousFootprintSelector)

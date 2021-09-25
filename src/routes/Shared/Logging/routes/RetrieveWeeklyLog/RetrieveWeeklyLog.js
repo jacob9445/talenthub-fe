@@ -34,7 +34,7 @@ const RetrieveWeeklyLog = ({ retrieveWeeklyLog, weeklyLog, weeklyLogIsLoading, m
     return <Spinner />
   } else {
     return weeklyLog ? (
-      <Redirect to={`/admin/logging/weekly/${weeklyLog.id}`} />
+      <Redirect to={`/${URL_PREFIXES[me.role]}/logging/weekly/${weeklyLog.id}`} />
     ) : (
       <LogDetail logDetail={weeklyLog} onGoBack={handleGoBack} />
     )

@@ -47,7 +47,8 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
       params: {
         pagination,
         owner
-      }
+      },
+      useCache: true
     })
   }, [getWeeklyLogs, me.role, selectedYear, selectedWeek, pagination, queryObj])
 
