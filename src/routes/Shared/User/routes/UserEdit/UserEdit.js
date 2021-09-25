@@ -3,7 +3,7 @@ import { compose } from 'ramda'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
-import { pick, get } from 'lodash'
+import { path, pick } from 'ramda'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { Grid } from '@material-ui/core'
@@ -28,8 +28,8 @@ const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDeta
     return !userDetail
       ? values
       : {
-          ...pick(userDetail, ['first_name', 'last_name', 'email', 'role']),
-          team: get(userDetail, 'team.id')
+          ...pick(['first_name', 'last_name', 'email', 'role'], userDetail),
+          team: path(['team', 'id'], userDetail)
         }
   }, [userDetail])
 
