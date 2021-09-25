@@ -3,12 +3,12 @@ import { Redirect, Switch, Route } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Transaction from 'routes/Shared/Transaction'
-import TeamReportList from 'routes/Admin/routes/Reports/routes/TeamReportList'
+import MyTeamReportList from 'routes/TeamManager/routes/FinancialReports/routes/MyTeamReportList'
 
 const Reports = ({ match: { path } }) => (
   <Switch>
     <Route path={`${path}/transactions`} component={Transaction} />
-    <Route path={`${path}/my-team-reports`} component={TeamReportList} />
+    <Route path={`${path}/my-team-reports`} component={MyTeamReportList} />
     <Redirect to={`${path}/transactions`} />
   </Switch>
 )
