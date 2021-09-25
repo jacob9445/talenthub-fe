@@ -34,7 +34,7 @@ const RetrieveMonthlyLog = ({ retrieveMonthlyLog, monthlyLog, monthlyLogIsLoadin
     return <Spinner />
   } else {
     return monthlyLog ? (
-      <Redirect to={`/admin/logging/monthly/${monthlyLog.id}`} />
+      <Redirect to={`/${URL_PREFIXES[me.role]}/logging/monthly/${monthlyLog.id}`} />
     ) : (
       <LogDetail logDetail={monthlyLog} onGoBack={handleGoBack} />
     )

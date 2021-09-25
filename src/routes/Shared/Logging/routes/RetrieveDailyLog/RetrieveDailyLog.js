@@ -33,7 +33,7 @@ const RetrieveDailyLog = ({ retrieveDailyLog, isDailyLogLoading, dailyLog, me, l
     return <Spinner />
   } else {
     return dailyLog ? (
-      <Redirect to={`/admin/logging/daily/${dailyLog.id}`} />
+      <Redirect to={`/${URL_PREFIXES[me.role]}/logging/daily/${dailyLog.id}`} />
     ) : (
       <LogDetail logDetail={dailyLog} onGoBack={handleGoBack} />
     )
