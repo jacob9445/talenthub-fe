@@ -3,7 +3,6 @@ import { compose } from 'ramda'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
-import { pick, get } from 'lodash'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -25,8 +24,7 @@ const TeamEdit = ({ match: { params }, getTeamDetail, teamDetail, updateTeamAndR
           name: ''
         }
       : {
-          ...pick(teamDetail, ['name']),
-          team: get(teamDetail, 'team.id')
+          name: teamDetail.name
         }
   }, [teamDetail])
 

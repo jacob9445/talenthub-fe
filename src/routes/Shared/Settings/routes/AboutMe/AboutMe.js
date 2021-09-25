@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router'
 import { Formik } from 'formik'
 import { Grid } from '@material-ui/core'
-import { pick } from 'lodash'
+import { pick } from 'ramda'
 import * as Yup from 'yup'
 import PropTypes from 'prop-types'
 
@@ -41,9 +41,7 @@ const AboutMe = ({ authUpdateMe, showMessage, me }) => {
           last_name: '',
           email: ''
         }
-      : {
-          ...pick(me, ['first_name', 'last_name', 'email'])
-        }
+      : pick(['first_name', 'last_name', 'email'], me)
   }, [me])
 
   const validationSchema = Yup.object().shape({

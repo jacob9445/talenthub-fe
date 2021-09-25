@@ -1,4 +1,3 @@
-import unset from 'lodash/unset'
 import * as R from 'ramda'
 import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
@@ -77,12 +76,9 @@ export const data = handleActions(
     [CLEAR_API_STATE]: R.always({}),
 
     [REQUEST_REJECTED]: (state, { payload }) => {
-      if (prettifyMethod(payload.method) === 'get')
-        state = {
-          ...state,
-          ...unset(state, payload.selectorKey)
-        }
-      return state
+      if (prettifyMethod(payload.method) === 'get') {
+        return R.dissocPath(R.split('.', payload.selectorKey), state)
+      }
     }
   },
   {}
