@@ -8,7 +8,7 @@ import { weeklyLogDetailSelector, getWeeklyLogDetail } from 'store/modules/loggi
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
-const WeeklyLogDetail = ({ getWeeklyLogDetail, weeklyLogDetail, me, location, history, match }) => {
+const WeeklyLogDetail = ({ getWeeklyLogDetail, weeklyLogDetail, me, location, history, match, interval }) => {
   const {
     params: { id }
   } = match
@@ -19,12 +19,11 @@ const WeeklyLogDetail = ({ getWeeklyLogDetail, weeklyLogDetail, me, location, hi
       useCache: true
     })
   }, [getWeeklyLogDetail, me.role, id])
-
   const handleGoBack = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/weekly/`)
   }, [location, history, me.role])
 
-  return <LogDetail logDetail={weeklyLogDetail} onGoBack={handleGoBack} />
+  return <LogDetail logDetail={weeklyLogDetail} onGoBack={handleGoBack} interval={interval} />
 }
 
 const actions = {

@@ -8,7 +8,7 @@ import { monthlyLogDetailSelector, getMonthlyLogDetail } from 'store/modules/log
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 
-const MonthlyLogDetail = ({ getMonthlyLogDetail, monthlyLogDetail, me, location, history, match }) => {
+const MonthlyLogDetail = ({ getMonthlyLogDetail, monthlyLogDetail, me, location, history, match, interval }) => {
   const {
     params: { id }
   } = match
@@ -22,8 +22,7 @@ const MonthlyLogDetail = ({ getMonthlyLogDetail, monthlyLogDetail, me, location,
   const handleGoBack = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/monthly/`)
   }, [location, history, me.role])
-
-  return <LogDetail logDetail={monthlyLogDetail} onGoBack={handleGoBack} />
+  return <LogDetail logDetail={monthlyLogDetail} onGoBack={handleGoBack} interval={interval} />
 }
 
 const actions = {

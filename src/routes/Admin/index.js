@@ -29,7 +29,7 @@ const Admin = ({ match: { path } }) => {
       <Route path={`${path}/projects`} component={Project} />
       <Route path={`${path}/users`} component={User} />
       <Route path={`${path}/teams`} component={Team} />
-      <Route path={`${path}/logging`} component={Logging} />
+      <Route path={`${path}/logging/:interval?`} component={Logging} />
       <Route path={`${path}/my-logs`} component={MyLogs} />
       <Route path={`${path}/settings`} component={Settings} />
       <Route path={`${path}/financial-reports`} component={FinancialReports} />

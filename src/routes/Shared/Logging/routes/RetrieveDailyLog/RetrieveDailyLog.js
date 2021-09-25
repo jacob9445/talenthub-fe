@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -10,12 +10,23 @@ import { dailyLogDetailSelector, dailyLogStatusLoadingSelector, retrieveDailyLog
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
+import { shouldRedirect } from '../utils'
 
-const RetrieveDailyLog = ({ retrieveDailyLog, isDailyLogLoading, dailyLog, me, location, history, match }) => {
+const RetrieveDailyLog = ({
+  retrieveDailyLog,
+  isDailyLogLoading,
+  dailyLog,
+  me,
+  location,
+  history,
+  match,
+  interval
+}) => {
   const {
     params: { year, month, day, userId }
   } = match
   const selectedDate = format(new Date(year, month - 1, day), 'yyyy-MM-dd') || format(new Date(), 'yyyy-MM-dd')
+
   useEffect(() => {
     retrieveDailyLog({
       date: selectedDate,
@@ -32,10 +43,10 @@ const RetrieveDailyLog = ({ retrieveDailyLog, isDailyLogLoading, dailyLog, me, l
   if (isDailyLogLoading) {
     return <Spinner />
   } else {
-    return dailyLog ? (
+    return dailyLog && shouldRedirect(dailyLog, year, month, null, day, userId) ? (
       <Redirect to={`/${URL_PREFIXES[me.role]}/logging/daily/${dailyLog.id}`} />
     ) : (
-      <LogDetail logDetail={dailyLog} onGoBack={handleGoBack} />
+      <LogDetail logDetail={dailyLog} onGoBack={handleGoBack} interval={interval} />
     )
   }
 }
