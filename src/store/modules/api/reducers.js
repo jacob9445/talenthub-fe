@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
 
 import { REQUEST_SUCCESS, REQUEST_REJECTED, REQUEST_PENDING, SET_API_DATA, CLEAR_API_STATE } from './types'
-import { prettifyMethod } from 'helpers/utils'
+import { prettifyMethod, getPathArray } from 'helpers/utils'
 
 export const requests = handleActions(
   {
@@ -52,26 +52,13 @@ export const requests = handleActions(
   {}
 )
 
-const deepSetWith = (state, path, data) => {
-  if (!path) return data
-  const pathArray = path.split('.')
-  const [firstKey, ...remaining] = pathArray
-
-  return {
-    ...state,
-    [firstKey]: deepSetWith(state[firstKey], remaining.join('.'), data)
-  }
-}
-
 export const data = handleActions(
   {
-    [REQUEST_SUCCESS]: (state, { payload }) => {
-      return deepSetWith(state, payload.selectorKey, payload.data)
-    },
+    [REQUEST_SUCCESS]: (state, { payload }) =>
+      payload.selectorKey ? R.assocPath(getPathArray(payload.selectorKey), payload.data, state) : state,
 
-    [SET_API_DATA]: (state, { payload }) => {
-      return deepSetWith(state, payload.selectorKey, payload.data)
-    },
+    [SET_API_DATA]: (state, { payload }) =>
+      payload.selectorKey ? R.assocPath(getPathArray(payload.selectorKey), payload.data, state) : state,
 
     [CLEAR_API_STATE]: R.always({}),
 
