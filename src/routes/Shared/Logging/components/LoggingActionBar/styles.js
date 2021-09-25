@@ -16,5 +16,16 @@ export default makeStyles(theme => ({
     margin: theme.spacing.unit,
     minWidth: 40,
     textAlign: 'center'
+  },
+  userSelect: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(3)
+  },
+  selectComponent: {
+    width: '100%'
+  },
+  datePick: {
+    padding: theme.spacing(3)
   }
 }))
