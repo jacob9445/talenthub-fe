@@ -3,13 +3,18 @@ import { Button, Grid } from '@material-ui/core'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import { DatePicker } from 'material-ui-pickers'
+import { format } from 'date-fns'
 import { withRouter } from 'react-router-dom'
-import DatePicker from 'components/DatePicker'
 import PropTypes from 'prop-types'
 import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 
-import { myReportSelector, myReportLoadingSelector, getMyReport } from 'store/modules/report'
+import {
+  getSelfFinancialReport,
+  selfFinancialReportLoadingSelector,
+  selfFinancialReportSelector
+} from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
 import MyReportTable from '../../components/MyReportTable'
@@ -19,7 +24,7 @@ import withPaginationInfo from 'hocs/withPaginationInfo'
 
 const MyReportList = ({
   myReport,
-  getMyReport,
+  getSelfFinancialReport,
   isMyReportLoading,
   pagination,
   onChangePage,
@@ -27,10 +32,6 @@ const MyReportList = ({
   location,
   history
 }) => {
-  const [showCustom, setShowCustom] = useState(0)
-  const [filterFrom, setFilterFrom] = useState(null)
-  const [filterTo, setFilterTo] = useState(null)
-  const classes = useStyles()
   const queryObj = useMemo(
     () => ({
       period: 'this-month',
@@ -39,27 +40,33 @@ const MyReportList = ({
     [location.search]
   )
 
+  const initialShowCustom = queryObj.period === 'custom' ? 1 : 0
+  const [showCustom, setShowCustom] = useState(initialShowCustom)
+  const [filterFrom, setFilterFrom] = useState(queryObj.from)
+  const [filterTo, setFilterTo] = useState(queryObj.to)
+  const classes = useStyles()
+
   useEffect(() => {
     const { from, to, period } = queryObj
     if (!from && period !== 'custom') {
-      getMyReport({
-        period,
+      getSelfFinancialReport({
         params: {
+          period,
           pagination
         }
       })
     }
     if (from) {
-      getMyReport({
-        period,
+      getSelfFinancialReport({
         params: {
+          period,
           ...pagination,
           from,
           to
         }
       })
     }
-  }, [getMyReport, pagination, queryObj])
+  }, [getSelfFinancialReport, pagination, queryObj])
 
   const handlePeriodChange = useCallback(
     event => {
@@ -88,22 +95,28 @@ const MyReportList = ({
     [history, location.search]
   )
 
-  const handleFromChange = useCallback(event => {
-    setFilterFrom(event.target.value)
-  }, [])
+  const handleFromChange = useCallback(
+    date => {
+      setFilterFrom(format(date, 'yyyy-MM-dd'))
+    },
+    [setFilterFrom]
+  )
 
-  const handleToChange = useCallback(event => {
-    setFilterTo(event.target.value)
-  }, [])
+  const handleToChange = useCallback(
+    date => {
+      setFilterTo(format(date, 'yyyy-MM-dd'))
+    },
+    [setFilterTo]
+  )
 
   const handleFilter = useCallback(() => {
     if (!filterFrom || !filterTo) {
       alert('Select date range!')
     } else {
-      const { period, page, page_size } = parseQueryString(location.search)
+      const { page, page_size } = parseQueryString(location.search)
       history.push({
         search: jsonToQueryString({
-          period,
+          period: 'custom',
           from: filterFrom,
           to: filterTo,
           page,
@@ -128,8 +141,20 @@ const MyReportList = ({
             />
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
-                <DatePicker label="From" onChange={handleFromChange} id="from" />
-                <DatePicker label="To" onChange={handleToChange} id="to" />
+                <DatePicker
+                  className={classes.datePicker}
+                  label="From"
+                  onChange={handleFromChange}
+                  id="from"
+                  value={filterFrom}
+                />
+                <DatePicker
+                  className={classes.datePicker}
+                  label="To"
+                  onChange={handleToChange}
+                  id="to"
+                  value={filterTo}
+                />
                 <Button variant="contained" color="primary" onClick={handleFilter}>
                   Filter
                 </Button>
@@ -137,7 +162,7 @@ const MyReportList = ({
             ) : null}
             {myReport ? (
               <MyReportTable
-                data={myReport.results[0]}
+                data={myReport[0]}
                 pagination={pagination}
                 onChangePage={onChangePage}
                 onChangeRowsPerPage={onChangeRowsPerPage}
@@ -151,17 +176,17 @@ const MyReportList = ({
 }
 
 const actions = {
-  getMyReport
+  getSelfFinancialReport
 }
 
 const selector = createStructuredSelector({
-  myReport: myReportSelector,
-  isMyReportLoading: myReportLoadingSelector
+  myReport: selfFinancialReportSelector,
+  isMyReportLoading: selfFinancialReportLoadingSelector
 })
 
 MyReportList.propTypes = {
-  myReport: PropTypes.object,
-  getMyReport: PropTypes.func.isRequired,
+  myReport: PropTypes.array,
+  getSelfFinancialReport: PropTypes.func.isRequired,
   isMyReportLoading: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,

@@ -24,6 +24,7 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
     },
     [history, role]
   )
+  console.log({ data })
   if (data) {
     return (
       <Table className="mb-0">

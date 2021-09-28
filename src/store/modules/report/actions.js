@@ -1,7 +1,15 @@
 import { createAction } from 'redux-actions'
 import * as Types from './types'
 
-export const getIndividualReport = createAction(Types.GET_INDIVIDUALREPORT)
-export const getMyReport = createAction(Types.GET_MY_REPORT)
-export const getTeamReport = createAction(Types.GET_TEAMREPORT)
-export const getMyTeamReports = createAction(Types.GET_MY_TEAM_REPORTS)
+//for only admins
+export const getTeamsEarningReport = createAction(Types.GET_TEAMS_EARNING_REPORT)
+export const getSelectedTeamEarningReport = createAction(Types.GET_SELECTED_TEAM_EARNING_REPORT)
+//for both admins and team-managers
+export const getTotalEarningReport = createAction(Types.GET_TOTAL_EARNING_REPORT)
+export const getDevelopersEarningReport = createAction(Types.GET_DEVELOPERS_EARNING_REPORT)
+export const getIndividualDeveloperEarningReport = createAction(Types.GET_INDIVIDUAL_DEVELOPER_EARNING_REPORT)
+export const getIndividualDeveloperProjectEarningReport = createAction(
+  Types.GET_INDIVIDUAL_DEVELOPER_PROJECT_EARNING_REPORT
+)
+//for only developers
+export const getSelfFinancialReport = createAction(Types.GET_SELF_FINANCIAL_REPORT)

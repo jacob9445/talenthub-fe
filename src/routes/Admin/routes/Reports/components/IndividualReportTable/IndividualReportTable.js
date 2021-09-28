@@ -1,45 +1,60 @@
 import React, { useCallback } from 'react'
-import { Table, TableRow, TableHead, TableBody, TableCell, TablePagination, TableFooter } from '@material-ui/core'
-import PropTypes from 'prop-types'
-import { show } from 'redux-modal'
 import { connect } from 'react-redux'
 import { FormattedNumber } from 'react-intl'
+import { show } from 'redux-modal'
+import { Table, TableRow, TableHead, TableBody, TableCell, TablePagination, TableFooter } from '@material-ui/core'
+import PropTypes from 'prop-types'
 
-import Spinner from 'components/Spinner'
 import useStyles from './styles'
-import { ListDataType } from 'helpers/prop-types'
-import { getFullName } from 'helpers/utils'
+import Spinner from 'components/Spinner'
 
-function IndividualReportTable({ data, show, pagination, onChangePage, onChangeRowsPerPage, period }) {
+function IndividualReportTable({
+  totalEarning,
+  developersEarning,
+  show,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage,
+  period
+}) {
   const columns = ['Full Name', 'Earning']
   const classes = useStyles()
-  const getResults = useCallback(id => data.results.find((value, index, array) => array[index].id === id), [data])
+
   const handleRowClick = useCallback(
-    id => () => {
+    id => {
       show('IndividualReportModal', {
-        project_earning: getResults(id).project_earnings,
-        developer: getFullName(getResults(id)),
-        earning: getResults(id).earning,
-        period
+        developerId: id,
+        selectedPeriod: period
       })
     },
-    [show, getResults, period]
+    [show, period]
   )
-
-  if (data) {
+  if (totalEarning && developersEarning) {
     return (
       <Table className="mb-0">
         <TableHead>
           <TableRow>
+            <TableCell>
+              <strong>Total Earning</strong>
+            </TableCell>
+            <TableCell>
+              <strong>
+                <FormattedNumber format="currency" value={totalEarning.total_earnings} />
+              </strong>
+            </TableCell>
+          </TableRow>
+          <TableRow>
             {columns.map(key => (
-              <TableCell key={key}>{key}</TableCell>
+              <TableCell key={key}>
+                <strong> {key} </strong>
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results
-            ? data.results.map(({ id, first_name, last_name, earning }) => (
-                <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
+          {developersEarning
+            ? developersEarning.results.map(({ id, first_name, last_name, earning }) => (
+                <TableRow key={id} hover onClick={() => handleRowClick(id)} className={classes.tableRow}>
                   <TableCell>{`${first_name} ${last_name}`}</TableCell>
                   <TableCell>
                     <FormattedNumber format="currency" value={earning} />
@@ -52,7 +67,7 @@ function IndividualReportTable({ data, show, pagination, onChangePage, onChangeR
           <TableRow>
             <TablePagination //This pagination is zero-based.
               rowsPerPageOptions={[2, 5, 10, 25]}
-              count={data.count}
+              count={developersEarning.count}
               rowsPerPage={pagination.page_size}
               page={pagination.page - 1}
               onChangePage={onChangePage}
@@ -72,7 +87,8 @@ const actions = {
 }
 
 IndividualReportTable.propTypes = {
-  data: ListDataType,
+  totalEarning: PropTypes.object,
+  developersEarning: PropTypes.object,
   show: PropTypes.func.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,

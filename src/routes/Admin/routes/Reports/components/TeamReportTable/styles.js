@@ -6,6 +6,6 @@ export default makeStyles(theme => ({
   },
   totalEarning: {
     marginLeft: theme.spacing(3),
-    marginTop: theme.spacing(2)
+    marginBottom: theme.spacing(2)
   }
 }))

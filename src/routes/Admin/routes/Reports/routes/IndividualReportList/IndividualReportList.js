@@ -1,39 +1,46 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react'
-import { Grid, Button } from '@material-ui/core'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import { Grid, Button } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
-import DatePicker from 'components/DatePicker'
+import { DatePicker } from 'material-ui-pickers'
+import { format } from 'date-fns'
 import PropTypes from 'prop-types'
-import Spinner from 'components/Spinner'
-import Widget from 'components/Widget'
 
-import { individualReportSelector, getIndividualReport, individualReportLoadingSelector } from 'store/modules/report'
-import IndividualReportTable from '../../components/IndividualReportTable'
-import { periodOptions } from 'config/constants'
-import SimpleSelect from 'components/SimpleSelect'
-import withPaginationInfo from 'hocs/withPaginationInfo'
-import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import {
+  developersEarningLoadingSelector,
+  developersEarningSelector,
+  getDevelopersEarningReport,
+  getTotalEarningReport,
+  totalEarningLoadingSelector,
+  totalEarningSelector
+} from 'store/modules/report'
 import { getTeams, teamsSelector } from 'store/modules/team'
+import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import { periodOptions } from 'config/constants'
+import IndividualReportTable from '../../components/IndividualReportTable'
+import SimpleSelect from 'components/SimpleSelect'
+import Spinner from 'components/Spinner'
 import useStyles from './styles'
+import Widget from 'components/Widget'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
 const IndividualReportList = ({
   teams,
+  totalEarning,
+  totalEarningLoading,
+  developersEarning,
+  developersEarningLoading,
   getTeams,
-  individualReport,
-  getIndividualReport,
-  isIndividualReportLoading,
+  getTotalEarningReport,
+  getDevelopersEarningReport,
   pagination,
   onChangePage,
   onChangeRowsPerPage,
   location,
   history
 }) => {
-  const [showCustom, setShowCustom] = useState(0)
-  const [filterFrom, setFilterFrom] = useState(null)
-  const [filterTo, setFilterTo] = useState(null)
-  const classes = useStyles()
   const queryObj = useMemo(
     () => ({
       period: 'this-month',
@@ -42,30 +49,48 @@ const IndividualReportList = ({
     [location.search]
   )
 
+  const initialShowCustom = queryObj.period === 'custom' ? 1 : 0
+  const [showCustom, setShowCustom] = useState(initialShowCustom)
+  const [filterFrom, setFilterFrom] = useState(queryObj.from)
+  const [filterTo, setFilterTo] = useState(queryObj.to)
+  const classes = useStyles()
+
   useEffect(() => {
     const { from, to, team = 'all', period } = queryObj
     if (!from && period !== 'custom') {
-      getIndividualReport({
-        period,
+      getDevelopersEarningReport({
         params: {
+          period,
           team: team === 'all' ? undefined : team,
           pagination
         }
       })
+      getTotalEarningReport({
+        params: {
+          period
+        }
+      })
     }
     if (from) {
-      getIndividualReport({
-        period,
+      getDevelopersEarningReport({
         params: {
+          period,
           team: team === 'all' ? undefined : team,
           pagination,
           from,
           to
         }
       })
+      getTotalEarningReport({
+        params: {
+          period,
+          from,
+          to
+        }
+      })
     }
     getTeams()
-  }, [getIndividualReport, getTeams, pagination, queryObj])
+  }, [getDevelopersEarningReport, getTotalEarningReport, getTeams, pagination, queryObj])
 
   const teamOptions = useMemo(
     () => [
@@ -130,12 +155,12 @@ const IndividualReportList = ({
     [history, queryObj]
   )
 
-  const handleFromChange = useCallback(event => {
-    setFilterFrom(event.target.value)
+  const handleFromChange = useCallback(date => {
+    setFilterFrom(format(date, 'yyyy-MM-dd'))
   }, [])
 
-  const handleToChange = useCallback(event => {
-    setFilterTo(event.target.value)
+  const handleToChange = useCallback(date => {
+    setFilterTo(format(date, 'yyyy-MM-dd'))
   }, [])
 
   const handleFilter = useCallback(() => {
@@ -155,7 +180,7 @@ const IndividualReportList = ({
     }
   }, [filterFrom, filterTo, queryObj, history])
 
-  if (isIndividualReportLoading) {
+  if (totalEarningLoading || developersEarningLoading) {
     return <Spinner />
   } else {
     return (
@@ -186,15 +211,28 @@ const IndividualReportList = ({
             }>
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
-                <DatePicker label="From" onChange={handleFromChange} id="from" />
-                <DatePicker label="To" onChange={handleToChange} id="to" />
+                <DatePicker
+                  className={classes.datePicker}
+                  label="From"
+                  onChange={handleFromChange}
+                  value={filterFrom}
+                  id="from"
+                />
+                <DatePicker
+                  className={classes.datePicker}
+                  label="To"
+                  onChange={handleToChange}
+                  value={filterTo}
+                  id="to"
+                />
                 <Button variant="contained" color="primary" onClick={handleFilter}>
                   Filter
                 </Button>
               </div>
             ) : null}
             <IndividualReportTable
-              data={individualReport}
+              totalEarning={totalEarning}
+              developersEarning={developersEarning}
               pagination={pagination}
               onChangePage={onChangePage}
               onChangeRowsPerPage={onChangeRowsPerPage}
@@ -208,27 +246,33 @@ const IndividualReportList = ({
 }
 
 const actions = {
-  getIndividualReport,
-  getTeams
+  getTeams,
+  getTotalEarningReport,
+  getDevelopersEarningReport
 }
 
 const selector = createStructuredSelector({
   teams: teamsSelector,
-  individualReport: individualReportSelector,
-  isIndividualReportLoading: individualReportLoadingSelector
+  totalEarning: totalEarningSelector,
+  totalEarningLoading: totalEarningLoadingSelector,
+  developersEarning: developersEarningSelector,
+  developersEarningLoading: developersEarningLoadingSelector
 })
 
 IndividualReportList.propTypes = {
-  team: PropTypes.object,
   getTeams: PropTypes.func.isRequired,
-  individualReport: PropTypes.object,
-  getIndividualReport: PropTypes.func.isRequired,
-  isIndividualReportLoading: PropTypes.bool.isRequired,
+  getTotalEarningReport: PropTypes.func.isRequired,
+  getDevelopersEarningReport: PropTypes.func.isRequired,
+  teams: PropTypes.array,
+  totalEarning: PropTypes.object,
+  totalEarningLoading: PropTypes.bool.isRequired,
+  developersEarning: PropTypes.object,
+  developersEarningLoading: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,
-  onChangeRowsPerPage: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  onChangeRowsPerPage: PropTypes.func.isRequired
 }
 
 export default compose(withRouter, withPaginationInfo, connect(selector, actions))(IndividualReportList)
