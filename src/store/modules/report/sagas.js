@@ -3,50 +3,84 @@ import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
 
-const getIndividualReport = createApiCallSaga({
-  type: Types.GET_INDIVIDUALREPORT,
+//for only admins
+const getTeamsEarningReport = createApiCallSaga({
+  type: Types.GET_TEAMS_EARNING_REPORT,
   method: 'GET',
-  path: function*({ payload }) {
-    return yield roleBasedPath(`reports/developer/${payload.period}/`)
-  },
-  selectorKey: 'individualReport',
-  allowedParamKeys: ['page', 'page_size', 'from', 'to', 'team']
+  path: 'api/admin/report/earnings/teams/',
+  selectorKey: 'teamsEarning',
+  allowedParamKeys: ['period', 'from', 'to']
 })
 
-const getMyReport = createApiCallSaga({
-  type: Types.GET_MY_REPORT,
+const getSelectedTeamEarningReport = createApiCallSaga({
+  type: Types.GET_SELECTED_TEAM_EARNING_REPORT,
   method: 'GET',
   path: function*({ payload }) {
-    return yield roleBasedPath(`reports/${payload.period}/`)
+    return yield `api/admin/report/earnings/teams/${payload.teamId}/`
   },
-  selectorKey: 'myReport',
-  allowedParamKeys: ['page', 'page_size', 'from', 'to']
+  selectorKey: 'selectedTeamEarning',
+  allowedParamKeys: ['period', 'from', 'to']
 })
 
-const getTeamReport = createApiCallSaga({
-  type: Types.GET_TEAMREPORT,
+//for both admins and team-managers
+const getTotalEarningReport = createApiCallSaga({
+  type: Types.GET_TOTAL_EARNING_REPORT,
   method: 'GET',
   path: function*({ payload }) {
-    return yield roleBasedPath(`reports/team/${payload.period}/`)
+    return yield roleBasedPath(`report/earnings/total/`)
   },
-  selectorKey: 'teamReport',
-  allowedParamKeys: ['from', 'to']
+  selectorKey: 'totalEarning',
+  allowedParamKeys: ['period', 'from', 'to']
 })
 
-const getMyTeamReports = createApiCallSaga({
-  type: Types.GET_MY_TEAM_REPORTS,
+const getDevelopersEarningReport = createApiCallSaga({
+  type: Types.GET_DEVELOPERS_EARNING_REPORT,
   method: 'GET',
   path: function*({ payload }) {
-    return yield roleBasedPath(`reports/${payload.period}/`)
+    return yield roleBasedPath(`report/earnings/developers/`)
   },
-  selectorKey: 'myTeamReports',
-  allowedParamKeys: ['page', 'page_size', 'from', 'to']
+  selectorKey: 'developersEarning',
+  allowedParamKeys: ['page', 'page_size', 'period', 'from', 'to', 'team']
+})
+
+const getIndividualDeveloperEarningReport = createApiCallSaga({
+  type: Types.GET_INDIVIDUAL_DEVELOPER_EARNING_REPORT,
+  method: 'GET',
+  path: function*({ payload }) {
+    return yield roleBasedPath(`report/earnings/developers/${payload.developerId}/`)
+  },
+  selectorKey: 'individualDeveloperEarning',
+  allowedParamKeys: ['period', 'from', 'to']
+})
+
+const getIndividualDeveloperProjectEarningReport = createApiCallSaga({
+  type: Types.GET_INDIVIDUAL_DEVELOPER_PROJECT_EARNING_REPORT,
+  method: 'GET',
+  path: function*({ payload }) {
+    return yield roleBasedPath(`report/earnings/developers/${payload.developerId}/projects/`)
+  },
+  selectorKey: 'individualDeveloperProjectEarning',
+  allowedParamKeys: ['period', 'from', 'to']
+})
+
+//for only developers
+const getSelfFinancialReport = createApiCallSaga({
+  type: Types.GET_SELF_FINANCIAL_REPORT,
+  method: 'GET',
+  path: 'api/developer/report/earnings/',
+  selectorKey: 'selfFinancialReport',
+  allowedParamKeys: ['period', 'from', 'to']
 })
 
 export default function* rootSaga() {
-  yield takeLatest(Types.GET_INDIVIDUALREPORT, getIndividualReport)
-  yield takeLatest(Types.GET_MY_REPORT, getMyReport)
-  yield takeLatest(Types.GET_TEAMREPORT, getTeamReport)
-  yield takeLatest(Types.GET_MY_TEAM_REPORTS, getMyTeamReports)
-
+  //for only admins
+  yield takeLatest(Types.GET_TEAMS_EARNING_REPORT, getTeamsEarningReport)
+  yield takeLatest(Types.GET_SELECTED_TEAM_EARNING_REPORT, getSelectedTeamEarningReport)
+  //for both admins and team-managers
+  yield takeLatest(Types.GET_TOTAL_EARNING_REPORT, getTotalEarningReport)
+  yield takeLatest(Types.GET_DEVELOPERS_EARNING_REPORT, getDevelopersEarningReport)
+  yield takeLatest(Types.GET_INDIVIDUAL_DEVELOPER_EARNING_REPORT, getIndividualDeveloperEarningReport)
+  yield takeLatest(Types.GET_INDIVIDUAL_DEVELOPER_PROJECT_EARNING_REPORT, getIndividualDeveloperProjectEarningReport)
+  //for only developers
+  yield takeLatest(Types.GET_SELF_FINANCIAL_REPORT, getSelfFinancialReport)
 }

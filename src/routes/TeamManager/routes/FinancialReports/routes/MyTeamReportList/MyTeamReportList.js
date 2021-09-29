@@ -1,36 +1,43 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react'
-import { Grid, Button } from '@material-ui/core'
-import { createStructuredSelector } from 'reselect'
-import { connect } from 'react-redux'
 import { compose } from 'redux'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+import { Grid, Button } from '@material-ui/core'
+import { format } from 'date-fns'
 import { withRouter } from 'react-router-dom'
+import { DatePicker } from 'material-ui-pickers'
+import PropTypes from 'prop-types'
 
-import Widget from 'components/Widget'
-import Spinner from 'components/Spinner'
-import DatePicker from 'components/DatePicker'
-import { periodOptions } from 'config/constants'
-import SimpleSelect from 'components/SimpleSelect'
-import withPaginationInfo from 'hocs/withPaginationInfo'
+import {
+  developersEarningLoadingSelector,
+  developersEarningSelector,
+  getDevelopersEarningReport,
+  getTotalEarningReport,
+  totalEarningLoadingSelector,
+  totalEarningSelector
+} from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import { periodOptions } from 'config/constants'
 import IndividualReportTable from 'routes/Admin/routes/Reports/components/IndividualReportTable'
-import { myTeamReportSelector, getMyTeamReports, myTeamReportLoadingSelector } from 'store/modules/report'
+import SimpleSelect from 'components/SimpleSelect'
+import Spinner from 'components/Spinner'
 import useStyles from './styles'
+import Widget from 'components/Widget'
+import withPaginationInfo from 'hocs/withPaginationInfo'
 
 const MyTeamReportList = ({
-  myTeamReports,
-  getMyTeamReports,
-  isMyTeamReportLoading,
+  totalEarning,
+  isTotalEarningLoading,
+  developersEarning,
+  isDevelopersEarningLoading,
+  getDevelopersEarningReport,
+  getTotalEarningReport,
   pagination,
   onChangePage,
   onChangeRowsPerPage,
   location,
   history
 }) => {
-  const [showCustom, setShowCustom] = useState(false)
-  const [filterFrom, setFilterFrom] = useState(null)
-  const [filterTo, setFilterTo] = useState(null)
-  const classes = useStyles()
   const queryObj = useMemo(
     () => ({
       period: 'this-month',
@@ -38,26 +45,45 @@ const MyTeamReportList = ({
     }),
     [location.search]
   )
+  const initialShowCustom = queryObj.period === 'custom' ? 1 : 0
+  const [showCustom, setShowCustom] = useState(initialShowCustom)
+  const [filterFrom, setFilterFrom] = useState(queryObj.from)
+  const [filterTo, setFilterTo] = useState(queryObj.to)
+  const classes = useStyles()
 
   useEffect(() => {
     const { from, to, period } = queryObj
     if (!from && period !== 'custom') {
-      getMyTeamReports({
-        period,
-        params: pagination
+      getDevelopersEarningReport({
+        params: {
+          period,
+          pagination
+        }
+      })
+      getTotalEarningReport({
+        params: {
+          period
+        }
       })
     }
     if (from) {
-      getMyTeamReports({
-        period,
+      getDevelopersEarningReport({
         params: {
+          period,
           pagination,
           from,
           to
         }
       })
+      getTotalEarningReport({
+        params: {
+          period,
+          from,
+          to
+        }
+      })
     }
-  }, [getMyTeamReports, pagination, queryObj])
+  }, [getDevelopersEarningReport, getTotalEarningReport, pagination, queryObj])
 
   const handleFilter = useCallback(() => {
     if (!filterFrom || !filterTo) {
@@ -66,6 +92,7 @@ const MyTeamReportList = ({
       const { page, page_size } = queryObj
       history.push({
         search: jsonToQueryString({
+          period: 'custom',
           from: filterFrom,
           to: filterTo,
           page,
@@ -100,15 +127,15 @@ const MyTeamReportList = ({
     [history, queryObj]
   )
 
-  const handleFromChange = useCallback(event => {
-    setFilterFrom(event.target.value)
+  const handleFromChange = useCallback(date => {
+    setFilterFrom(format(date, 'yyyy-MM-dd'))
   }, [])
 
-  const handleToChange = useCallback(event => {
-    setFilterTo(event.target.value)
+  const handleToChange = useCallback(date => {
+    setFilterTo(format(date, 'yyyy-MM-dd'))
   }, [])
 
-  if (isMyTeamReportLoading) {
+  if (isTotalEarningLoading || isDevelopersEarningLoading) {
     return <Spinner />
   } else {
     return (
@@ -123,15 +150,28 @@ const MyTeamReportList = ({
             />
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
-                <DatePicker label="From" onChange={handleFromChange} id="from" />
-                <DatePicker label="To" onChange={handleToChange} id="to" />
+                <DatePicker
+                  className={classes.datePicker}
+                  label="From"
+                  onChange={handleFromChange}
+                  id="from"
+                  value={filterFrom}
+                />
+                <DatePicker
+                  className={classes.datePicker}
+                  label="To"
+                  onChange={handleToChange}
+                  id="to"
+                  value={filterTo}
+                />
                 <Button variant="contained" color="primary" onClick={handleFilter}>
                   Filter
                 </Button>
               </div>
             ) : null}
             <IndividualReportTable
-              data={myTeamReports}
+              totalEarning={totalEarning}
+              developersEarning={developersEarning}
               pagination={pagination}
               onChangePage={onChangePage}
               onChangeRowsPerPage={onChangeRowsPerPage}
@@ -145,18 +185,24 @@ const MyTeamReportList = ({
 }
 
 const actions = {
-  getMyTeamReports
+  getTotalEarningReport,
+  getDevelopersEarningReport
 }
 
 const selector = createStructuredSelector({
-  myTeamReports: myTeamReportSelector,
-  isMyTeamReportLoading: myTeamReportLoadingSelector
+  totalEarning: totalEarningSelector,
+  isTotalEarningLoading: totalEarningLoadingSelector,
+  developersEarning: developersEarningSelector,
+  isDevelopersEarningLoading: developersEarningLoadingSelector
 })
 
 MyTeamReportList.propTypes = {
-  myTeamReports: PropTypes.object,
-  getMyTeamReports: PropTypes.func.isRequired,
-  isMyTeamReportLoading: PropTypes.bool.isRequired,
+  getTotalEarningReport: PropTypes.func.isRequired,
+  getDevelopersEarningReport: PropTypes.func.isRequired,
+  totalEarning: PropTypes.object,
+  isTotalEarningLoading: PropTypes.bool.isRequired,
+  developersEarning: PropTypes.object,
+  isDevelopersEarningLoading: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,
   onChangeRowsPerPage: PropTypes.func.isRequired,

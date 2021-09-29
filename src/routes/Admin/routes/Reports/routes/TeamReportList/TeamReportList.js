@@ -1,22 +1,22 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react'
-import { Grid, Button } from '@material-ui/core'
-import { createStructuredSelector } from 'reselect'
-import { connect } from 'react-redux'
 import { compose } from 'redux'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+import { Grid, Button } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import Widget from 'components/Widget'
-import Spinner from 'components/Spinner'
-import DatePicker from 'components/DatePicker'
-import { teamReportSelector, getTeamReport, teamReportLoadingSelector } from 'store/modules/report'
-import TeamReportTable from '../../components/TeamReportTable'
-import { periodOptions } from 'config/constants'
-import SimpleSelect from 'components/SimpleSelect'
+import { getTeamsEarningReport, teamsEarningSelector, teamsEarningLoadingSelector } from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import { periodOptions } from 'config/constants'
+import DatePicker from 'components/DatePicker'
+import SimpleSelect from 'components/SimpleSelect'
+import Spinner from 'components/Spinner'
+import TeamReportTable from '../../components/TeamReportTable'
 import useStyles from './styles'
+import Widget from 'components/Widget'
 
-const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, location, history }) => {
+const TeamReportList = ({ teamsReport, getTeamsEarningReport, isTeamsReportLoading, location, history }) => {
   const [showCustom, setShowCustom] = useState(0)
   const [filterFrom, setFilterFrom] = useState(null)
   const [filterTo, setFilterTo] = useState(null)
@@ -33,19 +33,21 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
   useEffect(() => {
     const { from, to, period } = queryObj
     if (!from) {
-      getTeamReport({
-        period
+      getTeamsEarningReport({
+        params: {
+          period
+        }
       })
     } else {
-      getTeamReport({
-        period: 'custom',
+      getTeamsEarningReport({
         params: {
+          period: 'custom',
           from,
           to
         }
       })
     }
-  }, [getTeamReport, queryObj])
+  }, [getTeamsEarningReport, queryObj])
 
   const handlePeriodChange = useCallback(
     event => {
@@ -85,7 +87,7 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
     }
   }, [filterFrom, filterTo, history])
 
-  if (isTeamReportLoading) {
+  if (isTeamsReportLoading) {
     return <Spinner />
   } else {
     return (
@@ -115,7 +117,7 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
                 </Button>
               </div>
             ) : null}
-            <TeamReportTable data={teamReport} />
+            <TeamReportTable data={teamsReport} />
           </Widget>
         </Grid>
       </Grid>
@@ -124,18 +126,18 @@ const TeamReportList = ({ teamReport, getTeamReport, isTeamReportLoading, locati
 }
 
 const actions = {
-  getTeamReport
+  getTeamsEarningReport
 }
 
 const selector = createStructuredSelector({
-  teamReport: teamReportSelector,
-  isTeamReportLoading: teamReportLoadingSelector
+  teamsReport: teamsEarningSelector,
+  isTeamsReportLoading: teamsEarningLoadingSelector
 })
 
 TeamReportList.propTypes = {
-  teamReport: PropTypes.array,
-  getTeamReport: PropTypes.func.isRequired,
-  isTeamReportLoading: PropTypes.bool.isRequired,
+  teamsReport: PropTypes.array,
+  getTeamsReport: PropTypes.func,
+  isTeamsReportLoading: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired
 }

@@ -4,5 +4,8 @@ export default makeStyles(theme => ({
   dateRangeFilter: {
     display: 'flex',
     alignItems: 'center'
+  },
+  datePicker: {
+    marginRight: theme.spacing(3)
   }
 }))

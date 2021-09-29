@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField'
 
 import useStyles from './styles'
 
-function DatePickers({ label, onChange, id }) {
+function DatePickers({ label, onChange, id, value }) {
   const classes = useStyles()
 
   return (
@@ -16,6 +16,7 @@ function DatePickers({ label, onChange, id }) {
       InputLabelProps={{
         shrink: true
       }}
+      value={value}
       onChange={onChange}
     />
   )
@@ -24,7 +25,8 @@ function DatePickers({ label, onChange, id }) {
 DatePickers.propTypes = {
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  value: PropTypes.string
 }
 
 export default DatePickers
