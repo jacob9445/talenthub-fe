@@ -62,7 +62,7 @@ const IndividualReportList = ({
         params: {
           period,
           team: team === 'all' ? undefined : team,
-          pagination
+          ...pagination
         }
       })
       getTotalEarningReport({
@@ -76,7 +76,7 @@ const IndividualReportList = ({
         params: {
           period,
           team: team === 'all' ? undefined : team,
-          pagination,
+          ...pagination,
           from,
           to
         }
