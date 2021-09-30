@@ -2,10 +2,9 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { Grid, Button } from '@material-ui/core'
-import { format } from 'date-fns'
+import { Grid } from '@material-ui/core'
+import { Formik } from 'formik'
 import { withRouter } from 'react-router-dom'
-import { DatePicker } from 'material-ui-pickers'
 import PropTypes from 'prop-types'
 
 import {
@@ -18,6 +17,7 @@ import {
 } from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
+import DateRangePickerForm, { validationSchema } from 'components/DateRangePickerForm'
 import IndividualReportTable from 'routes/Admin/routes/Reports/components/IndividualReportTable'
 import SimpleSelect from 'components/SimpleSelect'
 import Spinner from 'components/Spinner'
@@ -47,8 +47,6 @@ const MyTeamReportList = ({
   )
   const initialShowCustom = queryObj.period === 'custom' ? 1 : 0
   const [showCustom, setShowCustom] = useState(initialShowCustom)
-  const [filterFrom, setFilterFrom] = useState(queryObj.from)
-  const [filterTo, setFilterTo] = useState(queryObj.to)
   const classes = useStyles()
 
   useEffect(() => {
@@ -85,23 +83,6 @@ const MyTeamReportList = ({
     }
   }, [getDevelopersEarningReport, getTotalEarningReport, pagination, queryObj])
 
-  const handleFilter = useCallback(() => {
-    if (!filterFrom || !filterTo) {
-      alert('Select date range!')
-    } else {
-      const { page, page_size } = queryObj
-      history.push({
-        search: jsonToQueryString({
-          period: 'custom',
-          from: filterFrom,
-          to: filterTo,
-          page,
-          page_size
-        })
-      })
-    }
-  }, [filterFrom, filterTo, queryObj, history])
-
   const handlePeriodChange = useCallback(
     event => {
       const { page, page_size } = queryObj
@@ -127,13 +108,30 @@ const MyTeamReportList = ({
     [history, queryObj]
   )
 
-  const handleFromChange = useCallback(date => {
-    setFilterFrom(format(date, 'yyyy-MM-dd'))
-  }, [])
+  const handleSubmit = useCallback(
+    (formValues, formActions) => {
+      if (!formValues.from || !formValues.to) {
+        return
+      } else {
+        const { page, page_size } = queryObj
+        history.push({
+          search: jsonToQueryString({
+            period: 'custom',
+            from: formValues.from,
+            to: formValues.to,
+            page,
+            page_size
+          })
+        })
+      }
+    },
+    [history, queryObj]
+  )
 
-  const handleToChange = useCallback(date => {
-    setFilterTo(format(date, 'yyyy-MM-dd'))
-  }, [])
+  const initialValues = {
+    from: queryObj.from || null,
+    to: queryObj.to || null
+  }
 
   if (isTotalEarningLoading || isDevelopersEarningLoading) {
     return <Spinner />
@@ -150,23 +148,12 @@ const MyTeamReportList = ({
             />
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
-                <DatePicker
-                  className={classes.datePicker}
-                  label="From"
-                  onChange={handleFromChange}
-                  id="from"
-                  value={filterFrom}
+                <Formik
+                  component={DateRangePickerForm}
+                  initialValues={initialValues}
+                  onSubmit={handleSubmit}
+                  validationSchema={validationSchema}
                 />
-                <DatePicker
-                  className={classes.datePicker}
-                  label="To"
-                  onChange={handleToChange}
-                  id="to"
-                  value={filterTo}
-                />
-                <Button variant="contained" color="primary" onClick={handleFilter}>
-                  Filter
-                </Button>
               </div>
             ) : null}
             <IndividualReportTable
