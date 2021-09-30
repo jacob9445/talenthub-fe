@@ -6,7 +6,6 @@ import { Table, TableRow, TableHead, TableBody, TableCell, TablePagination, Tabl
 import PropTypes from 'prop-types'
 
 import useStyles from './styles'
-import Spinner from 'components/Spinner'
 
 function IndividualReportTable({
   totalEarning,
@@ -29,57 +28,53 @@ function IndividualReportTable({
     },
     [show, period]
   )
-  if (totalEarning && developersEarning) {
-    return (
-      <Table className="mb-0">
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <strong>Total Earning</strong>
+  return totalEarning && developersEarning ? (
+    <Table className="mb-0">
+      <TableHead>
+        <TableRow>
+          <TableCell>
+            <strong>Total Earning</strong>
+          </TableCell>
+          <TableCell>
+            <strong>
+              <FormattedNumber format="currency" value={totalEarning.total_earnings} />
+            </strong>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          {columns.map(key => (
+            <TableCell key={key}>
+              <strong> {key} </strong>
             </TableCell>
-            <TableCell>
-              <strong>
-                <FormattedNumber format="currency" value={totalEarning.total_earnings} />
-              </strong>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            {columns.map(key => (
-              <TableCell key={key}>
-                <strong> {key} </strong>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {developersEarning
-            ? developersEarning.results.map(({ id, first_name, last_name, earning }) => (
-                <TableRow key={id} hover onClick={() => handleRowClick(id)} className={classes.tableRow}>
-                  <TableCell>{`${first_name} ${last_name}`}</TableCell>
-                  <TableCell>
-                    <FormattedNumber format="currency" value={earning} />
-                  </TableCell>
-                </TableRow>
-              ))
-            : null}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination //This pagination is zero-based.
-              rowsPerPageOptions={[2, 5, 10, 25]}
-              count={developersEarning.count}
-              rowsPerPage={pagination.page_size}
-              page={pagination.page - 1}
-              onChangePage={onChangePage}
-              onChangeRowsPerPage={onChangeRowsPerPage}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    )
-  } else {
-    return <Spinner />
-  }
+          ))}
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {developersEarning
+          ? developersEarning.results.map(({ id, first_name, last_name, earning }) => (
+              <TableRow key={id} hover onClick={() => handleRowClick(id)} className={classes.tableRow}>
+                <TableCell>{`${first_name} ${last_name}`}</TableCell>
+                <TableCell>
+                  <FormattedNumber format="currency" value={earning} />
+                </TableCell>
+              </TableRow>
+            ))
+          : null}
+      </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TablePagination //This pagination is zero-based.
+            rowsPerPageOptions={[2, 5, 10, 25]}
+            count={developersEarning.count}
+            rowsPerPage={pagination.page_size}
+            page={pagination.page - 1}
+            onChangePage={onChangePage}
+            onChangeRowsPerPage={onChangeRowsPerPage}
+          />
+        </TableRow>
+      </TableFooter>
+    </Table>
+  ) : null
 }
 
 const actions = {

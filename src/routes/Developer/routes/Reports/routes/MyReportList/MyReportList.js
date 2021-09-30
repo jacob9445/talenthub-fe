@@ -1,10 +1,9 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { DatePicker } from 'material-ui-pickers'
-import { format } from 'date-fns'
+import { Formik } from 'formik'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Spinner from 'components/Spinner'
@@ -17,6 +16,7 @@ import {
 } from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
+import DateRangePickerForm, { validationSchema } from 'components/DateRangePickerForm'
 import MyReportTable from '../../components/MyReportTable'
 import SimpleSelect from 'components/SimpleSelect'
 import useStyles from './styles'
@@ -42,8 +42,6 @@ const MyReportList = ({
 
   const initialShowCustom = queryObj.period === 'custom' ? 1 : 0
   const [showCustom, setShowCustom] = useState(initialShowCustom)
-  const [filterFrom, setFilterFrom] = useState(queryObj.from)
-  const [filterTo, setFilterTo] = useState(queryObj.to)
   const classes = useStyles()
 
   useEffect(() => {
@@ -95,36 +93,30 @@ const MyReportList = ({
     [history, location.search]
   )
 
-  const handleFromChange = useCallback(
-    date => {
-      setFilterFrom(format(date, 'yyyy-MM-dd'))
-    },
-    [setFilterFrom]
-  )
-
-  const handleToChange = useCallback(
-    date => {
-      setFilterTo(format(date, 'yyyy-MM-dd'))
-    },
-    [setFilterTo]
-  )
-
-  const handleFilter = useCallback(() => {
-    if (!filterFrom || !filterTo) {
-      alert('Select date range!')
-    } else {
-      const { page, page_size } = parseQueryString(location.search)
-      history.push({
-        search: jsonToQueryString({
-          period: 'custom',
-          from: filterFrom,
-          to: filterTo,
-          page,
-          page_size
+  const handleSubmit = useCallback(
+    (formValues, formActions) => {
+      if (!formValues.from || !formValues.to) {
+        return
+      } else {
+        const { page, page_size } = queryObj
+        history.push({
+          search: jsonToQueryString({
+            period: 'custom',
+            from: formValues.from,
+            to: formValues.to,
+            page,
+            page_size
+          })
         })
-      })
-    }
-  }, [filterFrom, filterTo, location.search, history])
+      }
+    },
+    [history, queryObj]
+  )
+
+  const initialValues = {
+    from: queryObj.from || null,
+    to: queryObj.to || null
+  }
 
   if (isMyReportLoading) {
     return <Spinner />
@@ -141,23 +133,12 @@ const MyReportList = ({
             />
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
-                <DatePicker
-                  className={classes.datePicker}
-                  label="From"
-                  onChange={handleFromChange}
-                  id="from"
-                  value={filterFrom}
+                <Formik
+                  component={DateRangePickerForm}
+                  initialValues={initialValues}
+                  onSubmit={handleSubmit}
+                  validationSchema={validationSchema}
                 />
-                <DatePicker
-                  className={classes.datePicker}
-                  label="To"
-                  onChange={handleToChange}
-                  id="to"
-                  value={filterTo}
-                />
-                <Button variant="contained" color="primary" onClick={handleFilter}>
-                  Filter
-                </Button>
               </div>
             ) : null}
             {myReport ? (

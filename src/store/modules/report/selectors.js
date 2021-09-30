@@ -2,26 +2,27 @@ import { createDataSelector, isRequestPending } from '../api'
 
 //for only admins
 export const teamsEarningSelector = createDataSelector('teamsEarning')
-export const teamsEarningLoadingSelector = state => isRequestPending('teamsEarning', 'GET')(state)
+export const teamsEarningLoadingSelector = isRequestPending('teamsEarning', 'GET')
 
 export const selectedTeamEarningSelector = createDataSelector('selectedTeamEarning')
-export const selectedTeamEarningLoadingSelector = state => isRequestPending('selectedTeamEarning', 'GET')(state)
+export const selectedTeamEarningLoadingSelector = isRequestPending('selectedTeamEarning', 'GET')
 
 //for both admins and team-managers
 export const totalEarningSelector = createDataSelector('totalEarning')
-export const totalEarningLoadingSelector = state => isRequestPending('totalEarning', 'GET')(state)
+export const totalEarningLoadingSelector = isRequestPending('totalEarning', 'GET')
 
 export const developersEarningSelector = createDataSelector('developersEarning')
-export const developersEarningLoadingSelector = state => isRequestPending('developersEarning', 'GET')(state)
+export const developersEarningLoadingSelector = isRequestPending('developersEarning', 'GET')
 
 export const individualDeveloperEarningSelector = createDataSelector('individualDeveloperEarning')
-export const individualDeveloperEarningLoadingSelector = state =>
-  isRequestPending('individualDeveloperEarning', 'GET')(state)
+export const individualDeveloperEarningLoadingSelector = isRequestPending('individualDeveloperEarning', 'GET')
 
 export const individualDeveloperProjectEarningSelector = createDataSelector('individualDeveloperProjectEarning')
-export const individualDeveloperProjectEarningLoadingSelector = state =>
-  isRequestPending('individualDeveloperProjectEarning', 'GET')(state)
+export const individualDeveloperProjectEarningLoadingSelector = isRequestPending(
+  'individualDeveloperProjectEarning',
+  'GET'
+)
 
 //for only developers
 export const selfFinancialReportSelector = createDataSelector('selfFinancialReport')
-export const selfFinancialReportLoadingSelector = state => isRequestPending('selfFinancialReport', 'GET')(state)
+export const selfFinancialReportLoadingSelector = isRequestPending('selfFinancialReport', 'GET')
