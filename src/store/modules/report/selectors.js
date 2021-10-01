@@ -24,5 +24,8 @@ export const individualDeveloperProjectEarningLoadingSelector = isRequestPending
 )
 
 //for only developers
-export const selfFinancialReportSelector = createDataSelector('selfFinancialReport')
-export const selfFinancialReportLoadingSelector = isRequestPending('selfFinancialReport', 'GET')
+export const selfEarningReportSelector = createDataSelector('selfEarning')
+export const selfEarningReportLoadingSelector = isRequestPending('selfEarning', 'GET')
+
+export const selfProjectEarningSelector = createDataSelector('selfProjectEarning')
+export const selfProjectEarningLodaingSelector = isRequestPending('selfProjectEarning')

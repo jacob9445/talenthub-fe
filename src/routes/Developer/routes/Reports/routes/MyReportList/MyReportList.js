@@ -10,9 +10,12 @@ import Spinner from 'components/Spinner'
 import Widget from 'components/Widget'
 
 import {
-  getSelfFinancialReport,
-  selfFinancialReportLoadingSelector,
-  selfFinancialReportSelector
+  getSelfEarningReport,
+  getSelfProjectEarningRepot,
+  selfEarningReportSelector,
+  selfEarningReportLoadingSelector,
+  selfProjectEarningSelector,
+  selfProjectEarningLodaingSelector
 } from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
@@ -23,9 +26,12 @@ import useStyles from './styles'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 
 const MyReportList = ({
-  myReport,
-  getSelfFinancialReport,
-  isMyReportLoading,
+  earningReport,
+  projectEarningReport,
+  getSelfEarningReport,
+  getSelfProjectEarningRepot,
+  isEarningLoading,
+  isProjectEarningLoading,
   pagination,
   onChangePage,
   onChangeRowsPerPage,
@@ -47,7 +53,7 @@ const MyReportList = ({
   useEffect(() => {
     const { from, to, period } = queryObj
     if (!from && period !== 'custom') {
-      getSelfFinancialReport({
+      getSelfEarningReport({
         params: {
           period,
           pagination
@@ -55,7 +61,7 @@ const MyReportList = ({
       })
     }
     if (from) {
-      getSelfFinancialReport({
+      getSelfEarningReport({
         params: {
           period,
           ...pagination,
@@ -64,7 +70,29 @@ const MyReportList = ({
         }
       })
     }
-  }, [getSelfFinancialReport, pagination, queryObj])
+  }, [getSelfEarningReport, pagination, queryObj])
+
+  useEffect(() => {
+    const { from, to, period } = queryObj
+    if (!from && period !== 'custom') {
+      getSelfProjectEarningRepot({
+        params: {
+          period,
+          pagination
+        }
+      })
+    }
+    if (from) {
+      getSelfProjectEarningRepot({
+        params: {
+          period,
+          ...pagination,
+          from,
+          to
+        }
+      })
+    }
+  }, [getSelfProjectEarningRepot, pagination, queryObj])
 
   const handlePeriodChange = useCallback(
     event => {
@@ -118,7 +146,7 @@ const MyReportList = ({
     to: queryObj.to || null
   }
 
-  if (isMyReportLoading) {
+  if (isEarningLoading || isProjectEarningLoading) {
     return <Spinner />
   } else {
     return (
@@ -141,9 +169,10 @@ const MyReportList = ({
                 />
               </div>
             ) : null}
-            {myReport ? (
+            {earningReport && projectEarningReport ? (
               <MyReportTable
-                data={myReport[0]}
+                earning={earningReport}
+                projectEarnings={projectEarningReport}
                 pagination={pagination}
                 onChangePage={onChangePage}
                 onChangeRowsPerPage={onChangeRowsPerPage}
@@ -157,18 +186,23 @@ const MyReportList = ({
 }
 
 const actions = {
-  getSelfFinancialReport
+  getSelfEarningReport,
+  getSelfProjectEarningRepot
 }
 
 const selector = createStructuredSelector({
-  myReport: selfFinancialReportSelector,
-  isMyReportLoading: selfFinancialReportLoadingSelector
+  earningReport: selfEarningReportSelector,
+  isEarningLoading: selfEarningReportLoadingSelector,
+  projectEarningReport: selfProjectEarningSelector,
+  isProjectEarningLoading: selfProjectEarningLodaingSelector
 })
 
 MyReportList.propTypes = {
-  myReport: PropTypes.array,
-  getSelfFinancialReport: PropTypes.func.isRequired,
-  isMyReportLoading: PropTypes.bool.isRequired,
+  earningReport: PropTypes.object,
+  getSelfEarningReport: PropTypes.func.isRequired,
+  getSelfProjectEarningRepot: PropTypes.func.isRequired,
+  isEarningLoading: PropTypes.bool.isRequired,
+  isProjectEarningLoading: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   onChangePage: PropTypes.func.isRequired,
   onChangeRowsPerPage: PropTypes.func.isRequired,

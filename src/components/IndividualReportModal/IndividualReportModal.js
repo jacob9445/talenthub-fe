@@ -81,7 +81,7 @@ const IndividualReportModal = ({
           <Typography gutterBottom>
             Amount: <FormattedNumber format="currency" value={earning && earning.earning} />
           </Typography>
-          {projectEarning && projectEarning.project_earnings.length ? (
+          {projectEarning && projectEarning.length ? (
             <Table className="mb-0">
               <TableHead>
                 <TableRow>
@@ -91,11 +91,11 @@ const IndividualReportModal = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {projectEarning.project_earnings.map(data => (
+                {projectEarning.map(data => (
                   <TableRow key={data.id}>
-                    <TableCell>{data.project_title}</TableCell>
+                    <TableCell>{data.title}</TableCell>
                     <TableCell>
-                      <FormattedNumber format="currency" value={data.earning} />
+                      <FormattedNumber format="currency" value={data.project_earning} />
                     </TableCell>
                   </TableRow>
                 ))}

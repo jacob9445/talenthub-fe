@@ -12,4 +12,5 @@ export const getIndividualDeveloperProjectEarningReport = createAction(
   Types.GET_INDIVIDUAL_DEVELOPER_PROJECT_EARNING_REPORT
 )
 //for only developers
-export const getSelfFinancialReport = createAction(Types.GET_SELF_FINANCIAL_REPORT)
+export const getSelfEarningReport = createAction(Types.GET_SELF_EARNING_REPORT)
+export const getSelfProjectEarningRepot = createAction(Types.GET_SELF_PROJECT_EARNING_REPORT)
