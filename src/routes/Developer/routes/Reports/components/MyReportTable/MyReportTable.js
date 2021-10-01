@@ -3,7 +3,7 @@ import { FormattedNumber } from 'react-intl'
 import { Table, TableRow, TableHead, TableBody, TableCell } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
-const MyReportTable = ({ data }) => {
+const MyReportTable = ({ earning, projectEarnings }) => {
   const column = ['Project Title', 'Earning']
   return (
     <Table className="mb-0">
@@ -15,12 +15,12 @@ const MyReportTable = ({ data }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data &&
-          data.project_earnings.map(project_earning => (
+        {projectEarnings &&
+          projectEarnings.map(project_earning => (
             <TableRow key={project_earning.id}>
-              <TableCell>{project_earning.project_title}</TableCell>
+              <TableCell>{project_earning.title}</TableCell>
               <TableCell>
-                <FormattedNumber format="currency" value={project_earning.earning} />
+                <FormattedNumber format="currency" value={project_earning.project_earning} />
               </TableCell>
             </TableRow>
           ))}
@@ -30,7 +30,7 @@ const MyReportTable = ({ data }) => {
           </TableCell>
           <TableCell>
             <strong>
-              <FormattedNumber format="currency" value={data ? data.earning : 0} />
+              <FormattedNumber format="currency" value={earning ? earning[0].earning : 0} />
             </strong>
           </TableCell>
         </TableRow>
@@ -40,7 +40,8 @@ const MyReportTable = ({ data }) => {
 }
 
 MyReportTable.propTypes = {
-  data: PropTypes.object
+  earning: PropTypes.array,
+  projectEarnings: PropTypes.array
 }
 
 export default MyReportTable

@@ -64,11 +64,19 @@ const getIndividualDeveloperProjectEarningReport = createApiCallSaga({
 })
 
 //for only developers
-const getSelfFinancialReport = createApiCallSaga({
-  type: Types.GET_SELF_FINANCIAL_REPORT,
+const getSelfEarningReport = createApiCallSaga({
+  type: Types.GET_SELF_EARNING_REPORT,
   method: 'GET',
-  path: 'api/developer/report/earnings/',
-  selectorKey: 'selfFinancialReport',
+  path: 'api/developer/report/earnings/earning/',
+  selectorKey: 'selfEarning',
+  allowedParamKeys: ['period', 'from', 'to']
+})
+
+const getSelfProjectEarningReport = createApiCallSaga({
+  type: Types.GET_SELF_PROJECT_EARNING_REPORT,
+  method: 'GET',
+  path: 'api/developer/report/earnings/project_earnings/',
+  selectorKey: 'selfProjectEarning',
   allowedParamKeys: ['period', 'from', 'to']
 })
 
@@ -82,5 +90,6 @@ export default function* rootSaga() {
   yield takeLatest(Types.GET_INDIVIDUAL_DEVELOPER_EARNING_REPORT, getIndividualDeveloperEarningReport)
   yield takeLatest(Types.GET_INDIVIDUAL_DEVELOPER_PROJECT_EARNING_REPORT, getIndividualDeveloperProjectEarningReport)
   //for only developers
-  yield takeLatest(Types.GET_SELF_FINANCIAL_REPORT, getSelfFinancialReport)
+  yield takeLatest(Types.GET_SELF_EARNING_REPORT, getSelfEarningReport)
+  yield takeLatest(Types.GET_SELF_PROJECT_EARNING_REPORT, getSelfProjectEarningReport)
 }
