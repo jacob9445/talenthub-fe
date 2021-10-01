@@ -130,8 +130,8 @@ const actions = {
 IndividualReportModal.propTypes = {
   show: PropTypes.bool.isRequired,
   handleHide: PropTypes.func.isRequired,
-  earning: PropTypes.object.isRequired,
-  projectEarning: PropTypes.object.isRequired,
+  earning: PropTypes.object,
+  projectEarning: PropTypes.object,
   isEarningLoading: PropTypes.bool.isRequired,
   isProjectEarningLoading: PropTypes.bool.isRequired
 }
