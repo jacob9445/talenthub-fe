@@ -7,3 +7,4 @@ export const deleteProjectAndRefresh = createAction(Types.DELETE_PROJECT_AND_REF
 export const getProjectDetail = createAction(Types.GET_PROJECT_DETAIL)
 export const updateProjectDetail = createAction(Types.UPDATE_PROJECT_DETAIL)
 export const createProject = createAction(Types.CREATE_PROJECT)
+export const searchProjects = createAction(Types.SEARCH_PROJECTS)

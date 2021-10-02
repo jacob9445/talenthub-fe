@@ -1,7 +1,10 @@
 import { createDataSelector, isRequestPending } from '../api'
 
 export const projectsSelector = createDataSelector('projects')
-export const projectsLoadingSelector = state => isRequestPending('projects', 'GET')(state)
+export const projectsLoadingSelector = isRequestPending('projects', 'GET')
 
 export const projectDetailSelector = createDataSelector('projectDetail')
-export const projectDetailLoadingSelector = state => isRequestPending('projectDetail', 'get')(state)
+export const projectDetailLoadingSelector = isRequestPending('projectDetail', 'get')
+
+export const projectsSearchResultsSelector = createDataSelector('projectsSearchResults')
+export const projectsSearchResultsLodaingSelector = isRequestPending('projectsSearchResults', 'get')

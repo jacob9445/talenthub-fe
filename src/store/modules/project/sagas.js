@@ -61,6 +61,14 @@ const createProject = createApiCallSaga({
   }
 })
 
+const searchProjects = createApiCallSaga({
+  type: Types.SEARCH_PROJECTS,
+  method: 'GET',
+  path: `api/search/projects/`,
+  selectorKey: 'projectsSearchResults',
+  allowedParamKeys: ['project_starter', 'team']
+})
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_PROJECTS, getProjects)
   yield takeLatest(Types.DELETE_PROJECT, deleteProject)
@@ -68,4 +76,5 @@ export default function* rootSaga() {
   yield takeLatest(Types.GET_PROJECT_DETAIL, getProjectDetail)
   yield takeLatest(Types.UPDATE_PROJECT_DETAIL, updateProjectDetail)
   yield takeLatest(Types.CREATE_PROJECT, createProject)
+  yield takeLatest(Types.SEARCH_PROJECTS, searchProjects)
 }
