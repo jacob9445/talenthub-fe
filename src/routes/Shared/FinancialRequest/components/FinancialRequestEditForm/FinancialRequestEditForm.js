@@ -14,7 +14,7 @@ import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { URL_PREFIXES, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
-import { getProjects, projectsSelector } from 'store/modules/project'
+import { searchProjects, projectsSearchResultsSelector } from 'store/modules/project'
 import { ListDataType } from 'helpers/prop-types'
 
 export const validationSchema = Yup.object().shape({
@@ -33,29 +33,33 @@ const FinancialRequestDetailForm = ({
   me: { role },
   me,
   match: { params },
-  getProjects,
-  projects
+  searchProjects,
+  projectsSearchResults
 }) => {
   const classes = useStyles()
 
   useEffect(() => {
-    getProjects(me)
-  }, [getProjects, me])
+    searchProjects({
+      params: {
+        project_starter: me.id
+      }
+    })
+  }, [searchProjects, me])
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/financial-requests`)
   }, [location, history, role])
 
   const projectList = useMemo(() => {
-    if (projects) {
-      return projects.results.map(project => ({
+    if (projectsSearchResults) {
+      return projectsSearchResults.map(project => ({
         label: project.title,
         value: project.id
       }))
     } else {
       return []
     }
-  }, [projects])
+  }, [projectsSearchResults])
 
   const isUpdateMode = useMemo(() => Boolean(params.id), [params.id])
   return (
@@ -121,7 +125,7 @@ const FinancialRequestDetailForm = ({
 }
 
 FinancialRequestDetailForm.propTypes = {
-  getProjects: PropTypes.func.isRequired,
+  searchProjects: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   initialValues: PropTypes.object.isRequired,
@@ -134,11 +138,11 @@ FinancialRequestDetailForm.propTypes = {
 
 const selector = createStructuredSelector({
   me: meSelector,
-  projects: projectsSelector
+  projectsSearchResults: projectsSearchResultsSelector
 })
 
 const actions = {
-  getProjects
+  searchProjects
 }
 
 export default compose(withRouter, connect(selector, actions))(FinancialRequestDetailForm)
