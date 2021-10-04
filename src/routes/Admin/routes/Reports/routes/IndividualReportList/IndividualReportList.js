@@ -3,8 +3,10 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
-import { Grid } from '@material-ui/core'
+import { CloudDownload } from '@material-ui/icons'
+import { Grid, Tooltip, Button } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
+import * as R from 'ramda'
 import PropTypes from 'prop-types'
 
 import {
@@ -13,7 +15,8 @@ import {
   getDevelopersEarningReport,
   getTotalEarningReport,
   totalEarningLoadingSelector,
-  totalEarningSelector
+  totalEarningSelector,
+  downloadDevelopersEarning
 } from 'store/modules/report'
 import { getTeams, teamsSelector } from 'store/modules/team'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
@@ -35,6 +38,7 @@ const IndividualReportList = ({
   getTeams,
   getTotalEarningReport,
   getDevelopersEarningReport,
+  downloadDevelopersEarning,
   pagination,
   onChangePage,
   onChangeRowsPerPage,
@@ -52,6 +56,12 @@ const IndividualReportList = ({
   const initialShowCustom = queryObj.period === 'custom' ? 1 : 0
   const [showCustom, setShowCustom] = useState(initialShowCustom)
   const classes = useStyles()
+
+  const getTeamName = useCallback(
+    teamId =>
+      R.compose(R.prop('name'), R.defaultTo({ name: 'All' }), R.find(R.propEq('id', teamId)), R.defaultTo([]))(teams),
+    [teams]
+  )
 
   useEffect(() => {
     const { from, to, team = 'all', period } = queryObj
@@ -178,6 +188,31 @@ const IndividualReportList = ({
     to: queryObj.to || null
   }
 
+  const teamName = getTeamName(Number(queryObj.team))
+
+  const handleDownload = useCallback(() => {
+    const { from, to, period, team } = queryObj
+    if (!from) {
+      downloadDevelopersEarning({
+        teamName,
+        params: {
+          period,
+          team
+        }
+      })
+    } else {
+      downloadDevelopersEarning({
+        teamName,
+        params: {
+          team,
+          period: 'custom',
+          from,
+          to
+        }
+      })
+    }
+  }, [downloadDevelopersEarning, queryObj, teamName])
+
   if (totalEarningLoading || developersEarningLoading) {
     return <Spinner />
   } else {
@@ -188,7 +223,15 @@ const IndividualReportList = ({
             title="Individuals"
             disableWidgetMenu
             WidgetButton={
-              <Grid container spacing={2} alignItems="center" justify="flex-end">
+              <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+                <Grid item>
+                  <Tooltip title="Export as CSV" placement="top">
+                    <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
+                      <CloudDownload />
+                      &nbsp;Export
+                    </Button>
+                  </Tooltip>
+                </Grid>
                 <Grid item>
                   <SimpleSelect
                     label="Period"
@@ -235,7 +278,8 @@ const IndividualReportList = ({
 const actions = {
   getTeams,
   getTotalEarningReport,
-  getDevelopersEarningReport
+  getDevelopersEarningReport,
+  downloadDevelopersEarning
 }
 
 const selector = createStructuredSelector({

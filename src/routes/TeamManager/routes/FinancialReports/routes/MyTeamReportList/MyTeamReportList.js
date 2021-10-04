@@ -2,7 +2,8 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { Grid } from '@material-ui/core'
+import { CloudDownload } from '@material-ui/icons'
+import { Grid, Button, Tooltip } from '@material-ui/core'
 import { Formik } from 'formik'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -13,8 +14,10 @@ import {
   getDevelopersEarningReport,
   getTotalEarningReport,
   totalEarningLoadingSelector,
-  totalEarningSelector
+  totalEarningSelector,
+  downloadDevelopersEarning
 } from 'store/modules/report'
+import { meSelector } from 'store/modules/auth'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
 import DateRangePickerForm, { validationSchema } from 'components/DateRangePickerForm'
@@ -26,12 +29,14 @@ import Widget from 'components/Widget'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 
 const MyTeamReportList = ({
+  me,
   totalEarning,
   isTotalEarningLoading,
   developersEarning,
   isDevelopersEarningLoading,
   getDevelopersEarningReport,
   getTotalEarningReport,
+  downloadDevelopersEarning,
   pagination,
   onChangePage,
   onChangeRowsPerPage,
@@ -133,6 +138,27 @@ const MyTeamReportList = ({
     to: queryObj.to || null
   }
 
+  const handleDownload = useCallback(() => {
+    const { from, to, period } = queryObj
+    if (!from) {
+      downloadDevelopersEarning({
+        teamName: me.team.name,
+        params: {
+          period
+        }
+      })
+    } else {
+      downloadDevelopersEarning({
+        teamName: me.team.name,
+        params: {
+          period: 'custom',
+          from,
+          to
+        }
+      })
+    }
+  }, [downloadDevelopersEarning, queryObj, me])
+
   if (isTotalEarningLoading || isDevelopersEarningLoading) {
     return <Spinner />
   } else {
@@ -140,12 +166,24 @@ const MyTeamReportList = ({
       <Grid container>
         <Grid item xs={12}>
           <Widget title="My Team Reports" disableWidgetMenu>
-            <SimpleSelect
-              label="Period"
-              value={queryObj.period}
-              options={periodOptions}
-              onChange={handlePeriodChange}
-            />
+            <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+              <Grid item>
+                <Tooltip title="Export as CSV" placement="top">
+                  <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
+                    <CloudDownload />
+                    &nbsp;Export
+                  </Button>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <SimpleSelect
+                  label="Period"
+                  value={queryObj.period}
+                  options={periodOptions}
+                  onChange={handlePeriodChange}
+                />
+              </Grid>
+            </Grid>
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
                 <Formik
@@ -173,10 +211,12 @@ const MyTeamReportList = ({
 
 const actions = {
   getTotalEarningReport,
-  getDevelopersEarningReport
+  getDevelopersEarningReport,
+  downloadDevelopersEarning
 }
 
 const selector = createStructuredSelector({
+  me: meSelector,
   totalEarning: totalEarningSelector,
   isTotalEarningLoading: totalEarningLoadingSelector,
   developersEarning: developersEarningSelector,

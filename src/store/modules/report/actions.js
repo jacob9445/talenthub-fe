@@ -14,3 +14,14 @@ export const getIndividualDeveloperProjectEarningReport = createAction(
 //for only developers
 export const getSelfEarningReport = createAction(Types.GET_SELF_EARNING_REPORT)
 export const getSelfProjectEarningRepot = createAction(Types.GET_SELF_PROJECT_EARNING_REPORT)
+
+//for download
+export const downloadDevelopersEarning = createAction(Types.DOWNLOAD_DEVELOPERS_EARNING)
+export const downloadIndividualDeveloperEarning = createAction(Types.DOWNLOAD_INDIVIDUAL_DEVELOPER_EARNING)
+export const downloadIndividualDeveloperProjectsEarning = createAction(
+  Types.DOWNLOAD_INDIVIDUAL_DEVELOPER_PROJECTS_EARNING
+)
+export const downloadTeamsEarning = createAction(Types.DOWNLOAD_TEAMS_EARNING)
+export const downloadSelectedTeamEarning = createAction(Types.DOWNLOAD_SELECTED_TEAM_EARNING)
+
+export const downloadMyReport = createAction(Types.DOWNLOAD_MY_REPORT)

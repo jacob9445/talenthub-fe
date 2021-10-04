@@ -3,11 +3,17 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
-import { Grid } from '@material-ui/core'
+import { CloudDownload } from '@material-ui/icons'
+import { Grid, Button, Tooltip } from '@material-ui/core'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import { getTeamsEarningReport, teamsEarningSelector, teamsEarningLoadingSelector } from 'store/modules/report'
+import {
+  getTeamsEarningReport,
+  teamsEarningSelector,
+  teamsEarningLoadingSelector,
+  downloadTeamsEarning
+} from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
 import DateRangePickerForm, { validationSchema } from 'components/DateRangePickerForm'
@@ -17,7 +23,14 @@ import TeamReportTable from '../../components/TeamReportTable'
 import useStyles from './styles'
 import Widget from 'components/Widget'
 
-const TeamReportList = ({ teamsReport, getTeamsEarningReport, isTeamsReportLoading, location, history }) => {
+const TeamReportList = ({
+  teamsReport,
+  getTeamsEarningReport,
+  downloadTeamsEarning,
+  isTeamsReportLoading,
+  location,
+  history
+}) => {
   const queryObj = useMemo(
     () => ({
       period: 'this-month',
@@ -88,6 +101,25 @@ const TeamReportList = ({ teamsReport, getTeamsEarningReport, isTeamsReportLoadi
     to: queryObj.to || null
   }
 
+  const handleDownload = useCallback(() => {
+    const { from, to, period } = queryObj
+    if (!from) {
+      downloadTeamsEarning({
+        params: {
+          period
+        }
+      })
+    } else {
+      downloadTeamsEarning({
+        params: {
+          period: 'custom',
+          from,
+          to
+        }
+      })
+    }
+  }, [downloadTeamsEarning, queryObj])
+
   if (isTeamsReportLoading) {
     return <Spinner />
   } else {
@@ -98,7 +130,15 @@ const TeamReportList = ({ teamsReport, getTeamsEarningReport, isTeamsReportLoadi
             title="Teams"
             disableWidgetMenu
             WidgetButton={
-              <Grid container spacing={2} alignItems="center" justify="flex-end">
+              <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+                <Grid item>
+                  <Tooltip title="Export as CSV" placement="top">
+                    <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
+                      <CloudDownload />
+                      &nbsp;Export
+                    </Button>
+                  </Tooltip>
+                </Grid>
                 <Grid item>
                   <SimpleSelect
                     label="Period"
@@ -128,7 +168,8 @@ const TeamReportList = ({ teamsReport, getTeamsEarningReport, isTeamsReportLoadi
 }
 
 const actions = {
-  getTeamsEarningReport
+  getTeamsEarningReport,
+  downloadTeamsEarning
 }
 
 const selector = createStructuredSelector({
