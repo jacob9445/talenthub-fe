@@ -124,3 +124,29 @@ export const getBool = R.compose(Boolean, JSON.parse, R.defaultTo('false'))
 export const prettifyMethod = R.toLower()
 
 export const getPathArray = R.split('.')
+
+export const generateHrefFromText = data => {
+  const rawLength = data.length
+  const array = new Uint8Array(rawLength)
+
+  for (let i = 0; i < rawLength; i++) {
+    array[i] = data.charCodeAt(i)
+  }
+  return URL.createObjectURL(new Blob([array], { type: 'text/csv' }))
+}
+
+export const downloadFile = (url, fileName) => {
+  let link = document.createElement('a')
+  link.href = url
+  link.download = fileName
+
+  let event = null
+  if (typeof MouseEvent === 'function') {
+    event = new MouseEvent('click')
+  } else {
+    event = document.createEvent('MouseEvent')
+    event.initEvent('click', true, true)
+  }
+
+  link.dispatchEvent(event)
+}

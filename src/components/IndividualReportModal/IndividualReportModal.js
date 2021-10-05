@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { connectModal } from 'redux-modal'
 import { createStructuredSelector } from 'reselect'
 import { FormattedNumber, FormattedDate } from 'react-intl'
-import { Table, TableRow, TableHead, TableBody, TableCell, Typography } from '@material-ui/core'
+import { CloudDownload } from '@material-ui/icons'
+import { Table, TableRow, TableHead, TableBody, TableCell, Typography, Tooltip } from '@material-ui/core'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core'
 import * as R from 'ramda'
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import PropTypes from 'prop-types'
 
 import {
@@ -19,7 +16,8 @@ import {
   individualDeveloperEarningLoadingSelector,
   individualDeveloperEarningSelector,
   individualDeveloperProjectEarningLoadingSelector,
-  individualDeveloperProjectEarningSelector
+  individualDeveloperProjectEarningSelector,
+  downloadIndividualDeveloperProjectsEarning
 } from 'store/modules/report'
 import { getFullName } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
@@ -36,6 +34,7 @@ const IndividualReportModal = ({
   isProjectEarningLoading,
   getIndividualDeveloperEarningReport,
   getIndividualDeveloperProjectEarningReport,
+  downloadIndividualDeveloperProjectsEarning,
   show,
   handleHide,
   selectedPeriod,
@@ -58,6 +57,29 @@ const IndividualReportModal = ({
       params: selectedPeriod
     })
   }, [getIndividualDeveloperProjectEarningReport, developerId, selectedPeriod])
+
+  const handleDownload = useCallback(() => {
+    const { from, to, period } = selectedPeriod
+    if (!from) {
+      downloadIndividualDeveloperProjectsEarning({
+        developer,
+        developerId: earning.id,
+        params: {
+          period
+        }
+      })
+    } else {
+      downloadIndividualDeveloperProjectsEarning({
+        developer,
+        developerId: earning.id,
+        params: {
+          period: 'custom',
+          from,
+          to
+        }
+      })
+    }
+  }, [downloadIndividualDeveloperProjectsEarning, selectedPeriod, developer, earning])
 
   return (
     <Dialog open={show} onClose={handleHide}>
@@ -107,6 +129,12 @@ const IndividualReportModal = ({
         </DialogContent>
       )}
       <DialogActions>
+        <Tooltip title="Export as CSV" placement="top">
+          <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
+            <CloudDownload />
+            &nbsp;Export
+          </Button>
+        </Tooltip>
         <Button onClick={handleHide} color="primary">
           Close
         </Button>
@@ -124,7 +152,8 @@ const selector = createStructuredSelector({
 
 const actions = {
   getIndividualDeveloperEarningReport,
-  getIndividualDeveloperProjectEarningReport
+  getIndividualDeveloperProjectEarningReport,
+  downloadIndividualDeveloperProjectsEarning
 }
 
 IndividualReportModal.propTypes = {

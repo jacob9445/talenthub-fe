@@ -1,7 +1,8 @@
 import React, { useEffect, useCallback, useState, useMemo } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Button, Tooltip } from '@material-ui/core'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { CloudDownload } from '@material-ui/icons'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
 import { withRouter } from 'react-router-dom'
@@ -15,7 +16,8 @@ import {
   selfEarningReportSelector,
   selfEarningReportLoadingSelector,
   selfProjectEarningSelector,
-  selfProjectEarningLodaingSelector
+  selfProjectEarningLodaingSelector,
+  downloadMyReport
 } from 'store/modules/report'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions } from 'config/constants'
@@ -30,6 +32,7 @@ const MyReportList = ({
   projectEarningReport,
   getSelfEarningReport,
   getSelfProjectEarningRepot,
+  downloadMyReport,
   isEarningLoading,
   isProjectEarningLoading,
   pagination,
@@ -146,6 +149,25 @@ const MyReportList = ({
     to: queryObj.to || null
   }
 
+  const handleDownload = useCallback(() => {
+    const { from, to, period } = queryObj
+    if (!from) {
+      downloadMyReport({
+        params: {
+          period
+        }
+      })
+    } else {
+      downloadMyReport({
+        params: {
+          period: 'custom',
+          from,
+          to
+        }
+      })
+    }
+  }, [downloadMyReport, queryObj])
+
   if (isEarningLoading || isProjectEarningLoading) {
     return <Spinner />
   } else {
@@ -153,12 +175,24 @@ const MyReportList = ({
       <Grid container>
         <Grid item xs={12}>
           <Widget title="My Report" disableWidgetMenu>
-            <SimpleSelect
-              label="Period"
-              value={queryObj.period}
-              options={periodOptions}
-              onChange={handlePeriodChange}
-            />
+            <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+              <Grid item>
+                <Tooltip title="Export as CSV" placement="top">
+                  <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
+                    <CloudDownload />
+                    &nbsp;Export
+                  </Button>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <SimpleSelect
+                  label="Period"
+                  value={queryObj.period}
+                  options={periodOptions}
+                  onChange={handlePeriodChange}
+                />
+              </Grid>
+            </Grid>
             {showCustom ? (
               <div className={classes.dateRangeFilter}>
                 <Formik
@@ -187,7 +221,8 @@ const MyReportList = ({
 
 const actions = {
   getSelfEarningReport,
-  getSelfProjectEarningRepot
+  getSelfProjectEarningRepot,
+  downloadMyReport
 }
 
 const selector = createStructuredSelector({
@@ -198,7 +233,7 @@ const selector = createStructuredSelector({
 })
 
 MyReportList.propTypes = {
-  earningReport: PropTypes.object,
+  earningReport: PropTypes.array,
   getSelfEarningReport: PropTypes.func.isRequired,
   getSelfProjectEarningRepot: PropTypes.func.isRequired,
   isEarningLoading: PropTypes.bool.isRequired,

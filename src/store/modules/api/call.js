@@ -127,6 +127,7 @@ const createApiCallSaga = ({
 
       return true
     } catch (err) {
+      console.error(err)
       const errRes = R.path('response', err) || err
       const payload = payloadOnFail ? payloadOnFail(errRes, action) : errRes
       yield put(

@@ -7,5 +7,8 @@ export default makeStyles(theme => ({
   },
   datePicker: {
     marginRight: theme.spacing(3)
+  },
+  download: {
+    height: '100%'
   }
 }))
