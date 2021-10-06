@@ -1,8 +1,8 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import PropTypes from 'prop-types'
-import TransactionReportList from 'routes/Shared/Transaction/routes/TransactionReportList/TransactionReportList'
-import TransactionReportDetail from 'routes/Shared/Transaction/routes/TransactionReportDetail/TransactionReportDetail'
+import TransactionReportList from 'routes/Developer/routes/Reports/routes/Transaction/routes/TransactionReportList'
+import TransactionReportDetail from 'routes/Developer/routes/Reports/routes/Transaction/routes/TransactionReportDetail'
 
 const Transaction = ({ match: { path } }) => (
   <Switch>

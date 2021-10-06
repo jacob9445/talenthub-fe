@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect, Switch, Route } from 'react-router'
 import PropTypes from 'prop-types'
 
-import Transaction from 'routes/Shared/Transaction'
+import Transaction from 'routes/Admin/routes/Reports/routes/Transaction'
 import TeamReportList from 'routes/Admin/routes/Reports/routes/TeamReportList'
 import IndividualReportList from 'routes/Admin/routes/Reports/routes/IndividualReportList'
 

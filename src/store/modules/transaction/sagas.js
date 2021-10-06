@@ -10,7 +10,7 @@ const getTransactions = createApiCallSaga({
     return yield roleBasedPath('transactions/')
   },
   selectorKey: 'transactions',
-  allowedParamKeys: ['page', 'page_size']
+  allowedParamKeys: ['page', 'page_size', 'period', 'from', 'to', 'team']
 })
 
 const getTransactionDetail = createApiCallSaga({
