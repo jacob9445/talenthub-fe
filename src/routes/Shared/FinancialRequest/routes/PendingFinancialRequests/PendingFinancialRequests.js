@@ -84,7 +84,7 @@ const PendingFinancialRequest = ({
           success: getPendingFinancialRequests
         })
       } else {
-        show('approveRequestModal', { requestId, grossAmount })
+        show('approveRequestModal', { requestId, grossAmount, requestType })
       }
     },
     [show, approveFinancialRequest, getPendingFinancialRequests]

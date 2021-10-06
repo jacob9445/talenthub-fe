@@ -66,6 +66,7 @@ export const data = handleActions(
       if (prettifyMethod(payload.method) === 'get') {
         return R.dissocPath(R.split('.', payload.selectorKey), state)
       }
+      return state
     }
   },
   {}
