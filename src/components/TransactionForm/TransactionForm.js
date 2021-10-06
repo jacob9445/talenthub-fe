@@ -8,15 +8,24 @@ import PropTypes from 'prop-types'
 import FormInput from 'components/FormInput'
 import FormEditableSelect from 'components/FormEditableSelect'
 import useStyles from './styles'
-import { PAYMENT_PLATFORM_OPTIONS } from 'config/constants'
+import { PAYMENT_PLATFORM_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 
-const TransactionForm = ({ handleSubmit, onClose }) => {
+const TransactionForm = ({ handleSubmit, onClose, requestType }) => {
   const classes = useStyles()
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field component={FormInput} htmlId="gross_amount" type="number" name="gross_amount" label="Gross Amount" />
-      <Field component={FormInput} htmlId="net_amount" type="number" name="net_amount" label="Net Amount" />
+      {requestType !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? (
+        <>
+          <Field component={FormInput} htmlId="gross_amount" type="number" name="gross_amount" label="Gross Amount" />
+          <Field component={FormInput} htmlId="net_amount" type="number" name="net_amount" label="Net Amount" />
+        </>
+      ) : (
+        <>
+          <Field component={FormInput} htmlId="net_amount" type="number" name="net_amount" label="Gross Amount" />
+          <Field component={FormInput} htmlId="gross_amount" type="number" name="gross_amount" label="Net Amount" />
+        </>
+      )}
       <Field component={FormInput} type="date" htmlId="created_at" name="created_at" label="Date" />
       <Field
         component={FormEditableSelect}
@@ -43,7 +52,8 @@ const actions = {}
 const selectors = createStructuredSelector({})
 
 TransactionForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  requestType: PropTypes.number.isRequired
 }
 
 export default connect(selectors, actions)(TransactionForm)

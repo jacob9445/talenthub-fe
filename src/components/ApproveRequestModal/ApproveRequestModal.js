@@ -29,6 +29,7 @@ const formatDate = date => {
 const ApproveRequestModal = ({
   requestId,
   grossAmount,
+  requestType,
   show,
   handleHide,
   approveFinancialRequest,
@@ -88,7 +89,7 @@ const ApproveRequestModal = ({
       <DialogTitle id="form-dialog-title">Approve Request</DialogTitle>
       <DialogContent>
         <Formik initialValues={initialValues} onSubmit={handleSubmit} enableReinitialize>
-          {props => <TransactionForm {...props} onClose={handleHide} />}
+          {props => <TransactionForm {...props} onClose={handleHide} requestType={requestType} />}
         </Formik>
       </DialogContent>
     </Dialog>
@@ -113,7 +114,8 @@ ApproveRequestModal.propTypes = {
   grossAmount: PropTypes.number.isRequired,
   dashboard: PropTypes.bool.isRequired,
   show: PropTypes.bool.isRequired,
-  handleHide: PropTypes.func.isRequired
+  handleHide: PropTypes.func.isRequired,
+  requestType: PropTypes.number.isRequired
 }
 
 export default compose(
