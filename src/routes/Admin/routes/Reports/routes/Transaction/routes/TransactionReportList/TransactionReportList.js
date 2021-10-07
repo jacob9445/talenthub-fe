@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Grid } from '@material-ui/core'
+import { Button, Grid, Tooltip } from '@material-ui/core'
+import { CloudDownload } from '@material-ui/icons'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
+import * as R from 'ramda'
 import { show } from 'redux-modal'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -15,7 +17,12 @@ import SimpleSelect from 'components/SimpleSelect'
 import Spinner from 'components/Spinner'
 import { getTeams, teamsSelector } from 'store/modules/team'
 import useStyles from './styles'
-import { getTransactions, transactionsSelector, transactionsLoadingSelector } from 'store/modules/transaction'
+import {
+  getTransactions,
+  transactionsSelector,
+  transactionsLoadingSelector,
+  downloadTransactions
+} from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
@@ -26,6 +33,7 @@ const TransactionReportList = ({
   getTransactions,
   transactions,
   isTransactionLoading,
+  downloadTransactions,
   me,
   teams,
   getTeams,
@@ -50,6 +58,14 @@ const TransactionReportList = ({
   }
   const [showCustom, setShowCustom] = useState(initialShowCustom)
   const classes = useStyles()
+
+  const getTeamName = useCallback(
+    teamId =>
+      R.compose(R.prop('name'), R.defaultTo({ name: 'All' }), R.find(R.propEq('id', teamId)), R.defaultTo([]))(teams),
+    [teams]
+  )
+
+  const teamName = getTeamName(Number(queryObj.team))
 
   useEffect(() => {
     getTeams()
@@ -227,6 +243,29 @@ const TransactionReportList = ({
     [history, queryObj]
   )
 
+  const handleDownload = useCallback(() => {
+    const { from, to, period, team } = queryObj
+    if (!from) {
+      downloadTransactions({
+        teamOrUserName: teamName,
+        params: {
+          period,
+          team
+        }
+      })
+    } else {
+      downloadTransactions({
+        teamOrUserName: teamName,
+        params: {
+          team,
+          period: 'custom',
+          from,
+          to
+        }
+      })
+    }
+  }, [downloadTransactions, queryObj, teamName])
+
   if (isTransactionLoading) return <Spinner />
   else
     return transactions ? (
@@ -238,6 +277,14 @@ const TransactionReportList = ({
               disableWidgetMenu
               WidgetButton={
                 <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+                  <Grid item>
+                    <Tooltip title="Export as CSV" placement="top">
+                      <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
+                        <CloudDownload />
+                        &nbsp;Export
+                      </Button>
+                    </Tooltip>
+                  </Grid>
                   <Grid item>
                     <SimpleSelect
                       label="Type"
@@ -291,6 +338,7 @@ const TransactionReportList = ({
 const actions = {
   getTransactions,
   getTeams,
+  downloadTransactions,
   show
 }
 
@@ -308,7 +356,8 @@ TransactionReportList.propTypes = {
   me: PropTypes.object.isRequired,
   show: PropTypes.func.isRequired,
   pagination: PropTypes.object,
-  teams: PropTypes.array
+  teams: PropTypes.array,
+  downloadTransactions: PropTypes.func.isRequired
 }
 
 export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionReportList)
