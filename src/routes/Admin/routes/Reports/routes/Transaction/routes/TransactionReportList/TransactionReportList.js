@@ -20,7 +20,7 @@ import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
-import { periodOptions } from 'config/constants'
+import { periodOptions, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 
 const TransactionReportList = ({
   getTransactions,
@@ -56,14 +56,15 @@ const TransactionReportList = ({
   }, [getTeams])
 
   useEffect(() => {
-    const { from, to, team = 'all', period } = queryObj
+    const { type = 'all', from, to, team = 'all', period } = queryObj
     if (!from && period !== 'custom') {
       getTransactions({
         me,
         params: {
           ...pagination,
           period,
-          team: team === 'all' ? undefined : team
+          team: team === 'all' ? undefined : team,
+          type: type === 'all' ? undefined : type
         }
       })
     }
@@ -74,6 +75,7 @@ const TransactionReportList = ({
           ...pagination,
           period,
           team: team === 'all' ? undefined : team,
+          type: type === 'all' ? undefined : type,
           from,
           to
         }
@@ -94,13 +96,22 @@ const TransactionReportList = ({
     [teams]
   )
 
+  const financialRequestTypeOptions = useMemo(
+    () => [
+      { value: 'all', label: 'All' },
+      ...FINANCIALREQUEST_TYPE_OPTIONS.filter(typeOption => typeOption.value !== FINANCIALREQUEST_TYPE.SENDINVOICE)
+    ],
+    []
+  )
+
   const handleTeamChange = useCallback(
     event => {
-      const { period, from, to } = queryObj
+      const { type, period, from, to } = queryObj
       const team = event.target.value
       if (team !== 'all') {
         history.push({
           search: jsonToQueryString({
+            type,
             period,
             team,
             from,
@@ -118,14 +129,40 @@ const TransactionReportList = ({
     [history, queryObj]
   )
 
+  const handleTypeChange = useCallback(
+    event => {
+      const { team, period, from, to } = queryObj
+      const type = event.target.value
+      if (type !== 'all') {
+        history.push({
+          search: jsonToQueryString({
+            type,
+            team,
+            period,
+            from,
+            to
+          })
+        })
+      } else {
+        history.push({
+          search: jsonToQueryString({
+            period
+          })
+        })
+      }
+    },
+    [history, queryObj]
+  )
+
   const handlePeriodChange = useCallback(
     event => {
-      const { team, page, page_size } = queryObj
+      const { type, team, page, page_size } = queryObj
       const period = event.target.value
       if (period !== 'custom') {
         setShowCustom(0)
         history.push({
           search: jsonToQueryString({
+            type,
             team,
             period,
             page,
@@ -136,7 +173,9 @@ const TransactionReportList = ({
         setShowCustom(1)
         history.push({
           search: jsonToQueryString({
-            period
+            type,
+            period,
+            team
           })
         })
       }
@@ -175,6 +214,14 @@ const TransactionReportList = ({
               disableWidgetMenu
               WidgetButton={
                 <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+                  <Grid item>
+                    <SimpleSelect
+                      label="Type"
+                      value={queryObj.type || 'all'}
+                      options={financialRequestTypeOptions}
+                      onChange={handleTypeChange}
+                    />
+                  </Grid>
                   <Grid item>
                     <SimpleSelect
                       label="Period"
