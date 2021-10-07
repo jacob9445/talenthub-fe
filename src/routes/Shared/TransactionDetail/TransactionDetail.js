@@ -21,7 +21,7 @@ import { URL_PREFIXES, ROLES } from 'config/constants'
 import LabelValue from 'components/LabelValue'
 import { FINANCIALREQUEST_TYPE_LABELS, FINANCIALREQUEST_TYPE } from 'config/constants'
 
-const TransactionReportDetail = ({
+const TransactionDetail = ({
   getTransactionDetail,
   transactionDetail,
   isTransactionDetailLoading,
@@ -108,7 +108,7 @@ const selector = createStructuredSelector({
   me: meSelector
 })
 
-TransactionReportDetail.propTypes = {
+TransactionDetail.propTypes = {
   getTransactionDetail: PropTypes.func.isRequired,
   transactionDetail: PropTypes.object,
   isTransactionDetailLoading: PropTypes.bool.isRequired,
@@ -116,4 +116,4 @@ TransactionReportDetail.propTypes = {
   show: PropTypes.func.isRequired
 }
 
-export default compose(withRouter, connect(selector, actions))(TransactionReportDetail)
+export default compose(withRouter, connect(selector, actions))(TransactionDetail)

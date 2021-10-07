@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect, Switch, Route } from 'react-router'
 import PropTypes from 'prop-types'
 
-import Transaction from 'routes/Shared/Transaction'
+import Transaction from 'routes/Developer/routes/Reports/routes/Transaction'
 import MyReportList from '../../routes/MyReportList'
 
 const Reports = ({ match: { path } }) => (
