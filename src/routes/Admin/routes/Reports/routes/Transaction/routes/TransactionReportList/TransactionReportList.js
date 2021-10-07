@@ -119,11 +119,23 @@ const TransactionReportList = ({
           })
         })
       } else {
-        history.push({
-          search: jsonToQueryString({
-            period
+        if (period === 'custom') {
+          history.push({
+            search: jsonToQueryString({
+              type,
+              period,
+              from,
+              to
+            })
           })
-        })
+        } else {
+          history.push({
+            search: jsonToQueryString({
+              type,
+              period
+            })
+          })
+        }
       }
     },
     [history, queryObj]
@@ -144,11 +156,23 @@ const TransactionReportList = ({
           })
         })
       } else {
-        history.push({
-          search: jsonToQueryString({
-            period
+        if (period === 'custom') {
+          history.push({
+            search: jsonToQueryString({
+              period,
+              team,
+              from,
+              to
+            })
           })
-        })
+        } else {
+          history.push({
+            search: jsonToQueryString({
+              period,
+              team
+            })
+          })
+        }
       }
     },
     [history, queryObj]
