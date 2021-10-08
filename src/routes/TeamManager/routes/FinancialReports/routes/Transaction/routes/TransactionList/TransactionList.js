@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Grid } from '@material-ui/core'
+import { Button, Grid, Tooltip } from '@material-ui/core'
+import { CloudDownload } from '@material-ui/icons'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -14,17 +15,23 @@ import TransactionTable from 'components/TransactionTable'
 import SimpleSelect from 'components/SimpleSelect'
 import Spinner from 'components/Spinner'
 import useStyles from './styles'
-import { getTransactions, transactionsSelector, transactionsLoadingSelector } from 'store/modules/transaction'
+import {
+  getTransactions,
+  transactionsSelector,
+  transactionsLoadingSelector,
+  downloadTransactions
+} from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 
-const TransactionReportList = ({
+const TransactionList = ({
   getTransactions,
   transactions,
   isTransactionLoading,
+  downloadTransactions,
   me,
   pagination,
   onChangePage,
@@ -162,6 +169,28 @@ const TransactionReportList = ({
     },
     [history, queryObj]
   )
+  const handleDownload = useCallback(() => {
+    const { from, to, period, type } = queryObj
+    if (!from) {
+      downloadTransactions({
+        fileName: me.team.name,
+        params: {
+          period,
+          type
+        }
+      })
+    } else {
+      downloadTransactions({
+        fileName: me.team.name,
+        params: {
+          period: 'custom',
+          from,
+          to,
+          type
+        }
+      })
+    }
+  }, [downloadTransactions, queryObj, me])
 
   if (isTransactionLoading) return <Spinner />
   else
@@ -174,6 +203,14 @@ const TransactionReportList = ({
               disableWidgetMenu
               WidgetButton={
                 <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+                  <Grid item>
+                    <Tooltip title="Export as CSV" placement="top">
+                      <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
+                        <CloudDownload />
+                        &nbsp;Export
+                      </Button>
+                    </Tooltip>
+                  </Grid>
                   <Grid item>
                     <SimpleSelect
                       label="Type"
@@ -218,6 +255,7 @@ const TransactionReportList = ({
 
 const actions = {
   getTransactions,
+  downloadTransactions,
   show
 }
 
@@ -227,13 +265,14 @@ const selector = createStructuredSelector({
   me: meSelector
 })
 
-TransactionReportList.propTypes = {
+TransactionList.propTypes = {
   getTransactions: PropTypes.func.isRequired,
   transactions: ListDataType,
   isTransactionLoading: PropTypes.bool.isRequired,
   me: PropTypes.object.isRequired,
   show: PropTypes.func.isRequired,
-  pagination: PropTypes.object
+  pagination: PropTypes.object,
+  downloadTransactions: PropTypes.func.isRequired
 }
 
-export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionReportList)
+export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionList)
