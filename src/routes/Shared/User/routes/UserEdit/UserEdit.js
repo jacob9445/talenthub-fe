@@ -35,7 +35,6 @@ const UserEdit = ({ match: { params }, getUserDetail, userDetail, updateUserDeta
 
   const handleSubmit = useCallback(
     (payload, formActions) => {
-      console.log({ payload })
       return formSubmit(
         updateUserDetail,
         {
