@@ -19,7 +19,7 @@ import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 import { parseQueryString, jsonToQueryString } from 'helpers/utils'
-import { periodOptions } from 'config/constants'
+import { periodOptions, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 
 const TransactionReportList = ({
   getTransactions,
@@ -49,12 +49,13 @@ const TransactionReportList = ({
   const classes = useStyles()
 
   useEffect(() => {
-    const { from, to, period } = queryObj
+    const { type = 'all', from, to, period } = queryObj
     if (!from && period !== 'custom') {
       getTransactions({
         me,
         params: {
           ...pagination,
+          type: type === 'all' ? undefined : type,
           period
         }
       })
@@ -64,6 +65,7 @@ const TransactionReportList = ({
         me,
         params: {
           ...pagination,
+          type: type === 'all' ? undefined : type,
           period,
           from,
           to
@@ -74,12 +76,13 @@ const TransactionReportList = ({
 
   const handlePeriodChange = useCallback(
     event => {
-      const { page, page_size } = queryObj
+      const { type = 'all', page, page_size } = queryObj
       const period = event.target.value
       if (period !== 'custom') {
         setShowCustom(0)
         history.push({
           search: jsonToQueryString({
+            type,
             period,
             page,
             page_size
@@ -97,14 +100,60 @@ const TransactionReportList = ({
     [history, queryObj]
   )
 
+  const financialRequestTypeOptions = useMemo(
+    () => [
+      { value: 'all', label: 'All' },
+      ...FINANCIALREQUEST_TYPE_OPTIONS.filter(typeOption => typeOption.value !== FINANCIALREQUEST_TYPE.SENDINVOICE)
+    ],
+    []
+  )
+
+  const handleTypeChange = useCallback(
+    event => {
+      const { team, period, from, to } = queryObj
+      const type = event.target.value
+      if (type !== 'all') {
+        history.push({
+          search: jsonToQueryString({
+            type,
+            team,
+            period,
+            from,
+            to
+          })
+        })
+      } else {
+        if (period === 'custom') {
+          history.push({
+            search: jsonToQueryString({
+              period,
+              team,
+              from,
+              to
+            })
+          })
+        } else {
+          history.push({
+            search: jsonToQueryString({
+              period,
+              team
+            })
+          })
+        }
+      }
+    },
+    [history, queryObj]
+  )
+
   const handleSubmit = useCallback(
     (formValues, formActions) => {
       if (!formValues.from || !formValues.to) {
         return
       } else {
-        const { page, page_size } = queryObj
+        const { type = 'all', page, page_size } = queryObj
         history.push({
           search: jsonToQueryString({
+            type,
             period: 'custom',
             from: formValues.from,
             to: formValues.to,
@@ -128,6 +177,14 @@ const TransactionReportList = ({
               disableWidgetMenu
               WidgetButton={
                 <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+                  <Grid item>
+                    <SimpleSelect
+                      label="Type"
+                      value={queryObj.type || 'all'}
+                      options={financialRequestTypeOptions}
+                      onChange={handleTypeChange}
+                    />
+                  </Grid>
                   <Grid item>
                     <SimpleSelect
                       label="Period"
