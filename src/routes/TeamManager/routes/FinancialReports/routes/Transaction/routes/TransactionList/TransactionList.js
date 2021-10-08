@@ -24,10 +24,10 @@ import {
 import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
-import { parseQueryString, jsonToQueryString, getFullName } from 'helpers/utils'
+import { parseQueryString, jsonToQueryString } from 'helpers/utils'
 import { periodOptions, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 
-const TransactionReportList = ({
+const TransactionList = ({
   getTransactions,
   transactions,
   isTransactionLoading,
@@ -107,51 +107,6 @@ const TransactionReportList = ({
     [history, queryObj]
   )
 
-  const financialRequestTypeOptions = useMemo(
-    () => [
-      { value: 'all', label: 'All' },
-      ...FINANCIALREQUEST_TYPE_OPTIONS.filter(typeOption => typeOption.value !== FINANCIALREQUEST_TYPE.SENDINVOICE)
-    ],
-    []
-  )
-
-  const handleTypeChange = useCallback(
-    event => {
-      const { team, period, from, to } = queryObj
-      const type = event.target.value
-      if (type !== 'all') {
-        history.push({
-          search: jsonToQueryString({
-            type,
-            team,
-            period,
-            from,
-            to
-          })
-        })
-      } else {
-        if (period === 'custom') {
-          history.push({
-            search: jsonToQueryString({
-              period,
-              team,
-              from,
-              to
-            })
-          })
-        } else {
-          history.push({
-            search: jsonToQueryString({
-              period,
-              team
-            })
-          })
-        }
-      }
-    },
-    [history, queryObj]
-  )
-
   const handleSubmit = useCallback(
     (formValues, formActions) => {
       if (!formValues.from || !formValues.to) {
@@ -173,22 +128,65 @@ const TransactionReportList = ({
     [history, queryObj]
   )
 
+  const financialRequestTypeOptions = useMemo(
+    () => [
+      { value: 'all', label: 'All' },
+      ...FINANCIALREQUEST_TYPE_OPTIONS.filter(typeOption => typeOption.value !== FINANCIALREQUEST_TYPE.SENDINVOICE)
+    ],
+    []
+  )
+
+  const handleTypeChange = useCallback(
+    event => {
+      const { period, from, to } = queryObj
+      const type = event.target.value
+      if (type !== 'all') {
+        history.push({
+          search: jsonToQueryString({
+            type,
+            period,
+            from,
+            to
+          })
+        })
+      } else {
+        if (period === 'custom') {
+          history.push({
+            search: jsonToQueryString({
+              period,
+              from,
+              to
+            })
+          })
+        } else {
+          history.push({
+            search: jsonToQueryString({
+              period
+            })
+          })
+        }
+      }
+    },
+    [history, queryObj]
+  )
   const handleDownload = useCallback(() => {
-    const { from, to, period } = queryObj
+    const { from, to, period, type } = queryObj
     if (!from) {
       downloadTransactions({
-        teamOrUserName: getFullName(me),
+        fileName: me.team.name,
         params: {
-          period
+          period,
+          type
         }
       })
     } else {
       downloadTransactions({
-        teamOrUserName: getFullName(me),
+        fileName: me.team.name,
         params: {
           period: 'custom',
           from,
-          to
+          to,
+          type
         }
       })
     }
@@ -267,7 +265,7 @@ const selector = createStructuredSelector({
   me: meSelector
 })
 
-TransactionReportList.propTypes = {
+TransactionList.propTypes = {
   getTransactions: PropTypes.func.isRequired,
   transactions: ListDataType,
   isTransactionLoading: PropTypes.bool.isRequired,
@@ -277,4 +275,4 @@ TransactionReportList.propTypes = {
   downloadTransactions: PropTypes.func.isRequired
 }
 
-export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionReportList)
+export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionList)

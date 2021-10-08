@@ -5,7 +5,6 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
-import * as R from 'ramda'
 import { show } from 'redux-modal'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
@@ -15,7 +14,6 @@ import Widget from 'components/Widget'
 import TransactionTable from 'components/TransactionTable'
 import SimpleSelect from 'components/SimpleSelect'
 import Spinner from 'components/Spinner'
-import { getTeams, teamsSelector } from 'store/modules/team'
 import useStyles from './styles'
 import {
   getTransactions,
@@ -26,17 +24,15 @@ import {
 import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
-import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import { parseQueryString, jsonToQueryString, getFullName } from 'helpers/utils'
 import { periodOptions, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 
-const TransactionReportList = ({
+const TransactionList = ({
   getTransactions,
   transactions,
   isTransactionLoading,
   downloadTransactions,
   me,
-  teams,
-  getTeams,
   pagination,
   onChangePage,
   onChangeRowsPerPage,
@@ -59,28 +55,15 @@ const TransactionReportList = ({
   const [showCustom, setShowCustom] = useState(initialShowCustom)
   const classes = useStyles()
 
-  const getTeamName = useCallback(
-    teamId =>
-      R.compose(R.prop('name'), R.defaultTo({ name: 'All' }), R.find(R.propEq('id', teamId)), R.defaultTo([]))(teams),
-    [teams]
-  )
-
-  const teamName = getTeamName(Number(queryObj.team))
-
   useEffect(() => {
-    getTeams()
-  }, [getTeams])
-
-  useEffect(() => {
-    const { type = 'all', from, to, team = 'all', period } = queryObj
+    const { type = 'all', from, to, period } = queryObj
     if (!from && period !== 'custom') {
       getTransactions({
         me,
         params: {
           ...pagination,
-          period,
-          team: team === 'all' ? undefined : team,
-          type: type === 'all' ? undefined : type
+          type: type === 'all' ? undefined : type,
+          period
         }
       })
     }
@@ -89,9 +72,8 @@ const TransactionReportList = ({
         me,
         params: {
           ...pagination,
-          period,
-          team: team === 'all' ? undefined : team,
           type: type === 'all' ? undefined : type,
+          period,
           from,
           to
         }
@@ -99,17 +81,30 @@ const TransactionReportList = ({
     }
   }, [getTransactions, me, pagination, queryObj])
 
-  const teamOptions = useMemo(
-    () => [
-      { value: 'all', label: 'All' },
-      ...(teams
-        ? teams.map(team => ({
-            value: team.id.toString(),
-            label: team.name
-          }))
-        : [])
-    ],
-    [teams]
+  const handlePeriodChange = useCallback(
+    event => {
+      const { type = 'all', page, page_size } = queryObj
+      const period = event.target.value
+      if (period !== 'custom') {
+        setShowCustom(0)
+        history.push({
+          search: jsonToQueryString({
+            type,
+            period,
+            page,
+            page_size
+          })
+        })
+      } else {
+        setShowCustom(1)
+        history.push({
+          search: jsonToQueryString({
+            period
+          })
+        })
+      }
+    },
+    [history, queryObj]
   )
 
   const financialRequestTypeOptions = useMemo(
@@ -118,43 +113,6 @@ const TransactionReportList = ({
       ...FINANCIALREQUEST_TYPE_OPTIONS.filter(typeOption => typeOption.value !== FINANCIALREQUEST_TYPE.SENDINVOICE)
     ],
     []
-  )
-
-  const handleTeamChange = useCallback(
-    event => {
-      const { type = 'all', period, from, to } = queryObj
-      const team = event.target.value
-      if (team !== 'all') {
-        history.push({
-          search: jsonToQueryString({
-            type,
-            period,
-            team,
-            from,
-            to
-          })
-        })
-      } else {
-        if (period === 'custom') {
-          history.push({
-            search: jsonToQueryString({
-              type,
-              period,
-              from,
-              to
-            })
-          })
-        } else {
-          history.push({
-            search: jsonToQueryString({
-              type,
-              period
-            })
-          })
-        }
-      }
-    },
-    [history, queryObj]
   )
 
   const handleTypeChange = useCallback(
@@ -194,43 +152,15 @@ const TransactionReportList = ({
     [history, queryObj]
   )
 
-  const handlePeriodChange = useCallback(
-    event => {
-      const { type = 'all', team, page, page_size } = queryObj
-      const period = event.target.value
-      if (period !== 'custom') {
-        setShowCustom(0)
-        history.push({
-          search: jsonToQueryString({
-            type,
-            team,
-            period,
-            page,
-            page_size
-          })
-        })
-      } else {
-        setShowCustom(1)
-        history.push({
-          search: jsonToQueryString({
-            type,
-            period,
-            team
-          })
-        })
-      }
-    },
-    [history, queryObj]
-  )
-
   const handleSubmit = useCallback(
     (formValues, formActions) => {
       if (!formValues.from || !formValues.to) {
         return
       } else {
-        const { page, page_size } = queryObj
+        const { type = 'all', page, page_size } = queryObj
         history.push({
           search: jsonToQueryString({
+            type,
             period: 'custom',
             from: formValues.from,
             to: formValues.to,
@@ -244,27 +174,27 @@ const TransactionReportList = ({
   )
 
   const handleDownload = useCallback(() => {
-    const { from, to, period, team } = queryObj
+    const { from, to, period, type } = queryObj
     if (!from) {
       downloadTransactions({
-        teamOrUserName: teamName,
+        fileName: getFullName(me),
         params: {
           period,
-          team
+          type
         }
       })
     } else {
       downloadTransactions({
-        teamOrUserName: teamName,
+        fileName: getFullName(me),
         params: {
-          team,
           period: 'custom',
           from,
-          to
+          to,
+          type
         }
       })
     }
-  }, [downloadTransactions, queryObj, teamName])
+  }, [downloadTransactions, queryObj, me])
 
   if (isTransactionLoading) return <Spinner />
   else
@@ -301,14 +231,6 @@ const TransactionReportList = ({
                       onChange={handlePeriodChange}
                     />
                   </Grid>
-                  <Grid item>
-                    <SimpleSelect
-                      label="Team"
-                      value={queryObj.team || 'all'}
-                      options={teamOptions}
-                      onChange={handleTeamChange}
-                    />
-                  </Grid>
                 </Grid>
               }>
               {showCustom ? (
@@ -337,7 +259,6 @@ const TransactionReportList = ({
 
 const actions = {
   getTransactions,
-  getTeams,
   downloadTransactions,
   show
 }
@@ -345,19 +266,17 @@ const actions = {
 const selector = createStructuredSelector({
   transactions: transactionsSelector,
   isTransactionLoading: transactionsLoadingSelector,
-  me: meSelector,
-  teams: teamsSelector
+  me: meSelector
 })
 
-TransactionReportList.propTypes = {
+TransactionList.propTypes = {
   getTransactions: PropTypes.func.isRequired,
   transactions: ListDataType,
   isTransactionLoading: PropTypes.bool.isRequired,
   me: PropTypes.object.isRequired,
   show: PropTypes.func.isRequired,
   pagination: PropTypes.object,
-  teams: PropTypes.array,
   downloadTransactions: PropTypes.func.isRequired
 }
 
-export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionReportList)
+export default compose(withRouter, withPaginationInfo, connect(selector, actions))(TransactionList)

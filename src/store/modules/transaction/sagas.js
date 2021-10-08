@@ -29,14 +29,14 @@ const downloadTransactions = createApiCallSaga({
   method: 'GET',
   payloadOnSuccess: (resData, action) => {
     const href = generateHrefFromText(resData)
-    downloadFile(href, `Transaction-${action.payload.teamOrUserName}.csv`)
+    downloadFile(href, `Transaction-${action.payload.fileName}.csv`)
     return null
   },
   path: function*() {
     return yield roleBasedPath(`downloads/report/transactions/`)
   },
   selectorKey: 'transactionDownload',
-  allowedParamKeys: ['period', 'from', 'to', 'team']
+  allowedParamKeys: ['period', 'from', 'to', 'team', 'type']
 })
 
 export default function* rootSaga() {
