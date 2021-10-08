@@ -83,7 +83,7 @@ const TransactionList = ({
 
   const handlePeriodChange = useCallback(
     event => {
-      const { type = 'all', page, page_size } = queryObj
+      const { type, page, page_size } = queryObj
       const period = event.target.value
       if (period !== 'custom') {
         setShowCustom(0)
@@ -157,7 +157,7 @@ const TransactionList = ({
       if (!formValues.from || !formValues.to) {
         return
       } else {
-        const { type = 'all', page, page_size } = queryObj
+        const { type, page, page_size } = queryObj
         history.push({
           search: jsonToQueryString({
             type,
