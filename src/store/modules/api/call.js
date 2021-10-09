@@ -70,12 +70,11 @@ const createApiCallSaga = ({
     if (useCache && prettifyMethod(method) === 'get') {
       const previousFootprintSelector = createRequestFootprintSelector(requestSelectorKey || selectorKey)
       const prevReqFootprint = yield select(previousFootprintSelector)
-      if (R.equals(prevReqFootprint, reqFootprint)) return true
-
+      const previousDataSelector = createDataSelector(selectorKey)
+      const previousData = yield select(previousDataSelector)
+      if (R.equals(prevReqFootprint, reqFootprint) && previousData) return true
       const reqFootprintForRetrieve = footprint ? footprint(payload) : null
       if (reqFootprintForRetrieve) {
-        const previousDataSelector = createDataSelector(selectorKey)
-        const previousData = yield select(previousDataSelector)
         const prevResFootprint = previousData ? R.pick(R.keys(reqFootprintForRetrieve), previousData) : null
         if (R.equals(prevResFootprint, reqFootprintForRetrieve)) return true
       }

@@ -2,6 +2,7 @@ import { takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
+import { getDate } from 'routes/Shared/Logging/routes/utils'
 
 const getDailyLogs = createApiCallSaga({
   type: Types.GET_DAILY_LOGS,
@@ -97,7 +98,10 @@ const retrieveWeeklyLog = createApiCallSaga({
   selectorKey: 'weeklyLogDetail',
   requestSelectorKey: 'retrieveWeeklyLog',
   allowedParamKeys: ['page', 'page_size', 'owner'],
-  footprint: payload => ({ createdAt: payload.date, owner: payload.params.owner })
+  footprint: payload => ({
+    createdAt: getDate(null, payload.year, null, payload.week, null),
+    owner: payload.params.owner
+  })
 })
 
 const retrieveMonthlyLog = createApiCallSaga({
@@ -111,7 +115,10 @@ const retrieveMonthlyLog = createApiCallSaga({
   selectorKey: 'monthlyLogDetail',
   requestSelectorKey: 'retrieveMonthlyLog',
   allowedParamKeys: ['page', 'page_size', 'owner'],
-  footprint: payload => ({ createdAt: payload.date, owner: payload.params.owner })
+  footprint: payload => ({
+    createdAt: getDate(null, payload.year, payload.month, null, null),
+    owner: payload.params.owner
+  })
 })
 
 export default function* rootSaga() {
