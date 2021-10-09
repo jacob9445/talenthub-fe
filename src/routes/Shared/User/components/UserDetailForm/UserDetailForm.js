@@ -46,16 +46,17 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
   const classes = useStyles()
 
   useEffect(() => {
-    getTeams()
-  }, [getTeams])
+    if (me.role === ROLES.ADMIN) getTeams()
+  }, [getTeams, me])
 
-  const options = useMemo(
+  const teamOptions = useMemo(
     () =>
-      typeof teams !== 'undefined' &&
-      teams.map(team => ({
-        value: team.id,
-        label: team.name
-      })),
+      typeof teams !== 'undefined'
+        ? teams.map(team => ({
+            value: team.id,
+            label: team.name
+          }))
+        : [],
     [teams]
   )
 
@@ -65,7 +66,7 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
     location.state ? history.push(location.state) : history.push('/admin/users')
   }, [location, history])
 
-  if (!teams) return <Spinner />
+  if (me.role === ROLES.ADMIN && !teams) return <Spinner />
   else
     return (
       <form onSubmit={handleSubmit}>
@@ -73,10 +74,13 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
         <Field component={FormInput} htmlId="last_name" type="text" name="last_name" label="Last Name" />
         <Field component={FormInput} htmlId="email" type="email" name="email" label="Email" />
         {me.role === ROLES.ADMIN && (
-          <Field component={FormSelect} htmlId="role" name="role" label="Role" options={ROLE_OPTIONS} />
+          <>
+            <Field component={FormSelect} htmlId="role" name="role" label="Role" options={ROLE_OPTIONS} />
+            <Field component={FormEditableSelect} htmlId="team" name="team" label="Team" options={teamOptions} />
+          </>
         )}
         {!isEdit && (
-          <React.Fragment>
+          <>
             <Field component={FormInput} htmlId="password" type="password" name="password" label="Password" />
             <Field
               component={FormInput}
@@ -85,9 +89,8 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
               name="confirm_password"
               label="Confirm password"
             />
-          </React.Fragment>
+          </>
         )}
-        <Field component={FormEditableSelect} htmlId="team" name="team" label="Team" options={options} />
         <div className={classes.formButtonWrapper}>
           <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
             {isEdit ? 'Update' : 'Create'}
