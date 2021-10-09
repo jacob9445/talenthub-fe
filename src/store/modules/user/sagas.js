@@ -1,17 +1,16 @@
 import { put, takeLatest, select } from 'redux-saga/effects'
 import { createApiCallSaga, setApiData } from '../api'
 import * as Types from './types'
-import { ROLES } from 'config/constants'
 import { showMessage } from '../message'
 import { createTeamMembersSelector } from 'store/modules/team'
 import { unassignedUsersSelector } from 'store/modules/user'
+import { roleBasedPath } from 'helpers/sagaHelpers'
 
 const getUsers = createApiCallSaga({
   type: Types.USERS_GETUSERS,
   method: 'GET',
-  path: ({ payload }) => {
-    if (payload.role === ROLES.ADMIN) return 'api/admin/users/'
-    else if (payload.role === ROLES.TEAM_MANAGER) return 'api/team-manager/users/'
+  path: function*() {
+    return yield roleBasedPath('users/')
   },
   selectorKey: 'users',
   allowedParamKeys: ['page', 'page_size']
@@ -28,30 +27,31 @@ const searchUsers = createApiCallSaga({
 const deleteUser = createApiCallSaga({
   type: Types.USERS_DELETEUSER,
   method: 'DELETE',
-  path: ({ payload }) => `api/admin/users/${payload.id}/`
+  path: function*({ payload }) {
+    return yield roleBasedPath(`users/${payload.id}/`)
+  }
 })
 
 const deleteUserAndRefresh = function*(action) {
   yield deleteUser(action)
-  yield getUsers({
-    type: Types.USERS_GETUSERS,
-    payload: {
-      role: ROLES.ADMIN
-    }
-  })
+  yield getUsers(action)
 }
 
 const getUserDetail = createApiCallSaga({
   type: Types.GET_USER_DETAIL,
   method: 'GET',
-  path: ({ payload }) => `api/admin/users/${payload}/`,
+  path: function*({ payload }) {
+    return yield roleBasedPath(`users/${payload}/`)
+  },
   selectorKey: 'userDetail'
 })
 
 const updateUserDetail = createApiCallSaga({
   type: Types.UPDATE_USER_DETAIL,
   method: 'PATCH',
-  path: ({ payload: { id } }) => `api/admin/users/${id}/`,
+  path: function*({ payload }) {
+    return yield roleBasedPath(`users/${payload.id}/`)
+  },
   selectorKey: 'userDetail'
 })
 
