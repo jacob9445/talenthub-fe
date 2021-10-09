@@ -19,19 +19,19 @@ const Logging = ({ match: { path }, match }) => {
       <Route exact path={`${parentPath}/daily`} component={DailyLogs} />
       <Route
         exact
-        path={`${parentPath}/daily/:id`}
+        path={`${parentPath}/daily/:id/detail`}
         render={props => <DailyLogDetail {...props} interval={interval} />}
       />
       <Route exact path={`${parentPath}/monthly`} component={MonthlyLogs} />
       <Route
         exact
-        path={`${parentPath}/monthly/:id`}
+        path={`${parentPath}/monthly/:id/detail`}
         render={props => <MonthlyLogDetail {...props} interval={interval} />}
       />
       <Route exact path={`${parentPath}/weekly`} component={WeeklyLogs} />
       <Route
         exact
-        path={`${parentPath}/weekly/:id`}
+        path={`${parentPath}/weekly/:id/detail`}
         render={props => <WeeklyLogDetail {...props} interval={interval} />}
       />
       <Route

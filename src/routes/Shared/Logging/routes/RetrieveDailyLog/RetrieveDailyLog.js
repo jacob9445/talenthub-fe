@@ -44,7 +44,7 @@ const RetrieveDailyLog = ({
     return <Spinner />
   } else {
     return dailyLog && shouldRedirect(dailyLog, year, month, null, day, userId) ? (
-      <Redirect to={`/${URL_PREFIXES[me.role]}/logging/daily/${dailyLog.id}`} />
+      <Redirect to={`/${URL_PREFIXES[me.role]}/logging/daily/${dailyLog.id}/detail`} />
     ) : (
       <LogDetail logDetail={dailyLog} onGoBack={handleGoBack} interval={interval} />
     )

@@ -426,17 +426,17 @@ export const NOTIFICATION_CONFIG = {
   reporting_log_daily: {
     title: 'Daily Log',
     objectName: 'daily log',
-    path: 'logging/daily-logs'
+    path: 'logging/daily'
   },
   reporting_log_weekly: {
     title: 'Weekly Log',
     objectName: 'weely log',
-    path: 'logging/weekly-logs'
+    path: 'logging/weekly'
   },
   reporting_log_monthly: {
     title: 'Monthly Log',
     objectName: 'monthly log',
-    path: 'logging/monthly-logs'
+    path: 'logging/monthly'
   }
 }
 
