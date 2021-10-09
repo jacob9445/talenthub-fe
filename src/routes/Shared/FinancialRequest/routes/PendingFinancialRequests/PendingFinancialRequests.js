@@ -20,13 +20,7 @@ import {
 } from 'store/modules/financialRequest'
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
-import {
-  FINANCIALREQUEST_TYPE,
-  ROLES,
-  FINANCIALREQUEST_STATUS,
-  FINANCIALREQUEST_ORDERBY_KEYS,
-  URL_PREFIXES
-} from 'config/constants'
+import { FINANCIALREQUEST_TYPE, ROLES, FINANCIALREQUEST_STATUS, URL_PREFIXES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
@@ -49,8 +43,7 @@ const PendingFinancialRequest = ({
       me: me,
       params: {
         ...pagination,
-        status: FINANCIALREQUEST_STATUS.PENDING,
-        ordering: FINANCIALREQUEST_ORDERBY_KEYS.DESCENDING
+        status: FINANCIALREQUEST_STATUS.PENDING
       }
     })
   }, [getFinancialRequests, me, pagination])
@@ -60,8 +53,7 @@ const PendingFinancialRequest = ({
       me: me,
       params: {
         ...pagination,
-        status: FINANCIALREQUEST_STATUS.PENDING,
-        ordering: FINANCIALREQUEST_ORDERBY_KEYS.DESCENDING
+        status: FINANCIALREQUEST_STATUS.PENDING
       }
     })
   }, [me, pagination, getFinancialRequests])

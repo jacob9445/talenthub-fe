@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import TransactionForm from 'components/TransactionForm'
 import { approveFinancialRequest, getFinancialRequests } from 'store/modules/financialRequest'
 import { formSubmit } from 'helpers/form'
-import { PAYMENT_PLATFORM_TYPE, FINANCIALREQUEST_STATUS, FINANCIALREQUEST_ORDERBY_KEYS } from 'config/constants'
+import { PAYMENT_PLATFORM_TYPE, FINANCIALREQUEST_STATUS } from 'config/constants'
 import { getPendingRequests } from 'store/modules/dashboard'
 
 const formatDate = date => {
@@ -61,8 +61,7 @@ const ApproveRequestModal = ({
                 me: me,
                 params: {
                   ...pagination,
-                  status: FINANCIALREQUEST_STATUS.PENDING,
-                  ordering: FINANCIALREQUEST_ORDERBY_KEYS.DESCENDING
+                  status: FINANCIALREQUEST_STATUS.PENDING
                 }
               })
             }
