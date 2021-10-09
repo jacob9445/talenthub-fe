@@ -14,12 +14,5 @@ export default makeStyles(theme => ({
   content: {
     paddingTop: theme.spacing(1) / 2,
     paddingBottom: theme.spacing(1) / 2
-  },
-  link: {
-    textDecoration: 'None',
-    color: theme.palette.primary.main,
-    '&:hover': {
-      textDecoration: 'underline'
-    }
   }
 }))
