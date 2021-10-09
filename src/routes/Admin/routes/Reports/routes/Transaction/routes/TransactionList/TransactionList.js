@@ -122,7 +122,7 @@ const TransactionList = ({
 
   const handleTeamChange = useCallback(
     event => {
-      const { type = 'all', period, from, to } = queryObj
+      const { type, period, from, to } = queryObj
       const team = event.target.value
       if (team !== 'all') {
         history.push({
@@ -196,7 +196,7 @@ const TransactionList = ({
 
   const handlePeriodChange = useCallback(
     event => {
-      const { type = 'all', team, page, page_size } = queryObj
+      const { type, team, page, page_size } = queryObj
       const period = event.target.value
       if (period !== 'custom') {
         setShowCustom(0)
