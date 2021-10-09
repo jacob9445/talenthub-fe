@@ -30,9 +30,10 @@ const NotificationCenter = ({
   useEffect(() => getNotifications(), [getNotifications])
 
   const handleReadAll = useCallback(() => setAllRead(), [setAllRead])
+  const handleClose = useCallback(() => closeNC(), [closeNC])
 
   return (
-    <Drawer anchor="right" open={status} onClose={() => closeNC()}>
+    <Drawer anchor="right" open={status} onClose={handleClose}>
       <div tabIndex={0} role="button">
         <div className={classes.list}>
           <div className={classes.notificationHeader}>
