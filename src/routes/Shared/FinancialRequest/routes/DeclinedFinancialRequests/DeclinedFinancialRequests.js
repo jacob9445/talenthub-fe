@@ -5,7 +5,6 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
-import { show } from 'redux-modal'
 
 import Widget from 'components/Widget'
 import FinancialRequestsTable from '../../components/FinancialRequestTable'
@@ -14,13 +13,11 @@ import {
   getFinancialRequests,
   financialRequestsSelector,
   financialRequestsLoadingSelector,
-  cancelFinancialRequest,
-  declineFinancialRequest,
-  approveFinancialRequest
+  cancelFinancialRequest
 } from 'store/modules/financialRequest'
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
-import { FINANCIALREQUEST_TYPE, ROLES, URL_PREFIXES, FINANCIALREQUEST_STATUS } from 'config/constants'
+import { ROLES, URL_PREFIXES, FINANCIALREQUEST_STATUS } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
@@ -30,14 +27,21 @@ const DeclinedFinancialRequest = ({
   isFinancialRequestsLoading,
   me,
   cancelFinancialRequest,
-  declineFinancialRequest,
-  show,
-  approveFinancialRequest,
   pagination,
   onChangePage,
   onChangeRowsPerPage
 }) => {
-  const getDeclinedFinancialRequests = useEffect(() => {
+  useEffect(() => {
+    getFinancialRequests({
+      me: me,
+      params: {
+        ...pagination,
+        status: FINANCIALREQUEST_STATUS.DECLINED,
+      }
+    })
+  }, [getFinancialRequests, me, pagination])
+
+  const getDeclinedFinancialRequests = useCallback(() => {
     getFinancialRequests({
       me: me,
       params: {
@@ -51,39 +55,10 @@ const DeclinedFinancialRequest = ({
     id => {
       cancelFinancialRequest({
         id,
-        success: () => getDeclinedFinancialRequests()
+        success: getDeclinedFinancialRequests
       })
     },
     [cancelFinancialRequest, getDeclinedFinancialRequests]
-  )
-
-  const handleApprove = useCallback(
-    (requestId, gross_amount, request_type) => {
-      if (request_type === FINANCIALREQUEST_TYPE.SENDINVOICE) {
-        approveFinancialRequest({
-          id: requestId,
-          success: () => getDeclinedFinancialRequests()
-        })
-      } else {
-        show('approveRequestModal', { requestId, gross_amount })
-      }
-    },
-    [show, approveFinancialRequest, getDeclinedFinancialRequests]
-  )
-
-  const handleDecline = useCallback(
-    id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to decline the request?',
-        proceed: () => {
-          declineFinancialRequest({
-            id,
-            success: () => getDeclinedFinancialRequests()
-          })
-        }
-      })
-    },
-    [show, declineFinancialRequest, getDeclinedFinancialRequests]
   )
 
   if (isFinancialRequestsLoading) return <Spinner />
@@ -108,8 +83,6 @@ const DeclinedFinancialRequest = ({
                 data={financialRequests}
                 me={me}
                 onCancel={handleCancel}
-                onApprove={handleApprove}
-                onDecline={handleDecline}
                 pagination={pagination}
                 onChangePage={onChangePage}
                 onChangeRowsPerPage={onChangeRowsPerPage}
@@ -124,10 +97,7 @@ const DeclinedFinancialRequest = ({
 
 const actions = {
   getFinancialRequests,
-  cancelFinancialRequest,
-  declineFinancialRequest,
-  approveFinancialRequest,
-  show
+  cancelFinancialRequest
 }
 
 const selector = createStructuredSelector({
@@ -142,9 +112,6 @@ DeclinedFinancialRequest.propTypes = {
   isFinancialRequestsLoading: PropTypes.bool.isRequired,
   me: PropTypes.object.isRequired,
   cancelFinancialRequest: PropTypes.func.isRequired,
-  declineFinancialRequest: PropTypes.func.isRequired,
-  approveFinancialRequest: PropTypes.func.isRequired,
-  show: PropTypes.func.isRequired,
   pagination: PropTypes.object
 }
 
