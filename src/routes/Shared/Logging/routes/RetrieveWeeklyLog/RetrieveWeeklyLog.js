@@ -44,7 +44,7 @@ const RetrieveWeeklyLog = ({
     return <Spinner />
   } else {
     return weeklyLog && shouldRedirect(weeklyLog, year, null, week, null, userId) ? (
-      <Redirect to={`/${URL_PREFIXES[me.role]}/logging/weekly/${weeklyLog.id}`} />
+      <Redirect to={`/${URL_PREFIXES[me.role]}/logging/weekly/${weeklyLog.id}/detail`} />
     ) : (
       <LogDetail logDetail={weeklyLog} onGoBack={handleGoBack} interval={interval} />
     )

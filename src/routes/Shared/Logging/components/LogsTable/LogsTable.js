@@ -34,7 +34,7 @@ function LogsTable({
   const handleRowClick = useCallback(
     id => e => {
       e.preventDefault()
-      history.push(`/${URL_PREFIXES[role]}/logging/${interval}/${id}`, `${location.pathname}${location.search}`)
+      history.push(`/${URL_PREFIXES[role]}/logging/${interval}/${id}/detail`, `${location.pathname}${location.search}`)
     },
     [location, history, interval, role]
   )
