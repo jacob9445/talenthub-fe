@@ -20,13 +20,7 @@ import {
 } from 'store/modules/financialRequest'
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
-import {
-  FINANCIALREQUEST_TYPE,
-  ROLES,
-  URL_PREFIXES,
-  FINANCIALREQUEST_STATUS,
-  FINANCIALREQUEST_ORDERBY_KEYS
-} from 'config/constants'
+import { FINANCIALREQUEST_TYPE, ROLES, URL_PREFIXES, FINANCIALREQUEST_STATUS } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
@@ -48,8 +42,7 @@ const DeclinedFinancialRequest = ({
       me: me,
       params: {
         ...pagination,
-        status: FINANCIALREQUEST_STATUS.DECLINED,
-        ordering: FINANCIALREQUEST_ORDERBY_KEYS.DESCENDING
+        status: FINANCIALREQUEST_STATUS.DECLINED
       }
     })
   }, [getFinancialRequests, me, pagination])

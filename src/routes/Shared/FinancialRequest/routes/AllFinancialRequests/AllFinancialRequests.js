@@ -20,7 +20,7 @@ import {
 } from 'store/modules/financialRequest'
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
-import { FINANCIALREQUEST_TYPE, ROLES, URL_PREFIXES, FINANCIALREQUEST_ORDERBY_KEYS } from 'config/constants'
+import { FINANCIALREQUEST_TYPE, ROLES, URL_PREFIXES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
@@ -40,7 +40,7 @@ const AllFinancialRequest = ({
   useEffect(() => {
     getFinancialRequests({
       me: me,
-      params: { ...pagination, ordering: FINANCIALREQUEST_ORDERBY_KEYS.ASCENDING }
+      params: { ...pagination }
     })
   }, [getFinancialRequests, me, pagination])
 
@@ -48,8 +48,7 @@ const AllFinancialRequest = ({
     getFinancialRequests({
       me: me,
       params: {
-        ...pagination,
-        ordering: FINANCIALREQUEST_ORDERBY_KEYS.ASCENDING
+        ...pagination
       }
     })
   }, [me, pagination, getFinancialRequests])
