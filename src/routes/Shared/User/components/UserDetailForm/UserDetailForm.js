@@ -15,7 +15,7 @@ import { getTeams, teamsSelector } from 'store/modules/team'
 import { meSelector } from 'store/modules/auth/selectors'
 import Spinner from 'components/Spinner'
 import FormSelect from 'components/FormSelect'
-import { ROLE_OPTIONS, ROLES } from 'config/constants'
+import { ROLE_OPTIONS, ROLES, URL_PREFIXES } from 'config/constants'
 
 export const initialValues = {
   first_name: '',
@@ -63,8 +63,8 @@ const UserDetailForm = ({ match: { path }, location, history, handleSubmit, team
   const isEdit = useMemo(() => path.includes('detail'), [path])
 
   const handleCancel = useCallback(() => {
-    location.state ? history.push(location.state) : history.push('/admin/users')
-  }, [location, history])
+    location.state ? history.push(location.state) : history.push(`${URL_PREFIXES[me.role]}/users`)
+  }, [location, history, me])
 
   if (me.role === ROLES.ADMIN && !teams) return <Spinner />
   else
