@@ -11,6 +11,7 @@ import { setSnackbarTouched } from 'helpers/utils'
 import { OPEN_NC } from 'store/modules/notification/types'
 
 import { hideMessage, messageStateSelector, messageOptionSelector } from 'store/modules/message'
+import audio from './audio.wav'
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -90,6 +91,11 @@ const Message = ({ hideMessage, state, options, dispatch }) => {
               </Icon>
             )}
             {options.message}
+            {state ? (
+              <audio autoPlay>
+                <source src={audio} type="audio/wav" />
+              </audio>
+            ) : null}
           </div>
         }
         action={[
