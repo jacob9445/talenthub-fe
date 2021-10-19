@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem } from '@material-ui/core'
-import { Menu as MenuIcon, Person as AccountIcon, ArrowBack as ArrowBackIcon } from '@material-ui/icons'
+import { List as ListIcon, Person as AccountIcon, VerticalSplit as VSIcon } from '@material-ui/icons'
 import Badge from '@material-ui/core/Badge'
 import { NotificationsActive, NotificationsNone } from '@material-ui/icons'
 import classNames from 'classnames'
@@ -39,13 +39,13 @@ function Header({ me, authLogout, openNC, notifications }) {
           onClick={() => toggleSidebar(layoutDispatch)}
           className={classNames(classes.headerMenuButtonSandwich, classes.headerMenuButtonCollapse)}>
           {layoutState.isSidebarOpened ? (
-            <ArrowBackIcon
+            <ListIcon
               classes={{
                 root: classNames(classes.headerIcon, classes.headerIconCollapse)
               }}
             />
           ) : (
-            <MenuIcon
+            <VSIcon
               classes={{
                 root: classNames(classes.headerIcon, classes.headerIconCollapse)
               }}
