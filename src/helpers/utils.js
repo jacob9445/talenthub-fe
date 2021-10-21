@@ -150,3 +150,18 @@ export const downloadFile = (url, fileName) => {
 
   link.dispatchEvent(event)
 }
+
+export const bindCallbackToPromise = () => {
+  let _resolve
+  const promise = () => {
+    return new Promise(resolve => {
+      _resolve = resolve
+    })
+  }
+  const cb = args => _resolve(args)
+
+  return {
+    promise,
+    cb
+  }
+}
