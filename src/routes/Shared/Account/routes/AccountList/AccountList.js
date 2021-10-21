@@ -45,15 +45,12 @@ const AccountList = ({
   }, [getAccounts, pagination, initialValues])
 
   const handleDelete = useCallback(
-    id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to delete the account?',
-        proceed: () => {
-          deleteAccountAndRefresh(id)
-        }
-      })
-    },
-    [show, deleteAccountAndRefresh]
+    id =>
+      deleteAccountAndRefresh({
+        id,
+        message: 'Are you sure to delete this account?'
+      }),
+    [deleteAccountAndRefresh]
   )
 
   const handleSubmit = useCallback(
