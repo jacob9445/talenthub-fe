@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
-import { roleBasedPath } from 'helpers/sagaHelpers'
+import { roleBasedPath, confirm } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
 const getProfiles = createApiCallSaga({
@@ -35,15 +35,18 @@ const deleteProfile = createApiCallSaga({
   type: Types.DELETE_PROFILE,
   method: 'DELETE',
   path: function*({ payload }) {
-    return yield roleBasedPath(`profiles/${payload}/`)
+    return yield roleBasedPath(`profiles/${payload.id}/`)
   }
 })
 
 const deleteProfileAndRefresh = function*(action) {
-  yield deleteProfile(action)
-  yield getProfiles({
-    type: Types.GET_PROFILES
-  })
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) {
+    yield deleteProfile(action)
+    yield getProfiles({
+      type: Types.GET_PROFILES
+    })
+  }
 }
 
 const createProfile = createApiCallSaga({

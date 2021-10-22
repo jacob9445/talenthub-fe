@@ -15,8 +15,8 @@ import {
   getFinancialRequestDetail,
   financialRequestDetailSelector,
   financialRequestDetailLoadingSelector,
-  cancelFinancialRequest,
-  declineFinancialRequest,
+  confirmCancelFinancialRequest as cancelFinancialRequest,
+  confirmDeclineFinancialRequest as declineFinancialRequest,
   approveFinancialRequest
 } from 'store/modules/financialRequest'
 import useStyles from './styles'
@@ -68,21 +68,20 @@ const FinancialRequestDetail = ({
     }
   }, [show, approveFinancialRequest, financialRequestDetail])
 
-  const handleDecline = useCallback(() => {
-    show('confirmModal', {
-      confirmation: 'Are you sure to decline the request?',
-      proceed: () => {
-        declineFinancialRequest({
-          id: financialRequestDetail.id
-        })
-      }
-    })
-  }, [show, declineFinancialRequest, financialRequestDetail])
+  const handleDecline = useCallback(
+    () =>
+      declineFinancialRequest({
+        id: financialRequestDetail.id,
+        message: 'Are you sure to decline this request?'
+      }),
+    [declineFinancialRequest, financialRequestDetail]
+  )
 
   const handleCancel = useCallback(() => {
     cancelFinancialRequest({
       id: financialRequestDetail.id,
-      success: () => getFinancialRequestDetail(params.id)
+      success: () => getFinancialRequestDetail(params.id),
+      message: 'Are you sure to cancel this request?'
     })
   }, [cancelFinancialRequest, getFinancialRequestDetail, params.id, financialRequestDetail])
 

@@ -9,3 +9,5 @@ export const createFinancialRequest = createAction(Types.CREATE_FINANCIALREQUEST
 export const cancelFinancialRequest = createAction(Types.CANCEL_FINANCIALREQUEST)
 export const approveFinancialRequest = createAction(Types.APPROVE_FINANCIALREQUEST)
 export const declineFinancialRequest = createAction(Types.DECLINE_FINANCIALREQUEST)
+export const confirmDeclineFinancialRequest = createAction(Types.CONFIRM_DECLINE_FINANCIALREQUEST)
+export const confirmCancelFinancialRequest = createAction(Types.CONFIRM_CANCEL_FINANCIALREQUEST)

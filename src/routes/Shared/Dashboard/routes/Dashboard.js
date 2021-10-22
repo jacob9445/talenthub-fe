@@ -32,7 +32,7 @@ import FinancialRequestTable from 'routes/Shared/FinancialRequest/components/Fin
 import { meSelector } from 'store/modules/auth'
 import {
   cancelFinancialRequest,
-  declineFinancialRequest,
+  confirmDeclineFinancialRequest as declineFinancialRequest,
   approveFinancialRequest
 } from 'store/modules/financialRequest'
 import ApproveRequestModal from 'components/ApproveRequestModal'

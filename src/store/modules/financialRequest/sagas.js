@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
-import { roleBasedPath } from 'helpers/sagaHelpers'
+import { roleBasedPath, confirm } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
 const getFinancialRequests = createApiCallSaga({
@@ -83,13 +83,22 @@ const declineFinancialRequest = createApiCallSaga({
   selectorKey: 'financialRequestDetail'
 })
 
+const confirmDeclineFinancialRequest = function*(action) {
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) yield declineFinancialRequest(action)
+}
+
+const confirmCancelFinancialRequest = function*(action) {
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) yield cancelFinancialRequest(action)
+}
 export default function* rootSaga() {
   yield takeLatest(Types.GET_FINANCIALREQUESTS, getFinancialRequests)
   yield takeLatest(Types.DELETE_FINANCIALREQUEST, deleteFinancialRequest)
   yield takeLatest(Types.GET_FINANCIALREQUEST_DETAIL, getFinancialRequestDetail)
   yield takeLatest(Types.UPDATE_FINANCIALREQUEST_DETAIL, updateFinancialRequestDetail)
   yield takeLatest(Types.CREATE_FINANCIALREQUEST, createFinancialRequest)
-  yield takeLatest(Types.CANCEL_FINANCIALREQUEST, cancelFinancialRequest)
+  yield takeLatest(Types.CONFIRM_CANCEL_FINANCIALREQUEST, confirmCancelFinancialRequest)
   yield takeLatest(Types.APPROVE_FINANCIALREQUEST, approveFinancialRequest)
-  yield takeLatest(Types.DECLINE_FINANCIALREQUEST, declineFinancialRequest)
+  yield takeLatest(Types.CONFIRM_DECLINE_FINANCIALREQUEST, confirmDeclineFinancialRequest)
 }
