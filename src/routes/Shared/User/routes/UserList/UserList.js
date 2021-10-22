@@ -42,14 +42,12 @@ const UserList = ({
 
   const handleDelete = useCallback(
     id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to delete the user?',
-        proceed: () => {
-          deleteUserAndRefresh({ id })
-        }
+      deleteUserAndRefresh({
+        id,
+        message: 'Are you sure to delete this user?'
       })
     },
-    [show, deleteUserAndRefresh]
+    [deleteUserAndRefresh]
   )
 
   return (

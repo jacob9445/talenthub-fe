@@ -148,17 +148,13 @@ const Dashboard = ({
 
   const handleDecline = useCallback(
     id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to decline the request?',
-        proceed: () => {
-          declineFinancialRequest({
-            id,
-            success: () => getPendingRequests()
-          })
-        }
+      declineFinancialRequest({
+        id,
+        message: 'Are you sure to decline this request?',
+        success: getPendingRequests
       })
     },
-    [show, declineFinancialRequest, getPendingRequests]
+    [declineFinancialRequest, getPendingRequests]
   )
 
   const teamOptions = useMemo(

@@ -4,7 +4,7 @@ import * as Types from './types'
 import { showMessage } from '../message'
 import { createTeamMembersSelector } from 'store/modules/team'
 import { unassignedUsersSelector } from 'store/modules/user'
-import { roleBasedPath } from 'helpers/sagaHelpers'
+import { roleBasedPath, confirm } from 'helpers/sagaHelpers'
 
 const getUsers = createApiCallSaga({
   type: Types.USERS_GETUSERS,
@@ -33,8 +33,11 @@ const deleteUser = createApiCallSaga({
 })
 
 const deleteUserAndRefresh = function*(action) {
-  yield deleteUser(action)
-  yield getUsers(action)
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) {
+    yield deleteUser(action)
+    yield getUsers(action)
+  }
 }
 
 const getUserDetail = createApiCallSaga({

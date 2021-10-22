@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
-import { roleBasedPath } from 'helpers/sagaHelpers'
+import { roleBasedPath, confirm } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
 const getPartners = createApiCallSaga({
@@ -23,10 +23,13 @@ const deletePartner = createApiCallSaga({
 })
 
 const deletePartnerAndRefresh = function*(action) {
-  yield deletePartner(action)
-  yield getPartners({
-    payload: action.payload
-  })
+  const confimed = yield confirm(action.payload.message)
+  if (confimed) {
+    yield deletePartner(action)
+    yield getPartners({
+      payload: action.payload
+    })
+  }
 }
 
 const getPartnerDetail = createApiCallSaga({

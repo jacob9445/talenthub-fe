@@ -35,14 +35,12 @@ const ClientList = ({
 
   const handleDelete = useCallback(
     id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to delete the client?',
-        proceed: () => {
-          deleteClientAndRefresh(id)
-        }
+      deleteClientAndRefresh({
+        id,
+        message: 'Are you sure to delete this client?'
       })
     },
-    [show, deleteClientAndRefresh]
+    [deleteClientAndRefresh]
   )
 
   if (isClientsLoading) return <Spinner />
