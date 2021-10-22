@@ -36,14 +36,13 @@ const ProjectList = ({
 
   const handleDelete = useCallback(
     id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to delete the project?',
-        proceed: () => {
-          deleteProjectAndRefresh({ id, role: me.role })
-        }
+      deleteProjectAndRefresh({
+        id,
+        role: me.role,
+        message: 'Are you sure to delete the project?'
       })
     },
-    [show, deleteProjectAndRefresh, me.role]
+    [me.role, deleteProjectAndRefresh]
   )
 
   if (isProjectsLoading) return <Spinner />
