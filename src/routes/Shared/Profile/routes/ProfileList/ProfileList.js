@@ -45,15 +45,12 @@ const ProfileList = ({
   }, [getProfiles, pagination, initialValues])
 
   const handleDelete = useCallback(
-    id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to delete the profile?',
-        proceed: () => {
-          deleteProfileAndRefresh(id)
-        }
-      })
-    },
-    [show, deleteProfileAndRefresh]
+    id =>
+      deleteProfileAndRefresh({
+        id,
+        message: 'Are you sure to delete this profile?'
+      }),
+    [deleteProfileAndRefresh]
   )
 
   const handleSubmit = useCallback(
