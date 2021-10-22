@@ -1,9 +1,8 @@
 import { put, takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
-import { roleBasedPath } from 'helpers/sagaHelpers'
+import { roleBasedPath, confirm } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
-import { confirm } from 'helpers/sagaHelpers'
 
 const getProfiles = createApiCallSaga({
   type: Types.GET_PROFILES,
