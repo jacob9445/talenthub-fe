@@ -20,15 +20,14 @@ const TeamList = ({ getTeams, teams, show, deleteTeamAndRefresh }) => {
 
   const handleDeleteTeam = useCallback(
     id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to delete the team?',
-        proceed: () => {
-          deleteTeamAndRefresh({ id })
-        }
+      deleteTeamAndRefresh({
+        id,
+        message: 'Are you sure to delete the team?'
       })
     },
-    [show, deleteTeamAndRefresh]
+    [deleteTeamAndRefresh]
   )
+
   if (!teams) return <Spinner />
   else
     return (

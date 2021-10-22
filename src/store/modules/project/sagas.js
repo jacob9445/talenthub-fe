@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
-import { roleBasedPath } from 'helpers/sagaHelpers'
+import { roleBasedPath, confirm } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
 const getProjects = createApiCallSaga({
@@ -23,10 +23,13 @@ const deleteProject = createApiCallSaga({
 })
 
 const deleteProjectAndRefresh = function*(action) {
-  yield deleteProject(action)
-  yield getProjects({
-    payload: action.payload
-  })
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) {
+    yield deleteProject(action)
+    yield getProjects({
+      payload: action.payload
+    })
+  }
 }
 
 const getProjectDetail = createApiCallSaga({

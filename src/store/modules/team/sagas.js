@@ -2,6 +2,7 @@ import { takeLatest, put } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { showMessage } from '../message'
+import { confirm } from 'helpers/sagaHelpers'
 
 const getTeams = createApiCallSaga({
   type: Types.GET_TEAMS,
@@ -64,11 +65,11 @@ const deleteTeam = createApiCallSaga({
 })
 
 const deleteTeamAndRefresh = function*(action) {
-  yield deleteTeam(action)
-  yield getTeams({
-    type: Types.GET_TEAMS,
-    payload: {}
-  })
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) {
+    yield deleteTeam(action)
+    yield getTeams()
+  }
 }
 
 const createTeamAndRefresh = function*(action) {
