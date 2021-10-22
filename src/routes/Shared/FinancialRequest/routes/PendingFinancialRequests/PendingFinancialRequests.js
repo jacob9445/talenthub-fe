@@ -14,8 +14,8 @@ import {
   getFinancialRequests,
   financialRequestsSelector,
   financialRequestsLoadingSelector,
-  cancelFinancialRequest,
-  declineFinancialRequest,
+  confirmCancelFinancialRequest as cancelFinancialRequest,
+  confirmDeclineFinancialRequest as declineFinancialRequest,
   approveFinancialRequest
 } from 'store/modules/financialRequest'
 import { meSelector } from 'store/modules/auth'
@@ -62,7 +62,8 @@ const PendingFinancialRequest = ({
     id => {
       cancelFinancialRequest({
         id,
-        success: getPendingFinancialRequests
+        success: getPendingFinancialRequests,
+        message: 'Are you sure to cancel this request?'
       })
     },
     [cancelFinancialRequest, getPendingFinancialRequests]

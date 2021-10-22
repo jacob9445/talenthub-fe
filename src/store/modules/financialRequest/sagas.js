@@ -83,19 +83,22 @@ const declineFinancialRequest = createApiCallSaga({
   selectorKey: 'financialRequestDetail'
 })
 
-const processDecliningFinancialRequest = function*(action) {
+const confirmDeclineFinancialRequest = function*(action) {
   const confirmed = yield confirm(action.payload.message)
-  if (!confirmed) return
-  yield declineFinancialRequest(action)
+  if (confirmed) yield declineFinancialRequest(action)
 }
 
+const confirmCancelFinancialRequest = function*(action) {
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) yield cancelFinancialRequest(action)
+}
 export default function* rootSaga() {
   yield takeLatest(Types.GET_FINANCIALREQUESTS, getFinancialRequests)
   yield takeLatest(Types.DELETE_FINANCIALREQUEST, deleteFinancialRequest)
   yield takeLatest(Types.GET_FINANCIALREQUEST_DETAIL, getFinancialRequestDetail)
   yield takeLatest(Types.UPDATE_FINANCIALREQUEST_DETAIL, updateFinancialRequestDetail)
   yield takeLatest(Types.CREATE_FINANCIALREQUEST, createFinancialRequest)
-  yield takeLatest(Types.CANCEL_FINANCIALREQUEST, cancelFinancialRequest)
+  yield takeLatest(Types.CONFIRM_CANCEL_FINANCIALREQUEST, confirmCancelFinancialRequest)
   yield takeLatest(Types.APPROVE_FINANCIALREQUEST, approveFinancialRequest)
-  yield takeLatest(Types.DECLINE_FINANCIALREQUEST, processDecliningFinancialRequest)
+  yield takeLatest(Types.CONFIRM_DECLINE_FINANCIALREQUEST, confirmDeclineFinancialRequest)
 }

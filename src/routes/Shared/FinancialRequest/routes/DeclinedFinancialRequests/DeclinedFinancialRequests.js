@@ -13,7 +13,7 @@ import {
   getFinancialRequests,
   financialRequestsSelector,
   financialRequestsLoadingSelector,
-  cancelFinancialRequest
+  confirmCancelFinancialRequest as cancelFinancialRequest
 } from 'store/modules/financialRequest'
 import { meSelector } from 'store/modules/auth'
 import ApproveRequestModal from 'components/ApproveRequestModal'
@@ -36,7 +36,7 @@ const DeclinedFinancialRequest = ({
       me: me,
       params: {
         ...pagination,
-        status: FINANCIALREQUEST_STATUS.DECLINED,
+        status: FINANCIALREQUEST_STATUS.DECLINED
       }
     })
   }, [getFinancialRequests, me, pagination])
@@ -55,7 +55,8 @@ const DeclinedFinancialRequest = ({
     id => {
       cancelFinancialRequest({
         id,
-        success: getDeclinedFinancialRequests
+        success: getDeclinedFinancialRequests,
+        message: 'Are you sure to cancel this request?'
       })
     },
     [cancelFinancialRequest, getDeclinedFinancialRequests]
