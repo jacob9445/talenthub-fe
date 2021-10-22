@@ -36,14 +36,13 @@ const PartnerList = ({
 
   const handleDelete = useCallback(
     id => {
-      show('confirmModal', {
-        confirmation: 'Are you sure to delete the partner?',
-        proceed: () => {
-          deletePartnerAndRefresh({ id, role: me.role })
-        }
+      deletePartnerAndRefresh({
+        id,
+        role: me.role,
+        message: 'Are you sure to delete this partner?'
       })
     },
-    [show, deletePartnerAndRefresh, me.role]
+    [me, deletePartnerAndRefresh]
   )
 
   if (isPartnersLoading) return <Spinner />

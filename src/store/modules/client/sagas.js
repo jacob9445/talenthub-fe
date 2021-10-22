@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
-import { roleBasedPath } from 'helpers/sagaHelpers'
+import { roleBasedPath, confirm } from 'helpers/sagaHelpers'
 import { showMessage } from '../message'
 
 const getClients = createApiCallSaga({
@@ -50,15 +50,18 @@ const deleteClient = createApiCallSaga({
   type: Types.DELETE_CLIENT,
   method: 'DELETE',
   path: function*({ payload }) {
-    return yield roleBasedPath(`clients/${payload}`)
+    return yield roleBasedPath(`clients/${payload.id}`)
   }
 })
 
 const deleteClientAndRefresh = function*(action) {
-  yield deleteClient(action)
-  yield getClients({
-    type: Types.GET_CLIENTS
-  })
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) {
+    yield deleteClient(action)
+    yield getClients({
+      type: Types.GET_CLIENTS
+    })
+  }
 }
 
 export default function* rootSaga() {
