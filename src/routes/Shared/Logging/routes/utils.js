@@ -15,7 +15,7 @@ export const getDate = (date, year, month, week, day) => {
 
 export const datePickerLabelFunc = (selectedDate, invalidLabel) => {
   const weekOfMonth = getWeekOfMonth(selectedDate)
-  return `Week #${weekOfMonth} of ${format(selectedDate, 'MMM. yyyy')}`
+  return `Week #${weekOfMonth} of ${format(selectedDate, 'MMM.yyyy')}`
 }
 
 export const shouldRedirect = (logDetail, year, month, week, day, userId) => {

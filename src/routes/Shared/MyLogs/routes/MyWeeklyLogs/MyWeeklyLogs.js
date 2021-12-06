@@ -16,7 +16,7 @@ import { MyLogType } from 'helpers/prop-types'
 
 const datePickerLabelFunc = (date, invalidLabel) => {
   const weekOfMonth = getWeekOfMonth(date)
-  return `Week #${weekOfMonth} of ${format(date, 'MMM. yyyy')}`
+  return `Week #${weekOfMonth} of ${format(date, 'MMM.yyyy')}`
 }
 
 const MyWeeklyLog = ({ getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myWeeklyLog, location, history }) => {
