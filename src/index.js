@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import { IntlProvider } from 'react-intl'
 import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider } from 'material-ui-pickers'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import intlConfig from './config/intl'
 import './index.css'

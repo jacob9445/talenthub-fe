@@ -3,7 +3,7 @@ import { Button, Grid, FormControl, MenuItem, Input, InputLabel, Select, Paper }
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { DatePicker } from 'material-ui-pickers'
+import { DatePicker } from '@material-ui/pickers'
 import { format } from 'date-fns'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'

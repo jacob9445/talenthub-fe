@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { format } from 'date-fns'
-import { DatePicker } from 'material-ui-pickers'
+import { DatePicker } from '@material-ui/pickers'
 
 import { weeklyLogsSelector, getWeeklyLogs } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'

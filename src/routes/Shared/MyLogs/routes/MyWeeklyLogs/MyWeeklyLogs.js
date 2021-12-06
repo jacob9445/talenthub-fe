@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Grid, Button } from '@material-ui/core'
 import { format } from 'date-fns'
-import { DatePicker } from 'material-ui-pickers'
+import { DatePicker } from '@material-ui/pickers'
 import PropTypes from 'prop-types'
 
 import LogCard from 'routes/Shared/MyLogs/components/LogCard'

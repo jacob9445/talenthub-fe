@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { FormHelperText } from '@material-ui/core'
 import { format } from 'date-fns'
-import { DatePicker } from 'material-ui-pickers'
+import { DatePicker } from '@material-ui/pickers'
 import * as R from 'ramda'
 
 import useStyles from './styles'
