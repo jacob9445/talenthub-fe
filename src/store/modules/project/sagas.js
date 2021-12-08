@@ -18,7 +18,7 @@ const deleteProject = createApiCallSaga({
   type: Types.DELETE_PROJECT,
   method: 'DELETE',
   path: function*({ payload }) {
-    return yield roleBasedPath(`projects/${payload.id}`)
+    return yield roleBasedPath(`projects/${payload.id}/`)
   }
 })
 
@@ -36,7 +36,7 @@ const getProjectDetail = createApiCallSaga({
   type: Types.GET_PROJECT_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
-    return yield roleBasedPath(`projects/${payload}`)
+    return yield roleBasedPath(`projects/${payload}/`)
   },
   selectorKey: 'projectDetail'
 })

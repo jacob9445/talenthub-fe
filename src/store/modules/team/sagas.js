@@ -68,7 +68,10 @@ const deleteTeamAndRefresh = function*(action) {
   const confirmed = yield confirm(action.payload.message)
   if (confirmed) {
     yield deleteTeam(action)
-    yield getTeams()
+    yield getTeams({
+      type: Types.GET_TEAMS,
+      payload: {}
+    })
   }
 }
 

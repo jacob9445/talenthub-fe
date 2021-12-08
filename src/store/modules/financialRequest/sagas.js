@@ -8,7 +8,7 @@ const getFinancialRequests = createApiCallSaga({
   type: Types.GET_FINANCIALREQUESTS,
   method: 'GET',
   path: function*() {
-    return yield roleBasedPath('financial-requests')
+    return yield roleBasedPath('financial-requests/')
   },
   selectorKey: 'financialRequests',
   allowedParamKeys: ['page', 'page_size', 'status', 'ordering']
@@ -18,7 +18,7 @@ const deleteFinancialRequest = createApiCallSaga({
   type: Types.DELETE_FINANCIALREQUEST,
   method: 'DELETE',
   path: function*({ payload }) {
-    return yield roleBasedPath(`financial-requests/${payload.id}`)
+    return yield roleBasedPath(`financial-requests/${payload.id}/`)
   }
 })
 

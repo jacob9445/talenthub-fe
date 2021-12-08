@@ -18,7 +18,7 @@ const deletePartner = createApiCallSaga({
   type: Types.DELETE_PARTNER,
   method: 'DELETE',
   path: function*({ payload }) {
-    return yield roleBasedPath(`partners/${payload.id}`)
+    return yield roleBasedPath(`partners/${payload.id}/`)
   }
 })
 
@@ -36,7 +36,7 @@ const getPartnerDetail = createApiCallSaga({
   type: Types.GET_PARTNER_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
-    return yield roleBasedPath(`partners/${payload}`)
+    return yield roleBasedPath(`partners/${payload}/`)
   },
   selectorKey: 'partnerDetail'
 })

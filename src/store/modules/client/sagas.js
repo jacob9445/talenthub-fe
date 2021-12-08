@@ -33,7 +33,7 @@ const getClientDetail = createApiCallSaga({
   type: Types.GET_CLIENT_DETAIL,
   method: 'GET',
   path: function*({ payload }) {
-    return yield roleBasedPath(`clients/${payload}`)
+    return yield roleBasedPath(`clients/${payload}/`)
   },
   selectorKey: 'clientDetail'
 })
@@ -50,7 +50,7 @@ const deleteClient = createApiCallSaga({
   type: Types.DELETE_CLIENT,
   method: 'DELETE',
   path: function*({ payload }) {
-    return yield roleBasedPath(`clients/${payload.id}`)
+    return yield roleBasedPath(`clients/${payload.id}/`)
   }
 })
 
