@@ -3,6 +3,7 @@ import { Router } from 'react-router-dom'
 import Routes from './routes'
 import { history } from './store'
 import { authGetMe, isAuthenticatedSelector, meLoadingSelector } from './store/modules/auth'
+import { getNotificationPermission } from './store/modules/notification'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import Spinner from './components/Spinner'
@@ -12,10 +13,14 @@ import ConfirmModal from 'components/ConfirmModal'
 import TeamReportModal from 'components/TeamReportModal'
 import IndividualReportModal from 'components/IndividualReportModal'
 
-function App({ isAuthenticated, authGetMe, meLoading }) {
+function App({ isAuthenticated, authGetMe, meLoading, getNotificationPermission }) {
   useEffect(() => {
     isAuthenticated && authGetMe()
   }, [isAuthenticated, authGetMe])
+
+  useEffect(() => {
+    isAuthenticated && getNotificationPermission()
+  }, [isAuthenticated, getNotificationPermission])
 
   if (isAuthenticated && meLoading) {
     return <Spinner />
@@ -35,7 +40,8 @@ function App({ isAuthenticated, authGetMe, meLoading }) {
 }
 
 const actions = {
-  authGetMe
+  authGetMe,
+  getNotificationPermission
 }
 
 const selectors = createStructuredSelector({
@@ -49,7 +55,4 @@ App.propTypes = {
   meLoading: PropTypes.bool.isRequired
 }
 
-export default connect(
-  selectors,
-  actions
-)(App)
+export default connect(selectors, actions)(App)

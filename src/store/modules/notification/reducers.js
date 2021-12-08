@@ -1,7 +1,8 @@
 import { handleActions } from 'redux-actions'
 import * as Types from './types'
 const initialState = {
-  isOpen: false
+  isOpen: false,
+  notificationEnabled: false
 }
 
 export default handleActions(
@@ -13,6 +14,10 @@ export default handleActions(
     [Types.CLOSE_NC]: state => ({
       ...state,
       isOpen: false
+    }),
+    [Types.NOTIFICATION_ENABLED]: state => ({
+      ...state,
+      notificationEnabled: true
     })
   },
   initialState

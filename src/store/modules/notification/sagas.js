@@ -1,7 +1,7 @@
 import { select, takeLatest, take, delay, cancel, fork, put } from 'redux-saga/effects'
 import { createApiCallSaga, setApiData } from '../api'
 import { roleBasedPath } from 'helpers/sagaHelpers'
-import { notificationsSelector } from './selectors'
+import { notificationsSelector, notificationPermissionSelector } from './selectors'
 import { NOTIFICATION_PING_DELAY, NOTIFICATION_IDS } from 'config/constants'
 import { showMessage } from '../message'
 import * as Types from './types'
@@ -76,8 +76,11 @@ const processAllRead = function*(action) {
 const pingToBackend = function*() {
   while (true) {
     yield put(actions.getNotifications())
-
     const notifications = yield select(notificationsSelector)
+    const notificationEnabled = yield select(notificationPermissionSelector)
+    if (!notificationEnabled && Notification.permission === 'granted') {
+      yield put(actions.notificationEnabled())
+    }
     if (notifications) {
       var notificationIDs = []
       notificationIDs = notifications.results.map(notification => notification.id)
@@ -90,6 +93,7 @@ const pingToBackend = function*() {
         setSnackbarTouched(false)
       }
       if (delta > 0 && touched === false) {
+        if (notificationEnabled) new Notification(`You have ${notifications.count} new notifications from Talents Hub`)
         yield put(
           showMessage({
             message: `You have ${notifications.count} new notifications`,
@@ -114,10 +118,16 @@ const subscribeToNotifications = function*() {
   yield cancel(task)
 }
 
+const getNotificationPermission = function*() {
+  if (Notification.permission === 'default') Notification.requestPermission()
+  else if (Notification.permission === 'granted') yield put(actions.notificationEnabled())
+}
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_NOTIFICATIONS, getNotifications)
   yield takeLatest(Types.GET_NOTIFICATION_DETAIL, getNotificationDetail)
   yield takeLatest(Types.SET_STATUS_READ, processPrivateRead)
   yield takeLatest(Types.SET_ALL_READ, processAllRead)
   yield takeLatest(Types.SUBSCRIBE_TO_NOTIFICATIONS, subscribeToNotifications)
+  yield takeLatest(Types.GET_NOTIFICATION_PERMISSION, getNotificationPermission)
 }
