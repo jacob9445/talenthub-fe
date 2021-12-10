@@ -15,6 +15,7 @@ import { saga as report } from './report'
 import { saga as notification } from './notification'
 import { saga as logging } from './logging'
 import { saga as myLogs } from './mylogs'
+import { saga as paymentAccount } from './paymentAccount'
 
 export default function* rootSaga() {
   yield all([
@@ -32,6 +33,7 @@ export default function* rootSaga() {
     logging(),
     notification(),
     myLogs(),
-    report()
+    report(),
+    paymentAccount()
   ])
 }

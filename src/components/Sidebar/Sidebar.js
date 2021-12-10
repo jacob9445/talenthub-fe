@@ -116,6 +116,12 @@ let structure = {
       icon: <AccountIcon />
     },
     {
+      id: 12,
+      label: 'PaymentAccounts',
+      link: `/admin/payment-accounts`,
+      icon: <AccountIcon />
+    },
+    {
       id: 7,
       label: 'Partners',
       link: '/admin/partners',
