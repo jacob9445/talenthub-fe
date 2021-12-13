@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect, Switch, Route } from 'react-router'
 import PropTypes from 'prop-types'
+
 import PaymentAccountList from '../../routes/PaymentAccountList'
 import PaymentAccountEdit from '../../routes/PaymentAccountEdit'
 import PaymentAccoutNew from '../../routes/PaymentAccountNew'

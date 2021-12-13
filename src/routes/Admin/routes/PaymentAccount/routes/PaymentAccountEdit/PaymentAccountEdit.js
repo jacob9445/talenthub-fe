@@ -37,7 +37,7 @@ const PaymentAccountEdit = ({
     () => ({
       platform: paymentAccountDetail?.platform || '',
       address: paymentAccountDetail?.address || '',
-      displayName: paymentAccountDetail?.displayName || ''
+      display_name: paymentAccountDetail?.display_name || ''
     }),
     [paymentAccountDetail]
   )
@@ -48,12 +48,13 @@ const PaymentAccountEdit = ({
         updatePaymentAccountDetail,
         {
           data: values,
+          id: parseInt(params.id),
           success: () => history.push(`/${URL_PREFIXES[me.role]}/payment-accounts`)
         },
         formActions
       )
     },
-    [updatePaymentAccountDetail, me, history]
+    [updatePaymentAccountDetail, me, history, params.id]
   )
 
   if (isDetailLoading) return <Spinner />
@@ -66,8 +67,9 @@ const PaymentAccountEdit = ({
               component={PaymentAccountDetailForm}
               initialValues={initialValues}
               validationSchema={validationSchema}
+              onSubmit={handleSubmit}>
               enableReinitialize
-              onSubmit={handleSubmit}></Formik>
+            </Formik>
           </Widget>
         </Grid>
       </Grid>

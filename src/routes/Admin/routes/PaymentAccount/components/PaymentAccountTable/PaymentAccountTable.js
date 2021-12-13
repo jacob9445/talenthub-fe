@@ -14,16 +14,26 @@ import {
 } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
-import { URL_PREFIXES, PAYMENT_PLATFORM_TYPE } from 'config/constants'
+import { URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
+import { getPlatformLabel } from 'helpers/utils'
 
-function ProjectTable({ data, role, onDelete, history, location, pagination, onChangePage, onChangeRowsPerPage }) {
+function PaymentAccountTable({
+  data,
+  role,
+  onDelete,
+  history,
+  location,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage
+}) {
   const columns = ['Platform', 'Address', 'Display Name']
 
-  const showProjectDetail = useCallback(
+  const showPaymentAccountDetail = useCallback(
     id => () => {
-      history.push(`/${URL_PREFIXES[role]}/projects/${id}/detail`, location.pathname)
+      history.push(`/${URL_PREFIXES[role]}/payment-accounts/${id}/detail`, location.pathname)
     },
     [history, location.pathname, role]
   )
@@ -40,14 +50,14 @@ function ProjectTable({ data, role, onDelete, history, location, pagination, onC
           </TableRow>
         </TableHead>
         <TableBody>
-          {results.map(({ id, platform, address, displayName }) => (
-            <TableRow key={id} hover onClick={showProjectDetail(id)}>
-              <TableCell>{PAYMENT_PLATFORM_TYPE[platform]}</TableCell>
+          {results.map(({ id, platform, address, display_name }) => (
+            <TableRow key={id} hover>
+              <TableCell>{getPlatformLabel(platform)}</TableCell>
               <TableCell>{address}</TableCell>
-              <TableCell>{displayName}</TableCell>
+              <TableCell>{display_name}</TableCell>
               <TableCell>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">
-                  <IconButton onClick={showProjectDetail(id)}>
+                  <IconButton onClick={showPaymentAccountDetail(id)}>
                     <EditIcon color="primary" />
                   </IconButton>
                 </Tooltip>
@@ -79,9 +89,9 @@ function ProjectTable({ data, role, onDelete, history, location, pagination, onC
   }
 }
 
-export default withRouter(ProjectTable)
+export default withRouter(PaymentAccountTable)
 
-ProjectTable.propTypes = {
+PaymentAccountTable.propTypes = {
   data: ListDataType,
   role: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,

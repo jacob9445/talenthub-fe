@@ -17,14 +17,14 @@ import { meSelector } from 'store/modules/auth'
 export const validationSchema = Yup.object().shape({
   platform: Yup.string().required('This field is required!'),
   address: Yup.string().required('This field is required!'),
-  displayName: Yup.string().required('This field is required!')
+  display_name: Yup.string().required('This field is required!')
 })
 
 const PaymentAccountDetailForm = ({ handleSubmit, values, location, history, me: { role }, me, match: { params } }) => {
   const classes = useStyles()
-  const handleCancel = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/payment-account`)
-  }, [location, history, role])
+  const handleGoBack = useCallback(() => {
+    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/payment-accounts`)
+  }, [location, history, me])
 
   const isUpdateMode = useMemo(() => Boolean(params.id), [params.id])
   return (
@@ -34,22 +34,17 @@ const PaymentAccountDetailForm = ({ handleSubmit, values, location, history, me:
         htmlId="platform"
         name="platform"
         label="Platform"
+        placeholder="Choose one platform..."
         options={PAYMENT_PLATFORM_OPTIONS}
       />
       <Field component={FormInput} type="text" htmlId="address" name="address" label="Address" />
-      <Field
-        component={FormEditableSelect}
-        htmlId="displayname"
-        name="displayname"
-        label="Display Name"
-        options={PAYMENT_PLATFORM_OPTIONS}
-      />
+      <Field component={FormInput} type="text" htmlId="displayName" name="display_name" label="Dispaly Name" />
 
       <div className={classes.formButtonWrapper}>
         <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
           {isUpdateMode ? 'Update' : 'Create'}
         </Button>
-        <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleCancel}>
+        <Button variant="contained" color="secondary" className={classes.formButton} onClick={handleGoBack}>
           Go Back
         </Button>
       </div>

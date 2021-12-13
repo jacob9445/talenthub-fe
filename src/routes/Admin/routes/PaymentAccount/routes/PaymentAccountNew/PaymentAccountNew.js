@@ -12,12 +12,12 @@ import PaymentAccountDetailForm, { validationSchema } from '../../components/Pay
 import { formSubmit } from 'helpers/form'
 import { createPaymentAccount } from 'store/modules/paymentAccount'
 import { meSelector } from 'store/modules/auth'
-import { PAYMENT_PLATFORM_TYPE, URL_PREFIXES } from 'config/constants'
+import { URL_PREFIXES } from 'config/constants'
 
 const initialValues = {
-  platform: PAYMENT_PLATFORM_TYPE.PAYPAL,
+  platform: '',
   address: '',
-  displayName: ''
+  display_name: ''
 }
 
 const PaymentAccountNew = ({ createPaymentAccount, me, history }) => {
@@ -27,7 +27,7 @@ const PaymentAccountNew = ({ createPaymentAccount, me, history }) => {
         createPaymentAccount,
         {
           data: values,
-          success: resData => history.push(`/${URL_PREFIXES[me.role]}/payment-account/${resData.id}/detail`)
+          success: resData => history.push(`/${URL_PREFIXES[me.role]}/payment-accounts`)
         },
         formActions
       )

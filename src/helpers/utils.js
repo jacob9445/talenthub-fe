@@ -5,7 +5,7 @@ import { PAYMENT_PLATFORM_OPTIONS, SNACKBAR_TOUCHED } from 'config/constants'
 export const getPlatformLabel = paymentPlatform =>
   R.compose(
     R.defaultTo(paymentPlatform),
-    R.path(['display']),
+    R.path(['label']),
     R.find(item => item.value === paymentPlatform)
   )(PAYMENT_PLATFORM_OPTIONS)
 

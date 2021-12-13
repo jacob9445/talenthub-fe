@@ -49,7 +49,6 @@ const PaymentAccountList = ({
     },
     [me.role, deletePaymentAccountAndRefresh]
   )
-
   if (isPaymentAccountsLoading) return <Spinner />
   else
     return (
@@ -60,7 +59,7 @@ const PaymentAccountList = ({
             disableWidgetMenu
             WidgetButton={
               <Button color="primary" component={Link} to={`${path}/new`}>
-                Add PaymentAccount
+                Add Payment Account
               </Button>
             }>
             <PaymentAccountTable

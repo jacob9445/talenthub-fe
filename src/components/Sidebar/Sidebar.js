@@ -93,60 +93,60 @@ let structure = {
     },
     {
       id: 3,
-      label: 'Users',
-      link: `/admin/users`,
-      icon: <UserIcon />
-    },
-    {
-      id: 4,
-      label: 'Teams',
-      link: `/admin/teams`,
-      icon: <TeamIcon />
-    },
-    {
-      id: 5,
-      label: 'Profiles',
-      link: `/admin/profiles`,
-      icon: <ProfileIcon />
-    },
-    {
-      id: 6,
-      label: 'Accounts',
-      link: `/admin/accounts`,
-      icon: <AccountIcon />
-    },
-    {
-      id: 12,
       label: 'PaymentAccounts',
       link: `/admin/payment-accounts`,
       icon: <AccountIcon />
     },
     {
+      id: 4,
+      label: 'Users',
+      link: `/admin/users`,
+      icon: <UserIcon />
+    },
+    {
+      id: 5,
+      label: 'Teams',
+      link: `/admin/teams`,
+      icon: <TeamIcon />
+    },
+    {
+      id: 6,
+      label: 'Profiles',
+      link: `/admin/profiles`,
+      icon: <ProfileIcon />
+    },
+    {
       id: 7,
+      label: 'Accounts',
+      link: `/admin/accounts`,
+      icon: <AccountIcon />
+    },
+    {
+      id: 8,
       label: 'Partners',
       link: '/admin/partners',
       icon: <PartnerIcon />
     },
     {
-      id: 8,
+      id: 9,
       label: 'Clients',
       link: '/admin/clients',
       icon: <ClientIcon />
     },
     {
-      id: 9,
+      id: 10,
       label: 'Projects',
       link: '/admin/projects',
       icon: <ProjectIcon />
     },
     {
-      id: 10,
+      id: 11,
       label: 'My logs',
       link: '/admin/my-logs',
       icon: <LogIcon />
     },
     {
-      id: 11,
+      id: 12,
       label: 'Reports',
       link: '/admin/logging',
       icon: <ReportIcon />
