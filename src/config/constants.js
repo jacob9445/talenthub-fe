@@ -251,6 +251,15 @@ export const FINANCIALREQUEST_COUNTER_PARTY_OPTIONS = [
   }
 ]
 
+export const PAYMENT_PLATFORMS = {
+  payapl: 'PayPal',
+  payoneer: 'Payoneer',
+  upwork: 'Upwork',
+  freelancer: 'Freelancer',
+  toptal: 'Toptal',
+  bitcoin: 'BTC'
+}
+
 export const PAYMENT_PLATFORM_TYPE = {
   PAYPAL: 'paypal',
   PAYONEER: 'payoneer',
