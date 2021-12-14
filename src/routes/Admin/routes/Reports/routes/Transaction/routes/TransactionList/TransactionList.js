@@ -332,7 +332,7 @@ const TransactionList = ({
                         onChange={handleTeamChange}
                       />
                     </Grid>
-                    <Tooltip title="Export as CSV" placement="top">
+                    <Tooltip title="Add new transaction" placement="top">
                       <Button color="primary" variant="outlined" component={Link} to={`${path}/new`}>
                         Add
                       </Button>

@@ -59,7 +59,7 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
               </TableCell>
               <TableCell>{getFullName(financial_request?.requester) || ''}</TableCell>
               <TableCell>{briefText(financial_request?.description, 30) || ''}</TableCell>
-              <TableCell align="center">{payment_account.id}</TableCell>
+              <TableCell align="center">{`${payment_account.display_name} (${payment_account.address}) - ${payment_account.platform}`}</TableCell>
               <TableCell>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">
                   <IconButton onClick={showTransactionDetail(id)}>
