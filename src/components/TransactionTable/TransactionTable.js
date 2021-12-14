@@ -45,21 +45,21 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, gross_amount, net_amount, created_at, financial_request, payment_account_id }) => (
+          {data.results.map(({ id, gross_amount, net_amount, created_at, financial_request, payment_account }) => (
             <TableRow key={id} hover className={classes.tableRow}>
               <TableCell>
                 <FormattedDate value={created_at} />
               </TableCell>
-              <TableCell>{financial_request.address}</TableCell>
+              <TableCell>{financial_request?.address}</TableCell>
               <TableCell>
                 <FormattedNumber format="currency" value={gross_amount} />
               </TableCell>
               <TableCell>
                 <FormattedNumber format="currency" value={net_amount} />
               </TableCell>
-              <TableCell>{getFullName(financial_request.requester)}</TableCell>
-              <TableCell>{briefText(financial_request.description, 30)}</TableCell>
-              <TableCell>{payment_account_id}</TableCell>
+              <TableCell>{getFullName(financial_request?.requester) || ''}</TableCell>
+              <TableCell>{briefText(financial_request?.description, 30) || ''}</TableCell>
+              <TableCell align="center">{payment_account.id}</TableCell>
               <TableCell>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">
                   <IconButton onClick={showTransactionDetail(id)}>

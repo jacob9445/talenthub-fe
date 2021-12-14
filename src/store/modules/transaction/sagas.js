@@ -9,7 +9,6 @@ const getTransactions = createApiCallSaga({
   type: Types.GET_TRANSACTIONS,
   method: 'GET',
   path: function*() {
-    console.log(yield roleBasedPath('transactions/'))
     return yield roleBasedPath('transactions/')
   },
   selectorKey: 'transactions',
@@ -66,12 +65,11 @@ const deleteTransaction = createApiCallSaga({
   type: Types.DELETE_TRANSACTION,
   method: 'DELETE',
   path: function*({ payload }) {
-    return yield `api/admin/transactions/${payload.id}`
+    return yield `api/admin/transactions/${payload.id}/`
   }
 })
 
 const deleteTransactionAndRefresh = function*(action) {
-  console.log(action)
   const confirmed = yield confirm(action.payload.message)
   if (confirmed) {
     yield deleteTransaction(action)
