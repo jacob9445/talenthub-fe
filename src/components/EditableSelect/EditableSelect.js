@@ -72,7 +72,7 @@ const DropdownIndicator = props => (
 )
 
 const EditableSelect = props => {
-  const { name, value, onChange, onBlur, onInputChange, ...selectProps } = props
+  const { placeholder, name, value, onChange, onBlur, onInputChange, ...selectProps } = props
   const classes = useStyles()
 
   const handleChange = useCallback(option => onChange && onChange(option ? option.value : ''), [onChange])
@@ -83,7 +83,7 @@ const EditableSelect = props => {
   return (
     <Select
       {...selectProps}
-      placeholder={'All'}
+      placeholder={placeholder || 'All'}
       name={name}
       value={selectProps.options.find(option => option.value === value) || null}
       onChange={handleChange}

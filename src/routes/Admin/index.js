@@ -17,6 +17,7 @@ const Logging = lazy(() => import('routes/Shared/Logging'))
 const MyLogs = lazy(() => import('routes/Shared/MyLogs'))
 const Settings = lazy(() => import('routes/Shared/Settings'))
 const FinancialReports = lazy(() => import('./routes/Reports'))
+const PaymentAccount = lazy(() => import('./routes/PaymentAccount'))
 
 const Admin = ({ match: { path } }) => {
   return (
@@ -35,6 +36,7 @@ const Admin = ({ match: { path } }) => {
         <Route path={`${path}/my-logs`} component={MyLogs} />
         <Route path={`${path}/settings`} component={Settings} />
         <Route path={`${path}/financial-reports`} component={FinancialReports} />
+        <Route path={`${path}/payment-accounts`} component={PaymentAccount} />
       </Switch>
     </Suspense>
   )

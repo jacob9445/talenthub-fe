@@ -7,7 +7,7 @@ import EditableSelect from 'components/EditableSelect'
 import { useStyles } from './styles'
 
 const FormEditableSelect = props => {
-  const { label, htmlId, field, form, className, ...selectProps } = props
+  const { placeholder, label, htmlId, field, form, className, ...selectProps } = props
   const error = R.path(R.split('.', field.name), form.touched) && R.path(R.split('.', field.name), form.errors)
   const classes = useStyles()
 
@@ -24,6 +24,7 @@ const FormEditableSelect = props => {
         onChange={handleChange}
         onBlur={handleBlur}
         error={Boolean(error)}
+        placeholder={placeholder}
       />
       <FormHelperText className={classes.helperText} error={Boolean(error)}>
         {error}

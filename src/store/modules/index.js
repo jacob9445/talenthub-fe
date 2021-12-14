@@ -18,6 +18,7 @@ import report from './report'
 import notification from './notification'
 import logging from './logging'
 import myLogs from './mylogs'
+import PaymentAccount from './paymentAccount'
 
 export default combineReducers({
   api,
@@ -37,5 +38,6 @@ export default combineReducers({
   modal,
   logging,
   notification,
-  myLogs
+  myLogs,
+  PaymentAccount
 })
