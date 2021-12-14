@@ -57,7 +57,7 @@ const updateTransaction = createApiCallSaga({
   type: Types.UPDATE_TRANSACTION,
   method: 'PUT',
   path: function*({ payload }) {
-    return yield `api/admin/transactions/${payload.id}`
+    return yield `api/admin/transactions/${payload.id}/`
   }
 })
 
@@ -73,9 +73,7 @@ const deleteTransactionAndRefresh = function*(action) {
   const confirmed = yield confirm(action.payload.message)
   if (confirmed) {
     yield deleteTransaction(action)
-    yield getTransactions({
-      type: Types.GET_TRANSACTIONS
-    })
+    yield getTransactions(action)
   }
 }
 

@@ -11,7 +11,7 @@ import {
   Tooltip,
   IconButton
 } from '@material-ui/core'
-import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
+import { Edit as EditIcon, Delete as DeleteIcon, Details as DetailsIcon } from '@material-ui/icons'
 import PropTypes from 'prop-types'
 
 import Spinner from 'components/Spinner'
@@ -28,12 +28,20 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
   const columns = ['Date', 'From/To', 'Gross amount', 'Net Amount', 'Owner', 'Description', 'PaymentAccount ID']
   const role = me?.role
 
-  const showTransactionDetail = useCallback(
+  const showTransactionEdit = useCallback(
     id => () => {
-      history.push(`/${URL_PREFIXES[role]}/financial-reports/transactions/${id}/detail`, location.pathname)
+      history.push(`/${URL_PREFIXES[role]}/financial-reports/transactions/${id}/Edit`, location.pathname)
     },
     [history, location.pathname, role]
   )
+
+  const showTransactionDetail = useCallback(
+    id => () => {
+      history.push(`/${URL_PREFIXES[role]}/financial-reports/transactions/${id}/Detail`, location.pathname)
+    },
+    [history, location.pathname, role]
+  )
+
   if (data) {
     return (
       <Table className="mb-0">
@@ -61,8 +69,13 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
               <TableCell>{briefText(financial_request?.description, 30) || ''}</TableCell>
               <TableCell align="center">{`${payment_account.display_name} (${payment_account.address}) - ${payment_account.platform}`}</TableCell>
               <TableCell>
-                <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                <Tooltip key={`${id}Detail`} title="Detail" placement="top">
                   <IconButton onClick={showTransactionDetail(id)}>
+                    <DetailsIcon color="primary" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                  <IconButton onClick={showTransactionEdit(id)}>
                     <EditIcon color="primary" />
                   </IconButton>
                 </Tooltip>

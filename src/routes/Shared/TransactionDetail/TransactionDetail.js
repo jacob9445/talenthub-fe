@@ -16,7 +16,7 @@ import {
   transactionDetailSelector
 } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
-import { getPlatformLabel, getFullName } from 'helpers/utils'
+import { getFullName } from 'helpers/utils'
 import { URL_PREFIXES, ROLES } from 'config/constants'
 import LabelValue from 'components/LabelValue'
 import { FINANCIALREQUEST_TYPE_LABELS, FINANCIALREQUEST_TYPE } from 'config/constants'
@@ -60,8 +60,8 @@ const TransactionDetail = ({
                     <LabelValue label="Net Amount">
                       <FormattedNumber format="currency" value={transactionDetail.net_amount} />
                     </LabelValue>
-                    <LabelValue label="Payment Platform">
-                      {getPlatformLabel(transactionDetail.payment_platform)}
+                    <LabelValue label="Payment Account">
+                      {`${transactionDetail.payment_account.display_name} (${transactionDetail.payment_account.address}) - ${transactionDetail.payment_account.platform}`}
                     </LabelValue>
                     <LabelValue label="Description">{transactionDetail.description}</LabelValue>
                   </Grid>

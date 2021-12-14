@@ -96,6 +96,6 @@ PaymentAccountTable.propTypes = {
   role: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
   history: PropTypes.object.isRequired,
-  disableActions: PropTypes.bool.isRequired,
+  disableActions: PropTypes.bool,
   location: PropTypes.object.isRequired
 }

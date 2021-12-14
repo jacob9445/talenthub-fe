@@ -125,7 +125,6 @@ const TransactionList = ({
 
   const handleDelete = useCallback(
     id => {
-      console.log(id)
       deleteTransactionAndRefresh({
         id,
         role: me.role,
