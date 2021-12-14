@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
 import * as R from 'ramda'
 import { show } from 'redux-modal'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import DateRangePickerForm, { validationSchema } from 'components/DateRangePickerForm'
@@ -21,7 +21,8 @@ import {
   getTransactions,
   transactionsSelector,
   transactionsLoadingSelector,
-  downloadTransactions
+  downloadTransactions,
+  deleteTransactionAndRefresh
 } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
@@ -31,6 +32,7 @@ import { periodOptions, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } f
 
 const TransactionList = ({
   getTransactions,
+  deleteTransactionAndRefresh,
   transactions,
   isTransactionLoading,
   downloadTransactions,
@@ -41,7 +43,8 @@ const TransactionList = ({
   onChangePage,
   onChangeRowsPerPage,
   location,
-  history
+  history,
+  match: { path }
 }) => {
   const queryObj = useMemo(
     () => ({
@@ -118,6 +121,18 @@ const TransactionList = ({
       ...FINANCIALREQUEST_TYPE_OPTIONS.filter(typeOption => typeOption.value !== FINANCIALREQUEST_TYPE.SENDINVOICE)
     ],
     []
+  )
+
+  const handleDelete = useCallback(
+    id => {
+      console.log(id)
+      deleteTransactionAndRefresh({
+        id,
+        role: me.role,
+        message: 'Are you sure to delete the transaction?'
+      })
+    },
+    [me.role, deleteTransactionAndRefresh]
   )
 
   const handleTeamChange = useCallback(
@@ -279,40 +294,51 @@ const TransactionList = ({
               title="Transactions"
               disableWidgetMenu
               WidgetButton={
-                <Grid container spacing={2} alignItems="stretch" justify="flex-end">
-                  <Grid item>
+                <>
+                  <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+                    <Grid item>
+                      <Tooltip title="Export as CSV" placement="top">
+                        <Button
+                          onClick={handleDownload}
+                          variant="outlined"
+                          color="primary"
+                          className={classes.download}>
+                          <CloudDownload />
+                          &nbsp;Export
+                        </Button>
+                      </Tooltip>
+                    </Grid>
+                    <Grid item>
+                      <SimpleSelect
+                        label="Type"
+                        value={queryObj.type || 'all'}
+                        options={financialRequestTypeOptions}
+                        onChange={handleTypeChange}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <SimpleSelect
+                        label="Period"
+                        value={queryObj.period}
+                        options={periodOptions}
+                        onChange={handlePeriodChange}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <SimpleSelect
+                        label="Team"
+                        value={queryObj.team || 'all'}
+                        options={teamOptions}
+                        onChange={handleTeamChange}
+                      />
+                    </Grid>
                     <Tooltip title="Export as CSV" placement="top">
-                      <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
-                        <CloudDownload />
-                        &nbsp;Export
+                      <Button color="primary" variant="outlined" component={Link} to={`${path}/new`}>
+                        Add
                       </Button>
                     </Tooltip>
                   </Grid>
-                  <Grid item>
-                    <SimpleSelect
-                      label="Type"
-                      value={queryObj.type || 'all'}
-                      options={financialRequestTypeOptions}
-                      onChange={handleTypeChange}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <SimpleSelect
-                      label="Period"
-                      value={queryObj.period}
-                      options={periodOptions}
-                      onChange={handlePeriodChange}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <SimpleSelect
-                      label="Team"
-                      value={queryObj.team || 'all'}
-                      options={teamOptions}
-                      onChange={handleTeamChange}
-                    />
-                  </Grid>
-                </Grid>
+                </>
               }>
               {showCustom ? (
                 <div className={classes.dateRangeFilter}>
@@ -324,9 +350,11 @@ const TransactionList = ({
                   />
                 </div>
               ) : null}
+
               <TransactionTable
                 data={transactions}
                 me={me}
+                onDelete={handleDelete}
                 pagination={pagination}
                 onChangePage={onChangePage}
                 onChangeRowsPerPage={onChangeRowsPerPage}
@@ -340,6 +368,7 @@ const TransactionList = ({
 
 const actions = {
   getTransactions,
+  deleteTransactionAndRefresh,
   getTeams,
   downloadTransactions,
   show

@@ -1,13 +1,15 @@
-import { takeLatest } from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
-import { roleBasedPath } from 'helpers/sagaHelpers'
+import { roleBasedPath, confirm } from 'helpers/sagaHelpers'
 import { downloadFile, generateHrefFromText } from 'helpers/utils'
+import { showMessage } from '../message'
 
 const getTransactions = createApiCallSaga({
   type: Types.GET_TRANSACTIONS,
   method: 'GET',
   path: function*() {
+    console.log(yield roleBasedPath('transactions/'))
     return yield roleBasedPath('transactions/')
   },
   selectorKey: 'transactions',
@@ -39,10 +41,51 @@ const downloadTransactions = createApiCallSaga({
   allowedParamKeys: ['period', 'from', 'to', 'team', 'type']
 })
 
+const createTransaction = createApiCallSaga({
+  type: Types.CREATE_TRANSACTION,
+  method: 'POST',
+  path: 'api/admin/transactions/',
+  success: function*(resData) {
+    yield put(
+      showMessage({
+        message: 'Transaction created successfully!'
+      })
+    )
+  }
+})
+
+const updateTransaction = createApiCallSaga({
+  type: Types.UPDATE_TRANSACTION,
+  method: 'PUT',
+  path: function*({ payload }) {
+    return yield `api/admin/transactions/${payload.id}`
+  }
+})
+
+const deleteTransaction = createApiCallSaga({
+  type: Types.DELETE_TRANSACTION,
+  method: 'DELETE',
+  path: function*({ payload }) {
+    return yield `api/admin/transactions/${payload.id}`
+  }
+})
+
+const deleteTransactionAndRefresh = function*(action) {
+  console.log(action)
+  const confirmed = yield confirm(action.payload.message)
+  if (confirmed) {
+    yield deleteTransaction(action)
+    yield getTransactions({
+      type: Types.GET_TRANSACTIONS
+    })
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(Types.GET_TRANSACTIONS, getTransactions)
   yield takeLatest(Types.GET_TRANSACTION_DETAIL, getTransactionDetail)
-
-  //for download
-  yield takeLatest(Types.DOWNLOAD_TRANSACTIONS, downloadTransactions)
+  yield takeLatest(Types.DOWNLOAD_TRANSACTIONS, downloadTransactions) //for download
+  yield takeLatest(Types.CREATE_TRANSACTION, createTransaction)
+  yield takeLatest(Types.DELETE_TRANSACTION_AND_REFRESH, deleteTransactionAndRefresh)
+  yield takeLatest(Types.UPDATE_TRANSACTION, updateTransaction)
 }

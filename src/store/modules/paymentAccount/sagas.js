@@ -8,6 +8,7 @@ const getPaymentAccounts = createApiCallSaga({
   type: Types.GET_PAYMENT_ACCOUNTS,
   method: 'GET',
   path: function*() {
+    console.log(yield roleBasedPath('payment-accounts/'))
     return yield roleBasedPath('payment-accounts/')
   },
   selectorKey: 'paymentAccounts',
