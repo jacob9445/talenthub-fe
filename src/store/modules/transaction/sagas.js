@@ -70,6 +70,7 @@ const deleteTransaction = createApiCallSaga({
 })
 
 const deleteTransactionAndRefresh = function*(action) {
+  console.log(action)
   const confirmed = yield confirm(action.payload.message)
   if (confirmed) {
     yield deleteTransaction(action)

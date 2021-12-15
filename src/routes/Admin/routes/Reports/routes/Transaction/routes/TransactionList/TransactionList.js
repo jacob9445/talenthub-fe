@@ -127,11 +127,11 @@ const TransactionList = ({
     id => {
       deleteTransactionAndRefresh({
         id,
-        role: me.role,
+        me,
         message: 'Are you sure to delete the transaction?'
       })
     },
-    [me.role, deleteTransactionAndRefresh]
+    [deleteTransactionAndRefresh, me]
   )
 
   const handleTeamChange = useCallback(
@@ -293,51 +293,52 @@ const TransactionList = ({
               title="Transactions"
               disableWidgetMenu
               WidgetButton={
-                <>
-                  <Grid container spacing={2} alignItems="stretch" justify="flex-end">
-                    <Grid item>
-                      <Tooltip title="Export as CSV" placement="top">
-                        <Button
-                          onClick={handleDownload}
-                          variant="outlined"
-                          color="primary"
-                          className={classes.download}>
-                          <CloudDownload />
-                          &nbsp;Export
-                        </Button>
-                      </Tooltip>
-                    </Grid>
-                    <Grid item>
-                      <SimpleSelect
-                        label="Type"
-                        value={queryObj.type || 'all'}
-                        options={financialRequestTypeOptions}
-                        onChange={handleTypeChange}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <SimpleSelect
-                        label="Period"
-                        value={queryObj.period}
-                        options={periodOptions}
-                        onChange={handlePeriodChange}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <SimpleSelect
-                        label="Team"
-                        value={queryObj.team || 'all'}
-                        options={teamOptions}
-                        onChange={handleTeamChange}
-                      />
-                    </Grid>
-                    <Tooltip title="Add new transaction" placement="top">
-                      <Button color="primary" variant="outlined" component={Link} to={`${path}/new`}>
-                        Add
+                <Grid container spacing={2} alignItems="stretch" justify="flex-end">
+                  <Grid item>
+                    <Tooltip title="Export as CSV" placement="top">
+                      <Button onClick={handleDownload} variant="outlined" color="primary" className={classes.download}>
+                        <CloudDownload />
+                        &nbsp;Export
                       </Button>
                     </Tooltip>
                   </Grid>
-                </>
+                  <Grid item>
+                    <SimpleSelect
+                      label="Type"
+                      value={queryObj.type || 'all'}
+                      options={financialRequestTypeOptions}
+                      onChange={handleTypeChange}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <SimpleSelect
+                      label="Period"
+                      value={queryObj.period}
+                      options={periodOptions}
+                      onChange={handlePeriodChange}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <SimpleSelect
+                      label="Team"
+                      value={queryObj.team || 'all'}
+                      options={teamOptions}
+                      onChange={handleTeamChange}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Tooltip title="Add new transaction" placement="top">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        component={Link}
+                        to={`${path}/new`}
+                        className={classes.download}>
+                        Add Transaction
+                      </Button>
+                    </Tooltip>
+                  </Grid>
+                </Grid>
               }>
               {showCustom ? (
                 <div className={classes.dateRangeFilter}>
@@ -346,6 +347,7 @@ const TransactionList = ({
                     initialValues={initialValues}
                     onSubmit={handleSubmit}
                     validationSchema={validationSchema}
+                    enableReinitialize
                   />
                 </div>
               ) : null}

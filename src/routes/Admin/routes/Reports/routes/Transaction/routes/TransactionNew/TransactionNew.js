@@ -8,7 +8,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import TransactionDetailForm, { validatingSchema } from '../../components/TransactionDetailForm'
+import TransactionDetailForm, { validationSchema } from '../../components/TransactionDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createTransaction } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
@@ -47,7 +47,8 @@ const TransactionNew = ({ createTransaction, me, history }) => {
             component={TransactionDetailForm}
             initialValues={initialValues}
             onSubmit={handleSubmit}
-            validationSchema={validatingSchema}
+            validationSchema={validationSchema}
+            enableReinitialize
           />
         </Widget>
       </Grid>

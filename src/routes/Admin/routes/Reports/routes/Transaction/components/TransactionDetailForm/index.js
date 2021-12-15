@@ -1,1 +1,1 @@
-export { default, validatingSchema } from './TransactionDetailForm'
+export { default, validationSchema } from './TransactionDetailForm'

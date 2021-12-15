@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import PropTypes from 'prop-types'
+
 import TransactionList from 'routes/Admin/routes/Reports/routes/Transaction/routes/TransactionList'
 import TransactionNew from 'routes/Admin/routes/Reports/routes/Transaction/routes/TransactionNew'
 import TransactionDetail from 'routes/Shared/TransactionDetail'

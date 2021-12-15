@@ -19,7 +19,7 @@ import { getPaymentAccounts, paymentAccountsSelector } from 'store/modules/payme
 import FormDatePicker from 'components/FormDatePicker'
 import FormSelect from 'components/FormSelect'
 
-export const validatingSchema = Yup.object().shape({
+export const validationSchema = Yup.object().shape({
   owner: Yup.string().required('This field is required!'),
   address: Yup.string().required('This field is required!'),
   gross_amount: Yup.string().required('This field is required!'),
@@ -31,7 +31,6 @@ export const validatingSchema = Yup.object().shape({
 
 const TransactionDetailForm = ({
   handleSubmit,
-  // values,
   location,
   history,
   me,
@@ -90,7 +89,7 @@ const TransactionDetailForm = ({
       <Field component={FormInput} type="text" htmlId="address" name="address" label="From/To" />
       <Field component={FormInput} type="text" htmlId="gross_amount" name="gross_amount" label="Gross amount" />
       <Field component={FormInput} type="text" htmlId="net_amount" name="net_amount" label="Net amount" />
-      <Field component={FormDatePicker} htmlId="created_at" name="created_at" label="Date" />
+      <Field component={FormDatePicker} name="created_at" label="Date" />
       <Field
         component={FormInput}
         type="text"

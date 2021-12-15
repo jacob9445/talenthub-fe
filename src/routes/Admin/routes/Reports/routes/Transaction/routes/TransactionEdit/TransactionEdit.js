@@ -8,7 +8,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import Widget from 'components/Widget'
-import TransactionDetailForm, { validatingSchema } from '../../components/TransactionDetailForm'
+import TransactionDetailForm, { validationSchema } from '../../components/TransactionDetailForm'
 import { formSubmit } from 'helpers/form'
 import { updateTransaction, getTransactionDetail, transactionDetailSelector } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
@@ -25,7 +25,7 @@ const TransactionEdit = ({
   useEffect(() => {
     getTransactionDetail(params.id)
   }, [getTransactionDetail, params.id])
-  console.log({ transactionDetail })
+
   const initialValues = useMemo(
     () => ({
       owner: transactionDetail?.owner,
@@ -64,7 +64,8 @@ const TransactionEdit = ({
             component={TransactionDetailForm}
             initialValues={initialValues}
             onSubmit={handleSubmit}
-            validationSchema={validatingSchema}
+            validationSchema={validationSchema}
+            enableReinitialize
           />
         </Widget>
       </Grid>
