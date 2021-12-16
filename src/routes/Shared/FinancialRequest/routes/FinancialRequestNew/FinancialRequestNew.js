@@ -29,7 +29,6 @@ const initialValues = {
 const FinancialRequestNew = ({ createFinancialRequest, history, me: { role } }) => {
   const handleSubmit = useCallback(
     (values, formActions) => {
-      console.log({ values })
       return formSubmit(
         createFinancialRequest,
         {

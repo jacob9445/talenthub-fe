@@ -49,19 +49,7 @@ function FinancialRequestTable({
   onChangeRowsPerPage
 }) {
   const classes = useStyles()
-  const columns = [
-    'Time',
-    'Project',
-    'Sender',
-    'To',
-    'Amount',
-    'Platform',
-    'Address',
-    'Display Name',
-    'Type',
-    'Status',
-    'Actions'
-  ]
+  const columns = ['Time', 'Project', 'Sender', 'To', 'Amount', 'Payment account', 'Type', 'Status', 'Actions']
 
   const showFinancialRequestEdit = useCallback(
     id => () => {
@@ -101,17 +89,11 @@ function FinancialRequestTable({
                 <FormattedNumber format="currency" value={amount} />
               </TableCell>
               {payment_account ? (
-                <>
-                  <TableCell>{PAYMENT_PLATFORMS[payment_account.platform]}</TableCell>
-                  <TableCell>{payment_account.address}</TableCell>
-                  <TableCell>{payment_account.display_name}</TableCell>
-                </>
+                <TableCell>
+                  {`${payment_account.display_name} (${payment_account.address}) - ${payment_account.platform}`}
+                </TableCell>
               ) : (
-                <>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </>
+                <TableCell></TableCell>
               )}
 
               <TableCell>{FINANCIALREQUEST_TYPE_LABELS[type]}</TableCell>
