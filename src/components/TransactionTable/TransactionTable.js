@@ -15,14 +15,16 @@ import {
 } from '@material-ui/core'
 import { Edit as EditIcon, Delete as DeleteIcon, Details as DetailsIcon } from '@material-ui/icons'
 import PropTypes from 'prop-types'
+// import * as R from 'ramda'
 
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedNumber } from 'react-intl'
 import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
-import { getFullName, formatPAInfo } from 'helpers/utils'
+import { getFullName, formatPAInfo, getProjectName } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
 import { getUsers, usersSelector } from 'store/modules/user'
+import { getProjects, projectsSelector } from 'store/modules/project'
 import { createStructuredSelector } from 'reselect'
 
 function TransactionTable({
@@ -35,15 +37,18 @@ function TransactionTable({
   location,
   onDelete,
   getUsers,
-  users
+  users,
+  getProjects,
+  projects
 }) {
   const classes = useStyles()
-  const columns = ['Date', 'From/To', 'Gross amount', 'Net Amount', 'Owner', 'Description', 'PaymentAccount']
+  const columns = ['Date', 'From/To', 'Gross amount', 'Net Amount', 'Owner', 'Project', 'Description', 'PaymentAccount']
   const role = me?.role
 
   useEffect(() => {
     getUsers()
-  }, [getUsers])
+    getProjects()
+  }, [getUsers, getProjects])
 
   const showTransactionEdit = useCallback(
     id => () => {
@@ -89,6 +94,7 @@ function TransactionTable({
               net_amount: netAmount,
               created_at: createdAt,
               description,
+              project: projectId,
               payment_account: paymentAccount
             }) => (
               <TableRow key={id} hover className={classes.tableRow}>
@@ -103,6 +109,7 @@ function TransactionTable({
                   <FormattedNumber format="currency" value={netAmount} />
                 </TableCell>
                 <TableCell>{getOnwerFullname(owner)}</TableCell>
+                <TableCell>{projects ? getProjectName(projectId)(projects.results) : null}</TableCell>
                 <TableCell>{description}</TableCell>
                 <TableCell>{formatPAInfo(paymentAccount)}</TableCell>
                 <TableCell>
@@ -146,11 +153,13 @@ function TransactionTable({
 }
 
 const actions = {
-  getUsers
+  getUsers,
+  getProjects
 }
 
 const selector = createStructuredSelector({
-  users: usersSelector
+  users: usersSelector,
+  projects: projectsSelector
 })
 
 TransactionTable.propTypes = {
@@ -163,7 +172,9 @@ TransactionTable.propTypes = {
   location: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
   getUsers: PropTypes.func.isRequired,
-  users: PropTypes.object.isRequired
+  users: PropTypes.object,
+  getProjects: PropTypes.func.isRequired,
+  projects: PropTypes.object
 }
 
 export default compose(withRouter, connect(selector, actions))(TransactionTable)
