@@ -1,30 +1,74 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Table, TableRow, TableHead, TableBody, TableCell, TableFooter, TablePagination } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import {
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TablePagination,
+  Tooltip,
+  IconButton
+} from '@material-ui/core'
+import { Edit as EditIcon, Delete as DeleteIcon, Details as DetailsIcon } from '@material-ui/icons'
 import PropTypes from 'prop-types'
 
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedNumber } from 'react-intl'
 import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
-import { getPlatformLabel, getFullName } from 'helpers/utils'
+import { getFullName, formatPAInfo } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
+import { getUsers, usersSelector } from 'store/modules/user'
+import { createStructuredSelector } from 'reselect'
 
-const briefText = (str, length) => (str && str.length > length ? str.substring(0, length) + '...' : str)
-
-function TransactionTable({ data, history, me, pagination, onChangePage, onChangeRowsPerPage }) {
+function TransactionTable({
+  data,
+  history,
+  me,
+  pagination,
+  onChangePage,
+  onChangeRowsPerPage,
+  location,
+  onDelete,
+  getUsers,
+  users
+}) {
   const classes = useStyles()
-  const columns = ['Date', 'From/To', 'Gross amount', 'Net Amount', 'Owner', 'Description', 'Payment Platform']
+  const columns = ['Date', 'From/To', 'Gross amount', 'Net Amount', 'Owner', 'Description', 'PaymentAccount']
   const role = me?.role
-  const handleRowClick = useCallback(
+
+  useEffect(() => {
+    getUsers()
+  }, [getUsers])
+
+  const showTransactionEdit = useCallback(
     id => () => {
-      if (role) {
-        history.push(`/${URL_PREFIXES[role]}/financial-reports/transactions/${id}/detail`)
+      history.push(`/${URL_PREFIXES[role]}/financial-reports/transactions/${id}/Edit`, location.pathname)
+    },
+    [history, location.pathname, role]
+  )
+
+  const showTransactionDetail = useCallback(
+    id => () => {
+      history.push(`/${URL_PREFIXES[role]}/financial-reports/transactions/${id}/Detail`, location.pathname)
+    },
+    [history, location.pathname, role]
+  )
+
+  const getOnwerFullname = useCallback(
+    ownerId => {
+      if (users) {
+        const user = users.results.filter(userItem => userItem.id === parseInt(ownerId))
+        return getFullName(user[0])
       }
     },
-    [history, role]
+    [users]
   )
-  console.log({ data })
+
   if (data) {
     return (
       <Table className="mb-0">
@@ -36,23 +80,51 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, gross_amount, net_amount, payment_platform, created_at, financial_request }) => (
-            <TableRow key={id} hover onClick={handleRowClick(id)} className={classes.tableRow}>
-              <TableCell>
-                <FormattedDate value={created_at} />
-              </TableCell>
-              <TableCell>{financial_request.address}</TableCell>
-              <TableCell>
-                <FormattedNumber format="currency" value={gross_amount} />
-              </TableCell>
-              <TableCell>
-                <FormattedNumber format="currency" value={net_amount} />
-              </TableCell>
-              <TableCell>{getFullName(financial_request.requester)}</TableCell>
-              <TableCell>{briefText(financial_request.description, 30)}</TableCell>
-              <TableCell>{getPlatformLabel(payment_platform)}</TableCell>
-            </TableRow>
-          ))}
+          {data.results.map(
+            ({
+              id,
+              owner,
+              address,
+              gross_amount: grossAmount,
+              net_amount: netAmount,
+              created_at: createdAt,
+              description,
+              payment_account: paymentAccount
+            }) => (
+              <TableRow key={id} hover className={classes.tableRow}>
+                <TableCell>
+                  <FormattedDate value={createdAt} />
+                </TableCell>
+                <TableCell>{address}</TableCell>
+                <TableCell>
+                  <FormattedNumber format="currency" value={grossAmount} />
+                </TableCell>
+                <TableCell>
+                  <FormattedNumber format="currency" value={netAmount} />
+                </TableCell>
+                <TableCell>{getOnwerFullname(owner)}</TableCell>
+                <TableCell>{description}</TableCell>
+                <TableCell>{formatPAInfo(paymentAccount)}</TableCell>
+                <TableCell>
+                  <Tooltip key={`${id}Detail`} title="Detail" placement="top">
+                    <IconButton onClick={showTransactionDetail(id)}>
+                      <DetailsIcon color="primary" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip key={`${id}Edit`} title="Edit" placement="top">
+                    <IconButton onClick={showTransactionEdit(id)}>
+                      <EditIcon color="primary" />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip key={`${id}Delete`} title="Delete" placement="top">
+                    <IconButton onClick={() => onDelete(id)}>
+                      <DeleteIcon color="secondary" />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            )
+          )}
         </TableBody>
         <TableFooter>
           <TableRow>
@@ -73,9 +145,25 @@ function TransactionTable({ data, history, me, pagination, onChangePage, onChang
   }
 }
 
-TransactionTable.propTypes = {
-  data: ListDataType,
-  me: PropTypes.object.isRequired
+const actions = {
+  getUsers
 }
 
-export default withRouter(TransactionTable)
+const selector = createStructuredSelector({
+  users: usersSelector
+})
+
+TransactionTable.propTypes = {
+  data: ListDataType,
+  me: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  pagination: PropTypes.object.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  onChangeRowsPerPage: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired
+}
+
+export default compose(withRouter, connect(selector, actions))(TransactionTable)

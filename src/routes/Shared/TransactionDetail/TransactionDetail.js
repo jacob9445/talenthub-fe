@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { Button, Grid } from '@material-ui/core'
 import { Link, withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
@@ -15,13 +15,16 @@ import {
   transactionDetailLoadingSelector,
   transactionDetailSelector
 } from 'store/modules/transaction'
+import { getUsers, usersSelector } from 'store/modules/user'
 import { meSelector } from 'store/modules/auth'
-import { getPlatformLabel, getFullName } from 'helpers/utils'
+import { getFullName } from 'helpers/utils'
 import { URL_PREFIXES, ROLES } from 'config/constants'
 import LabelValue from 'components/LabelValue'
 import { FINANCIALREQUEST_TYPE_LABELS, FINANCIALREQUEST_TYPE } from 'config/constants'
 
 const TransactionDetail = ({
+  getUsers,
+  users,
   getTransactionDetail,
   transactionDetail,
   isTransactionDetailLoading,
@@ -30,9 +33,22 @@ const TransactionDetail = ({
 }) => {
   useEffect(() => {
     getTransactionDetail(params.id)
-  }, [getTransactionDetail, params])
-  const fr = transactionDetail?.financial_request
+    getUsers()
+  }, [getTransactionDetail, getUsers, params])
+
+  const getOnwerFullname = useCallback(
+    ownerId => {
+      if (users) {
+        const user = users.results.filter(userItem => userItem.id === parseInt(ownerId))
+        return getFullName(user[0])
+      }
+    },
+    [users]
+  )
+
+  const fr = transactionDetail?.financial_request || undefined
   const role = me?.role
+
   if (isTransactionDetailLoading) return <Spinner />
   else
     return (
@@ -60,33 +76,40 @@ const TransactionDetail = ({
                     <LabelValue label="Net Amount">
                       <FormattedNumber format="currency" value={transactionDetail.net_amount} />
                     </LabelValue>
-                    <LabelValue label="Payment Platform">
-                      {getPlatformLabel(transactionDetail.payment_platform)}
+                    <LabelValue label="Payment Account">
+                      {`${transactionDetail.payment_account.display_name} (${transactionDetail.payment_account.address}) - ${transactionDetail.payment_account.platform}`}
                     </LabelValue>
                     <LabelValue label="Description">{transactionDetail.description}</LabelValue>
                   </Grid>
                   <Grid item sm={6}>
-                    <LabelValue label="Financial Request Type">{FINANCIALREQUEST_TYPE_LABELS[fr.type]}</LabelValue>
-                    <LabelValue label="Requested Amount">
-                      <FormattedNumber format="currency" value={fr.amount} />
-                    </LabelValue>
-                    <LabelValue label={fr.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? 'Pay To' : 'Receive From'}>
-                      {fr.address}
-                    </LabelValue>
                     <LabelValue label="Requested by">
                       {role === ROLES.DEVELOPER ? (
-                        getFullName(fr.requester)
+                        getOnwerFullname(transactionDetail.owner)
                       ) : (
-                        <Link to={`/${URL_PREFIXES[role]}/users/${fr.requester.id}/detail`}>
-                          {getFullName(fr.requester)}
+                        <Link to={`/${URL_PREFIXES[role]}/users/${transactionDetail.owner}/detail`}>
+                          {getOnwerFullname(transactionDetail.owner)}
                         </Link>
                       )}
                     </LabelValue>
-                    {fr.type !== FINANCIALREQUEST_TYPE.SENDPAYMENT && (
-                      <LabelValue label="Associated Project">
-                        <Link to={`/${URL_PREFIXES[role]}/projects/${fr.project.id}/detail`}>{fr.project.title}</Link>
-                      </LabelValue>
-                    )}
+                    <LabelValue label="From/To">{transactionDetail.address}</LabelValue>
+                    {fr ? (
+                      <>
+                        <LabelValue label="Financial Request Type">{FINANCIALREQUEST_TYPE_LABELS[fr.type]}</LabelValue>
+                        <LabelValue label="Requested Amount">
+                          <FormattedNumber format="currency" value={fr.amount} />
+                        </LabelValue>
+                        <LabelValue label={fr.type === FINANCIALREQUEST_TYPE.SENDPAYMENT ? 'Pay To' : 'Receive From'}>
+                          {fr.address}
+                        </LabelValue>
+                        {fr.type !== FINANCIALREQUEST_TYPE.SENDPAYMENT && (
+                          <LabelValue label="Associated Project">
+                            <Link to={`/${URL_PREFIXES[role]}/projects/${fr.project.id}/detail`}>
+                              {fr.project.title}
+                            </Link>
+                          </LabelValue>
+                        )}
+                      </>
+                    ) : null}
                   </Grid>
                 </Grid>
               </Widget>
@@ -99,13 +122,15 @@ const TransactionDetail = ({
 
 const actions = {
   getTransactionDetail,
+  getUsers,
   show
 }
 
 const selector = createStructuredSelector({
   transactionDetail: transactionDetailSelector,
   isTransactionDetailLoading: transactionDetailLoadingSelector,
-  me: meSelector
+  me: meSelector,
+  users: usersSelector
 })
 
 TransactionDetail.propTypes = {

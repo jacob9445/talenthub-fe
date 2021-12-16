@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect'
 import { Formik } from 'formik'
 import * as R from 'ramda'
 import { show } from 'redux-modal'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import DateRangePickerForm, { validationSchema } from 'components/DateRangePickerForm'
@@ -21,7 +21,8 @@ import {
   getTransactions,
   transactionsSelector,
   transactionsLoadingSelector,
-  downloadTransactions
+  downloadTransactions,
+  deleteTransactionAndRefresh
 } from 'store/modules/transaction'
 import { meSelector } from 'store/modules/auth'
 import withPaginationInfo from 'hocs/withPaginationInfo'
@@ -31,6 +32,7 @@ import { periodOptions, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } f
 
 const TransactionList = ({
   getTransactions,
+  deleteTransactionAndRefresh,
   transactions,
   isTransactionLoading,
   downloadTransactions,
@@ -41,7 +43,8 @@ const TransactionList = ({
   onChangePage,
   onChangeRowsPerPage,
   location,
-  history
+  history,
+  match: { path }
 }) => {
   const queryObj = useMemo(
     () => ({
@@ -118,6 +121,17 @@ const TransactionList = ({
       ...FINANCIALREQUEST_TYPE_OPTIONS.filter(typeOption => typeOption.value !== FINANCIALREQUEST_TYPE.SENDINVOICE)
     ],
     []
+  )
+
+  const handleDelete = useCallback(
+    id => {
+      deleteTransactionAndRefresh({
+        id,
+        me,
+        message: 'Are you sure to delete the transaction?'
+      })
+    },
+    [deleteTransactionAndRefresh, me]
   )
 
   const handleTeamChange = useCallback(
@@ -312,6 +326,18 @@ const TransactionList = ({
                       onChange={handleTeamChange}
                     />
                   </Grid>
+                  <Grid item>
+                    <Tooltip title="Add new transaction" placement="top">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        component={Link}
+                        to={`${path}/new`}
+                        className={classes.download}>
+                        Add Transaction
+                      </Button>
+                    </Tooltip>
+                  </Grid>
                 </Grid>
               }>
               {showCustom ? (
@@ -321,12 +347,15 @@ const TransactionList = ({
                     initialValues={initialValues}
                     onSubmit={handleSubmit}
                     validationSchema={validationSchema}
+                    enableReinitialize
                   />
                 </div>
               ) : null}
+
               <TransactionTable
                 data={transactions}
                 me={me}
+                onDelete={handleDelete}
                 pagination={pagination}
                 onChangePage={onChangePage}
                 onChangeRowsPerPage={onChangeRowsPerPage}
@@ -340,6 +369,7 @@ const TransactionList = ({
 
 const actions = {
   getTransactions,
+  deleteTransactionAndRefresh,
   getTeams,
   downloadTransactions,
   show
