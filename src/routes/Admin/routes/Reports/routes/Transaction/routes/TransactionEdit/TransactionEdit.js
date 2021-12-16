@@ -28,13 +28,13 @@ const TransactionEdit = ({
 
   const initialValues = useMemo(
     () => ({
-      owner: transactionDetail?.owner,
-      address: transactionDetail?.address,
-      gross_amount: transactionDetail?.gross_amount,
-      net_amount: transactionDetail?.net_amount,
-      created_at: transactionDetail?.created_at,
-      description: transactionDetail?.description,
-      payment_account: transactionDetail?.payment_account
+      owner: transactionDetail?.owner || '',
+      address: transactionDetail?.address || '',
+      gross_amount: transactionDetail?.gross_amount || 0,
+      net_amount: transactionDetail?.net_amount || 0,
+      created_at: transactionDetail?.created_at || '',
+      description: transactionDetail?.description || '',
+      payment_account: transactionDetail?.payment_account || ''
     }),
     [transactionDetail]
   )
@@ -85,7 +85,11 @@ const actions = {
 
 TransactionEdit.propTypes = {
   updateTransaction: PropTypes.func.isRequired,
-  me: PropTypes.object
+  getTransactionDetail: PropTypes.func.isRequired,
+  transactionDetail: PropTypes.object,
+  me: PropTypes.object,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 export default compose(withRouter, connect(selector, actions))(TransactionEdit)

@@ -20,7 +20,7 @@ import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedNumber } from 'react-intl'
 import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
-import { getFullName } from 'helpers/utils'
+import { getFullName, formatPAInfo } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
 import { getUsers, usersSelector } from 'store/modules/user'
 import { createStructuredSelector } from 'reselect'
@@ -81,21 +81,30 @@ function TransactionTable({
         </TableHead>
         <TableBody>
           {data.results.map(
-            ({ id, owner, address, gross_amount, net_amount, created_at, description, payment_account }) => (
+            ({
+              id,
+              owner,
+              address,
+              gross_amount: grossAmount,
+              net_amount: netAmount,
+              created_at: createdAt,
+              description,
+              payment_account: paymentAccount
+            }) => (
               <TableRow key={id} hover className={classes.tableRow}>
                 <TableCell>
-                  <FormattedDate value={created_at} />
+                  <FormattedDate value={createdAt} />
                 </TableCell>
                 <TableCell>{address}</TableCell>
                 <TableCell>
-                  <FormattedNumber format="currency" value={gross_amount} />
+                  <FormattedNumber format="currency" value={grossAmount} />
                 </TableCell>
                 <TableCell>
-                  <FormattedNumber format="currency" value={net_amount} />
+                  <FormattedNumber format="currency" value={netAmount} />
                 </TableCell>
                 <TableCell>{getOnwerFullname(owner)}</TableCell>
                 <TableCell>{description}</TableCell>
-                <TableCell>{`${payment_account.display_name} (${payment_account.address}) - ${payment_account.platform}`}</TableCell>
+                <TableCell>{formatPAInfo(paymentAccount)}</TableCell>
                 <TableCell>
                   <Tooltip key={`${id}Detail`} title="Detail" placement="top">
                     <IconButton onClick={showTransactionDetail(id)}>
@@ -146,7 +155,15 @@ const selector = createStructuredSelector({
 
 TransactionTable.propTypes = {
   data: ListDataType,
-  me: PropTypes.object.isRequired
+  me: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  pagination: PropTypes.object.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  onChangeRowsPerPage: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  getUsers: PropTypes.func.isRequired,
+  users: PropTypes.object.isRequired
 }
 
 export default compose(withRouter, connect(selector, actions))(TransactionTable)

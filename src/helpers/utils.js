@@ -165,3 +165,7 @@ export const bindCallbackToPromise = () => {
     cb
   }
 }
+
+export const formatPAInfo = paymentAccount => {
+  return `${paymentAccount.display_name} (${paymentAccount.address}) - ${paymentAccount.platform}`
+}

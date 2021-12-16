@@ -99,6 +99,7 @@ const FinancialRequestDetailForm = ({
           validate={value => validateProjectField(value, values.type)}
         />
       ) : null}
+      <Field component={FormSelect} htmlId="payment_account" label="Payment account" />
       <Field
         component={FormInput}
         type="text"

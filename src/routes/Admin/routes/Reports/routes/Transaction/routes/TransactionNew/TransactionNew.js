@@ -21,7 +21,7 @@ const initialValues = {
   net_amount: ' ',
   created_at: ' ',
   description: ' ',
-  payment_account: 0
+  payment_account: ''
 }
 
 const TransactionNew = ({ createTransaction, me, history }) => {
@@ -66,7 +66,8 @@ const actions = {
 
 TransactionNew.propTypes = {
   createTransaction: PropTypes.func.isRequired,
-  me: PropTypes.object
+  me: PropTypes.object,
+  history: PropTypes.object.isRequired
 }
 
 export default compose(withRouter, connect(selector, actions))(TransactionNew)
