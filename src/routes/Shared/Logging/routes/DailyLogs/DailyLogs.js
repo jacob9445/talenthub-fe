@@ -2,17 +2,17 @@ import React, { useEffect, useCallback, useMemo } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { DatePicker } from '@material-ui/pickers'
 import { format } from 'date-fns'
 import { Grid, Button } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
-import { dailyLogsSelector, getDailyLogs } from 'store/modules/logging'
-import { ListDataType } from 'helpers/prop-types'
-import { meSelector } from 'store/modules/auth'
-import { parseQueryString, jsonToQueryString } from 'helpers/utils'
-import LoggingLayout from 'routes/Shared/Logging/components/LoggingLayout'
 import withPaginationInfo from 'hocs/withPaginationInfo'
+import LoggingLayout from 'routes/Shared/Logging/components/LoggingLayout'
+import LocalizedDatePicker from 'components/LocalizedDatePicker'
+import { parseQueryString, jsonToQueryString } from 'helpers/utils'
+import { meSelector } from 'store/modules/auth'
+import { ListDataType } from 'helpers/prop-types'
+import { dailyLogsSelector, getDailyLogs } from 'store/modules/logging'
 
 const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history }) => {
   const queryObj = useMemo(() => parseQueryString(location.search), [location])
@@ -22,7 +22,7 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history 
       history.push({
         search: jsonToQueryString({
           ...parseQueryString(location.search),
-          date: format(date, 'yyyy-MM-dd')
+          date
         })
       })
     },
@@ -46,7 +46,7 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history 
     history.push({
       search: jsonToQueryString({
         ...parseQueryString(location.search),
-        date: format(date, 'yyyy-MM-dd')
+        date
       })
     })
   }, [history, location])
@@ -59,7 +59,12 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history 
       actions={
         <>
           <Grid item>
-            <DatePicker margin="normal" label="Choose a date" value={selectedDate} onChange={handleDateChange} />
+            <LocalizedDatePicker
+              margin="normal"
+              label="Choose a date"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
           </Grid>
           <Grid item>
             <Button variant="outlined" color="primary" onClick={viewTodayLog}>

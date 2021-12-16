@@ -1,5 +1,7 @@
 import * as R from 'ramda'
+import DateFnsUtils from '@date-io/date-fns'
 import { format } from 'date-fns'
+
 import { PAYMENT_PLATFORM_OPTIONS, SNACKBAR_TOUCHED } from 'config/constants'
 
 export const getPlatformLabel = paymentPlatform =>
@@ -98,7 +100,7 @@ export const getFirstDateOfWeek = (year, week) => {
   const month = i + 1
   const day = period
   const firstdate = new Date(year, month - 1, day)
-  return firstdate
+  return format(firstdate, 'yyyy-MM-dd')
 }
 
 export const getWeekOfMonth = date => {
@@ -168,4 +170,9 @@ export const bindCallbackToPromise = () => {
 
 export const formatPAInfo = paymentAccount => {
   return `${paymentAccount.display_name} (${paymentAccount.address}) - ${paymentAccount.platform}`
+}
+
+export const dateStringToLocalDate = s => {
+  if (!s) return null
+  return new DateFnsUtils().parse(s, 'yyyy-MM-dd')
 }

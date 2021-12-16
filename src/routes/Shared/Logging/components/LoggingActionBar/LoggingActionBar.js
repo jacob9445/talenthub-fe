@@ -3,13 +3,13 @@ import { Button, Grid, FormControl, MenuItem, Input, InputLabel, Select, Paper }
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { DatePicker } from '@material-ui/pickers'
 import { format } from 'date-fns'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { meSelector } from 'store/modules/auth'
 import SimpleSelect from 'components/SimpleSelect'
+import LocalizedDatePicker from 'components/LocalizedDatePicker'
 import EditableSelect from 'components/EditableSelect'
 import { searchUsers, userSearchResultsSelector } from 'store/modules/user'
 import { generateDecrementArray, generateIncrementArray } from 'helpers/utils'
@@ -56,18 +56,16 @@ const LoggingActionBar = ({ logDetail, history, match, me, interval, searchUsers
 
   const handleDateChange = useCallback(
     date => {
-      const year = date.getFullYear()
-      const month = date.getMonth() + 1
-      const day = date.getDate()
-      history.push(`/${URL_PREFIXES[me.role]}/logging/daily/${year}-${month}-${day}/${selectedUserId}`)
+      history.push(`/${URL_PREFIXES[me.role]}/logging/daily/${date}/${selectedUserId}`)
     },
     [history, selectedUserId, me.role]
   )
 
   const handleWeekChange = useCallback(
     date => {
-      const year = date.getFullYear()
-      const week = parseInt(format(date, 'ww')) - 1
+      const dt = new Date(date)
+      const year = dt.getFullYear()
+      const week = parseInt(format(dt, 'ww')) - 1
       history.push(`/${URL_PREFIXES[me.role]}/logging/weekly/${year}-${week}/${selectedUserId}`)
     },
     [history, selectedUserId, me.role]
@@ -173,7 +171,12 @@ const LoggingActionBar = ({ logDetail, history, match, me, interval, searchUsers
             {interval === INTERVALS.DAILY ? (
               <>
                 <Grid item>
-                  <DatePicker margin="normal" label="Choose a date" value={selectedDate} onChange={handleDateChange} />
+                  <LocalizedDatePicker
+                    margin="normal"
+                    label="Choose a date"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                  />
                 </Grid>
                 <Grid item>
                   <Button variant="outlined" color="primary" onClick={handleTodayClick}>
@@ -184,9 +187,9 @@ const LoggingActionBar = ({ logDetail, history, match, me, interval, searchUsers
             ) : interval === INTERVALS.WEEKLY ? (
               <>
                 <Grid item>
-                  <DatePicker
+                  <LocalizedDatePicker
                     margin="normal"
-                    label="Choose a date of week"
+                    label="Choose a week of month"
                     value={selectedDate}
                     onChange={handleWeekChange}
                     labelFunc={datePickerLabelFunc}
