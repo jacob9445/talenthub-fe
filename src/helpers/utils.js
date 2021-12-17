@@ -176,3 +176,6 @@ export const dateStringToLocalDate = s => {
   if (!s) return null
   return new DateFnsUtils().parse(s, 'yyyy-MM-dd')
 }
+
+export const getProjectName = id =>
+  R.compose(R.defaultTo(null), R.path(['title']), R.find(R.propEq('id', parseInt(id))))
