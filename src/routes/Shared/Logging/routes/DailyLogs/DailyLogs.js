@@ -46,7 +46,7 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history 
     history.push({
       search: jsonToQueryString({
         ...parseQueryString(location.search),
-        date
+        date: format(date, 'yyyy-MM-dd')
       })
     })
   }, [history, location])
