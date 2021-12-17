@@ -27,7 +27,8 @@ import {
   ROLES,
   FINANCIALREQUEST_STATUS,
   FINANCIALREQUEST_TYPE,
-  URL_PREFIXES
+  URL_PREFIXES,
+  PAYMENT_PLATFORMS
 } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedNumber } from 'react-intl'
@@ -48,7 +49,7 @@ function FinancialRequestTable({
   onChangeRowsPerPage
 }) {
   const classes = useStyles()
-  const columns = ['Time', 'Project', 'Sender', 'To', 'Amount', 'Type', 'Status', 'Actions']
+  const columns = ['Time', 'Project', 'Sender', 'To', 'Amount', 'Payment account', 'Type', 'Status', 'Actions']
 
   const showFinancialRequestEdit = useCallback(
     id => () => {
@@ -76,7 +77,7 @@ function FinancialRequestTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {results.map(({ id, type, status, amount, address, requested_at, requester, project }) => (
+          {results.map(({ id, type, status, amount, address, requested_at, requester, project, payment_account }) => (
             <TableRow key={id} hover>
               <TableCell>
                 <FormattedDate value={requested_at} />
@@ -87,6 +88,14 @@ function FinancialRequestTable({
               <TableCell>
                 <FormattedNumber format="currency" value={amount} />
               </TableCell>
+              {payment_account ? (
+                <TableCell>
+                  {`${payment_account.display_name} (${payment_account.address}) - ${payment_account.platform}`}
+                </TableCell>
+              ) : (
+                <TableCell></TableCell>
+              )}
+
               <TableCell>{FINANCIALREQUEST_TYPE_LABELS[type]}</TableCell>
               <TableCell>{FINANCIALREQUEST_STATUS_LABELS[status]}</TableCell>
               <TableCell>

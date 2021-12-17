@@ -14,6 +14,7 @@ import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { URL_PREFIXES, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
+import { getPaymentAccountDetail, getPaymentAccounts, paymentAccountsSelector } from 'store/modules/paymentAccount'
 import { searchProjects, projectsSearchResultsSelector } from 'store/modules/project'
 import { ListDataType } from 'helpers/prop-types'
 
@@ -34,7 +35,9 @@ const FinancialRequestDetailForm = ({
   me,
   match: { params },
   searchProjects,
-  projectsSearchResults
+  projectsSearchResults,
+  getPaymentAccounts,
+  paymentAccounts
 }) => {
   const classes = useStyles()
 
@@ -44,7 +47,8 @@ const FinancialRequestDetailForm = ({
         project_starter: me.id
       }
     })
-  }, [searchProjects, me])
+    getPaymentAccounts()
+  }, [searchProjects, getPaymentAccounts, me])
 
   const handleCancel = useCallback(() => {
     location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[role]}/financial-requests`)
@@ -62,6 +66,18 @@ const FinancialRequestDetailForm = ({
   }, [projectsSearchResults])
 
   const isUpdateMode = useMemo(() => Boolean(params.id), [params.id])
+
+  const paymentAccountOptions = useMemo(
+    () =>
+      paymentAccounts
+        ? paymentAccounts.results.map(paymentAccount => ({
+            value: paymentAccount.id,
+            label: `${paymentAccount.display_name} (${paymentAccount.address}) - ${paymentAccount.platform}`
+          }))
+        : [],
+    [paymentAccounts]
+  )
+
   return (
     <form onSubmit={handleSubmit}>
       <Field
@@ -99,7 +115,13 @@ const FinancialRequestDetailForm = ({
           validate={value => validateProjectField(value, values.type)}
         />
       ) : null}
-      <Field component={FormSelect} htmlId="payment_account" label="Payment account" />
+      <Field
+        component={FormSelect}
+        htmlId="payment_account"
+        name="payment_account"
+        label="Payment Accounts"
+        options={paymentAccountOptions}
+      />
       <Field
         component={FormInput}
         type="text"
@@ -134,16 +156,20 @@ FinancialRequestDetailForm.propTypes = {
   match: PropTypes.object.isRequired,
   me: PropTypes.object,
   projects: ListDataType,
-  values: PropTypes.object.isRequired
+  values: PropTypes.object.isRequired,
+  getPaymentAccounts: PropTypes.func.isRequired,
+  paymentAccounts: PropTypes.object
 }
 
 const selector = createStructuredSelector({
   me: meSelector,
-  projectsSearchResults: projectsSearchResultsSelector
+  projectsSearchResults: projectsSearchResultsSelector,
+  paymentAccounts: paymentAccountsSelector
 })
 
 const actions = {
-  searchProjects
+  searchProjects,
+  getPaymentAccounts
 }
 
 export default compose(withRouter, connect(selector, actions))(FinancialRequestDetailForm)
