@@ -1,12 +1,18 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import LogDetail from 'routes/Shared/Logging/components/LogDetail'
 import Spinner from 'components/Spinner'
-import { monthlyLogDetailSelector, retrieveMonthlyLog, monthlyLogStatusLoadingSelector } from 'store/modules/logging'
+import MonthlyPlusWeekly from '../../components/MonthlyPlusWeekly'
+import {
+  monthlyLogDetailSelector,
+  retrieveMonthlyLog,
+  monthlyLogStatusLoadingSelector,
+  weeklyLogsSelector,
+  getWeeklyLogs
+} from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 import { shouldRedirect } from '../utils'
@@ -16,14 +22,14 @@ const RetrieveMonthlyLog = ({
   monthlyLog,
   monthlyLogIsLoading,
   me,
-  location,
-  history,
   match,
+  getWeeklyLogs,
   interval
 }) => {
   const {
     params: { year, month, userId }
   } = match
+
   useEffect(() => {
     retrieveMonthlyLog({
       role: me.role,
@@ -35,9 +41,14 @@ const RetrieveMonthlyLog = ({
     })
   }, [retrieveMonthlyLog, me.role, year, month, userId])
 
-  const handleGoBack = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/monthly/`)
-  }, [location, history, me.role])
+  useEffect(() => {
+    getWeeklyLogs({
+      role: me.role,
+      params: {
+        owner: userId
+      }
+    })
+  }, [getWeeklyLogs, me.role, userId])
 
   if (monthlyLogIsLoading) {
     return <Spinner />
@@ -45,25 +56,28 @@ const RetrieveMonthlyLog = ({
     return monthlyLog && shouldRedirect(monthlyLog, year, month, null, null, userId) ? (
       <Redirect to={`/${URL_PREFIXES[me.role]}/logging/monthly/${monthlyLog.id}/detail`} />
     ) : (
-      <LogDetail logDetail={monthlyLog} onGoBack={handleGoBack} interval={interval} />
+      <MonthlyPlusWeekly interval={interval} />
     )
   }
 }
 
 const actions = {
-  retrieveMonthlyLog
+  retrieveMonthlyLog,
+  getWeeklyLogs
 }
 
 const selectors = createStructuredSelector({
   monthlyLog: monthlyLogDetailSelector,
   monthlyLogIsLoading: monthlyLogStatusLoadingSelector,
-  me: meSelector
+  me: meSelector,
+  developerWeeklyLogs: weeklyLogsSelector
 })
 
 RetrieveMonthlyLog.propTypes = {
   monthlyLog: PropTypes.object,
   me: PropTypes.object.isRequired,
-  retrieveMonthlyLog: PropTypes.func.isRequired
+  retrieveMonthlyLog: PropTypes.func.isRequired,
+  getWeeklyLogs: PropTypes.func.isRequired
 }
 
 export default connect(selectors, actions)(RetrieveMonthlyLog)

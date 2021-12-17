@@ -17,8 +17,10 @@ export default makeStyles(theme => ({
     marginBottom: theme.spacing(2)
   },
   navs: {
-    textAlign: 'right',
-    marginTop: theme.spacing(2)
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   textContent: {
     whiteSpace: 'pre-wrap'

@@ -1,26 +1,25 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { createStructuredSelector } from 'reselect'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import LogDetail from 'routes/Shared/Logging/components/LogDetail'
 import Spinner from 'components/Spinner'
-import { weeklyLogDetailSelector, retrieveWeeklyLog, weeklyLogStatusLoadingSelector } from 'store/modules/logging'
+import WeeklyPlusDaily from '../../components/WeeklyPlusDaily'
+import {
+  weeklyLogDetailSelector,
+  retrieveWeeklyLog,
+  weeklyLogStatusLoadingSelector,
+  dailyLogsSelector,
+  getDailyLogs
+} from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 import { shouldRedirect } from '../utils'
 
-const RetrieveWeeklyLog = ({
-  retrieveWeeklyLog,
-  weeklyLog,
-  weeklyLogIsLoading,
-  me,
-  location,
-  history,
-  match,
-  interval
-}) => {
+const RetrieveWeeklyLog = ({ retrieveWeeklyLog, weeklyLog, weeklyLogIsLoading, me, match, getDailyLogs, interval }) => {
   const {
     params: { year, week, userId }
   } = match
@@ -36,9 +35,14 @@ const RetrieveWeeklyLog = ({
     })
   }, [retrieveWeeklyLog, me.role, year, week, userId])
 
-  const handleGoBack = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/weekly/`)
-  }, [location, history, me.role])
+  useEffect(() => {
+    getDailyLogs({
+      role: me.role,
+      params: {
+        owner: userId
+      }
+    })
+  }, [getDailyLogs, me.role, userId])
 
   if (weeklyLogIsLoading) {
     return <Spinner />
@@ -46,25 +50,28 @@ const RetrieveWeeklyLog = ({
     return weeklyLog && shouldRedirect(weeklyLog, year, null, week, null, userId) ? (
       <Redirect to={`/${URL_PREFIXES[me.role]}/logging/weekly/${weeklyLog.id}/detail`} />
     ) : (
-      <LogDetail logDetail={weeklyLog} onGoBack={handleGoBack} interval={interval} />
+      <WeeklyPlusDaily interval={interval} />
     )
   }
 }
 
 const actions = {
-  retrieveWeeklyLog
+  retrieveWeeklyLog,
+  getDailyLogs
 }
 
 const selectors = createStructuredSelector({
   weeklyLog: weeklyLogDetailSelector,
   weeklyLogIsLoading: weeklyLogStatusLoadingSelector,
-  me: meSelector
+  me: meSelector,
+  developerDailyLogs: dailyLogsSelector
 })
 
 RetrieveWeeklyLog.propTypes = {
   weeklyLog: PropTypes.object,
   me: PropTypes.object.isRequired,
-  retrieveWeeklyLog: PropTypes.func.isRequired
+  retrieveWeeklyLog: PropTypes.func.isRequired,
+  getDailyLogs: PropTypes.func.isRequired
 }
 
-export default connect(selectors, actions)(RetrieveWeeklyLog)
+export default compose(withRouter, connect(selectors, actions))(RetrieveWeeklyLog)

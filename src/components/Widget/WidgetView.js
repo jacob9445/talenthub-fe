@@ -66,7 +66,7 @@ const styles = theme => ({
   },
   widgetHeader: {
     padding: theme.spacing(3),
-    paddingBottom: theme.spacing.unit,
+    paddingBottom: theme.spacing(1),
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center'
@@ -89,7 +89,7 @@ const styles = theme => ({
     overflow: 'hidden'
   },
   moreButton: {
-    margin: -theme.spacing.unit,
+    margin: -theme.spacing(1),
     padding: 0,
     width: 40,
     height: 40,

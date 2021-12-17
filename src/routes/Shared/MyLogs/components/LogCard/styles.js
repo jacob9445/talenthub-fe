@@ -5,7 +5,7 @@ export default makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    boxShadow: theme.shadows[5]
+    boxShadow: theme.shadows[2]
   },
   cardContent: {
     flex: 1

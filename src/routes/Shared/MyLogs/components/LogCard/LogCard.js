@@ -66,7 +66,7 @@ const LogCard = ({ title, content, onSave, editable }) => {
 }
 
 LogCard.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   content: PropTypes.string,
   onSave: PropTypes.func
 }

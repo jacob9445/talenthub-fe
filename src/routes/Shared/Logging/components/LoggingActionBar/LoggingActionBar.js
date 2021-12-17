@@ -254,7 +254,8 @@ LoggingActionBar.propTypes = {
   logDetail: PropTypes.object,
   history: PropTypes.object.isRequired,
   me: PropTypes.object,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  interval: PropTypes.string.isRequired
 }
 
 export default compose(withRouter, connect(selectors, actions))(LoggingActionBar)
