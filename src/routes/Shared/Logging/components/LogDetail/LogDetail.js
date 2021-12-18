@@ -6,12 +6,18 @@ import LogCard from 'routes/Shared/MyLogs/components/LogCard'
 import LoggingActionBar from 'routes/Shared/Logging/components/LoggingActionBar'
 import useStyles from './styles'
 
+const intervals = {
+  daily: 'Daily',
+  weekly: 'Weekly',
+  monthly: 'Monthly'
+}
+
 const LogDetail = ({ logDetail, onGoBack, editable, interval }) => {
   let classes = useStyles()
   return (
     <>
       <Paper className={classes.navs}>
-        <Typography variant="h3">This Week's Plan</Typography>
+        <Typography variant="h3">{intervals[interval]} Plan</Typography>
         <Button variant="contained" color="primary" onClick={onGoBack}>
           Go back
         </Button>
@@ -27,12 +33,6 @@ const LogDetail = ({ logDetail, onGoBack, editable, interval }) => {
           <LogCard title="Achievements" content={logDetail?.achievements} editable={false} />
         </Grid>
       </Grid>
-
-      <div className={classes.navs}>
-        <Button variant="contained" color="primary" onClick={onGoBack}>
-          Go back
-        </Button>
-      </div>
     </>
   )
 }

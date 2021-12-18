@@ -13,12 +13,12 @@ export default makeStyles(theme => ({
     marginRight: theme.spacing(4)
   },
   formControl: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     minWidth: 40,
     textAlign: 'center'
   },
   buttonMargin: {
-    marginRight: theme.spacing.unit
+    marginRight: theme.spacing(1)
   },
   selectMonth: {
     display: 'flex',
