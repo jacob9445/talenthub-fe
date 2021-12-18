@@ -14,7 +14,7 @@ import FormSelect from 'components/FormSelect'
 import useStyles from './styles'
 import { URL_PREFIXES, FINANCIALREQUEST_TYPE_OPTIONS, FINANCIALREQUEST_TYPE } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
-import { getPaymentAccountDetail, getPaymentAccounts, paymentAccountsSelector } from 'store/modules/paymentAccount'
+import { getPaymentAccounts, paymentAccountsSelector } from 'store/modules/paymentAccount'
 import { searchProjects, projectsSearchResultsSelector } from 'store/modules/project'
 import { ListDataType } from 'helpers/prop-types'
 
