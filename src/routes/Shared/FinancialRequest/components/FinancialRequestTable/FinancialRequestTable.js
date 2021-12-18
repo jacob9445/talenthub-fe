@@ -27,8 +27,7 @@ import {
   ROLES,
   FINANCIALREQUEST_STATUS,
   FINANCIALREQUEST_TYPE,
-  URL_PREFIXES,
-  PAYMENT_PLATFORMS
+  URL_PREFIXES
 } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { FormattedDate, FormattedNumber } from 'react-intl'

@@ -11,7 +11,7 @@ import Widget from 'components/Widget'
 import FinancialRequestDetailForm, { validationSchema } from '../../components/FinancialRequestEditForm'
 import { formSubmit } from 'helpers/form'
 import { meSelector } from 'store/modules/auth'
-import { createFinancialRequest, getPaymentAccounts } from 'store/modules/financialRequest'
+import { createFinancialRequest } from 'store/modules/financialRequest'
 import { FINANCIALREQUEST_TYPE, URL_PREFIXES, PAYMENT_PLATFORM_TYPE } from 'config/constants'
 
 const initialValues = {
