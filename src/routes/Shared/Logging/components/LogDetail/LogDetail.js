@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid, Paper, Typography } from '@material-ui/core'
 import PropTypes from 'prop-types'
 
 import LogCard from 'routes/Shared/MyLogs/components/LogCard'
@@ -10,6 +10,12 @@ const LogDetail = ({ logDetail, onGoBack, editable, interval }) => {
   let classes = useStyles()
   return (
     <>
+      <Paper className={classes.navs}>
+        <Typography variant="h3">This Week's Plan</Typography>
+        <Button variant="contained" color="primary" onClick={onGoBack}>
+          Go back
+        </Button>
+      </Paper>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <LoggingActionBar logDetail={logDetail} interval={interval} />
