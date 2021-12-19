@@ -4,10 +4,10 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Grid, Button } from '@material-ui/core'
 import { format } from 'date-fns'
-import { DatePicker } from '@material-ui/pickers'
 import PropTypes from 'prop-types'
 
 import LogCard from 'routes/Shared/MyLogs/components/LogCard'
+import LocalizedDatePicker from 'components/LocalizedDatePicker'
 import MyLogLayout from 'routes/Shared/MyLogs/components/MyLogLayout'
 import useStyles from './styles'
 import { getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myWeeklylogSelector } from 'store/modules/mylogs'
@@ -28,8 +28,9 @@ const MyWeeklyLog = ({ getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myW
 
   const handleDateChange = useCallback(
     date => {
-      const year = date.getFullYear()
-      const week = parseInt(format(date, 'ww'))
+      const dt = new Date(date)
+      const year = dt.getFullYear()
+      const week = parseInt(format(dt, 'ww'))
       getMyWeeklyLog({
         year: year,
         week: week - 1
@@ -114,7 +115,7 @@ const MyWeeklyLog = ({ getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myW
       interval="weekly"
       actions={
         <Grid item className={classes.actions}>
-          <DatePicker
+          <LocalizedDatePicker
             margin="normal"
             label="Choose a week"
             value={firstdayOfSelectedWeek}

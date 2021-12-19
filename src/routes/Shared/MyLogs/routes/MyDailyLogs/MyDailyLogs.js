@@ -4,9 +4,9 @@ import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Grid, Button } from '@material-ui/core'
 import { format } from 'date-fns'
-import { DatePicker } from '@material-ui/pickers'
 
 import LogCard from 'routes/Shared/MyLogs/components/LogCard'
+import LocalizedDatePicker from 'components/LocalizedDatePicker'
 import MyLogLayout from 'routes/Shared/MyLogs/components/MyLogLayout'
 import useStyles from './styles'
 import { getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDailylogSelector } from 'store/modules/mylogs'
@@ -22,13 +22,13 @@ const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDaily
   const handleDateChange = useCallback(
     date => {
       getMyDailyLog({
-        date: format(date, 'yyyy-MM-dd')
+        date
       })
 
       history.push({
         search: jsonToQueryString({
           ...parseQueryString(location.search),
-          date: format(date, 'yyyy-MM-dd')
+          date
         })
       })
     },
@@ -38,12 +38,12 @@ const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDaily
   const viewTodayLog = useCallback(() => {
     const date = Date.now()
     getMyDailyLog({
-      date: format(date, 'yyyy-MM-dd')
+      date
     })
     history.push({
       search: jsonToQueryString({
         ...parseQueryString(location.search),
-        date: format(date, 'yyyy-MM-dd')
+        date
       })
     })
   }, [history, location, getMyDailyLog])
@@ -100,7 +100,7 @@ const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDaily
       interval="daily"
       actions={
         <Grid item className={classes.actions}>
-          <DatePicker margin="normal" label="Choose a date" value={selectedDate} onChange={handleDateChange} />
+          <LocalizedDatePicker margin="normal" label="Choose a date" value={selectedDate} onChange={handleDateChange} />
           <Button margin="normal" variant="outlined" color="primary" onClick={viewTodayLog}>
             Today
           </Button>

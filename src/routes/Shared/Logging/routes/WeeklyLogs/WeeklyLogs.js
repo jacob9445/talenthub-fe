@@ -5,11 +5,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { format } from 'date-fns'
-import { DatePicker } from '@material-ui/pickers'
 
 import { weeklyLogsSelector, getWeeklyLogs } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
 import LoggingLayout from 'routes/Shared/Logging/components/LoggingLayout'
+import LocalizedDatePicker from 'components/LocalizedDatePicker'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { parseQueryString, jsonToQueryString, getFirstDateOfWeek, getWeekOfMonth } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
@@ -26,8 +26,9 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
   const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek + 1)
   const handleDateChange = useCallback(
     date => {
-      const year = date.getFullYear()
-      const week = parseInt(format(date, 'ww'))
+      const dt = new Date(date)
+      const year = dt.getFullYear()
+      const week = parseInt(format(dt, 'ww'))
       history.push({
         search: jsonToQueryString({
           ...parseQueryString(location.search),
@@ -74,7 +75,7 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
       actions={
         <>
           <Grid item>
-            <DatePicker
+            <LocalizedDatePicker
               margin="normal"
               label="Choose a date of week"
               value={firstdayOfSelectedWeek}

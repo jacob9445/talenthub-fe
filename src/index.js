@@ -1,13 +1,14 @@
 import React from 'react'
+import 'react-toastify/dist/ReactToastify.css'
 import { CssBaseline } from '@material-ui/core'
+import { IntlProvider } from 'react-intl'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { Provider } from 'react-redux'
 import { ThemeProvider } from '@material-ui/styles'
+import DateFnsUtils from '@date-io/date-fns'
+import locale from 'date-fns/locale/en-US'
 import ReactDOM from 'react-dom'
 import Themes from './themes'
-import { Provider } from 'react-redux'
-import 'react-toastify/dist/ReactToastify.css'
-import { IntlProvider } from 'react-intl'
-import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import intlConfig from './config/intl'
 import './index.css'
@@ -16,6 +17,10 @@ import { LayoutProvider } from './context/LayoutContext'
 import { UserProvider } from './context/UserContext'
 import store from './store'
 
+if (locale && locale.options) {
+  locale.options.weekStartsOn = 1
+}
+
 ReactDOM.render(
   <LayoutProvider>
     <UserProvider>
@@ -23,7 +28,7 @@ ReactDOM.render(
         <CssBaseline />
         <Provider store={store}>
           <IntlProvider {...intlConfig}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
               <App />
             </MuiPickersUtilsProvider>
           </IntlProvider>
