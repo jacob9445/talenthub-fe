@@ -1,14 +1,13 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import LogDetail from 'routes/Shared/Logging/components/LogDetail'
+import WeeklyPlusDaily from '../../components/WeeklyPlusDaily/WeeklyPlusDaily'
 import { weeklyLogDetailSelector, getWeeklyLogDetail } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
-import { URL_PREFIXES } from 'config/constants'
 
-const WeeklyLogDetail = ({ getWeeklyLogDetail, weeklyLogDetail, me, location, history, match, interval }) => {
+const WeeklyLogDetail = ({ getWeeklyLogDetail, me, match, interval }) => {
   const {
     params: { id }
   } = match
@@ -19,11 +18,8 @@ const WeeklyLogDetail = ({ getWeeklyLogDetail, weeklyLogDetail, me, location, hi
       useCache: true
     })
   }, [getWeeklyLogDetail, me.role, id])
-  const handleGoBack = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/weekly/`)
-  }, [location, history, me.role])
 
-  return <LogDetail logDetail={weeklyLogDetail} onGoBack={handleGoBack} interval={interval} />
+  return <WeeklyPlusDaily interval={interval} />
 }
 
 const actions = {

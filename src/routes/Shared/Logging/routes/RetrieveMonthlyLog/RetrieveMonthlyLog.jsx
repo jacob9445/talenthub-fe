@@ -1,15 +1,11 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { Typography, Paper } from '@material-ui/core'
 import PropTypes from 'prop-types'
-import * as R from 'ramda'
 
-import LogDetail from 'routes/Shared/Logging/components/LogDetail'
-import LogList from 'routes/Shared/Logging/components/LogList'
 import Spinner from 'components/Spinner'
-import useStyles from './styles'
+import MonthlyPlusWeekly from '../../components/MonthlyPlusWeekly'
 import {
   monthlyLogDetailSelector,
   retrieveMonthlyLog,
@@ -26,34 +22,13 @@ const RetrieveMonthlyLog = ({
   monthlyLog,
   monthlyLogIsLoading,
   me,
-  location,
-  history,
   match,
-  interval,
-  developerWeeklyLogs,
-  getWeeklyLogs
+  getWeeklyLogs,
+  interval
 }) => {
   const {
     params: { year, month, userId }
   } = match
-
-  const classes = useStyles()
-
-  const firstDayOfThisMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
-
-  const firstDayOfFirstWeek = new Date(
-    firstDayOfThisMonth.setDate(firstDayOfThisMonth.getDate() - firstDayOfThisMonth.getDay())
-  )
-
-  const getDeveloperWeeklyLogsInThisMonth = R.compose(
-    R.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()),
-    R.filter(item => new Date(item.created_at) >= firstDayOfFirstWeek)
-  )
-  const developerWeeklyLogsInThisMonth = developerWeeklyLogs
-    ? getDeveloperWeeklyLogsInThisMonth(developerWeeklyLogs.results)
-    : []
-
-  console.log('XCV', firstDayOfFirstWeek)
 
   useEffect(() => {
     retrieveMonthlyLog({
@@ -75,27 +50,13 @@ const RetrieveMonthlyLog = ({
     })
   }, [getWeeklyLogs, me.role, userId])
 
-  console.log({ developerWeeklyLogsInThisMonth })
-
-  const handleGoBack = useCallback(() => {
-    location.state ? history.push(location.state) : history.push(`/${URL_PREFIXES[me.role]}/logging/monthly/`)
-  }, [location, history, me.role])
-
   if (monthlyLogIsLoading) {
     return <Spinner />
   } else {
     return monthlyLog && shouldRedirect(monthlyLog, year, month, null, null, userId) ? (
       <Redirect to={`/${URL_PREFIXES[me.role]}/logging/monthly/${monthlyLog.id}/detail`} />
     ) : (
-      <>
-        <LogDetail logDetail={monthlyLog} onGoBack={handleGoBack} interval={interval} />
-        <div className={classes.topSpace}>
-          <Paper className={classes.navs}>
-            <Typography variant="h3">Weekly Logs in This Month</Typography>
-          </Paper>
-          <LogList data={developerWeeklyLogsInThisMonth} interval={interval} role={me.role} />
-        </div>
-      </>
+      <MonthlyPlusWeekly interval={interval} />
     )
   }
 }

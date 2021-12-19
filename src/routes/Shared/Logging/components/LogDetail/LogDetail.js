@@ -40,7 +40,8 @@ const LogDetail = ({ logDetail, onGoBack, editable, interval }) => {
 LogDetail.propTypes = {
   logDetail: PropTypes.object,
   onGoBack: PropTypes.func.isRequired,
-  editable: PropTypes.bool
+  editable: PropTypes.bool,
+  interval: PropTypes.string.isRequired
 }
 
 export default LogDetail
