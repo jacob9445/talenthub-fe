@@ -15,7 +15,9 @@ export default makeStyles(theme => ({
   },
   typography: {
     marginBottom: theme.spacing(2),
-    whiteSpace: 'pre-wrap'
+    whiteSpace: 'pre-wrap',
+    fontStyle: 'italic',
+    color: '#aaa'
   },
   textField: {
     width: '100%'
