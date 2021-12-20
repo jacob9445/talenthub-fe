@@ -38,7 +38,7 @@ const LogCard = ({ title, content, onSave, editable }) => {
             onChange={e => setContentValue(e.target.value)}
           />
         ) : (
-          <Typography component="pre" className={classes.typography}>
+          <Typography component="pre" className={`classes.typography ${Boolean(!content) && classes.blankText}`}>
             {content || `No ${title} added yet`}
           </Typography>
         )}

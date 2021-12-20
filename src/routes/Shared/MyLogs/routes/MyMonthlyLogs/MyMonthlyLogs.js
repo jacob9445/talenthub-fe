@@ -135,16 +135,20 @@ const MyMonthlyLog = ({ getMyMonthlyLog, createMyMonthlyLog, updateMyMonthlyLog,
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="year">Year</InputLabel>
               <Select value={selectedYear} onChange={handleYearChange} input={<Input id="year" />}>
-                {yearArray.map(year => (
-                  <MenuItem value={year}>{year}</MenuItem>
+                {yearArray.map((year, idx) => (
+                  <MenuItem value={year} key={idx}>
+                    {year}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="month">Month</InputLabel>
               <Select value={selectedMonth} onChange={handleMonthChange} input={<Input id="month" />}>
-                {monthArray.map(month => (
-                  <MenuItem value={month}>{month}</MenuItem>
+                {monthArray.map((month, idx) => (
+                  <MenuItem value={month} key={idx}>
+                    {month}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

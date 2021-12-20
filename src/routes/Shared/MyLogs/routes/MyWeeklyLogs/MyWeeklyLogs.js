@@ -78,7 +78,7 @@ const MyWeeklyLog = ({ getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myW
             plan: '',
             achievements: content,
             interval: 'weekly',
-            created_at: format(firstdayOfSelectedWeek, 'yyyy-MM-dd')
+            created_at: firstdayOfSelectedWeek
           }
         })
       }
@@ -101,7 +101,7 @@ const MyWeeklyLog = ({ getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myW
             plan: content,
             achievements: '',
             interval: 'weekly',
-            created_at: format(firstdayOfSelectedWeek, 'yyyy-MM-dd')
+            created_at: firstdayOfSelectedWeek
           }
         })
       }
