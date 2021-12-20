@@ -14,7 +14,6 @@ import PropTypes from 'prop-types'
 import { compose } from 'redux'
 
 import Spinner from 'components/Spinner'
-import { truncateText } from 'helpers/utils'
 import { ListDataType } from 'helpers/prop-types'
 import { URL_PREFIXES } from 'config/constants'
 
@@ -55,8 +54,8 @@ function LogsTable({
               <TableCell>
                 {first_name} {last_name}
               </TableCell>
-              <TableCell>{truncateText(plan)}</TableCell>
-              <TableCell>{truncateText(achievements)}</TableCell>
+              <TableCell>{plan}</TableCell>
+              <TableCell>{achievements}</TableCell>
               <TableCell>
                 <Button
                   component={Link}
