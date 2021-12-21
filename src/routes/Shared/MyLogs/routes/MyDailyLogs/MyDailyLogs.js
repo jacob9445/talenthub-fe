@@ -38,12 +38,12 @@ const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDaily
   const viewTodayLog = useCallback(() => {
     const date = Date.now()
     getMyDailyLog({
-      date
+      date: format(date, 'yyyy-MM-dd')
     })
     history.push({
       search: jsonToQueryString({
         ...parseQueryString(location.search),
-        date
+        date: format(date, 'yyyy-MM-dd')
       })
     })
   }, [history, location, getMyDailyLog])
