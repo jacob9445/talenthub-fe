@@ -94,7 +94,12 @@ const MyDailyLog = ({ getMyDailyLog, createMyDailyLog, updateMyDailyLog, myDaily
     [updateMyDailyLog, createMyDailyLog, myDailyLog, selectedDate]
   )
 
-  useEffect(() => getMyDailyLog(), [getMyDailyLog])
+  useEffect(() => {
+    const date = Date.now()
+    getMyDailyLog({
+      date: format(date, 'yyyy-MM-dd')
+    })
+  }, [getMyDailyLog])
   return (
     <MyLogLayout
       interval="daily"
