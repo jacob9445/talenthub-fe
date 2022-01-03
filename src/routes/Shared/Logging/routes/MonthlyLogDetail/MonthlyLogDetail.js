@@ -14,8 +14,7 @@ const MonthlyLogDetail = ({ getMonthlyLogDetail, me, match, interval }) => {
   useEffect(() => {
     getMonthlyLogDetail({
       id: id,
-      role: me.role,
-      useCache: true
+      role: me.role
     })
   }, [getMonthlyLogDetail, me.role, id])
 

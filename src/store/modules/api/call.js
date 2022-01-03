@@ -5,9 +5,7 @@ import { call, put, select } from 'redux-saga/effects'
 import { API_BASE } from '../../../config/constants'
 import { requestRejected, requestPending, requestSuccess } from './actions'
 import { TOKEN } from 'config/constants'
-import { createDataSelector } from './selectors'
 import { prettifyMethod } from 'helpers/utils'
-import { createRequestFootprintSelector } from 'store/modules/api'
 
 const defaultHeaders = request => {
   const token = localStorage.getItem(TOKEN)
@@ -53,7 +51,7 @@ const createApiCallSaga = ({
     const {
       data,
       params,
-      useCache,
+      // useCache,
       headers: customHeaders,
       success: successCallback,
       fail: failCallback,
@@ -65,20 +63,7 @@ const createApiCallSaga = ({
     const requestSelectorKey =
       typeof requestSelectorKeyOrFunc === 'function' ? requestSelectorKeyOrFunc(payload) : requestSelectorKeyOrFunc
     const selectorKey = typeof selectorKeyOrFunc === 'function' ? selectorKeyOrFunc(payload) : selectorKeyOrFunc
-
     const reqFootprint = footprintKeys ? R.pick(footprintKeys, payload) : null
-    if (useCache && prettifyMethod(method) === 'get') {
-      const previousFootprintSelector = createRequestFootprintSelector(requestSelectorKey || selectorKey)
-      const prevReqFootprint = yield select(previousFootprintSelector)
-      const previousDataSelector = createDataSelector(selectorKey)
-      const previousData = yield select(previousDataSelector)
-      if (R.equals(prevReqFootprint, reqFootprint) && previousData) return true
-      const reqFootprintForRetrieve = footprint ? footprint(payload) : null
-      if (reqFootprintForRetrieve) {
-        const prevResFootprint = previousData ? R.pick(R.keys(reqFootprintForRetrieve), previousData) : null
-        if (R.equals(prevResFootprint, reqFootprintForRetrieve)) return true
-      }
-    }
 
     try {
       if (pending) {

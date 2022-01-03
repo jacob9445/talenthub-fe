@@ -14,8 +14,7 @@ const WeeklyLogDetail = ({ getWeeklyLogDetail, me, match, interval }) => {
   useEffect(() => {
     getWeeklyLogDetail({
       id: id,
-      role: me.role,
-      useCache: true
+      role: me.role
     })
   }, [getWeeklyLogDetail, me.role, id])
 
