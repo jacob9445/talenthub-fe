@@ -56,8 +56,7 @@ const MonthlyLogs = ({ getMonthlyLogs, monthlyLogs, me, pagination, location, hi
       params: {
         pagination,
         owner
-      },
-      useCache: true
+      }
     })
   }, [getMonthlyLogs, me.role, selectedMonth, selectedYear, pagination, queryObj])
 

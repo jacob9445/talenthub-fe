@@ -36,8 +36,7 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history 
       params: {
         pagination,
         owner
-      },
-      useCache: true
+      }
     })
   }, [getDailyLogs, me.role, selectedDate, pagination, queryObj])
 

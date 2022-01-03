@@ -16,8 +16,7 @@ const DailyLogDetail = ({ getDailyLogDetail, dailyLogDetail, me, location, histo
   useEffect(() => {
     getDailyLogDetail({
       id: id,
-      role: me.role,
-      useCache: true
+      role: me.role
     })
   }, [getDailyLogDetail, me.role, id])
 
