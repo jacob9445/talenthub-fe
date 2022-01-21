@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
+import { withRouter } from 'react-router-dom'
 import {
   Table,
   TableRow,
@@ -10,18 +12,24 @@ import {
   Tooltip,
   IconButton
 } from '@material-ui/core'
-import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import { Edit as EditIcon, Delete as DeleteIcon } from '@material-ui/icons'
+import { URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
-import { getFullName } from 'helpers/utils'
 
-const columns = ['Owner', 'Profile', 'Platform Type', 'Email', 'Password', 'Location', 'URL', 'Actions']
+function PlatformTable({ data, role, onDelete, history, location, pagination, onChangePage, onChangeRowsPerPage }) {
+  const columns = ['Name', 'Actions']
 
-function AccountTable({ data, handleDelete, match: { path }, pagination, onChangePage, onChangeRowsPerPage }) {
+  const showPlatformDetail = useCallback(
+    id => () => {
+      history.push(`/${URL_PREFIXES[role]}/platforms/${id}/detail`, location.pathname)
+    },
+    [history, location.pathname, role]
+  )
+
   if (data) {
+    const { results } = data
     return (
       <Table className="mb-0">
         <TableHead>
@@ -32,23 +40,17 @@ function AccountTable({ data, handleDelete, match: { path }, pagination, onChang
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, profile, account_platform, email, password, location, url }) => (
+          {results.map(({ id, name }) => (
             <TableRow key={id} hover>
-              <TableCell>{getFullName(profile.user)}</TableCell>
-              <TableCell>{getFullName(profile)}</TableCell>
-              <TableCell>{account_platform?.name}</TableCell>
-              <TableCell>{email}</TableCell>
-              <TableCell>*****</TableCell>
-              <TableCell>{location}</TableCell>
-              <TableCell>{url}</TableCell>
+              <TableCell>{name}</TableCell>
               <TableCell>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">
-                  <IconButton component={Link} to={`${path}/${id}/detail`}>
+                  <IconButton onClick={showPlatformDetail(id)}>
                     <EditIcon color="primary" />
                   </IconButton>
                 </Tooltip>
                 <Tooltip key={`${id}Delete`} title="Delete" placement="top">
-                  <IconButton onClick={() => handleDelete(id)}>
+                  <IconButton onClick={() => onDelete(id)}>
                     <DeleteIcon color="secondary" />
                   </IconButton>
                 </Tooltip>
@@ -75,10 +77,13 @@ function AccountTable({ data, handleDelete, match: { path }, pagination, onChang
   }
 }
 
-AccountTable.propTypes = {
-  data: ListDataType,
-  handleDelete: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired
-}
+export default withRouter(PlatformTable)
 
-export default withRouter(AccountTable)
+PlatformTable.propTypes = {
+  data: ListDataType,
+  role: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func,
+  history: PropTypes.object.isRequired,
+  disableActions: PropTypes.bool,
+  location: PropTypes.object.isRequired
+}

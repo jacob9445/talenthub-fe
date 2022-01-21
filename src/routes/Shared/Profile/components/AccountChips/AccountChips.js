@@ -8,7 +8,7 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 
 import { meSelector } from 'store/modules/auth'
-import { PLATFORM_LABELS, URL_PREFIXES } from 'config/constants'
+import { URL_PREFIXES } from 'config/constants'
 import BlockChip from 'components/BlockChip'
 
 const AccountChips = ({ accounts, history, location, me }) => {
@@ -28,7 +28,7 @@ const AccountChips = ({ accounts, history, location, me }) => {
       {accounts.map(account => (
         <BlockChip
           key={account.id}
-          label={`${account.email}(${PLATFORM_LABELS[account.platform_type]})`}
+          label={`${account.email}${account.platform_type}`}
           color="primary"
           icon={<AccountIcon />}
           variant="outlined"

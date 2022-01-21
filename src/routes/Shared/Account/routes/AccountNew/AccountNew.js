@@ -11,12 +11,12 @@ import Widget from 'components/Widget'
 import AccountDetailForm, { validationSchema } from '../../components/AccountDetailForm'
 import { formSubmit } from 'helpers/form'
 import { createAccount } from 'store/modules/account'
-import { PLATFORMS, URL_PREFIXES } from 'config/constants'
+import { URL_PREFIXES } from 'config/constants'
 import { meSelector } from 'store/modules/auth'
 
 const initialValues = {
   profile: '',
-  platform_type: PLATFORMS.EMAIL,
+  platform_type: '',
   email: '',
   password: '',
   location: '',
