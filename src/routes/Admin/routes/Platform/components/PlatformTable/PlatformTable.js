@@ -12,14 +12,17 @@ import {
   Tooltip,
   IconButton
 } from '@material-ui/core'
+import cn from 'classnames'
 import PropTypes from 'prop-types'
 
 import { URL_PREFIXES } from 'config/constants'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
+import useStyles from './styles'
 
 function PlatformTable({ data, role, onDelete, history, location, pagination, onChangePage, onChangeRowsPerPage }) {
   const columns = ['Name', 'Actions']
+  const classes = useStyles()
 
   const showPlatformDetail = useCallback(
     id => () => {
@@ -34,8 +37,10 @@ function PlatformTable({ data, role, onDelete, history, location, pagination, on
       <Table className="mb-0">
         <TableHead>
           <TableRow>
-            {columns.map(key => (
-              <TableCell key={key}>{key}</TableCell>
+            {columns.map((key, idx) => (
+              <TableCell key={key} className={cn({ [classes.actions]: idx === 1 })}>
+                {key}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -43,7 +48,7 @@ function PlatformTable({ data, role, onDelete, history, location, pagination, on
           {results.map(({ id, name }) => (
             <TableRow key={id} hover>
               <TableCell>{name}</TableCell>
-              <TableCell>
+              <TableCell className={classes.actions}>
                 <Tooltip key={`${id}Edit`} title="Edit" placement="top">
                   <IconButton onClick={showPlatformDetail(id)}>
                     <EditIcon color="primary" />

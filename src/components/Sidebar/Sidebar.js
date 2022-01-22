@@ -14,7 +14,7 @@ import {
   Money as FRequestIcon,
   EventNote as LogIcon,
   EventAvailable as ReportIcon,
-  Tablet as PlatformIcon
+  DeviceHub as PlatformIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
