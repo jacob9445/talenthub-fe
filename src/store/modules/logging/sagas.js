@@ -2,7 +2,6 @@ import { takeLatest } from 'redux-saga/effects'
 import { createApiCallSaga } from '../api'
 import * as Types from './types'
 import { roleBasedPath } from 'helpers/sagaHelpers'
-import { getDate } from 'routes/Shared/Logging/routes/utils'
 
 const getDailyLogs = createApiCallSaga({
   type: Types.GET_DAILY_LOGS,

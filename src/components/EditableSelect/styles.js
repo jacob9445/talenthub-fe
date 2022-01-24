@@ -31,7 +31,7 @@ export const useStyles = makeStyles(theme => ({
   },
   paper: {
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 99,
     marginTop: 1,
     left: 0,
     right: 0

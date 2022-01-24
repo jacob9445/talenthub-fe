@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as R from 'ramda'
-import { call, put, select } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 
 import { API_BASE } from '../../../config/constants'
 import { requestRejected, requestPending, requestSuccess } from './actions'

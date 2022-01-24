@@ -12,8 +12,8 @@ import FormInput from 'components/FormInput'
 import FormEditableSelect from 'components/FormEditableSelect'
 import FormPasswordInput from 'components/FormPasswordInput'
 import useStyles from './styles'
-import { platformOptions } from 'config/constants'
 import { getProfiles, profileSelector } from 'store/modules/profile'
+import { getPlatforms, platformsSelector } from 'store/modules/platform'
 import { meSelector } from 'store/modules/auth'
 import { URL_PREFIXES } from 'config/constants'
 import { ListDataType } from 'helpers/prop-types'
@@ -28,10 +28,24 @@ export const validationSchema = Yup.object().shape({
   url: Yup.string().required('This field is required!')
 })
 
-const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSubmit, me, match: { params } }) => {
+const AccountDetailForm = ({
+  getProfiles,
+  getPlatforms,
+  profiles,
+  platforms,
+  location,
+  history,
+  handleSubmit,
+  me,
+  match: { params }
+}) => {
   useEffect(() => {
     getProfiles()
   }, [getProfiles])
+
+  useEffect(() => {
+    getPlatforms()
+  }, [getPlatforms])
 
   const classes = useStyles()
   const isUpdateMode = Boolean(params.id)
@@ -49,6 +63,17 @@ const AccountDetailForm = ({ getProfiles, profiles, location, history, handleSub
           }))
         : [],
     [profiles]
+  )
+
+  const platformOptions = useMemo(
+    () =>
+      platforms
+        ? platforms.results.map(platform => ({
+            value: platform.id,
+            label: platform.name
+          }))
+        : [],
+    [platforms]
   )
 
   return (
@@ -108,11 +133,13 @@ AccountDetailForm.propTypes = {
 }
 
 const actions = {
-  getProfiles
+  getProfiles,
+  getPlatforms
 }
 
 const selector = createStructuredSelector({
   profiles: profileSelector,
+  platforms: platformsSelector,
   me: meSelector
 })
 

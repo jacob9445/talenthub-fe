@@ -13,7 +13,8 @@ import {
   ContactPhone as FRIcon,
   Money as FRequestIcon,
   EventNote as LogIcon,
-  EventAvailable as ReportIcon
+  EventAvailable as ReportIcon,
+  DeviceHub as PlatformIcon
 } from '@material-ui/icons'
 import { useTheme } from '@material-ui/styles'
 import { withRouter } from 'react-router-dom'
@@ -123,30 +124,36 @@ let structure = {
     },
     {
       id: 8,
+      label: 'Platforms',
+      link: `/admin/platforms`,
+      icon: <PlatformIcon />
+    },
+    {
+      id: 9,
       label: 'Partners',
       link: '/admin/partners',
       icon: <PartnerIcon />
     },
     {
-      id: 9,
+      id: 10,
       label: 'Clients',
       link: '/admin/clients',
       icon: <ClientIcon />
     },
     {
-      id: 10,
+      id: 11,
       label: 'Projects',
       link: '/admin/projects',
       icon: <ProjectIcon />
     },
     {
-      id: 11,
+      id: 12,
       label: 'My logs',
       link: '/admin/my-logs',
       icon: <LogIcon />
     },
     {
-      id: 12,
+      id: 13,
       label: 'Reports',
       link: '/admin/logging',
       icon: <ReportIcon />

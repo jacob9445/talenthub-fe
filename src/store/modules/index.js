@@ -19,6 +19,7 @@ import notification from './notification'
 import logging from './logging'
 import myLogs from './mylogs'
 import PaymentAccount from './paymentAccount'
+import Platform from './platform'
 
 export default combineReducers({
   api,
@@ -39,5 +40,6 @@ export default combineReducers({
   logging,
   notification,
   myLogs,
-  PaymentAccount
+  PaymentAccount,
+  Platform
 })

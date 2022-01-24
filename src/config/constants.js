@@ -39,32 +39,6 @@ export const GENDER = {
   FEMALE: 2
 }
 
-export const PLATFORMS = {
-  EMAIL: 'email',
-  SKYPE: 'skype',
-  SLACK: 'slack',
-  MS_TEAM: 'ms_team',
-  GITHUB: 'github',
-  GITLAB: 'gitlab',
-  BITBUCKET: 'bitbucket',
-  FREELANCER: 'freelancer',
-  UPWORK: 'upwork',
-  ETC: 'etc'
-}
-
-export const PLATFORM_LABELS = {
-  [PLATFORMS.EMAIL]: 'Email',
-  [PLATFORMS.SKYPE]: 'Skype',
-  [PLATFORMS.SLACK]: 'Slack',
-  [PLATFORMS.MS_TEAM]: 'MS Team',
-  [PLATFORMS.GITHUB]: 'Github',
-  [PLATFORMS.GITLAB]: 'Gitlab',
-  [PLATFORMS.BITBUCKET]: 'Bitbucket',
-  [PLATFORMS.FREELANCER]: 'Freelancer',
-  [PLATFORMS.UPWORK]: 'Upwork',
-  [PLATFORMS.ETC]: 'Etc'
-}
-
 export const CLIENT_TYPES = {
   INDIVIDUAL: 1,
   COMPANY: 2
@@ -293,41 +267,6 @@ export const PAYMENT_PLATFORM_OPTIONS = [
   {
     value: PAYMENT_PLATFORM_TYPE.BTC,
     label: 'BTC'
-  }
-]
-
-export const platformOptions = [
-  {
-    label: 'Email',
-    value: PLATFORMS.EMAIL
-  },
-  {
-    label: 'Skype',
-    value: PLATFORMS.SKYPE
-  },
-  {
-    label: 'Slack',
-    value: PLATFORMS.SLACK
-  },
-  {
-    label: 'MS Team',
-    value: PLATFORMS.MS_TEAM
-  },
-  {
-    label: 'Github',
-    value: PLATFORMS.GITHUB
-  },
-  {
-    label: 'Gitlab',
-    value: PLATFORMS.GITLAB
-  },
-  {
-    label: 'Bitbucket',
-    value: PLATFORMS.BITBUCKET
-  },
-  {
-    label: 'Etc',
-    value: PLATFORMS.ETC
   }
 ]
 
