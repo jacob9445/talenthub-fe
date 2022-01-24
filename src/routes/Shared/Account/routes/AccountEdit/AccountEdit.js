@@ -28,7 +28,7 @@ const AccountEdit = ({ match: { params }, getAccountDetail, accountDetail, updat
   const initialValues = useMemo(
     () => ({
       profile: accountDetail?.profile?.id || '',
-      platform_type: accountDetail?.platform_type || '',
+      account_platform: accountDetail?.account_platform || '',
       email: accountDetail?.email || '',
       password: accountDetail?.password || '',
       location: accountDetail?.location || '',
