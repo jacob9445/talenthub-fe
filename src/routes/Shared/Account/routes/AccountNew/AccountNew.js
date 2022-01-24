@@ -16,7 +16,7 @@ import { meSelector } from 'store/modules/auth'
 
 const initialValues = {
   profile: '',
-  platform_type: '',
+  account_platform: '',
   email: '',
   password: '',
   location: '',

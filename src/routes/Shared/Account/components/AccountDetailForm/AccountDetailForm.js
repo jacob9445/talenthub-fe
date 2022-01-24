@@ -21,7 +21,7 @@ import { getFullName } from 'helpers/utils'
 
 export const validationSchema = Yup.object().shape({
   profile: Yup.string().required('This field is required!'),
-  platform_type: Yup.string().required('This field is required!'),
+  account_platform: Yup.string().required('This field is required!'),
   email: Yup.string().required('This field is required!'),
   password: Yup.string().required('This field is required!'),
   location: Yup.string().required('This field is required!'),
@@ -88,9 +88,9 @@ const AccountDetailForm = ({
       />
       <Field
         component={FormEditableSelect}
-        htmlId="platform_type"
+        htmlId="account_platform"
         type="text"
-        name="platform_type"
+        name="account_platform"
         label="Platform Type"
         options={platformOptions}
       />
