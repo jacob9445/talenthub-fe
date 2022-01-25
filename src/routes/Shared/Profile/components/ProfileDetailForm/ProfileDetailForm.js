@@ -91,7 +91,7 @@ const ProfileDetailForm = ({
         />
         <Field component={FormInput} htmlId="first_name" type="text" name="first_name" label="First Name" />
         <Field component={FormInput} htmlId="last_name" type="text" name="last_name" label="Last Name" />
-        <Field component={FormInput} htmlId="dob" type="date" name="dob" label="Data of Birth" />
+        <Field component={FormInput} htmlId="dob" type="date" name="dob" label="Date of Birth" />
         <Field component={FormInput} htmlId="address" type="text" name="address" label="Address" />
         <Field component={FormInput} htmlId="country" type="text" name="country" label="Country" />
         <Field

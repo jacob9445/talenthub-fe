@@ -63,7 +63,7 @@ const ProfileEdit = ({ match: { params }, getProfileDetail, profileDetail, updat
     return (
       <Grid container spacing={2}>
         <Grid item xs={12} md={9}>
-          <Widget title="Profile Detail" disableWidgetMenu>
+          <Widget title="Profile Details" disableWidgetMenu>
             <Formik
               component={ProfileDetailForm}
               initialValues={initialValues}
