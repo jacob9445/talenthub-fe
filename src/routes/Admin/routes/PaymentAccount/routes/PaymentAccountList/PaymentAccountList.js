@@ -55,11 +55,11 @@ const PaymentAccountList = ({
       <Grid container>
         <Grid item xs={12}>
           <Widget
-            title="PaymentAccounts"
+            title="Payment Accounts"
             disableWidgetMenu
             WidgetButton={
               <Button color="primary" component={Link} to={`${path}/new`}>
-                Add Payment Account
+                Add a Payment Account
               </Button>
             }>
             <PaymentAccountTable

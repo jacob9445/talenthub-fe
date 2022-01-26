@@ -94,7 +94,7 @@ let structure = {
     },
     {
       id: 3,
-      label: 'PaymentAccounts',
+      label: 'Payment Accounts',
       link: `/admin/payment-accounts`,
       icon: <AccountIcon />
     },

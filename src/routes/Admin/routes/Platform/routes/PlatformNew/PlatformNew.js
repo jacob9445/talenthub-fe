@@ -36,7 +36,7 @@ const PlatformNew = ({ createPlatform, me, history }) => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Widget title="Create Payment Account" disableWidgetMenu>
+        <Widget title="Add a Platform" disableWidgetMenu>
           <Formik
             component={PlatformDetailForm}
             initialValues={initialValues}

@@ -55,7 +55,7 @@ const ProjectList = ({
             disableWidgetMenu
             WidgetButton={
               <Button color="primary" component={Link} to={`${path}/new`}>
-                Add Project
+                Add a Project
               </Button>
             }>
             <ProjectsTable

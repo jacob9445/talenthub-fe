@@ -53,7 +53,7 @@ const ClientList = ({
             disableWidgetMenu
             WidgetButton={
               <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/clients/new`}>
-                Add Client
+                Add a Client
               </Button>
             }>
             <ClientTable

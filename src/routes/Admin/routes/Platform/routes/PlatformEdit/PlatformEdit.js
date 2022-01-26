@@ -60,7 +60,7 @@ const PlatformEdit = ({
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Widget title="Payment Account Detail" disableWidgetMenu>
+          <Widget title="Platform Details" disableWidgetMenu>
             <Formik
               component={PlatformDetailForm}
               initialValues={initialValues}

@@ -38,7 +38,7 @@ const TeamList = ({ getTeams, teams, show, deleteTeamAndRefresh }) => {
             disableWidgetMenu
             WidgetButton={
               <Button color="primary" component={Link} to="/admin/teams/new">
-                Add Team
+                Add a Team
               </Button>
             }>
             {teams.map(team => (

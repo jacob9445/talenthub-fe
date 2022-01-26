@@ -76,7 +76,7 @@ const AccountList = ({
             disableWidgetMenu
             WidgetButton={
               <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/accounts/new`}>
-                Add Accounts
+                Add an Account
               </Button>
             }>
             <Formik initialValues={initialValues} component={SearchForm} onSubmit={handleSubmit} />

@@ -59,7 +59,7 @@ const Platform = ({
             disableWidgetMenu
             WidgetButton={
               <Button color="primary" component={Link} to={`${path}/new`}>
-                Add Platform
+                Add a Platform
               </Button>
             }>
             <PlatformTable
