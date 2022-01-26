@@ -70,7 +70,7 @@ function UserTable({
           {data.results.map(({ id, email, first_name, last_name, role }) => (
             <TableRow key={email} hover>
               <TableCell>
-                {first_name} {last_name}
+                {last_name} {first_name}
               </TableCell>
               <TableCell>{email}</TableCell>
               <TableCell>

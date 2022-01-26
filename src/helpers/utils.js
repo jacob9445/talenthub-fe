@@ -12,6 +12,7 @@ export const getPlatformLabel = paymentPlatform =>
   )(PAYMENT_PLATFORM_OPTIONS)
 
 export const getFullName = user => (user ? [user.first_name, user.last_name].join(' ') : '')
+export const getAsianFullName = user => (user ? [user.last_name, user.first_name].join(' ') : '')
 
 export const parseQueryString = R.compose(
   R.reduce(
