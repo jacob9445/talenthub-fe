@@ -327,14 +327,14 @@ const TransactionList = ({
                     />
                   </Grid>
                   <Grid item>
-                    <Tooltip title="Add new transaction" placement="top">
+                    <Tooltip title="Add a New Transaction" placement="top">
                       <Button
                         color="primary"
                         variant="outlined"
                         component={Link}
                         to={`${path}/new`}
                         className={classes.download}>
-                        Add Transaction
+                        Add a Transaction
                       </Button>
                     </Tooltip>
                   </Grid>

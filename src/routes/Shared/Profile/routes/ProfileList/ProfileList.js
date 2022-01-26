@@ -76,7 +76,7 @@ const ProfileList = ({
             noBodyPadding
             WidgetButton={
               <Button color="primary" component={Link} to={`/${URL_PREFIXES[me.role]}/profiles/new`}>
-                Add Profile
+                Add a Profile
               </Button>
             }>
             <Formik initialValues={initialValues} component={SearchForm} onSubmit={handleSubmit} />

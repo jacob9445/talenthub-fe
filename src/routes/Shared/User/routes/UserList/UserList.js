@@ -64,7 +64,7 @@ const UserList = ({
             disableWidgetButton={me.role !== ROLES.ADMIN}
             WidgetButton={
               <Button color="primary" component={Link} to="/admin/users/new">
-                Add User
+                Add an User
               </Button>
             }>
             <UserTable
