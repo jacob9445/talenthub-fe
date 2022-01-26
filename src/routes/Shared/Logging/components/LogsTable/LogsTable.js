@@ -16,6 +16,7 @@ import { compose } from 'redux'
 import Spinner from 'components/Spinner'
 import { ListDataType } from 'helpers/prop-types'
 import { URL_PREFIXES } from 'config/constants'
+import { getAsianFullName } from 'helpers/utils'
 
 const columns = ['Full name', 'Plan', 'Achievements', 'Action']
 
@@ -49,11 +50,9 @@ function LogsTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.results.map(({ id, owner: { first_name, last_name }, plan, achievements }) => (
+          {data.results.map(({ id, owner, plan, achievements }) => (
             <TableRow key={id} hover>
-              <TableCell>
-                {first_name} {last_name}
-              </TableCell>
+              <TableCell>{getAsianFullName(owner)}</TableCell>
               <TableCell>{plan}</TableCell>
               <TableCell>{achievements}</TableCell>
               <TableCell>

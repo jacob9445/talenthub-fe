@@ -28,7 +28,7 @@ const AccountChips = ({ accounts, history, location, me }) => {
       {accounts.map(account => (
         <BlockChip
           key={account.id}
-          label={`${account.email}${account.account_platform}`}
+          label={`${account.email}${account.account_platform.name}`}
           color="primary"
           icon={<AccountIcon />}
           variant="outlined"

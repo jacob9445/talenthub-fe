@@ -53,7 +53,7 @@ function IndividualReportTable({
         {developersEarning
           ? developersEarning.results.map(({ id, first_name, last_name, earning }) => (
               <TableRow key={id} hover onClick={() => handleRowClick(id)} className={classes.tableRow}>
-                <TableCell>{`${first_name} ${last_name}`}</TableCell>
+                <TableCell>{`${last_name} ${first_name}`}</TableCell>
                 <TableCell>
                   <FormattedNumber format="currency" value={earning} />
                 </TableCell>
