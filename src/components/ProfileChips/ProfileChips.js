@@ -13,7 +13,7 @@ const ProfileChips = props => {
 
   const showProfileDetail = useCallback(
     id => () => {
-      history.push(`/admin/profiles/${id}/detail`, location.pathname)
+      history.push(`/${URL_PREFIXES[me.role]}/profiles/${id}/detail`, location.pathname)
     },
     [history, location]
   )
