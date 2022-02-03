@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Typography } from '@material-ui/core'
-import { startOfWeek } from 'date-fns'
+import { startOfWeek, endOfWeek } from 'date-fns'
 import PropTypes from 'prop-types'
 import * as R from 'ramda'
 
@@ -32,15 +32,24 @@ const RetrieveWeeklyLog = ({
   getDailyLogs
 }) => {
   const {
-    params: { userId }
+    params: { userId, week, year }
   } = match
 
   const classes = useStyles()
 
-  const firstDayOfThisWeek = startOfWeek(new Date(), { weekStartsOn: 1 })
+  const getDateOfWeek = (w, y) => {
+    var d = 1 + w * 7
+
+    return new Date(y, 0, d)
+  }
+
+  const selectedDate = week ? getDateOfWeek(week, year) : new Date()
+  const firstDayOfThisWeek = startOfWeek(selectedDate, { weekStartsOn: 1 })
+  const lastDayofThisWeek = endOfWeek(selectedDate, { weekStartsOn: 1 })
   const getDeveloperDailyLogsInThisWeek = R.compose(
     R.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()),
-    R.filter(item => new Date(item.created_at) >= firstDayOfThisWeek)
+    R.filter(item => new Date(item.created_at) >= firstDayOfThisWeek),
+    R.filter(item => new Date(item.created_at) <= lastDayofThisWeek)
   )
   const developerDailyLogsInThisWeek = developerDailyLogs
     ? getDeveloperDailyLogsInThisWeek(developerDailyLogs.results)
