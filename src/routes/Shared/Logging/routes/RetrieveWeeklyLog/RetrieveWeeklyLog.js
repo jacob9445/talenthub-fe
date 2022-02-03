@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { createStructuredSelector } from 'reselect'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
@@ -16,8 +15,6 @@ import {
   getDailyLogs
 } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
-import { URL_PREFIXES } from 'config/constants'
-import { shouldRedirect } from '../utils'
 
 const RetrieveWeeklyLog = ({ retrieveWeeklyLog, weeklyLog, weeklyLogIsLoading, me, match, getDailyLogs, interval }) => {
   const {
@@ -47,11 +44,7 @@ const RetrieveWeeklyLog = ({ retrieveWeeklyLog, weeklyLog, weeklyLogIsLoading, m
   if (weeklyLogIsLoading) {
     return <Spinner />
   } else {
-    return weeklyLog && shouldRedirect(weeklyLog, year, null, week, null, userId) ? (
-      <Redirect to={`/${URL_PREFIXES[me.role]}/logging/weekly/${weeklyLog.id}/detail`} />
-    ) : (
-      <WeeklyPlusDaily interval={interval} />
-    )
+    return <WeeklyPlusDaily interval={interval} />
   }
 }
 

@@ -65,7 +65,7 @@ const LoggingActionBar = ({ logDetail, history, match, me, interval, searchUsers
     date => {
       const dt = new Date(date)
       const year = dt.getFullYear()
-      const week = parseInt(format(dt, 'ww')) - 1
+      const week = parseInt(format(dt, 'ww', { weekStartsOn: 1 })) - 1
       history.push(`/${URL_PREFIXES[me.role]}/logging/weekly/${year}-${week}/${selectedUserId}`)
     },
     [history, selectedUserId, me.role]
