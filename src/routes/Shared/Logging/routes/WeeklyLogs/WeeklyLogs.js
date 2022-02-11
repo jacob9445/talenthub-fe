@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
 import { Grid, Button } from '@material-ui/core'
+import { NavigateBefore, NavigateNext } from '@material-ui/icons'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -24,6 +25,7 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
   const selectedYear = queryObj.year || new Date().getFullYear()
   const selectedWeek = parseInt(queryObj.week) - 1 || parseInt(format(new Date(), 'ww')) - 1
   const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek + 1)
+
   const handleDateChange = useCallback(
     date => {
       const dt = new Date(date)
@@ -66,6 +68,32 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
     })
   }, [history, location])
 
+  const viewPreviousWeekLog = useCallback(() => {
+    const year = selectedWeek > 0 ? selectedYear : selectedYear - 1
+    const week = selectedWeek > 0 ? selectedWeek : 53
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        week
+      })
+    })
+  }, [history, location, selectedYear, selectedWeek])
+
+  const viewNextWeekLog = useCallback(() => {
+    const year = selectedWeek < 52 ? selectedYear : selectedYear + 1
+    const week = selectedWeek < 52 ? selectedWeek + 2 : 1
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        week
+      })
+    })
+  }, [history, location, selectedYear, selectedWeek])
+
   return (
     <LoggingLayout
       title="Weekly Logs"
@@ -74,6 +102,11 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
       actions={
         <>
           <Grid item>
+            <Button variant="outlined" color="primary" onClick={viewPreviousWeekLog}>
+              <NavigateBefore />
+            </Button>
+          </Grid>
+          <Grid item>
             <LocalizedDatePicker
               margin="normal"
               label="Choose a date of week"
@@ -81,6 +114,11 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
               onChange={handleDateChange}
               labelFunc={datePickerLabelFunc}
             />
+          </Grid>
+          <Grid item>
+            <Button variant="outlined" color="primary" onClick={viewNextWeekLog}>
+              <NavigateNext />
+            </Button>
           </Grid>
           <Grid item>
             <Button variant="outlined" color="primary" onClick={viewThisWeekLog}>
