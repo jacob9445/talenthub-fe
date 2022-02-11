@@ -9,6 +9,7 @@ import Input from '@material-ui/core/Input'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import { NavigateBefore, NavigateNext } from '@material-ui/icons'
 
 import { monthlyLogsSelector, getMonthlyLogs } from 'store/modules/logging'
 import { meSelector } from 'store/modules/auth'
@@ -21,8 +22,9 @@ import { ListDataType } from 'helpers/prop-types'
 const MonthlyLogs = ({ getMonthlyLogs, monthlyLogs, me, pagination, location, history }) => {
   let classes = useStyles()
   const queryObj = useMemo(() => parseQueryString(location.search), [location])
-  const selectedYear = queryObj.year || new Date().getFullYear()
-  const selectedMonth = queryObj.month || new Date().getMonth() + 1
+  const selectedYear = parseInt(queryObj.year) || new Date().getFullYear()
+  const selectedMonth = parseInt(queryObj.month) || new Date().getMonth() + 1
+
   const handleYearChange = useCallback(
     eve => {
       history.push({
@@ -71,6 +73,32 @@ const MonthlyLogs = ({ getMonthlyLogs, monthlyLogs, me, pagination, location, hi
     })
   }, [history, location])
 
+  const viewPrevMonthLog = useCallback(() => {
+    const year = selectedMonth > 1 ? selectedYear : selectedYear - 1
+    const month = selectedMonth > 1 ? selectedMonth - 1 : 12
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        month
+      })
+    })
+  }, [history, location, selectedMonth, selectedYear])
+
+  const viewNextMonthLog = useCallback(() => {
+    const year = selectedMonth < 12 ? selectedYear : selectedYear + 1
+    const month = selectedMonth < 12 ? selectedMonth + 1 : 1
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        month
+      })
+    })
+  }, [history, location, selectedMonth, selectedYear])
+
   const yearArray = generateDecrementArray(new Date().getFullYear(), 10)
   const monthArray = generateIncrementArray(1, 12)
 
@@ -81,6 +109,11 @@ const MonthlyLogs = ({ getMonthlyLogs, monthlyLogs, me, pagination, location, hi
       logs={monthlyLogs}
       actions={
         <>
+          <Grid item>
+            <Button variant="outlined" color="primary" onClick={viewPrevMonthLog}>
+              <NavigateBefore />
+            </Button>
+          </Grid>
           <Grid item>
             <form className={classes.container}>
               <FormControl className={classes.formControl}>
@@ -104,6 +137,11 @@ const MonthlyLogs = ({ getMonthlyLogs, monthlyLogs, me, pagination, location, hi
                 </Select>
               </FormControl>
             </form>
+          </Grid>
+          <Grid item>
+            <Button variant="outlined" color="primary" onClick={viewNextMonthLog}>
+              <NavigateNext />
+            </Button>
           </Grid>
           <Grid item>
             <Button className={classes.button} onClick={viewThisMonthLog} variant="outlined" color="primary">

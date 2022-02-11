@@ -20,7 +20,6 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history,
   const selectedDate = queryObj.date || format(new Date(), 'yyyy-MM-dd')
 
   const oneDayPeriod = 86400000
-
   const previousDateOfSelectedDate = useMemo(() => new Date(new Date(selectedDate).getTime() - oneDayPeriod), [
     selectedDate
   ])
@@ -61,7 +60,7 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history,
     })
   }, [history, location])
 
-  const viewPreviousDayLog = useCallback(() => {
+  const viewPrevDayLog = useCallback(() => {
     history.push({
       search: jsonToQueryString({
         ...parseQueryString(location.search),
@@ -87,7 +86,7 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history,
       actions={
         <>
           <Grid item>
-            <Button variant="outlined" color="primary" onClick={viewPreviousDayLog}>
+            <Button variant="outlined" color="primary" onClick={viewPrevDayLog}>
               <NavigateBefore />
             </Button>
           </Grid>

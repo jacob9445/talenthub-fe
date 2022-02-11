@@ -22,9 +22,9 @@ const datePickerLabelFunc = (date, invalidLabel) => {
 
 const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, history }) => {
   const queryObj = useMemo(() => parseQueryString(location.search), [location])
-  const selectedYear = queryObj.year || new Date().getFullYear()
-  const selectedWeek = parseInt(queryObj.week) - 1 || parseInt(format(new Date(), 'ww')) - 1
-  const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek + 1)
+  const selectedYear = parseInt(queryObj.year) || new Date().getFullYear()
+  const selectedWeek = parseInt(queryObj.week) || parseInt(format(new Date(), 'ww'))
+  const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek)
 
   const handleDateChange = useCallback(
     date => {
@@ -46,7 +46,7 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
     getWeeklyLogs({
       role: me.role,
       year: selectedYear,
-      week: selectedWeek,
+      week: selectedWeek - 1,
       params: {
         pagination,
         owner
@@ -68,9 +68,9 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
     })
   }, [history, location])
 
-  const viewPreviousWeekLog = useCallback(() => {
-    const year = selectedWeek > 0 ? selectedYear : selectedYear - 1
-    const week = selectedWeek > 0 ? selectedWeek : 53
+  const viewPrevWeekLog = useCallback(() => {
+    const year = selectedWeek > 1 ? selectedYear : selectedYear - 1
+    const week = selectedWeek > 1 ? selectedWeek - 1 : 53
 
     history.push({
       search: jsonToQueryString({
@@ -82,8 +82,8 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
   }, [history, location, selectedYear, selectedWeek])
 
   const viewNextWeekLog = useCallback(() => {
-    const year = selectedWeek < 52 ? selectedYear : selectedYear + 1
-    const week = selectedWeek < 52 ? selectedWeek + 2 : 1
+    const year = selectedWeek < 53 ? selectedYear : selectedYear + 1
+    const week = selectedWeek < 53 ? selectedWeek + 1 : 1
 
     history.push({
       search: jsonToQueryString({
@@ -102,7 +102,7 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
       actions={
         <>
           <Grid item>
-            <Button variant="outlined" color="primary" onClick={viewPreviousWeekLog}>
+            <Button variant="outlined" color="primary" onClick={viewPrevWeekLog}>
               <NavigateBefore />
             </Button>
           </Grid>
