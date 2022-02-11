@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { format } from 'date-fns'
 import { Grid, Button } from '@material-ui/core'
+import { NavigateBefore, NavigateNext } from '@material-ui/icons'
 import PropTypes from 'prop-types'
 
 import withPaginationInfo from 'hocs/withPaginationInfo'
@@ -14,9 +15,19 @@ import { meSelector } from 'store/modules/auth'
 import { ListDataType } from 'helpers/prop-types'
 import { dailyLogsSelector, getDailyLogs } from 'store/modules/logging'
 
-const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history }) => {
+const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history, match }) => {
   const queryObj = useMemo(() => parseQueryString(location.search), [location])
   const selectedDate = queryObj.date || format(new Date(), 'yyyy-MM-dd')
+
+  const oneDayPeriod = 86400000
+
+  const previousDateOfSelectedDate = useMemo(() => new Date(new Date(selectedDate).getTime() - oneDayPeriod), [
+    selectedDate
+  ])
+  const nextDateofSelectedDate = useMemo(() => new Date(new Date(selectedDate).getTime() + oneDayPeriod), [
+    selectedDate
+  ])
+
   const handleDateChange = useCallback(
     date => {
       history.push({
@@ -50,6 +61,24 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history 
     })
   }, [history, location])
 
+  const viewPreviousDayLog = useCallback(() => {
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        date: format(previousDateOfSelectedDate, 'yyyy-MM-dd')
+      })
+    })
+  }, [history, location, previousDateOfSelectedDate])
+
+  const viewNextDayLog = useCallback(() => {
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        date: format(nextDateofSelectedDate, 'yyyy-MM-dd')
+      })
+    })
+  }, [history, location, nextDateofSelectedDate])
+
   return (
     <LoggingLayout
       title="Daily Logs"
@@ -58,12 +87,22 @@ const DailyLogs = ({ getDailyLogs, dailyLogs, me, pagination, location, history 
       actions={
         <>
           <Grid item>
+            <Button variant="outlined" color="primary" onClick={viewPreviousDayLog}>
+              <NavigateBefore />
+            </Button>
+          </Grid>
+          <Grid item>
             <LocalizedDatePicker
               margin="normal"
               label="Choose a date"
               value={selectedDate}
               onChange={handleDateChange}
             />
+          </Grid>
+          <Grid item>
+            <Button variant="outlined" color="primary" onClick={viewNextDayLog}>
+              <NavigateNext />
+            </Button>
           </Grid>
           <Grid item>
             <Button variant="outlined" color="primary" onClick={viewTodayLog}>
