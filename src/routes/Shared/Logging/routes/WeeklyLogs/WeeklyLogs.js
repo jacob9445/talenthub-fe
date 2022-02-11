@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
 import { Grid, Button } from '@material-ui/core'
+import { NavigateBefore, NavigateNext } from '@material-ui/icons'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -21,9 +22,10 @@ const datePickerLabelFunc = (date, invalidLabel) => {
 
 const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, history }) => {
   const queryObj = useMemo(() => parseQueryString(location.search), [location])
-  const selectedYear = queryObj.year || new Date().getFullYear()
-  const selectedWeek = parseInt(queryObj.week) - 1 || parseInt(format(new Date(), 'ww')) - 1
-  const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek + 1)
+  const selectedYear = parseInt(queryObj.year) || new Date().getFullYear()
+  const selectedWeek = parseInt(queryObj.week) || parseInt(format(new Date(), 'ww'))
+  const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek)
+
   const handleDateChange = useCallback(
     date => {
       const dt = new Date(date)
@@ -44,7 +46,7 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
     getWeeklyLogs({
       role: me.role,
       year: selectedYear,
-      week: selectedWeek,
+      week: selectedWeek - 1,
       params: {
         pagination,
         owner
@@ -66,6 +68,32 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
     })
   }, [history, location])
 
+  const viewPrevWeekLog = useCallback(() => {
+    const year = selectedWeek > 1 ? selectedYear : selectedYear - 1
+    const week = selectedWeek > 1 ? selectedWeek - 1 : 53
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        week
+      })
+    })
+  }, [history, location, selectedYear, selectedWeek])
+
+  const viewNextWeekLog = useCallback(() => {
+    const year = selectedWeek < 53 ? selectedYear : selectedYear + 1
+    const week = selectedWeek < 53 ? selectedWeek + 1 : 1
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        week
+      })
+    })
+  }, [history, location, selectedYear, selectedWeek])
+
   return (
     <LoggingLayout
       title="Weekly Logs"
@@ -74,6 +102,11 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
       actions={
         <>
           <Grid item>
+            <Button variant="outlined" color="primary" onClick={viewPrevWeekLog}>
+              <NavigateBefore />
+            </Button>
+          </Grid>
+          <Grid item>
             <LocalizedDatePicker
               margin="normal"
               label="Choose a date of week"
@@ -81,6 +114,11 @@ const WeeklyLogs = ({ getWeeklyLogs, weeklyLogs, me, pagination, location, histo
               onChange={handleDateChange}
               labelFunc={datePickerLabelFunc}
             />
+          </Grid>
+          <Grid item>
+            <Button variant="outlined" color="primary" onClick={viewNextWeekLog}>
+              <NavigateNext />
+            </Button>
           </Grid>
           <Grid item>
             <Button variant="outlined" color="primary" onClick={viewThisWeekLog}>
