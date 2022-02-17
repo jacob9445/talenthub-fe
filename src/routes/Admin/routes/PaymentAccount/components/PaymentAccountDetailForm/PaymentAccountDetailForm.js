@@ -33,12 +33,12 @@ const PaymentAccountDetailForm = ({ handleSubmit, values, location, history, me:
         component={FormEditableSelect}
         htmlId="platform"
         name="platform"
-        label="Platform"
+        label="Payment Platform"
         placeholder="Choose one platform..."
         options={PAYMENT_PLATFORM_OPTIONS}
       />
       <Field component={FormInput} type="text" htmlId="address" name="address" label="Address" />
-      <Field component={FormInput} type="text" htmlId="displayName" name="display_name" label="Dispaly Name" />
+      <Field component={FormInput} type="text" htmlId="displayName" name="display_name" label="Display Name" />
 
       <div className={classes.formButtonWrapper}>
         <Button type="submit" variant="contained" color="primary" className={classes.formButton}>
