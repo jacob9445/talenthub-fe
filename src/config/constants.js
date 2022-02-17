@@ -240,7 +240,11 @@ export const PAYMENT_PLATFORM_TYPE = {
   UPWORK: 'upwork',
   FREELANCER: 'freelancer',
   TOPTAL: 'toptal',
-  BTC: 'bitcoin'
+  BTC: 'bitcoin',
+  ETH: 'ethereum',
+  BANK: 'bank',
+  USDC: 'usdc',
+  USDT: 'usdt'
 }
 
 export const PAYMENT_PLATFORM_OPTIONS = [
@@ -267,6 +271,22 @@ export const PAYMENT_PLATFORM_OPTIONS = [
   {
     value: PAYMENT_PLATFORM_TYPE.BTC,
     label: 'BTC'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.ETH,
+    label: 'ETH'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.BANK,
+    label: 'Bank'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.USDC,
+    label: 'USDC'
+  },
+  {
+    value: PAYMENT_PLATFORM_TYPE.USDT,
+    label: 'USDT'
   }
 ]
 
