@@ -101,7 +101,7 @@ const FinancialRequestDetailForm = ({
         type="text"
         htmlId="address"
         name="address"
-        label="Address"
+        label="Counterparty Address"
         extra={{ placeholder: 'Address to send or receive from. Email or btc address' }}
       />
       {values.type !== FINANCIALREQUEST_TYPE.SENDPAYMENT ? (
@@ -117,9 +117,10 @@ const FinancialRequestDetailForm = ({
       ) : null}
       <Field
         component={FormSelect}
+        type="text"
         htmlId="payment_account"
         name="payment_account"
-        label="Payment Accounts"
+        label="My Payment Account"
         options={paymentAccountOptions}
       />
       <Field
