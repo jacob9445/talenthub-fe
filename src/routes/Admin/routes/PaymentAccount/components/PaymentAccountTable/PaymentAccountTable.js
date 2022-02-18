@@ -29,7 +29,7 @@ function PaymentAccountTable({
   onChangePage,
   onChangeRowsPerPage
 }) {
-  const columns = ['Platform', 'Address', 'Display Name']
+  const columns = ['Payment Platform', 'Address', 'Display Name']
 
   const showPaymentAccountDetail = useCallback(
     id => () => {
