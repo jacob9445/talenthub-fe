@@ -9,7 +9,7 @@ import { Cancel as CancelIcon } from '@material-ui/icons'
 import { IconButton } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 
-import { fromMsgStrToArray } from 'helpers/utils'
+import { fromMsgStrToArray, getPastTime } from 'helpers/utils'
 import { NOTIFICATION_CONFIG } from 'config/constants'
 import NotificationTextSlice from 'components/NotificationTextSlice'
 import useStyles from './styles'
@@ -23,7 +23,10 @@ const NotificationCard = props => {
 
   return NOTIFICATION_CONFIG[notification.content_name] && notification.content_object ? (
     <Card className={classes.card} key={index} color="textSecondary">
-      <CardHeader className={classes.title} title={NOTIFICATION_CONFIG[notification.content_name]['title']} />
+      <CardHeader
+        className={classes.title}
+        title={`${NOTIFICATION_CONFIG[notification.content_name]['title']} ${getPastTime(notification.created_at)}`}
+      />
       <CardContent className={classes.content}>
         <Typography color="textSecondary" variant="body1">
           {fromMsgStrToArray(notification.message).map((part, idx) => (

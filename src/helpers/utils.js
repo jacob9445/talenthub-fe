@@ -180,3 +180,13 @@ export const dateStringToLocalDate = s => {
 
 export const getProjectName = id =>
   R.compose(R.defaultTo(null), R.path(['title']), R.find(R.propEq('id', parseInt(id))))
+
+export const getPastTime = date => {
+  const currentTime = new Date().getTime()
+  const eventTime = new Date(date).getTime()
+  const delta = (currentTime - eventTime) / 1000
+  const hours = Math.floor(delta / 3600)
+  const minutes = Math.floor((delta % 3600) / 60)
+  const seconds = Math.floor(delta % 60)
+  return ` ${hours}h ${minutes}m ${seconds}s ago`
+}
