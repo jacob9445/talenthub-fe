@@ -1,8 +1,9 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import { Grid, Button } from '@material-ui/core'
+import { NavigateBefore, NavigateNext } from '@material-ui/icons'
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 
@@ -21,10 +22,10 @@ const datePickerLabelFunc = (date, invalidLabel) => {
 
 const MyWeeklyLog = ({ getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myWeeklyLog, location, history }) => {
   const classes = useStyles()
-  const queryObj = parseQueryString(location.search)
+  const queryObj = useMemo(() => parseQueryString(location.search), [location])
   const selectedYear = queryObj.year || new Date().getFullYear()
-  const selectedWeek = parseInt(queryObj.week) - 1 || parseInt(format(new Date(), 'ww')) - 1
-  const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek + 1)
+  const selectedWeek = parseInt(queryObj.week) || parseInt(format(new Date(), 'ww'))
+  const firstdayOfSelectedWeek = getFirstDateOfWeek(selectedYear, selectedWeek)
 
   const handleDateChange = useCallback(
     date => {
@@ -46,6 +47,33 @@ const MyWeeklyLog = ({ getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myW
     },
     [history, location, getMyWeeklyLog]
   )
+
+  const viewPrevWeekLog = useCallback(() => {
+    const year = selectedWeek > 1 ? selectedYear : selectedYear - 1
+    const week = selectedWeek > 1 ? selectedWeek - 1 : 53
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        week
+      })
+    })
+  }, [history, location, selectedYear, selectedWeek])
+
+  const viewNextWeekLog = useCallback(() => {
+    const year = selectedWeek < 53 ? selectedYear : selectedYear + 1
+    const week = selectedWeek < 53 ? selectedWeek + 1 : 1
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        week
+      })
+    })
+  }, [history, location, selectedYear, selectedWeek])
+
   const viewThisWeekLog = useCallback(() => {
     const date = new Date()
     const year = date.getFullYear()
@@ -109,19 +137,33 @@ const MyWeeklyLog = ({ getMyWeeklyLog, createMyWeeklyLog, updateMyWeeklyLog, myW
     [updateMyWeeklyLog, createMyWeeklyLog, myWeeklyLog, firstdayOfSelectedWeek]
   )
 
-  useEffect(() => getMyWeeklyLog(), [getMyWeeklyLog])
+  useEffect(
+    () =>
+      getMyWeeklyLog({
+        year: selectedYear,
+        week: selectedWeek - 1
+      }),
+    [getMyWeeklyLog, selectedWeek, selectedYear]
+  )
   return (
     <MyLogLayout
       interval="weekly"
       actions={
         <Grid item className={classes.actions}>
+          <Button className={classes.item} variant="outlined" color="primary" onClick={viewPrevWeekLog}>
+            <NavigateBefore />
+          </Button>
           <LocalizedDatePicker
+            className={classes.item}
             margin="normal"
             label="Choose a week"
             value={firstdayOfSelectedWeek}
             onChange={handleDateChange}
             labelFunc={datePickerLabelFunc}
           />
+          <Button className={classes.item} variant="outlined" color="primary" onClick={viewNextWeekLog}>
+            <NavigateNext />
+          </Button>
           <Button margin="normal" variant="outlined" color="primary" onClick={viewThisWeekLog}>
             This Week
           </Button>

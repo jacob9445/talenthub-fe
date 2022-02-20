@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { withRouter } from 'react-router-dom'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -9,6 +9,7 @@ import Input from '@material-ui/core/Input'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import { NavigateBefore, NavigateNext } from '@material-ui/icons'
 import PropTypes from 'prop-types'
 
 import LogCard from 'routes/Shared/MyLogs/components/LogCard'
@@ -20,9 +21,9 @@ import { MyLogType } from 'helpers/prop-types'
 
 const MyMonthlyLog = ({ getMyMonthlyLog, createMyMonthlyLog, updateMyMonthlyLog, myMonthlyLog, location, history }) => {
   const classes = useStyles()
-  const queryObj = parseQueryString(location.search)
-  const selectedYear = queryObj.year || new Date().getFullYear()
-  const selectedMonth = queryObj.month || new Date().getMonth() + 1
+  const queryObj = useMemo(() => parseQueryString(location.search), [location])
+  const selectedYear = parseInt(queryObj.year) || new Date().getFullYear()
+  const selectedMonth = parseInt(queryObj.month) || new Date().getMonth() + 1
   const handleYearChange = useCallback(
     e => {
       getMyMonthlyLog({
@@ -73,6 +74,32 @@ const MyMonthlyLog = ({ getMyMonthlyLog, createMyMonthlyLog, updateMyMonthlyLog,
     })
   }, [history, location, getMyMonthlyLog])
 
+  const viewPrevMonthLog = useCallback(() => {
+    const year = selectedMonth > 1 ? selectedYear : selectedYear - 1
+    const month = selectedMonth > 1 ? selectedMonth - 1 : 12
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        month
+      })
+    })
+  }, [history, location, selectedMonth, selectedYear])
+
+  const viewNextMonthLog = useCallback(() => {
+    const year = selectedMonth < 12 ? selectedYear : selectedYear + 1
+    const month = selectedMonth < 12 ? selectedMonth + 1 : 1
+
+    history.push({
+      search: jsonToQueryString({
+        ...parseQueryString(location.search),
+        year,
+        month
+      })
+    })
+  }, [history, location, selectedMonth, selectedYear])
+
   const handleSaveAchievements = useCallback(
     content => {
       if (myMonthlyLog?.id) {
@@ -121,7 +148,11 @@ const MyMonthlyLog = ({ getMyMonthlyLog, createMyMonthlyLog, updateMyMonthlyLog,
     [updateMyMonthlyLog, createMyMonthlyLog, myMonthlyLog, selectedYear, selectedMonth]
   )
 
-  useEffect(() => getMyMonthlyLog(), [getMyMonthlyLog])
+  useEffect(() => getMyMonthlyLog({ year: selectedYear, month: selectedMonth }), [
+    getMyMonthlyLog,
+    selectedYear,
+    selectedMonth
+  ])
 
   const yearArray = generateDecrementArray(new Date().getFullYear(), 10)
   const monthArray = generateIncrementArray(1, 12)
@@ -130,33 +161,47 @@ const MyMonthlyLog = ({ getMyMonthlyLog, createMyMonthlyLog, updateMyMonthlyLog,
     <MyLogLayout
       interval="monthly"
       actions={
-        <Grid className={classes.selectMonth}>
-          <form className={classes.container}>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="year">Year</InputLabel>
-              <Select value={selectedYear} onChange={handleYearChange} input={<Input id="year" />}>
-                {yearArray.map((year, idx) => (
-                  <MenuItem value={year} key={idx}>
-                    {year}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="month">Month</InputLabel>
-              <Select value={selectedMonth} onChange={handleMonthChange} input={<Input id="month" />}>
-                {monthArray.map((month, idx) => (
-                  <MenuItem value={month} key={idx}>
-                    {month}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </form>
-          <Button className={classes.button} onClick={viewThisMonthLog} variant="outlined" color="primary">
-            THIS MONTH
-          </Button>
-        </Grid>
+        <div className={classes.container}>
+          <Grid item className={classes.item}>
+            <Button variant="outlined" color="primary" onClick={viewPrevMonthLog}>
+              <NavigateBefore />
+            </Button>
+          </Grid>
+          <Grid className={classes.selectMonth}>
+            <form>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="year">Year</InputLabel>
+                <Select value={selectedYear} onChange={handleYearChange} input={<Input id="year" />}>
+                  {yearArray.map((year, idx) => (
+                    <MenuItem value={year} key={idx}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="month">Month</InputLabel>
+                <Select value={selectedMonth} onChange={handleMonthChange} input={<Input id="month" />}>
+                  {monthArray.map((month, idx) => (
+                    <MenuItem value={month} key={idx}>
+                      {month}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </form>
+          </Grid>
+          <Grid item className={classes.item}>
+            <Button variant="outlined" color="primary" onClick={viewNextMonthLog}>
+              <NavigateNext />
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button className={classes.button} onClick={viewThisMonthLog} variant="outlined" color="primary">
+              THIS MONTH
+            </Button>
+          </Grid>
+        </div>
       }>
       <Grid item xs={6}>
         <LogCard title="Plan" content={myMonthlyLog?.plan} onSave={handleSavePlan} />
