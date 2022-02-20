@@ -1,4 +1,3 @@
-import React, { useCallback } from 'react'
 import { Grid } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
@@ -9,32 +8,13 @@ import { meSelector } from 'store/modules/auth'
 import LogsTable from '../../components/LogsTable'
 import Widget from 'components/Widget'
 import useStyles from './styles'
-import SimpleSelect from 'components/SimpleSelect'
-import { ROLES, LOG_OPTIONS, URL_PREFIXES } from 'config/constants'
+import PeriodButtonGroup from 'components/PeriodButtonGroup'
+import { ROLES } from 'config/constants'
 import withPaginationInfo from 'hocs/withPaginationInfo'
 import { ListDataType } from 'helpers/prop-types'
 
-const LoggingLayout = ({
-  title,
-  interval,
-  logs,
-  actions,
-  me,
-  pagination,
-  location,
-  history,
-  onChangePage,
-  onChangeRowsPerPage
-}) => {
+const LoggingLayout = ({ title, interval, logs, actions, me, pagination, onChangePage, onChangeRowsPerPage }) => {
   let classes = useStyles()
-
-  const handleLogChange = useCallback(
-    event => {
-      const interval = event.target.value
-      history.push(`/${URL_PREFIXES[me.role]}/logging/${interval}`)
-    },
-    [history, me.role]
-  )
 
   return (
     <Widget
@@ -47,7 +27,7 @@ const LoggingLayout = ({
       WidgetButton={
         <Grid container className={classes.grid} spacing={2} alignItems="center" justify="flex-end">
           <Grid item>
-            <SimpleSelect label="Period" value={interval} options={LOG_OPTIONS} onChange={handleLogChange} />
+            <PeriodButtonGroup selectedPeriod={interval} me={me} loggingOrMyLogs="logging" />
           </Grid>
           {actions}
         </Grid>

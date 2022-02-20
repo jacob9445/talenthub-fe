@@ -1,22 +1,12 @@
-import React, { useCallback } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { Grid, Paper } from '@material-ui/core'
 import { createStructuredSelector } from 'reselect'
-import SimpleSelect from 'components/SimpleSelect'
-import { LOG_OPTIONS, URL_PREFIXES } from 'config/constants'
+import PeriodButtonGroup from 'components/PeriodButtonGroup'
 import useStyles from './styles'
 import { meSelector } from 'store/modules/auth'
 import PropTypes from 'prop-types'
 
-const MyLogLayout = ({ history, interval, location, actions, children, me }) => {
-  const handleLogChange = useCallback(
-    event => {
-      const interval = event.target.value
-      history.push(`/${URL_PREFIXES[me.role]}/my-logs/${interval}`)
-    },
-    [history, me.role]
-  )
+const MyLogLayout = ({ interval, actions, children, me }) => {
   const classes = useStyles()
   return (
     <Grid container className={classes.grid} spacing={2}>
@@ -24,7 +14,7 @@ const MyLogLayout = ({ history, interval, location, actions, children, me }) => 
         <Paper elevation={1}>
           <Grid container className={classes.toolbar} alignItems="center">
             <Grid item>
-              <SimpleSelect label="Period" value={interval} options={LOG_OPTIONS} onChange={handleLogChange} />
+              <PeriodButtonGroup me={me} selectedPeriod={interval} loggingOrMyLogs="my-logs" />
             </Grid>
             {actions}
           </Grid>
@@ -48,4 +38,4 @@ MyLogLayout.propTypes = {
   location: PropTypes.object
 }
 
-export default connect(selectors)(withRouter(MyLogLayout))
+export default connect(selectors)(MyLogLayout)
