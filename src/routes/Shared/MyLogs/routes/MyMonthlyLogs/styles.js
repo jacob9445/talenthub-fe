@@ -4,6 +4,7 @@ export default makeStyles(theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    alignItems: 'center',
     marginRight: theme.spacing(4)
   },
   formControl: {
@@ -15,9 +16,13 @@ export default makeStyles(theme => ({
     display: 'flex',
     width: 'auto',
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginRight: theme.spacing(3)
   },
   button: {
     maxHeight: theme.spacing(5)
+  },
+  item: {
+    marginRight: theme.spacing(3)
   }
 }))
