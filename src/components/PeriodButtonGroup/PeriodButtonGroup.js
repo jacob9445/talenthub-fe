@@ -5,13 +5,13 @@ import { withRouter } from 'react-router'
 import { URL_PREFIXES } from 'config/constants'
 import useStyles from './styles'
 
-const PeriodButtonGroup = ({ selectedPeriod, history, me }) => {
+const PeriodButtonGroup = ({ selectedPeriod, history, me, loggingOrMyLogs }) => {
   const classes = useStyles()
   const handlePeriodChange = useCallback(
     interval => {
-      history.push(`/${URL_PREFIXES[me.role]}/my-logs/${interval}`)
+      history.push(`/${URL_PREFIXES[me.role]}/${loggingOrMyLogs}/${interval}`)
     },
-    [history, me.role]
+    [history, me.role, loggingOrMyLogs]
   )
   return (
     <div className={classes.container}>
